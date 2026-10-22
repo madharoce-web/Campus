@@ -1,0 +1,368 @@
+/* ==========================================================================
+   Iniciació a la Programació · pàgina del curs amb l'aspecte de l'aula virtual
+   Calaix esquerre amb l'índex del curs, columna central amb la pàgina activa.
+   (CSS original; el connector de PostCSS el limita a [data-course="prog"].)
+   ========================================================================== */
+:root{
+  color-scheme:light;
+  --ink:#1d2125; --ink-2:#495057; --ink-3:#6a737b; --line:#dee2e6; --line-2:#ced4da; --line-3:#8f959e;
+  --primary:#0f6cbf; --primary-dark:#0c589c; --primary-soft:#e7f1fa; --primary-line:#b6d4ee;
+  --que-bg:#e7f3f5; --que-line:#b8dce2; --que-ink:#001a1e;
+  --out-bg:#fcefdc; --out-line:#fbe8cd;
+  --ok:#357a32; --ok-bg:#d7e4d6; --ok-line:#c3d7c2; --ok-row:#e2f0e1;
+  --bad:#ca3120; --bad-bg:#f4d6d2; --bad-line:#efc1bb;
+  --warn-ink:#7d5a29; --warn-bg:#fcefdc; --warn-line:#fbe6c9;
+  --info-ink:#00434e; --info-bg:#cce6ea; --info-line:#b3d9df;
+  --code-pink:#c7254e; --quiz:#c4307b; --page:#0d8ba1; --tool:#836fff;
+  --t-kw:#0000ff; --t-ty:#008080; --t-str:#036a07; --t-num:#0000cd; --t-com:#7a7f85; --t-pp:#a31515; --t-bi:#795e26;
+  --hl:#fff3cd; --hl-line:#f0c36d;
+  --ci-w:300px;
+}
+*{box-sizing:border-box}
+body{margin:0; background:#fff; color:var(--ink); font-family:var(--m-sans); font-size:.9375rem; line-height:1.55}
+a{color:var(--primary); text-decoration:none} a:hover{color:var(--primary-dark); text-decoration:underline}
+:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(15,108,191,.45); border-radius:.25rem}
+button{font:inherit; color:inherit}
+h1,h2,h3,h4,h5{line-height:1.25; text-wrap:balance}
+code{font-family:var(--m-mono); font-size:87.5%; color:var(--code-pink); word-break:break-word}
+kbd{font-family:var(--m-mono); font-size:.8em; border:1px solid var(--line-2); border-bottom-width:2px; border-radius:.25rem; padding:0 .3em; background:#fff}
+.ip-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+/* ---------- maquetació ---------- */
+.ip-wrap{display:grid; grid-template-columns:var(--ci-w) minmax(0,1fr); min-height:calc(100vh - 60px)}
+.ip-ci{position:sticky; top:60px; align-self:start; height:calc(100vh - 60px); overflow:auto; background:var(--m-drawer); border-right:1px solid var(--line); padding:14px 10px 40px; padding-left:max(10px, env(safe-area-inset-left, 0px)); font-size:.875rem}
+.ip-cihead{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 6px 10px}
+.ip-cihead b{font-size:.9375rem}
+.ip-ciclose{display:none; width:32px; height:32px; border:0; border-radius:.5rem; background:transparent; cursor:pointer; place-items:center}
+.ip-ciclose:hover{background:#e9ecef}
+.ip-ciclose svg{width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round}
+.ip-cisec{margin-bottom:4px}
+.ip-cisech{display:flex; align-items:center; gap:6px; width:100%; border:0; background:transparent; text-align:left; padding:.35rem .4rem; border-radius:.5rem; cursor:pointer; font-weight:700; color:var(--ink)}
+.ip-cisech:hover{background:#e9ecef}
+.ip-cisech .ip-chev{width:16px; height:16px; flex:0 0 auto; display:grid; place-items:center; transition:transform .15s}
+.ip-cisech .ip-chev svg{width:10px; height:10px; fill:none; stroke:currentColor; stroke-width:2}
+.ip-cisech[aria-expanded="false"] .ip-chev{transform:rotate(-90deg)}
+@media (prefers-reduced-motion:reduce){ .ip-cisech .ip-chev{transition:none} }
+.ip-cisech.on{color:var(--m-olive)}
+.ip-cilist{list-style:none; margin:0 0 6px; padding:0 0 0 22px}
+.ip-cilist.top{padding-left:0}
+.ip-cilist a{display:flex; gap:7px; align-items:flex-start; padding:.28rem .5rem; border-radius:.5rem; color:var(--ink); line-height:1.35}
+.ip-cilist a:hover{background:#e9ecef; text-decoration:none}
+.ip-cilist a[aria-current="page"]{background:var(--m-olive); color:#fff}
+.ip-cilist a[aria-current="page"] .ip-cidone{color:#fff}
+.ip-cilist .ip-citx{flex:1; min-width:0}
+.ip-cidone{flex:0 0 auto; width:14px; height:14px; margin-top:2px; color:var(--ok)}
+.ip-cidone.no{color:transparent}
+.ip-scrim{display:none}
+.ip-main{min-width:0; padding-block:26px 90px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.ip-in{max-width:900px; margin:0 auto}
+@media (min-width:1100px){ .ip-main{padding-left:40px; padding-right:40px} }
+
+/* capçalera d'activitat */
+.ip-ph{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:6px}
+.ip-ph h1{font-size:1.75rem; font-weight:700; margin:0; flex:1 1 300px; min-width:0}
+/* capçalera comuna del curs (CourseHeader) amb l'aspecte de la pàgina original */
+.m-ph h1{font-size:1.75rem; line-height:1.25; flex:1 1 300px; min-width:0}
+.m-ph .m-cico{width:40px; height:40px; background:#e3edf7; color:#1b6fb5}
+.m-ph .m-cico svg{width:24px; height:24px; stroke-width:1.7}
+.ip-defs{position:absolute}
+.ip-actico{width:40px; height:40px; border-radius:.5rem; display:grid; place-items:center; flex:0 0 auto}
+.ip-actico svg{width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+.ip-actico.page{background:#e0f3f6; color:var(--page)} .ip-actico.lab{background:#e7f1fa; color:var(--primary)} .ip-actico.quiz{background:#fbe5f0; color:var(--quiz)} .ip-actico.tool{background:#efebff; color:var(--tool)} .ip-actico.course{background:#e3edf7; color:#1b6fb5}
+.ip-ciopen{display:none; width:36px; height:36px; border-radius:.5rem; border:1px solid var(--line-2); background:#fff; place-items:center; cursor:pointer; flex:0 0 auto}
+.ip-ciopen svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+.ip-compl{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:10px 0 18px}
+.ip-badge{display:inline-flex; align-items:center; gap:5px; font-size:.8203rem; border:1px solid var(--line-2); border-radius:.4rem; padding:.15rem .55rem; background:#fff; color:var(--ink-2); white-space:nowrap}
+.ip-badge svg{width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
+.ip-badge.done{background:var(--ok-bg); border-color:var(--ok-line); color:#1c411a}
+.ip-badge.lv1{background:#e2f0e1; border-color:#c3d7c2; color:#1c411a} .ip-badge.lv2{background:#d9e8f6; border-color:#b8d2ec; color:#0c3e6d} .ip-badge.lv3{background:#fdf3e1; border-color:#f8d9a8; color:#7d5a29} .ip-badge.lv4{background:#f4d6d2; border-color:#efc1bb; color:#6a1a11}
+.ip-btn{display:inline-flex; align-items:center; justify-content:center; gap:6px; border:1px solid transparent; border-radius:.5rem; padding:.375rem .75rem; font-size:.9375rem; line-height:1.5; cursor:pointer; white-space:nowrap; text-decoration:none; background:#ced4da; border-color:#ced4da; color:var(--ink)}
+.ip-btn:hover{background:#b8c1ca; border-color:#b8c1ca; text-decoration:none; color:var(--ink)}
+.ip-btn.pri{background:var(--primary); border-color:var(--primary); color:#fff}
+.ip-btn.pri:hover{background:var(--primary-dark); border-color:var(--primary-dark); color:#fff}
+.ip-btn.out{background:#fff; border-color:var(--line-3)}
+.ip-btn.out:hover{background:#f5f5f5}
+.ip-btn.ok{background:var(--ok-bg); border-color:var(--ok-line); color:#1c411a}
+.ip-btn.sm{padding:.2rem .55rem; font-size:.8203rem; border-radius:.4rem}
+.ip-btn svg{width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+.ip-btn[disabled]{opacity:.6; cursor:not-allowed}
+.ip-meta{border:1px solid var(--line); border-radius:.5rem; padding:12px 16px; margin:0 0 24px; font-size:.9rem; display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 14px; background:#fff}
+.ip-meta dt{color:var(--ink-3); font-weight:400}
+.ip-meta dd{margin:0}
+
+/* ---------- pàgina del curs ---------- */
+.ip-summary{border:1px solid var(--line); border-radius:.5rem; padding:14px 18px; margin:6px 0 18px}
+.ip-summary p{margin:0 0 .5rem} .ip-summary p:last-child{margin:0}
+.ip-summary .ip-book{font-size:.85rem; color:var(--ink-3)}
+.ip-progress{display:flex; align-items:center; gap:12px; font-size:.875rem; color:var(--ink-2); margin:0 0 18px}
+.ip-pbar{flex:1; max-width:340px; height:8px; border-radius:4px; background:#e9ecef; overflow:hidden}
+.ip-pbar i{display:block; height:100%; background:var(--ok)}
+.ip-sec{border-bottom:1px solid var(--line); padding:4px 0 12px; margin-bottom:6px}
+.ip-sech{display:flex; align-items:center; gap:10px; width:100%; border:0; background:transparent; text-align:left; padding:10px 0 6px; cursor:pointer}
+.ip-sech .ip-chev{width:26px; height:26px; border-radius:50%; background:#e9ecef; display:grid; place-items:center; flex:0 0 auto; transition:transform .15s}
+.ip-sech .ip-chev svg{width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:2}
+.ip-sech[aria-expanded="false"] .ip-chev{transform:rotate(-90deg)}
+.ip-sech h2{font-size:1.3rem; margin:0}
+.ip-sech .ip-secsub{margin-left:auto; font-size:.8203rem; color:var(--ink-3); text-align:right}
+.ip-secdesc{margin:0 0 6px 36px; color:var(--ink-2); font-size:.9rem}
+.ip-acts{margin-left:22px}
+.ip-act{display:flex; gap:12px; align-items:flex-start; padding:10px 8px; border-radius:.5rem}
+.ip-act:hover{background:#f8f9fa}
+.ip-act .ip-actico{width:36px; height:36px}
+.ip-act .ip-actico svg{width:21px; height:21px}
+.ip-actb{flex:1; min-width:0}
+.ip-actt{font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3)}
+.ip-actn{font-weight:700}
+.ip-actd{font-size:.8203rem; color:var(--ink-2); margin-top:2px}
+.ip-actr{display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex:0 0 auto}
+
+/* ---------- contingut ---------- */
+.ip-doc{font-size:.9375rem}
+.ip-doc > h2{font-size:1.4rem; margin:2.2em 0 .6em; padding-top:.8em; border-top:1px solid var(--line); scroll-margin-top:76px}
+.ip-doc > h2:first-child{margin-top:.4em; border-top:0; padding-top:0}
+.ip-doc h3{font-size:1.12rem; margin:1.8em 0 .5em; scroll-margin-top:76px}
+.ip-doc h4{font-size:1rem; margin:1.4em 0 .4em}
+.ip-doc p{margin:0 0 .9em}
+.ip-doc ul,.ip-doc ol{margin:0 0 1em; padding-left:1.5em}
+.ip-doc li{margin:.25em 0}
+.ip-doc li > p{margin:.2em 0}
+.ip-doc hr{border:0; border-top:1px solid var(--line); margin:2em 0}
+.ip-doc blockquote{margin:1em 0; padding:.2em 0 .2em 14px; border-left:3px solid var(--line-2); color:var(--ink-2)}
+.ip-lead{font-size:1.02rem; color:var(--ink-2)}
+.ip-tw{overflow-x:auto; margin:0 0 1.2em; border:1px solid var(--line); border-radius:.5rem}
+.ip-tw table{border-collapse:collapse; width:100%; font-size:.9rem}
+.ip-tw th{text-align:left; padding:.55rem .75rem; border-bottom:2px solid var(--line); font-weight:700; background:#fff; vertical-align:bottom}
+.ip-tw td{padding:.5rem .75rem; border-top:1px solid var(--line); vertical-align:top}
+.ip-tw tbody tr:nth-child(odd) td{background:rgba(0,0,0,.025)}
+.ip-tw td.c,.ip-tw th.c{text-align:center}
+.ip-tw td.r,.ip-tw th.r{text-align:right; font-variant-numeric:tabular-nums}
+.ip-tw td.hl{background:var(--hl)!important; font-weight:700}
+.ip-tw.trace td,.ip-tw.trace th{font-family:var(--m-mono); font-size:.82rem; white-space:nowrap}
+.ip-tw.trace td:first-child,.ip-tw.trace th:first-child{font-family:var(--m-sans)}
+.ip-tw caption{caption-side:bottom; text-align:left; font-size:.82rem; color:var(--ink-3); padding:6px 10px}
+.ip-v{color:var(--ok); font-weight:700} .ip-f{color:var(--bad); font-weight:700}
+
+/* avisos */
+.ip-co{border:1px solid; border-radius:.5rem; padding:12px 16px; margin:0 0 1.2em}
+.ip-co > :last-child{margin-bottom:0}
+.ip-co .ip-cot{display:flex; align-items:center; gap:8px; font-weight:700; margin:0 0 .4em}
+.ip-co .ip-cot svg{width:18px; height:18px; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.ip-co.def{background:#e7f1fa; border-color:#bcd6ee; color:#08385e}
+.ip-co.key{background:#f8f9fa; border-color:var(--line); color:var(--ink)}
+.ip-co.tip{background:#e2f0e1; border-color:#c3d7c2; color:#1c411a}
+.ip-co.warn{background:#fcefdc; border-color:#fbe6c9; color:#6b4a1c}
+.ip-co.bad{background:#f4d6d2; border-color:#efc1bb; color:#6a1a11}
+.ip-co.info{background:#e7f3f5; border-color:#b8dce2; color:#00434e}
+.ip-co code{color:inherit; background:rgba(255,255,255,.6); padding:0 .25em; border-radius:.2rem}
+
+/* passos numerats */
+ol.ip-steps{list-style:none; counter-reset:st; padding:0; margin:0 0 1.2em}
+ol.ip-steps > li{counter-increment:st; position:relative; padding:2px 0 10px 42px; margin:0}
+ol.ip-steps > li::before{content:counter(st); position:absolute; left:0; top:0; width:28px; height:28px; border-radius:50%; background:var(--primary); color:#fff; font-weight:700; font-size:.85rem; display:grid; place-items:center}
+ol.ip-steps > li:not(:last-child)::after{content:""; position:absolute; left:13.5px; top:30px; bottom:2px; width:1px; background:var(--line-2)}
+
+/* dues columnes */
+.ip-cols{display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:14px; margin:0 0 1.2em}
+.ip-cols > *{min-width:0; margin:0}
+.ip-card{border:1px solid var(--line); border-radius:.5rem; padding:12px 14px; background:#fff}
+.ip-card h4{margin:0 0 .4em}
+.ip-card > :last-child{margin-bottom:0}
+.ip-map{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:6px 10px; align-items:center; margin:0 0 1.2em; font-size:.9rem}
+.ip-map > div{border:1px solid var(--line); border-radius:.4rem; padding:6px 10px; background:#fff; font-family:var(--m-mono); font-size:.84rem; overflow-x:auto; white-space:nowrap}
+.ip-map > .ip-maph{border:0; padding:0 2px; font-family:var(--m-sans); font-weight:700; font-size:.8rem; color:var(--ink-3); background:transparent}
+.ip-map > span{color:var(--ink-3)}
+
+/* figures */
+.ip-fig{margin:1.2em 0 1.6em}
+.ip-figb{border:1px solid var(--line); border-radius:.5rem; background:#fff; padding:12px; overflow-x:auto}
+.ip-fig svg{display:block; width:100%; height:auto; min-width:var(--fig-min, 0px)}
+.ip-fig figcaption{font-size:.85rem; color:var(--ink-2); margin-top:.5em}
+svg .dt{font-family:var(--m-sans); font-size:13px; fill:var(--ink)}
+svg .ds{font-family:var(--m-sans); font-size:11.5px; fill:var(--ink-3)}
+svg .db{font-weight:700}
+svg .dm{font-family:var(--m-mono); font-size:12.5px; fill:var(--ink)}
+svg .dw{fill:#fff}
+svg .bx{fill:#fff; stroke:var(--line-3); stroke-width:1.2}
+svg .bxa{fill:#e7f1fa; stroke:var(--primary); stroke-width:1.4}
+svg .bxo{fill:#e2f0e1; stroke:var(--ok); stroke-width:1.4}
+svg .bxw{fill:#fcefdc; stroke:#d59a3c; stroke-width:1.4}
+svg .bxp{fill:#fbe5f0; stroke:var(--quiz); stroke-width:1.4}
+svg .bxq{fill:#e7f3f5; stroke:#5fa2a8; stroke-width:1.4}
+svg .bxg{fill:#f8f9fa; stroke:var(--line-2); stroke-width:1.2}
+svg .bxd{fill:#f8f9fa; stroke:var(--line-3); stroke-width:1.2; stroke-dasharray:4 3}
+svg .ln{stroke:var(--ink-2); stroke-width:1.4; fill:none}
+svg .lna{stroke:var(--primary); stroke-width:1.8; fill:none}
+svg .lno{stroke:var(--ok); stroke-width:1.6; fill:none}
+svg .lnb{stroke:var(--bad); stroke-width:1.6; fill:none}
+svg .lnd{stroke:var(--line-3); stroke-width:1.2; fill:none; stroke-dasharray:4 3}
+svg .fa{fill:var(--primary)} svg .fo{fill:var(--ok)} svg .fb{fill:var(--bad)} svg .fk{fill:var(--ink-2)} svg .fq{fill:var(--quiz)}
+svg .ta{fill:var(--primary)} svg .to{fill:var(--ok)} svg .tb{fill:var(--bad)} svg .tq{fill:var(--quiz)}
+
+/* ---------- blocs de codi ---------- */
+.ip-cb{border:1px solid #c0c4c8; border-radius:.5rem; margin:0 0 1.2em; background:#fff; overflow:hidden; min-width:0}
+.ip-cbh{display:flex; align-items:center; gap:8px; padding:5px 8px 5px 12px; background:#f8f9fa; border-bottom:1px solid var(--line); flex-wrap:wrap}
+.ip-cbl{font-size:.72rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3)}
+.ip-cbt{font-family:var(--m-mono); font-size:.8rem; color:var(--ink-2)}
+.ip-cbsp{flex:1}
+.ip-cbb{overflow-x:auto; background:#fff}
+.ip-code{margin:0; padding:8px 0; font-family:var(--m-mono); font-size:.84rem; line-height:1.55; counter-reset:ln; color:#000; white-space:pre; min-width:max-content}
+.ip-code .l{display:block; padding:0 14px 0 0; counter-increment:ln; position:relative}
+.ip-code .l::before{content:counter(ln); display:inline-block; width:2.6em; padding-right:.9em; margin-right:.7em; text-align:right; color:#8a9096; background:#f3f3f3; user-select:none}
+.ip-code.nonum .l::before{display:none}
+.ip-code.nonum .l{padding-left:14px}
+.ip-code .l.cur{background:var(--hl)}
+.ip-code .l.cur::before{background:var(--hl-line); color:#000; content:"▶ " counter(ln)}
+.ip-code .l.err{background:#fde2de}
+.ip-code .k{color:var(--t-kw)} .ip-code .t{color:var(--t-ty)} .ip-code .s{color:var(--t-str)} .ip-code .n{color:var(--t-num)} .ip-code .c{color:var(--t-com); font-style:italic} .ip-code .p{color:var(--t-pp)} .ip-code .b{color:var(--t-bi)} .ip-code .o{color:#c4307b; font-weight:700}
+.ip-ed{display:block; width:100%; min-height:200px; border:0; padding:10px 14px; font-family:var(--m-mono); font-size:.84rem; line-height:1.55; resize:vertical; tab-size:4; white-space:pre; color:#000; background:#fffef6}
+.ip-ed:focus{outline:none; box-shadow:inset 0 0 0 2px rgba(15,108,191,.35)}
+.ip-run{border-top:1px solid var(--line); padding:10px 12px 12px; background:#fcfcfd; display:grid; gap:8px}
+.ip-runrow{display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap}
+.ip-runrow label{font-weight:700; font-size:.82rem; display:block; margin-bottom:3px}
+.ip-stdin{width:100%; min-height:38px; height:42px; font-family:var(--m-mono); font-size:.82rem; border:1px solid var(--line-3); border-radius:.4rem; padding:6px 8px; resize:vertical; background:#fff}
+.ip-runin{flex:1 1 240px; min-width:0}
+.ip-con{background:#fff; border:1px solid #c0c4c8; border-radius:.25rem; padding:8px 10px; font-family:var(--m-mono); font-size:.8rem; white-space:pre-wrap; overflow-wrap:anywhere; min-height:56px; max-height:300px; overflow:auto; margin:0; color:#000}
+.ip-con .sys{color:var(--ink-3)} .ip-con .err{color:var(--bad)} .ip-con .ok{color:var(--ok)}
+.ip-eng{display:flex; align-items:center; gap:8px; font-size:.8rem; color:var(--ink-2)}
+.ip-eng .bar{width:120px; height:6px; border-radius:3px; background:#e9ecef; overflow:hidden}
+.ip-eng .bar i{display:block; height:100%; background:var(--primary); width:0}
+.ip-spin{width:13px; height:13px; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; display:inline-block; animation:ipsp .8s linear infinite}
+@keyframes ipsp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){ .ip-spin{animation:none} }
+.ip-pair{display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 330px), 1fr)); gap:12px; margin:0 0 1.2em}
+.ip-pair > .ip-cb{margin:0}
+
+/* ---------- traça pas a pas ---------- */
+.ip-tr{border-top:1px solid var(--line); background:#fff}
+.ip-trbar{display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:8px 10px; background:#f8f9fa; border-bottom:1px solid var(--line)}
+.ip-trbar .ip-trn{font-size:.82rem; color:var(--ink-2); min-width:92px; text-align:center; font-variant-numeric:tabular-nums}
+.ip-trbar input{width:170px; max-width:100%; font-family:var(--m-mono); font-size:.8rem; border:1px solid var(--line-3); border-radius:.4rem; padding:4px 7px}
+.ip-trbar label{font-size:.8rem; font-weight:700}
+.ip-trg{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.ip-trg > *{min-width:0}
+.ip-trc{overflow:auto; max-height:520px; border-right:1px solid var(--line)}
+.ip-trs{padding:10px 12px; display:flex; flex-direction:column; gap:10px; font-size:.86rem}
+.ip-trnote{background:var(--que-bg); border:1px solid var(--que-line); color:var(--que-ink); border-radius:.4rem; padding:8px 10px; line-height:1.45}
+.ip-trnote b{font-weight:700}
+.ip-trnote .chg{display:block; margin-top:3px; font-family:var(--m-mono); font-size:.8rem}
+.ip-frames{display:grid; gap:8px}
+.ip-frame{border:1px solid var(--line-2); border-radius:.4rem; overflow:hidden}
+.ip-frame.top{border-color:var(--primary)}
+.ip-frameh{font-size:.75rem; font-weight:700; letter-spacing:.04em; padding:3px 8px; background:#f1f3f5; color:var(--ink-2); display:flex; justify-content:space-between; gap:6px}
+.ip-frame.top .ip-frameh{background:var(--primary-soft); color:#0c3e6d}
+.ip-frame table{width:100%; border-collapse:collapse; font-size:.82rem}
+.ip-frame td{padding:3px 8px; border-top:1px solid #eef0f2; font-family:var(--m-mono); vertical-align:top}
+.ip-frame td:first-child{width:38%; color:var(--ink-2)}
+.ip-frame td.ty{width:1%; color:var(--ink-3); font-size:.72rem; white-space:nowrap}
+.ip-frame tr.chg td{background:var(--hl)}
+.ip-frame .ref{color:var(--quiz); font-size:.72rem; white-space:nowrap}
+.ip-frame .emp{color:var(--ink-3); font-family:var(--m-sans); font-size:.8rem; padding:5px 8px}
+.ip-trlab{font-size:.75rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.ip-strip{display:flex; flex-wrap:wrap; gap:4px; align-items:flex-end}
+.ip-strip span{font-family:var(--m-mono); font-size:.8rem; border:1px solid var(--line-2); border-radius:.3rem; padding:2px 7px; background:#fff; position:relative}
+.ip-strip span.used{background:#e9ecef; color:var(--ink-3); border-color:#e9ecef}
+.ip-strip span.head{border-color:var(--primary); background:var(--primary-soft); color:#0c3e6d; font-weight:700}
+.ip-strip span.head::after{content:"▲"; position:absolute; left:50%; bottom:-15px; transform:translateX(-50%); font-size:.6rem; color:var(--primary)}
+.ip-strip.withhead{padding-bottom:14px}
+.ip-strip .none{border:0; background:transparent; color:var(--ink-3); font-family:var(--m-sans); padding:0}
+.ip-trout{background:#fff; border:1px solid #c0c4c8; border-radius:.25rem; padding:6px 8px; font-family:var(--m-mono); font-size:.8rem; white-space:pre-wrap; overflow-wrap:anywhere; min-height:34px; max-height:150px; overflow:auto; margin:0}
+.ip-trout .new{background:var(--hl)}
+.ip-trerr{color:var(--bad); font-weight:700}
+
+/* ---------- autocomprovació (aspecte de pregunta de qüestionari) ---------- */
+.ip-quiz{margin:1.6em 0}
+.ip-q{display:flex; gap:14px; margin:0 0 18px; align-items:flex-start}
+.ip-qi{flex:0 0 auto; width:96px; background:#f8f9fa; border:1px solid var(--line); border-radius:.25rem; padding:6px 7px; font-size:.75rem; line-height:1.35; display:flex; flex-direction:column; gap:6px}
+.ip-qi b{font-size:1.15rem}
+.ip-qc{flex:1; min-width:0; display:flex; flex-direction:column; gap:8px}
+.ip-qf{background:var(--que-bg); border:1px solid var(--que-line); color:var(--que-ink); border-radius:.5rem; padding:12px 14px}
+.ip-qf > p{margin:0 0 .6em}
+.ip-qf pre{margin:.2em 0 .7em; font-family:var(--m-mono); font-size:.82rem; white-space:pre; overflow-x:auto; background:rgba(255,255,255,.6); padding:6px 8px; border-radius:.3rem}
+.ip-qo{display:flex; flex-direction:column; gap:6px; margin:.4em 0 .6em}
+.ip-qo label{display:flex; gap:9px; align-items:flex-start; padding:6px 9px; border:1px solid transparent; border-radius:.4rem; cursor:pointer; background:rgba(255,255,255,.55)}
+.ip-qo label:hover{border-color:var(--que-line)}
+.ip-qo input{margin-top:4px; accent-color:var(--primary)}
+.ip-qo label.right{border-color:var(--ok); background:var(--ok-row)}
+.ip-qo label.wrong{border-color:var(--bad); background:#fbe6e3}
+.ip-qo .mk{margin-left:auto; font-weight:700}
+.ip-qo label.right .mk{color:var(--ok)} .ip-qo label.wrong .mk{color:var(--bad)}
+.ip-qfb{background:var(--out-bg); border:1px solid var(--out-line); border-radius:.5rem; padding:10px 14px; font-size:.9rem}
+.ip-qfb .res{font-weight:700; display:block; margin-bottom:3px}
+.ip-qfb .res.ok{color:var(--ok)} .ip-qfb .res.no{color:var(--bad)}
+
+/* ---------- llista d'exercicis de la setmana ---------- */
+.ip-exs{border:1px solid var(--line); border-radius:.5rem; padding:6px 10px; margin:0 0 1.2em}
+.ip-exsh{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:6px 4px 8px; border-bottom:1px solid var(--line)}
+.ip-exsh b{font-size:1rem}
+.ip-exrow{display:flex; gap:12px; align-items:center; padding:8px 4px; border-bottom:1px solid #eef0f2}
+.ip-exrow:last-child{border-bottom:0}
+.ip-exrow .ip-actico{width:32px; height:32px} .ip-exrow .ip-actico svg{width:19px; height:19px}
+.ip-exrow .ip-actb a{font-weight:700}
+.ip-exrow .ip-actd{overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical}
+
+/* ---------- avaluador d'expressions ---------- */
+.ip-xp{border:1px solid var(--line); border-radius:.5rem; margin:0 0 1.2em; overflow:hidden}
+.ip-xph{background:#f8f9fa; border-bottom:1px solid var(--line); padding:8px 12px; font-weight:700}
+.ip-xpb{padding:12px; display:grid; gap:10px}
+.ip-xprow{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+.ip-xprow input{font-family:var(--m-mono); font-size:.88rem; border:1px solid var(--line-3); border-radius:.4rem; padding:5px 8px}
+.ip-xprow input.ex{flex:1 1 280px; min-width:0}
+.ip-xprow input.var{width:64px}
+.ip-xprow label{font-family:var(--m-mono); font-size:.88rem}
+.ip-xpkeys{display:flex; gap:4px; flex-wrap:wrap}
+.ip-xpkeys button{font-family:var(--m-mono); font-size:.85rem; border:1px solid var(--line-2); background:#fff; border-radius:.35rem; padding:2px 9px; cursor:pointer}
+.ip-xpkeys button:hover{background:var(--primary-soft); border-color:var(--primary-line)}
+.ip-xpout{display:grid; gap:6px}
+.ip-xpst{display:grid; grid-template-columns:28px minmax(0,1fr); gap:8px; align-items:baseline; padding:6px 9px; border:1px solid var(--line); border-radius:.4rem; background:#fff; font-family:var(--m-mono); font-size:.84rem; overflow-x:auto}
+.ip-xpst .n{color:var(--ink-3); font-family:var(--m-sans); font-size:.78rem}
+.ip-xpst.fin{background:var(--ok-row); border-color:var(--ok-line)}
+.ip-xpst.err{background:#fbe6e3; border-color:var(--bad-line); font-family:var(--m-sans)}
+.ip-xppar{font-family:var(--m-mono); font-size:.88rem; background:#f8f9fa; border:1px dashed var(--line-2); border-radius:.4rem; padding:6px 9px; overflow-x:auto; white-space:nowrap}
+.ip-xppar .pl{color:var(--quiz); font-weight:700}
+
+/* ---------- navegació entre activitats ---------- */
+.ip-pn{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:40px; padding-top:16px; border-top:1px solid var(--line)}
+.ip-pn a{display:flex; flex-direction:column; max-width:48%; min-width:0}
+.ip-pn a small{color:var(--ink-3); font-size:.78rem}
+.ip-pn a.nx{text-align:right; margin-left:auto}
+.ip-toc{border:1px solid var(--line); border-radius:.5rem; padding:10px 14px; margin:0 0 22px; font-size:.88rem; background:#fff}
+.ip-toc b{display:block; margin-bottom:4px}
+.ip-toc ol{margin:0; padding-left:1.3em; columns:2 260px; column-gap:24px}
+.ip-toc li{margin:.15em 0; break-inside:avoid}
+
+/* ---------- progrés ---------- */
+.ip-gt{border-collapse:collapse; width:100%; font-size:.9rem}
+.ip-gt th{text-align:left; padding:.55rem .75rem; border-bottom:2px solid var(--line)}
+.ip-gt td{padding:.55rem .75rem; border-top:1px solid var(--line); vertical-align:middle}
+.ip-gt td.r,.ip-gt th.r{text-align:right; font-variant-numeric:tabular-nums}
+.ip-gt tr.wk td{background:#f8f9fa; font-weight:700}
+.ip-mini{display:inline-block; width:80px; height:6px; background:#e9ecef; border-radius:3px; overflow:hidden; vertical-align:middle; margin-left:8px}
+.ip-mini i{display:block; height:100%; background:var(--ok)}
+
+/* ---------- pantalles estretes ---------- */
+@media (max-width:1099px){
+  .ip-wrap{grid-template-columns:minmax(0,1fr)}
+  .ip-ci{position:fixed; left:0; top:calc(60px + env(safe-area-inset-top, 0px)); bottom:0; height:auto; width:min(320px, 88vw); z-index:45; transform:translateX(-102%); transition:transform .2s; box-shadow:4px 0 12px rgba(0,0,0,.12)}
+  .ip-ci.open{transform:none}
+  .ip-ciclose{display:inline-grid}
+  .ip-scrim.on{display:block; position:fixed; inset:calc(60px + env(safe-area-inset-top, 0px)) 0 0; background:rgba(0,0,0,.3); z-index:44}
+  .ip-ciopen{display:inline-grid}
+}
+@media (prefers-reduced-motion:reduce){ .ip-ci{transition:none} }
+@media (max-width:760px){
+  .ip-trg{grid-template-columns:minmax(0,1fr)}
+  .ip-trc{border-right:0; border-bottom:1px solid var(--line); max-height:320px}
+  .ip-q{flex-direction:column; align-items:stretch}
+  .ip-qi{width:100%; flex-direction:row; gap:12px; align-items:center}
+  .ip-ph h1,.m-ph h1{font-size:1.4rem}
+  .ip-acts{margin-left:0}
+  .ip-secdesc{margin-left:0}
+  .ip-sech .ip-secsub{display:none}
+  .ip-act{padding:10px 2px}
+  .ip-actr{display:none}
+  .ip-map{grid-template-columns:minmax(0,1fr)}
+  .ip-map > span{display:none}
+  .ip-map > .ip-maph:nth-child(2){display:none}
+  .ip-meta{grid-template-columns:minmax(0,1fr)}
+  .ip-meta dt{margin-top:4px}
+}
