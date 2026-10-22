@@ -1,0 +1,115 @@
+/* ==========================================================================
+   SEMESTRE 1 · closca comuna amb l'aspecte de l'aula virtual (Moodle Boost)
+   Barra blanca de 60 px amb marca i paraula en majúscules, navegació primària
+   (Inici · Tauler · Els meus cursos) subratllada en oliva, menú d'usuari amb avatar,
+   capçalera de curs amb molles de pa i navegació secundària. Classes amb prefix m-.
+   ========================================================================== */
+:root{
+  --m-body:#ffffff; --m-drawer:#f8f9fa; --m-ink:#1d2125; --m-ink-2:#495057; --m-ink-3:#6a737b;
+  --m-line:#dee2e6; --m-line-2:#ced4da; --m-line-3:#8f959e;
+  --m-primary:#0f6cbf; --m-primary-dark:#0c589c; --m-primary-soft:#e7f1fa;
+  --m-olive:#696e2e; --m-olive-dark:#55591f; --m-olive-mark:#6d7637; --m-olive-soft:#f1f2e6;
+  --m-word:#555a5e;
+  --m-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif;
+  --m-mono:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  --m-serif:"Times New Roman",Times,Georgia,serif;
+}
+.m-navbar,.m-navbar *{box-sizing:border-box}
+.m-navbar{position:sticky; top:env(safe-area-inset-top, 0px); z-index:60; height:60px; background:#fff; border-bottom:1px solid var(--m-line); box-shadow:0 2px 4px rgba(0,0,0,.08); font-family:var(--m-sans); font-size:.9375rem; line-height:1.5; color:var(--m-ink)}
+.m-navbar .m-in{height:100%; display:flex; align-items:center; gap:0; padding-left:max(8px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+
+/* marca: quadrat oliva i paraula en dues línies de lletra romana */
+.m-brand{display:flex; align-items:center; gap:9px; height:100%; padding:0 8px; color:var(--m-word); white-space:nowrap; text-decoration:none; flex:0 0 auto}
+.m-brand:hover{text-decoration:none; color:var(--m-word)}
+.m-brand:focus-visible{outline:none; box-shadow:inset 0 0 0 .2rem rgba(105,110,46,.45)}
+.m-mark{width:46px; height:46px; background:var(--m-olive-mark); color:#fff; display:grid; place-items:center; font-family:var(--m-serif); font-size:22px; letter-spacing:-.02em}
+.m-wm{display:flex; flex-direction:column; font-family:var(--m-serif); text-transform:uppercase; font-size:19.5px; line-height:1.04; letter-spacing:.005em; color:var(--m-word)}
+
+/* navegació primària */
+.m-pnav{display:flex; align-items:stretch; height:100%; gap:0; min-width:0; margin-left:22px}
+.m-pnav a{display:flex; align-items:center; padding:0 8px; height:100%; color:var(--m-ink); border-bottom:3px solid transparent; border-top:3px solid transparent; white-space:nowrap; text-decoration:none}
+.m-pnav a + a{margin-left:4px}
+.m-pnav a:hover{background:#f5f5f5; text-decoration:none; color:var(--m-ink)}
+.m-pnav a[aria-current="page"]{border-bottom-color:var(--m-olive)}
+.m-pnav a:focus-visible{outline:none; box-shadow:inset 0 0 0 .2rem rgba(105,110,46,.45)}
+.m-spacer{flex:1}
+
+/* menú d'usuari */
+.m-user{position:relative; display:flex; align-items:center; height:100%}
+.m-ubtn{display:flex; align-items:center; gap:9px; border:0; background:transparent; padding:6px 4px; cursor:pointer; color:var(--m-ink); font:inherit; border-radius:.5rem}
+.m-ubtn:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(105,110,46,.45)}
+.m-av{width:35px; height:35px; border-radius:50%; background:#e9ecef; display:grid; place-items:center; font-size:.9375rem; color:var(--m-ink); letter-spacing:.01em}
+.m-ubtn:hover .m-av{background:#dee2e6}
+.m-chev{width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
+.m-umenu{position:absolute; right:0; top:calc(100% - 4px); width:236px; background:#fff; border:1px solid rgba(0,0,0,.15); border-radius:.5rem; box-shadow:0 .5rem 1rem rgba(0,0,0,.15); padding:.5rem 0; z-index:70}
+.m-umenu a,.m-umenu button{display:flex; align-items:center; gap:8px; width:100%; border:0; background:transparent; text-align:left; padding:.25rem 1.5rem; font:inherit; font-size:.9375rem; color:var(--m-ink); text-decoration:none; cursor:pointer; line-height:1.6}
+.m-umenu a:hover,.m-umenu button:hover,.m-umenu a:focus-visible,.m-umenu button:focus-visible{background:var(--m-olive); color:#fff; outline:none; text-decoration:none}
+.m-umenu .m-uhead{padding:.15rem 1.5rem .35rem; font-size:.8203rem; color:var(--m-ink-3)}
+.m-udiv{height:0; border-top:1px solid #e9ecef; margin:.5rem 0}
+.m-umenu .m-unext{margin-left:auto; width:10px; height:10px}
+.m-umenu .m-uback svg{width:10px; height:10px}
+.m-umenu .m-uopt{padding-left:2.4rem; position:relative}
+.m-umenu .m-uopt[aria-checked="true"]::before{content:""; position:absolute; left:1.25rem; top:50%; width:6px; height:11px; border:solid currentColor; border-width:0 2px 2px 0; transform:translateY(-62%) rotate(45deg)}
+
+/* menú de navegació a pantalles estretes */
+.m-ib{width:36px; height:36px; border-radius:.5rem; border:0; background:transparent; display:none; place-items:center; cursor:pointer; color:var(--m-ink); padding:0; flex:0 0 auto; margin-right:2px}
+.m-ib:hover{background:#e9ecef}
+.m-ib svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round}
+.m-menu{position:absolute; left:max(8px, env(safe-area-inset-left, 0px)); top:calc(100% + 2px); width:min(300px, calc(100vw - 16px)); background:#fff; border:1px solid rgba(0,0,0,.15); border-radius:.5rem; box-shadow:0 .5rem 1rem rgba(0,0,0,.15); padding:.5rem 0; z-index:70; display:flex; flex-direction:column}
+.m-menu a{display:block; padding:.45rem 1.25rem; color:var(--m-ink); text-decoration:none; border-left:3px solid transparent}
+.m-menu a:hover{background:#f5f5f5; text-decoration:none}
+.m-menu a[aria-current="page"]{border-left-color:var(--m-olive); font-weight:700}
+.m-hidden{display:none!important}
+
+/* capçalera del curs */
+.m-hd{font-family:var(--m-sans); color:var(--m-ink); display:flex; flex-direction:column; gap:6px; margin-bottom:14px}
+.m-crumbs{font-size:.8203rem; display:flex; flex-wrap:wrap; gap:4px; align-items:center; line-height:1.4}
+.m-crumbs a{color:var(--m-ink); text-decoration:none}
+.m-crumbs a:hover{text-decoration:underline; color:var(--m-olive-dark)}
+.m-crumbs .m-sep{color:var(--m-ink-3); padding:0 4px}
+.m-ph{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:6px}
+.m-ph h1{font-family:var(--m-sans); font-size:1.875rem; font-weight:700; line-height:1.2; margin:0; color:var(--m-ink); letter-spacing:0; text-wrap:balance}
+.m-cico{width:36px; height:36px; border-radius:.5rem; display:grid; place-items:center; flex:0 0 auto; background:var(--m-ci-bg, #e7f1fa); color:var(--m-ci, #0f6cbf)}
+.m-cico svg{width:21px; height:21px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.m-ph .m-score{margin-left:auto}
+.m-sub{margin:0; font-size:.9375rem; color:var(--m-ink-2)}
+.m-sub:empty{display:none}
+
+/* navegació secundària del curs */
+.m-snav{display:flex; gap:2px; border-bottom:1px solid var(--m-line); margin:0 0 20px; overflow-x:auto; overflow-y:hidden; scrollbar-width:thin; font-family:var(--m-sans)}
+.m-snav button,.m-snav a{flex:0 0 auto; border:0; border-radius:0; background:transparent; padding:.55rem .8rem; border-bottom:3px solid transparent; cursor:pointer; color:var(--m-ink); white-space:nowrap; font:inherit; font-size:.9375rem; line-height:1.5; text-decoration:none; box-shadow:none}
+.m-snav button:hover,.m-snav a:hover{background:#f5f5f5; text-decoration:none}
+.m-snav button[aria-selected="true"],.m-snav button[aria-current="true"],.m-snav a[aria-current="page"]{border-bottom-color:var(--m-olive); background:transparent; color:var(--m-ink)}
+.m-snav button:focus-visible,.m-snav a:focus-visible{outline:none; box-shadow:inset 0 0 0 .2rem rgba(105,110,46,.4)}
+
+@media (max-width:767px){
+  .m-pnav{display:none}
+  .m-ib.m-menubtn{display:inline-grid}
+  .m-brand{padding:0 4px}
+  .m-mark{width:40px; height:40px; font-size:19px}
+  .m-wm{font-size:16px}
+  .m-ph h1{font-size:1.45rem}
+}
+@media (max-width:400px){
+  .m-wm{font-size:14px}
+}
+@media (max-width:340px){
+  .m-wm{display:none}
+}
+
+/* forats de la barra per al curs obert (vegeu NavbarSlots.jsx) */
+.m-tools{display:flex; align-items:center; gap:10px; margin-right:14px; font-family:var(--m-sans)}
+.m-tools:empty{display:none}
+.m-below:empty{display:none}
+@media (max-width:767px){ .m-tools{gap:6px; margin-right:8px} }
+
+/* pàgines senzilles de l'aplicació (càrrega, error, 404) */
+.app-page{max-width:830px; margin:0 auto; padding-block:44px 64px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); font-family:var(--m-sans); font-size:.9375rem; line-height:1.5; color:var(--m-ink)}
+.app-h1{font-size:1.875rem; font-weight:700; line-height:1.2; margin:0 0 12px}
+.app-muted{color:var(--m-ink-3)}
+.app-btn{display:inline-block; border:1px solid var(--m-primary); background:var(--m-primary); color:#fff; border-radius:.5rem; padding:.375rem .75rem; font:inherit; text-decoration:none; cursor:pointer}
+.app-btn:hover{background:var(--m-primary-dark); border-color:var(--m-primary-dark); color:#fff; text-decoration:none}
+.app-loading{display:flex; align-items:center; justify-content:center; gap:10px; padding:80px 16px; font-family:var(--m-sans); color:var(--m-ink-3)}
+.app-spin{width:18px; height:18px; border:2px solid var(--m-line); border-top-color:var(--m-primary); border-radius:50%; animation:app-spin .8s linear infinite}
+@keyframes app-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){ .app-spin{animation:none} }
