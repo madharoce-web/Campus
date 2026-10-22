@@ -1,0 +1,199 @@
+import { Z } from '../engine/z.js';
+
+/**
+ * Banc · tema 2: inducció.
+ * Codi original; l'idioma i les dependències arriben pel contenidor $ (un per idioma).
+ */
+export function makeBankInd($) {
+  const { BKT, FXN, IND, IND_ORDER, L, M, P, kDone, kF, kS, kT, md, ri } = $;
+  /* ---------- BANC · TEMA 2: inducció ---------- */
+  /* polinomi en una variable a partir dels coeficients [c_n, …, c_0] */
+  function polyTx(cs, v) {
+    const n = cs.length - 1; let out = '';
+    cs.forEach((c, i) => {
+      const e = n - i; if (!c) return;
+      const sg = c < 0 ? (out ? ' − ' : '−') : (out ? ' + ' : ''), ac = Math.abs(c);
+      const body = e === 0 ? String(ac) : (ac === 1 ? '' : ac) + v + (e > 1 ? '^{' + e + '}' : '');
+      out += sg + body;
+    });
+    return out || '0';
+  }
+  /* fórmules de sumes: lhs(v) és la suma fins a v; t(k) és el terme k */
+  const m2 = v => /^\d/.test(v) ? '2 · ' + v : '2' + v;
+  function bkSumF() {
+    const fixed = [
+      { id: 'odd', lhs: v => '1 + 3 + 5 + … + (2' + v + ' − 1)', tK1: '(2k + 1)', tK: '(2k − 1)', rhs: v => v === 'n' ? 'n^{2}' : '(' + v + ')^{2}', rk: 'k^{2}', rk1: '(k + 1)^{2}', S: n => n * n, t: k => 2 * k - 1, base: '1 = 1^{2}', ch: ['k^{2} + (2k + 1)', '(k + 1)^{2}'], cw: L('quadrat d\'una suma', 'cuadrado de una suma') },
+      { id: 'nat', lhs: v => '1 + 2 + 3 + … + ' + v, tK1: '(k + 1)', tK: 'k', rhs: v => '\\fr{' + v + '(' + v + ' + 1)}{2}', rk: '\\fr{k(k + 1)}{2}', rk1: '\\fr{(k + 1)(k + 2)}{2}', S: n => n * (n + 1) / 2, t: k => k, base: '1 = \\fr{1 · 2}{2}', ch: ['\\fr{k(k + 1)}{2} + (k + 1)', '\\fr{k(k + 1) + 2(k + 1)}{2}', '\\fr{(k + 1)(k + 2)}{2}'], cw: L('factor comú k + 1', 'factor común k + 1') },
+      { id: 'sq', lhs: v => '1^{2} + 2^{2} + … + ' + v + '^{2}', tK1: '(k + 1)^{2}', tK: 'k^{2}', rhs: v => '\\fr{' + v + '(' + v + ' + 1)(' + m2(v) + ' + 1)}{6}', rk: '\\fr{k(k + 1)(2k + 1)}{6}', rk1: '\\fr{(k + 1)(k + 2)(2k + 3)}{6}', S: n => n * (n + 1) * (2 * n + 1) / 6, t: k => k * k, base: '1 = \\fr{1 · 2 · 3}{6}', ch: ['\\fr{k(k + 1)(2k + 1)}{6} + (k + 1)^{2}', '\\fr{(k + 1)[k(2k + 1) + 6(k + 1)]}{6}', '\\fr{(k + 1)(2k^{2} + 7k + 6)}{6}', '\\fr{(k + 1)(k + 2)(2k + 3)}{6}'], cw: L('2k² + 7k + 6 = (k + 2)(2k + 3)', '2k² + 7k + 6 = (k + 2)(2k + 3)') },
+      { id: 'cub', lhs: v => '1^{3} + 2^{3} + … + ' + v + '^{3}', tK1: '(k + 1)^{3}', tK: 'k^{3}', rhs: v => '(\\fr{' + v + '(' + v + ' + 1)}{2})^{2}', rk: '\\fr{k^{2}(k + 1)^{2}}{4}', rk1: '\\fr{(k + 1)^{2}(k + 2)^{2}}{4}', S: n => (n * (n + 1) / 2) ** 2, t: k => k ** 3, base: '1 = (\\fr{1 · 2}{2})^{2}', ch: ['\\fr{k^{2}(k + 1)^{2}}{4} + (k + 1)^{3}', '\\fr{(k + 1)^{2}[k^{2} + 4(k + 1)]}{4}', '\\fr{(k + 1)^{2}(k + 2)^{2}}{4}'], cw: L('k² + 4k + 4 = (k + 2)²', 'k² + 4k + 4 = (k + 2)²') },
+      { id: 'geo2', lhs: v => '1 + 2 + 4 + … + 2^{' + v + ' − 1}', tK1: '2^{k}', tK: '2^{k − 1}', rhs: v => '2^{' + v + '} − 1', rk: '2^{k} − 1', rk1: '2^{k + 1} − 1', S: n => 2 ** n - 1, t: k => 2 ** (k - 1), base: '1 = 2^{1} − 1', ch: ['(2^{k} − 1) + 2^{k}', '2 · 2^{k} − 1 = 2^{k + 1} − 1'], cw: '' },
+      { id: 'tele', lhs: v => '\\fr{1}{1 · 2} + \\fr{1}{2 · 3} + … + \\fr{1}{' + v + '(' + v + ' + 1)}', tK1: '\\fr{1}{(k + 1)(k + 2)}', tK: '\\fr{1}{k(k + 1)}', rhs: v => '\\fr{' + v + '}{' + v + ' + 1}', rk: '\\fr{k}{k + 1}', rk1: '\\fr{k + 1}{k + 2}', S: n => n / (n + 1), Sq: n => [n, n + 1], t: k => 1 / (k * (k + 1)), base: '\\fr{1}{2} = \\fr{1}{1 + 1}', ch: ['\\fr{k}{k + 1} + \\fr{1}{(k + 1)(k + 2)}', '\\fr{k(k + 2) + 1}{(k + 1)(k + 2)}', '\\fr{(k + 1)^{2}}{(k + 1)(k + 2)} = \\fr{k + 1}{k + 2}'], cw: L('k² + 2k + 1 = (k + 1)²', 'k² + 2k + 1 = (k + 1)²') },
+      { id: 'fact', lhs: v => '1 · 1! + 2 · 2! + … + ' + v + ' · ' + v + '!', tK1: '(k + 1) · (k + 1)!', tK: 'k · k!', rhs: v => '(' + v + ' + 1)! − 1', rk: '(k + 1)! − 1', rk1: '(k + 2)! − 1', S: n => { let f = 1; for (let i = 2; i <= n + 1; i++) f *= i; return f - 1; }, t: k => { let f = 1; for (let i = 2; i <= k; i++) f *= i; return k * f; }, base: '1 · 1! = 1 = 2! − 1', ch: ['(k + 1)! − 1 + (k + 1) · (k + 1)!', '(k + 1)! · (1 + k + 1) − 1', '(k + 2)! − 1'], cw: L('(k + 2) · (k + 1)! = (k + 2)!', '(k + 2) · (k + 1)! = (k + 2)!') },
+      { id: 'odd2', lhs: v => '1^{2} + 3^{2} + … + (2' + v + ' − 1)^{2}', tK1: '(2k + 1)^{2}', tK: '(2k − 1)^{2}', rhs: v => '\\fr{' + v + '(' + m2(v) + ' − 1)(' + m2(v) + ' + 1)}{3}', rk: '\\fr{k(2k − 1)(2k + 1)}{3}', rk1: '\\fr{(k + 1)(2k + 1)(2k + 3)}{3}', S: n => n * (2 * n - 1) * (2 * n + 1) / 3, t: k => (2 * k - 1) ** 2, base: '1 = \\fr{1 · 1 · 3}{3}', ch: ['\\fr{k(2k − 1)(2k + 1)}{3} + (2k + 1)^{2}', '\\fr{(2k + 1)[k(2k − 1) + 3(2k + 1)]}{3}', '\\fr{(2k + 1)(2k^{2} + 5k + 3)}{3}', '\\fr{(k + 1)(2k + 1)(2k + 3)}{3}'], cw: L('2k² + 5k + 3 = (k + 1)(2k + 3)', '2k² + 5k + 3 = (k + 1)(2k + 3)') }
+    ];
+    /* aritmètica Σ (ak + b) = n(an + c)/2 amb c = a + 2b */
+    const a = ri(1, 5), b = ri(-3, 4), c = a + 2 * b;
+    const rv = v => '\\fr{' + v + '(' + polyTx([a, c], v) + ')}{2}';
+    const arith = { id: 'arith', lhs: v => (a + b) + ' + ' + (2 * a + b) + ' + … + (' + polyTx([a, b], v) + ')', tK1: '(' + polyTx([a, a + b], 'k') + ')', tK: '(' + polyTx([a, b], 'k') + ')', rhs: v => v === 'n' ? rv('n') : rv('(' + v + ')'), rk: rv('k'), rk1: '\\fr{(k + 1)(' + polyTx([a, a + c], 'k') + ')}{2}', S: n => n * (a * n + c) / 2, t: k => a * k + b, base: (a + b) + ' = \\fr{1 · ' + (a + c) + '}{2}', ch: [rv('k') + ' + (' + polyTx([a, a + b], 'k') + ')', '\\fr{' + polyTx([a, c + 2 * a, 2 * a + 2 * b], 'k') + '}{2}', '\\fr{(k + 1)(' + polyTx([a, a + c], 'k') + ')}{2}'], cw: L('desenvolupa els dos costats i compara', 'desarrolla los dos lados y compara') };
+    /* geomètrica de raó r */
+    const r = ri(3, 6);
+    const geo = { id: 'geo', lhs: v => '1 + ' + r + ' + ' + r + '^{2} + … + ' + r + '^{' + v + ' − 1}', tK1: r + '^{k}', tK: r + '^{k − 1}', rhs: v => '\\fr{' + r + '^{' + v + '} − 1}{' + (r - 1) + '}', rk: '\\fr{' + r + '^{k} − 1}{' + (r - 1) + '}', rk1: '\\fr{' + r + '^{k + 1} − 1}{' + (r - 1) + '}', S: n => (r ** n - 1) / (r - 1), t: k => r ** (k - 1), base: '1 = \\fr{' + r + ' − 1}{' + (r - 1) + '}', ch: ['\\fr{' + r + '^{k} − 1}{' + (r - 1) + '} + ' + r + '^{k}', '\\fr{' + r + '^{k} − 1 + ' + (r - 1) + ' · ' + r + '^{k}}{' + (r - 1) + '}', '\\fr{' + r + ' · ' + r + '^{k} − 1}{' + (r - 1) + '} = \\fr{' + r + '^{k + 1} − 1}{' + (r - 1) + '}'], cw: L('posem denominador comú', 'ponemos denominador común') };
+    return fixed.concat([arith, geo]);
+  }
+  function indProof(F) {
+    return [
+      kS(L('Cas base (n = 1)', 'Caso base (n = 1)'), F.base, L('Es compleix.', 'Se cumple.')),
+      kS(L('Hipòtesi d\'inducció: P(k)', 'Hipótesis de inducción: P(k)'), F.lhs('k') + ' = ' + F.rk, L('la suposem certa per a un k ≥ 1', 'la suponemos cierta para un k ≥ 1')),
+      { h: L('Objectiu: P(k + 1)', 'Objetivo: P(k + 1)'), m: F.lhs('k') + ' + ' + F.tK1 + ' = ' + F.rk1, c: 'goal' },
+      { h: L('Fem servir la hipòtesi', 'Usamos la hipótesis'), m: F.lhs('k') + ' + ' + F.tK1 + ' = ' + F.ch[0], w: L('substituïm la suma fins a k per ' , 'sustituimos la suma hasta k por ') + F.rk, c: 'hi' },
+    ].concat(F.ch.slice(1).map((m_, j) => kS('', '= ' + m_, j === F.ch.length - 2 ? F.cw : ''))).concat([kT(L('Conclusió', 'Conclusión'), md(L('P(1) és certa i P(k) ⟹ P(k + 1): pel principi d\'inducció, la fórmula és certa per a tot $n ∈ ℕ$.', 'P(1) es cierta y P(k) ⟹ P(k + 1): por el principio de inducción, la fórmula es cierta para todo $n ∈ ℕ$.')), 'done')]);
+  }
+  function bkIndEvalGen() {
+    const F = Z.pick(bkSumF().filter(f => f.id !== 'fact' || true)), n = F.id === 'fact' || F.id === 'geo' ? ri(3, 4) : ri(3, 6);
+    const terms = Z.range(1, n).map(F.t), sum = F.S(n), isFr = F.id === 'tele';
+    const tTx = F.id === 'tele' ? Z.range(1, n).map(k => '\\fr{1}{' + k * (k + 1) + '}') : terms.map(String);
+    const sTxx = isFr ? Z.fracTx(n, n + 1) : String(sum);
+    return { q: () => md(L(`Calcula $${F.lhs('n')}$ per a $n = ${n}$ i comprova que coincideix amb $${F.rhs('n')}$.`, `Calcula $${F.lhs('n')}$ para $n = ${n}$ y comprueba que coincide con $${F.rhs('n')}$.`)),
+      hint: () => P(L('Escriu els ' + n + ' termes (substitueix k = 1, 2, …) i suma\'ls. Després substitueix n = ' + n + ' a la fórmula.', 'Escribe los ' + n + ' términos (sustituye k = 1, 2, …) y súmalos. Después sustituye n = ' + n + ' en la fórmula.')),
+      sol: () => [kS(L('Termes', 'Términos'), tTx.join(' + ') + ' = ' + sTxx), kS(L('Fórmula', 'Fórmula'), F.rhs(String(n)) + ' = ' + sTxx), kDone(sTxx, L('Comprovar casos no demostra la fórmula: per això es fa per inducció.', 'Comprobar casos no demuestra la fórmula: por eso se hace por inducción.'))],
+      a: { k: 'num', v: sum, show: () => M(sTxx) } };
+  }
+  function bkIndPk1Gen() {
+    const F = Z.pick(bkSumF());
+    const cor = F.lhs('k') + ' + ' + F.tK1 + ' = ' + F.rk1, w1 = F.lhs('k') + ' + ' + F.tK1 + ' = ' + F.rk + ' + 1', w2 = F.lhs('k') + ' = ' + F.rk1, w3 = F.lhs('k') + ' + ' + F.tK1 + ' = ' + F.rk;
+    return { q: () => md(L(`Volem demostrar per inducció $P(n): ${F.lhs('n')} = ${F.rhs('n')}$. Quina és la igualtat $P(k + 1)$ que cal demostrar?`, `Queremos demostrar por inducción $P(n): ${F.lhs('n')} = ${F.rhs('n')}$. ¿Cuál es la igualdad $P(k + 1)$ que hay que demostrar?`)),
+      hint: () => P(L('Substitueix n per k + 1 a <b>tota</b> la igualtat: la suma té un terme més i el costat dret canvia.', 'Sustituye n por k + 1 en <b>toda</b> la igualdad: la suma tiene un término más y el lado derecho cambia.')),
+      sol: () => [kS(L('Últim terme nou', 'Último término nuevo'), F.tK1), kDone(cor)],
+      a: { k: 'mc', o: [cor, w1, w2, w3].map(t => () => M(t)), c: 0 } };
+  }
+  function bkIndTermGen() {
+    const F = Z.pick(bkSumF());
+    const opts = [F.tK1, F.tK, F.rk1].filter((x, i, arr) => arr.indexOf(x) === i);
+    return { q: () => md(L(`A la suma $${F.lhs('n')}$, quin terme s'afegeix en passar de $n = k$ a $n = k + 1$?`, `En la suma $${F.lhs('n')}$, ¿qué término se añade al pasar de $n = k$ a $n = k + 1$?`)),
+      hint: () => P(L('Escriu el terme general (el que hi ha al final de la suma amb n) i substitueix n per k + 1.', 'Escribe el término general (el que hay al final de la suma con n) y sustituye n por k + 1.')),
+      sol: () => [kS(L('Terme general amb n = k', 'Término general con n = k'), F.tK), kDone(F.tK1, L('És el que s\'afegeix: la suma fins a k + 1 és la suma fins a k més aquest terme.', 'Es lo que se añade: la suma hasta k + 1 es la suma hasta k más este término.'))],
+      a: { k: 'mc', o: opts.map(t => () => M(t)), c: 0 } };
+  }
+  function bkIndProofGen() {
+    const F = Z.pick(bkSumF());
+    return { q: () => md(L(`Demostra per inducció que, per a tot $n ∈ ℕ$: $${F.lhs('n')} = ${F.rhs('n')}$.`, `Demuestra por inducción que, para todo $n ∈ ℕ$: $${F.lhs('n')} = ${F.rhs('n')}$.`)),
+      hint: () => P(L('Escriu P(k + 1), separa l\'últim terme de la suma i fes servir la hipòtesi per a la resta. Després només és àlgebra fins arribar al costat dret de P(k + 1).', 'Escribe P(k + 1), separa el último término de la suma y usa la hipótesis para el resto. Después solo es álgebra hasta llegar al lado derecho de P(k + 1).')),
+      sol: () => indProof(F), a: { k: 'self' } };
+  }
+  function bkIndDivGen() {
+    const a = ri(3, 9), d = a - 1;
+    return { q: () => md(L(`Demostra per inducció que $${a}^{n} − 1$ és divisible per ${d} per a tot $n ∈ ℕ$.`, `Demuestra por inducción que $${a}^{n} − 1$ es divisible por ${d} para todo $n ∈ ℕ$.`)),
+      hint: () => P(L(`Escriu $${a}^{k + 1} − 1 = ${a} · ${a}^{k} − 1$ i fes aparèixer $${a}^{k} − 1$ sumant i restant ${a}.`, `Escribe $${a}^{k + 1} − 1 = ${a} · ${a}^{k} − 1$ y haz aparecer $${a}^{k} − 1$ sumando y restando ${a}.`)),
+      sol: () => [kS(L('Cas base', 'Caso base'), a + '^{1} − 1 = ' + d, L('divisible per ', 'divisible por ') + d), kS(L('Hipòtesi', 'Hipótesis'), a + '^{k} − 1 = ' + d + 'm,   m ∈ ℤ'), { h: L('Objectiu', 'Objetivo'), m: a + '^{k + 1} − 1 = ' + d + ' · (\\it{enter})', c: 'goal' },
+        { h: L('Pas', 'Paso'), m: a + '^{k + 1} − 1 = ' + a + ' · ' + a + '^{k} − ' + a + ' + ' + a + ' − 1 = ' + a + '(' + a + '^{k} − 1) + ' + d, c: 'hi' }, kS('', '= ' + a + ' · ' + d + 'm + ' + d + ' = ' + d + '(' + a + 'm + 1)', L('hipòtesi d\'inducció', 'hipótesis de inducción')), kT(L('Conclusió', 'Conclusión'), md(L(`$${a}m + 1 ∈ ℤ$: és divisible per ${d}. Per inducció, per a tot $n$.`, `$${a}m + 1 ∈ ℤ$: es divisible por ${d}. Por inducción, para todo $n$.`)), 'done')], a: { k: 'self' } };
+  }
+  function bkIndHiGen() {
+    const key = Z.pick(IND_ORDER), D = IND[key], st_ = D.steps(), goal = st_.find(x => x.c === 'goal'), hi = st_.find(x => x.c === 'hi'), ask = Z.pick(['goal', 'hi']);
+    const opts = ask === 'goal' ? [goal.m, st_[1].m, st_[0].m] : [hi.m, goal.m, st_[0].m];
+    return { q: () => D.q() + P('<b>' + (ask === 'goal' ? L('Quina línia és l\'objectiu del pas inductiu, P(k + 1)?', '¿Qué línea es el objetivo del paso inductivo, P(k + 1)?') : L('En quina línia s\'aplica la hipòtesi d\'inducció?', '¿En qué línea se aplica la hipótesis de inducción?')) + '</b>'),
+      hint: () => P(L('L\'objectiu és P(k + 1) escrit sencer. La hipòtesi s\'aplica on la suma (o l\'expressió) fins a k es substitueix pel seu valor.', 'El objetivo es P(k + 1) escrito entero. La hipótesis se aplica donde la suma (o la expresión) hasta k se sustituye por su valor.')),
+      sol: () => st_, a: { k: 'mc', o: opts.map(t => () => M(t)), c: 0 } };
+  }
+  /* ---------- extrem ---------- */
+  const BKDIV = [
+    { s: '6 | n^{3} − n', ch: () => [['1^{3} − 1 = 0', L('0 és divisible per 6', '0 es divisible por 6')], ['k^{3} − k = 6m', L('hipòtesi', 'hipótesis')], ['(k + 1)^{3} − (k + 1) = k^{3} + 3k^{2} + 3k + 1 − k − 1', ''], ['= (k^{3} − k) + 3k(k + 1)', ''], ['= 6m + 3k(k + 1)', L('k(k + 1) és parell (producte de consecutius), per tant 3k(k + 1) és múltiple de 6', 'k(k + 1) es par (producto de consecutivos), por tanto 3k(k + 1) es múltiplo de 6')]] },
+    { s: '3 | n^{3} + 2n', ch: () => [['1 + 2 = 3', ''], ['k^{3} + 2k = 3m', L('hipòtesi', 'hipótesis')], ['(k + 1)^{3} + 2(k + 1) = k^{3} + 3k^{2} + 3k + 1 + 2k + 2', ''], ['= (k^{3} + 2k) + 3(k^{2} + k + 1) = 3(m + k^{2} + k + 1)', '']] },
+    { s: '9 | 4^{n} + 15n − 1', ch: () => [['4 + 15 − 1 = 18 = 9 · 2', ''], ['4^{k} + 15k − 1 = 9m', L('hipòtesi', 'hipótesis')], ['4^{k + 1} + 15(k + 1) − 1 = 4 · 4^{k} + 15k + 14', ''], ['= 4(4^{k} + 15k − 1) − 45k + 18', L('fem aparèixer la hipòtesi: 4 · (15k − 1) = 60k − 4', 'hacemos aparecer la hipótesis: 4 · (15k − 1) = 60k − 4')], ['= 36m − 9(5k − 2) = 9(4m − 5k + 2)', '']] },
+    { s: '5 | 2^{2n + 1} + 3^{2n + 1}', ch: () => [['2^{3} + 3^{3} = 35 = 5 · 7', ''], ['2^{2k + 1} + 3^{2k + 1} = 5m', L('hipòtesi', 'hipótesis')], ['2^{2k + 3} + 3^{2k + 3} = 4 · 2^{2k + 1} + 9 · 3^{2k + 1}', ''], ['= 4(2^{2k + 1} + 3^{2k + 1}) + 5 · 3^{2k + 1}', ''], ['= 5(4m + 3^{2k + 1})', '']] },
+    { s: '7 | 3^{2n} − 2^{n}', ch: () => [['9 − 2 = 7', ''], ['3^{2k} − 2^{k} = 7m', L('hipòtesi', 'hipótesis')], ['3^{2k + 2} − 2^{k + 1} = 9 · 3^{2k} − 2 · 2^{k}', ''], ['= 9(3^{2k} − 2^{k}) + 7 · 2^{k} = 7(9m + 2^{k})', L('9 · 2^k − 2 · 2^k = 7 · 2^k', '9 · 2^k − 2 · 2^k = 7 · 2^k')]] },
+    { s: '8 | 3^{2n} − 1', ch: () => [['9 − 1 = 8', ''], ['3^{2k} − 1 = 8m', L('hipòtesi', 'hipótesis')], ['3^{2k + 2} − 1 = 9 · 3^{2k} − 1 = 9(3^{2k} − 1) + 8', ''], ['= 8(9m + 1)', '']] },
+    { s: '11 | 10^{n} − (−1)^{n}', ch: () => [['10 + 1 = 11', ''], ['10^{k} − (−1)^{k} = 11m', L('hipòtesi', 'hipótesis')], ['10^{k + 1} − (−1)^{k + 1} = 10 · 10^{k} + (−1)^{k}', ''], ['= 10(10^{k} − (−1)^{k}) + 11 · (−1)^{k} = 11(10m + (−1)^{k})', '']] }
+  ];
+  function bkIndDivHardGen() {
+    const it = Z.pick(BKDIV);
+    return { it, q: () => md(L(`Demostra per inducció que, per a tot $n ∈ ℕ$, $${it.s}$.`, `Demuestra por inducción que, para todo $n ∈ ℕ$, $${it.s}$.`)),
+      hint: () => P(L('Al pas inductiu, escriu l\'expressió per a k + 1 i fes-hi aparèixer la de k (multiplicant-la per alguna cosa) més un tros que sigui clarament múltiple.', 'En el paso inductivo, escribe la expresión para k + 1 y haz aparecer la de k (multiplicándola por algo) más un trozo que sea claramente múltiplo.')),
+      sol: () => it.ch().map(([m_, w], j) => ({ h: j === 0 ? L('Cas base', 'Caso base') : j === 1 ? L('Hipòtesi', 'Hipótesis') : j === 2 ? L('Pas inductiu', 'Paso inductivo') : '', m: m_, w, c: j === 3 ? 'hi' : '' })).concat([kT(L('Conclusió', 'Conclusión'), md(L('Pel principi d\'inducció, és cert per a tot $n ∈ ℕ$.', 'Por el principio de inducción, es cierto para todo $n ∈ ℕ$.')), 'done')]), a: { k: 'self' } };
+  }
+  const BKINEQ = [
+    { s: '2^{n} > n^{2}   (n ≥ 5)', ch: () => [['2^{5} = 32 > 25 = 5^{2}', L('cas base n = 5', 'caso base n = 5')], ['2^{k} > k^{2}   (k ≥ 5)', L('hipòtesi', 'hipótesis')], ['2^{k + 1} = 2 · 2^{k} > 2k^{2}', ''], ['2k^{2} − (k + 1)^{2} = k^{2} − 2k − 1 = (k − 1)^{2} − 2 > 0', L('cert per a k ≥ 3', 'cierto para k ≥ 3')], ['2^{k + 1} > 2k^{2} > (k + 1)^{2}', '']] },
+    { s: 'n! > 2^{n}   (n ≥ 4)', ch: () => [['4! = 24 > 16 = 2^{4}', L('cas base n = 4', 'caso base n = 4')], ['k! > 2^{k}', L('hipòtesi', 'hipótesis')], ['(k + 1)! = (k + 1) · k! > (k + 1) · 2^{k}', ''], ['≥ 2 · 2^{k} = 2^{k + 1}', L('perquè k + 1 ≥ 2', 'porque k + 1 ≥ 2')]] },
+    { s: L => L('(1 + x)^{n} ≥ 1 + nx   (x ≥ −1, n ≥ 1)', '(1 + x)^{n} ≥ 1 + nx   (x ≥ −1, n ≥ 1)'), ch: () => [['(1 + x)^{1} = 1 + x', L('cas base: igualtat', 'caso base: igualdad')], ['(1 + x)^{k} ≥ 1 + kx', L('hipòtesi', 'hipótesis')], ['(1 + x)^{k + 1} = (1 + x)^{k}(1 + x) ≥ (1 + kx)(1 + x)', L('multipliquem per 1 + x ≥ 0: el sentit es manté', 'multiplicamos por 1 + x ≥ 0: el sentido se mantiene')], ['= 1 + (k + 1)x + kx^{2} ≥ 1 + (k + 1)x', 'kx^{2} ≥ 0']] },
+    { s: '3^{n} > n^{3}   (n ≥ 4)', ch: () => [['3^{4} = 81 > 64 = 4^{3}', L('cas base n = 4', 'caso base n = 4')], ['3^{k} > k^{3}', L('hipòtesi', 'hipótesis')], ['3^{k + 1} = 3 · 3^{k} > 3k^{3}', ''], ['(k + 1)^{3} = k^{3}(1 + \\fr{1}{k})^{3} ≤ k^{3} · (\\fr{5}{4})^{3} < 2k^{3} < 3k^{3}', L('per a k ≥ 4, 1 + 1/k ≤ 5/4 i (5/4)³ ≈ 1,95', 'para k ≥ 4, 1 + 1/k ≤ 5/4 y (5/4)³ ≈ 1,95')], ['3^{k + 1} > 3k^{3} > (k + 1)^{3}', '']] },
+    { s: '1 + \\fr{1}{4} + \\fr{1}{9} + … + \\fr{1}{n^{2}} ≤ 2 − \\fr{1}{n}', ch: () => [['1 ≤ 2 − 1 = 1', L('cas base n = 1', 'caso base n = 1')], ['\\fr{1}{1^{2}} + … + \\fr{1}{k^{2}} ≤ 2 − \\fr{1}{k}', L('hipòtesi', 'hipótesis')], ['\\fr{1}{1^{2}} + … + \\fr{1}{(k + 1)^{2}} ≤ 2 − \\fr{1}{k} + \\fr{1}{(k + 1)^{2}}', ''], [L('n\'hi ha prou amb \\fr{1}{(k + 1)^{2}} ≤ \\fr{1}{k} − \\fr{1}{k + 1} = \\fr{1}{k(k + 1)}', 'basta con \\fr{1}{(k + 1)^{2}} ≤ \\fr{1}{k} − \\fr{1}{k + 1} = \\fr{1}{k(k + 1)}'), L('cert perquè k(k + 1) < (k + 1)²', 'cierto porque k(k + 1) < (k + 1)²')], ['⟹ … ≤ 2 − \\fr{1}{k + 1}', L('és el truc: demostrar una cota més forta que «≤ 2»', 'es el truco: demostrar una cota más fuerte que «≤ 2»')]] },
+    { s: '2^{n} ≥ 2n   (n ≥ 1)', ch: () => [['2^{1} = 2 ≥ 2', ''], ['2^{k} ≥ 2k', L('hipòtesi', 'hipótesis')], ['2^{k + 1} = 2 · 2^{k} ≥ 4k', ''], ['4k ≥ 2k + 2 ⟺ k ≥ 1', L('per tant 2^{k + 1} ≥ 2(k + 1)', 'por tanto 2^{k + 1} ≥ 2(k + 1)')]] }
+  ];
+  function bkIndIneqGen() {
+    const it = Z.pick(BKINEQ), s = () => typeof it.s === 'function' ? it.s(L) : it.s;
+    return { it, q: () => md(L(`Demostra per inducció: $${s()}$.`, `Demuestra por inducción: $${s()}$.`)),
+      hint: () => P(L('Comença al primer n on és certa. Al pas, usa la hipòtesi per acotar i després comprova una desigualtat auxiliar (sovint de segon grau).', 'Empieza en el primer n donde es cierta. En el paso, usa la hipótesis para acotar y después comprueba una desigualdad auxiliar (a menudo de segundo grado).')),
+      sol: () => it.ch().map(([m_, w], j) => ({ h: j === 0 ? L('Cas base', 'Caso base') : j === 1 ? L('Hipòtesi', 'Hipótesis') : j === 2 ? L('Pas inductiu', 'Paso inductivo') : '', m: m_, w, c: j === 2 ? 'hi' : '' })).concat([kT(L('Conclusió', 'Conclusión'), md(L('Pel principi d\'inducció (començant al cas base indicat), és cert per a tots els n.', 'Por el principio de inducción (empezando en el caso base indicado), es cierto para todos los n.')), 'done')]), a: { k: 'self' } };
+  }
+  const BKREC = [
+    { a1: 1, rec: 'a_{n + 1} = 2a_{n} + 1', f: n => 2 ** n - 1, ftx: '2^{n} − 1', step: ['a_{k + 1} = 2a_{k} + 1 = 2(2^{k} − 1) + 1', '= 2^{k + 1} − 1'] },
+    { a1: 2, rec: 'a_{n + 1} = 3a_{n} − 2', f: n => 3 ** (n - 1) + 1, ftx: '3^{n − 1} + 1', step: ['a_{k + 1} = 3a_{k} − 2 = 3(3^{k − 1} + 1) − 2', '= 3^{k} + 1'] },
+    { a1: 1, rec: 'a_{n + 1} = a_{n} + 2n + 1', f: n => n * n, ftx: 'n^{2}', step: ['a_{k + 1} = a_{k} + 2k + 1 = k^{2} + 2k + 1', '= (k + 1)^{2}'] },
+    { a1: 3, rec: 'a_{n + 1} = 2a_{n} − 1', f: n => 2 ** n + 1, ftx: '2^{n} + 1', step: ['a_{k + 1} = 2a_{k} − 1 = 2(2^{k} + 1) − 1', '= 2^{k + 1} + 1'] },
+    { a1: 1, rec: 'a_{n + 1} = a_{n} + 3', f: n => 3 * n - 2, ftx: '3n − 2', step: ['a_{k + 1} = a_{k} + 3 = 3k − 2 + 3', '= 3(k + 1) − 2'] },
+    { a1: 2, rec: 'a_{n + 1} = a_{n} + 2^{n}', f: n => 2 ** n, ftx: '2^{n}', step: ['a_{k + 1} = a_{k} + 2^{k} = 2^{k} + 2^{k}', '= 2^{k + 1}'] }
+  ];
+  const subN = (f, x) => f.replace(/(\d)n/g, '$1 · n').replace(/n/g, String(x));
+  function bkIndRecGen() {
+    const it = Z.pick(BKREC), n = ri(6, 10), v = it.f(n);
+    return { q: () => md(L(`Sigui $a_{1} = ${it.a1}$ i $${it.rec}$. Demostra per inducció que $a_{n} = ${it.ftx}$ i calcula $a_{${n}}$.`, `Sea $a_{1} = ${it.a1}$ y $${it.rec}$. Demuestra por inducción que $a_{n} = ${it.ftx}$ y calcula $a_{${n}}$.`)),
+      hint: () => P(L('Calcula a₂ i a₃ amb la recurrència i comprova que encaixen amb la fórmula. Al pas, substitueix a_k per la fórmula (hipòtesi).', 'Calcula a₂ y a₃ con la recurrencia y comprueba que encajan con la fórmula. En el paso, sustituye a_k por la fórmula (hipótesis).')),
+      sol: () => [kS(L('Cas base', 'Caso base'), 'a_{1} = ' + it.a1 + ',  ' + subN(it.ftx, 1) + ' = ' + it.f(1)), kS(L('Hipòtesi', 'Hipótesis'), 'a_{k} = ' + it.ftx.replace(/n/g, 'k')), { h: L('Pas', 'Paso'), m: it.step[0], c: 'hi' }, kS('', it.step[1], L('és la fórmula per a k + 1', 'es la fórmula para k + 1')), kDone('a_{' + n + '} = ' + subN(it.ftx, n) + ' = ' + v)],
+      a: { k: 'num', v, show: () => M('a_{' + n + '} = ' + v) } };
+  }
+  const BKERR = [
+    { q: () => L('«Teorema»: tots els cavalls són del mateix color. Base: un sol cavall té un sol color. Pas: en un grup de k + 1 cavalls, els k primers són del mateix color (hipòtesi) i els k últims també; com que els dos grups comparteixen cavalls, tots k + 1 són del mateix color.', '«Teorema»: todos los caballos son del mismo color. Base: un solo caballo tiene un solo color. Paso: en un grupo de k + 1 caballos, los k primeros son del mismo color (hipótesis) y los k últimos también; como los dos grupos comparten caballos, los k + 1 son del mismo color.'), c: 1, w: () => L('El pas falla de k = 1 a k + 1 = 2: el primer cavall i el segon formen grups d\'un sol cavall que <b>no</b> comparteixen cap cavall. La cadena es trenca al primer esglaó.', 'El paso falla de k = 1 a k + 1 = 2: el primer caballo y el segundo forman grupos de un solo caballo que <b>no</b> comparten ningún caballo. La cadena se rompe en el primer escalón.') },
+    { q: () => L('«Teorema»: $n^{2} + n$ és senar per a tot n. Pas: si $k^{2} + k$ és senar, $(k + 1)^{2} + (k + 1) = (k^{2} + k) + 2(k + 1)$ és senar + parell = senar.', '«Teorema»: $n^{2} + n$ es impar para todo n. Paso: si $k^{2} + k$ es impar, $(k + 1)^{2} + (k + 1) = (k^{2} + k) + 2(k + 1)$ es impar + par = impar.'), c: 0, w: () => L('El pas és correcte, però <b>no hi ha cas base</b>: $1^{2} + 1 = 2$ és parell. De fet $n^{2} + n = n(n + 1)$ sempre és parell.', 'El paso es correcto, pero <b>no hay caso base</b>: $1^{2} + 1 = 2$ es par. De hecho $n^{2} + n = n(n + 1)$ siempre es par.') },
+    { q: () => L('«Teorema»: $1 + 2 + … + n = \\fr{n^{2} + n + 2}{2}$. Pas: $\\fr{k^{2} + k + 2}{2} + (k + 1) = \\fr{(k + 1)^{2} + (k + 1) + 2}{2}$, que és correcte.', '«Teorema»: $1 + 2 + … + n = \\fr{n^{2} + n + 2}{2}$. Paso: $\\fr{k^{2} + k + 2}{2} + (k + 1) = \\fr{(k + 1)^{2} + (k + 1) + 2}{2}$, que es correcto.'), c: 0, w: () => L('L\'àlgebra del pas és bona, però per a n = 1 la fórmula dona 2 i la suma val 1: <b>el cas base falla</b>. Un pas inductiu correcte no serveix de res sense base.', 'El álgebra del paso es buena, pero para n = 1 la fórmula da 2 y la suma vale 1: <b>el caso base falla</b>. Un paso inductivo correcto no sirve de nada sin base.') },
+    { q: () => L('«Teorema»: $2^{n} > n^{2}$ per a tot $n ≥ 1$. Base: $2 > 1$. Pas: $2^{k + 1} = 2 · 2^{k} > 2k^{2} ≥ (k + 1)^{2}$.', '«Teorema»: $2^{n} > n^{2}$ para todo $n ≥ 1$. Base: $2 > 1$. Paso: $2^{k + 1} = 2 · 2^{k} > 2k^{2} ≥ (k + 1)^{2}$.'), c: 1, w: () => L('$2k^{2} ≥ (k + 1)^{2}$ només és cert per a $k ≥ 3$. Per a k = 1 i k = 2 el pas falla, i de fet per a n = 2 tenim $2^{2} = 4$, que no és més gran que $2^{2} = 4$, i per a n = 3, $2^{3} = 8 < 9$. La desigualtat només és certa a partir de n = 5.', '$2k^{2} ≥ (k + 1)^{2}$ solo es cierto para $k ≥ 3$. Para k = 1 y k = 2 el paso falla, y de hecho para n = 2 tenemos $2^{2} = 4$, que no es mayor que $2^{2} = 4$, y para n = 3, $2^{3} = 8 < 9$. La desigualdad solo es cierta a partir de n = 5.') }
+  ];
+  function bkIndErrGen() {
+    const it = Z.pick(BKERR);
+    return { q: () => md(it.q()) + P('<b>' + L('On és l\'error?', '¿Dónde está el error?') + '</b>'),
+      hint: () => P(L('Comprova el cas base amb números i, al pas, mira per a quins k és vàlid cada argument.', 'Comprueba el caso base con números y, en el paso, mira para qué k es válido cada argumento.')),
+      sol: () => [kT(L('Explicació', 'Explicación'), md(it.w()), 'neg')],
+      a: { k: 'mc', o: [() => L('El cas base és fals', 'El caso base es falso'), () => L('El pas inductiu no val per a tots els k', 'El paso inductivo no vale para todos los k'), () => L('No hi ha cap error', 'No hay ningún error')], c: it.c } };
+  }
+  BKT.ind = { n: () => L('Inducció', 'Inducción'), lv: {
+    1: [{ n: () => L('Calcular un cas', 'Calcular un caso'), g: bkIndEvalGen }, { n: () => L('Escriure P(k + 1)', 'Escribir P(k + 1)'), g: bkIndPk1Gen }, { n: () => L('El terme nou', 'El término nuevo'), g: bkIndTermGen }],
+    2: [{ n: () => L('Demostrar una suma', 'Demostrar una suma'), g: bkIndProofGen }, { n: () => L('Divisibilitat aⁿ − 1', 'Divisibilidad aⁿ − 1'), g: bkIndDivGen }, { n: () => L('On s\'aplica la hipòtesi', 'Dónde se aplica la hipótesis'), g: bkIndHiGen }],
+    3: [{ n: () => L('Divisibilitat difícil', 'Divisibilidad difícil'), g: bkIndDivHardGen }, { n: () => L('Desigualtats', 'Desigualdades'), g: bkIndIneqGen }, { n: () => L('Successió recurrent', 'Sucesión recurrente'), g: bkIndRecGen }, { n: () => L('Troba l\'error', 'Encuentra el error'), g: bkIndErrGen }]
+  } };
+
+  /* ---------- només amb el formulari: guies d'inducció ---------- */
+  const indTag = st => st.map(s => {
+    const h = String(s.h || '');
+    if (/^(Cas base|Caso base)/.test(h)) return kF(Object.assign({}, s), ['IND1']);
+    if (/^(Hipòtesi|Hipótesis)/.test(h)) return kF(Object.assign({}, s), ['IND2']);
+    if (/^(Conclusió|Conclusión)/.test(h)) return kF(Object.assign({}, s), ['IND']);
+    return s;
+  });
+  const FXI = {
+    plan: () => L('§4 és l\'esquema de la demostració: posa $S = \\{n ∈ ℕ | P(n) \\it{és certa}\\}$ i comprova les dues condicions. (1) $1 ∈ S$ és el cas base. (2) $k ∈ S ⇒ k + 1 ∈ S$ és el pas: suposes $P(k)$ (hipòtesi) i demostres $P(k + 1)$. Llavors $S = ℕ$.', '§4 es el esquema de la demostración: pon $S = \\{n ∈ ℕ | P(n) \\it{es cierta}\\}$ y comprueba las dos condiciones. (1) $1 ∈ S$ es el caso base. (2) $k ∈ S ⇒ k + 1 ∈ S$ es el paso: supones $P(k)$ (hipótesis) y demuestras $P(k + 1)$. Entonces $S = ℕ$.'),
+    alg: () => L('L\'àlgebra del pas (treure factor comú, desenvolupar $(k + 1)^{2}$ o $(k + 1)^{3}$) no és al formulari i no cal: és càlcul. Escriu-la pas a pas.', 'El álgebra del paso (sacar factor común, desarrollar $(k + 1)^{2}$ o $(k + 1)^{3}$) no está en el formulario y no hace falta: es cálculo. Escríbela paso a paso.'),
+    n0: n0 => L(`El principi de §4 comença a $n = 1$, i aquí comences a $n = ${n0}$. No és al formulari: aplica §4 a $S = \\{m ∈ ℕ | P(m + ${n0 - 1})\\}$ (el $m = 1$ és el teu cas base $n = ${n0}$), o enuncia el principi d'inducció a partir de $n_{0}$.`, `El principio de §4 empieza en $n = 1$, y aquí empiezas en $n = ${n0}$. No está en el formulario: aplica §4 a $S = \\{m ∈ ℕ | P(m + ${n0 - 1})\\}$ (el $m = 1$ es tu caso base $n = ${n0}$), o enuncia el principio de inducción a partir de $n_{0}$.`),
+    div: () => L('Divisibilitat: $d | a$ vol dir $a = d · m$ amb $m ∈ ℤ$ (definició). Que una suma de múltiples de $d$ és múltiple de $d$ es veu traient factor comú.', 'Divisibilidad: $d | a$ quiere decir $a = d · m$ con $m ∈ ℤ$ (definición). Que una suma de múltiplos de $d$ es múltiplo de $d$ se ve sacando factor común.')
+  };
+  const fxInd = (extra) => Object.assign({ on: ['IND1', 'IND2', 'IND'], plan: FXI.plan(), compte: [], fora: [FXI.alg()] }, extra || {});
+  const INDFX = {
+    1: [() => ({ on: ['IND'], plan: L('Aquí només cal substituir: el formulari no hi intervé. Però recorda per què existeix §4: comprovar uns quants casos no demostra la fórmula per a tot $n$.', 'Aquí solo hay que sustituir: el formulario no interviene. Pero recuerda por qué existe §4: comprobar unos cuantos casos no demuestra la fórmula para todo $n$.'), compte: [], fora: [] }),
+      () => ({ on: ['IND2'], plan: L('La condició (2) de §4 és «$k ∈ S ⇒ k + 1 ∈ S$». $P(k + 1)$ és la fórmula sencera amb $n$ canviat per $k + 1$: la suma té un terme més i el costat dret també canvia.', 'La condición (2) de §4 es «$k ∈ S ⇒ k + 1 ∈ S$». $P(k + 1)$ es la fórmula entera con $n$ cambiado por $k + 1$: la suma tiene un término más y el lado derecho también cambia.'), compte: [], fora: [] }),
+      () => ({ on: ['IND2'], plan: L('Per passar de $k ∈ S$ a $k + 1 ∈ S$ (condició (2) de §4), la suma fins a $k + 1$ és la suma fins a $k$ més un terme: el terme general amb $n = k + 1$.', 'Para pasar de $k ∈ S$ a $k + 1 ∈ S$ (condición (2) de §4), la suma hasta $k + 1$ es la suma hasta $k$ más un término: el término general con $n = k + 1$.'), compte: [], fora: [] })],
+    2: [() => fxInd(), () => fxInd({ fora: [FXI.div(), FXI.alg()] }),
+      () => ({ on: ['IND1', 'IND2', 'IND'], plan: L('A §4, la hipòtesi és «$k ∈ S$» de la condició (2): s\'aplica a la línia on la part fins a $k$ es substitueix pel seu valor. L\'objectiu és «$k + 1 ∈ S$», és a dir, $P(k + 1)$ escrit sencer.', 'En §4, la hipótesis es «$k ∈ S$» de la condición (2): se aplica en la línea donde la parte hasta $k$ se sustituye por su valor. El objetivo es «$k + 1 ∈ S$», es decir, $P(k + 1)$ escrito entero.'), compte: [], fora: [] })],
+    3: [j => fxInd({ fora: [FXI.div(), FXI.alg()].concat(j === 0 ? [L('Que $k(k + 1)$ és parell no hi és: de dos enters consecutius, un és parell. Enuncia-ho i justifica-ho.', 'Que $k(k + 1)$ es par no está: de dos enteros consecutivos, uno es par. Enúncialo y justifícalo.')] : []) }),
+      j => fxInd({ compte: [FXN.ord()], fora: ([0, 1, 3].includes(j) ? [FXI.n0([5, 4, 1, 4][j])] : []).concat([L('Les desigualtats auxiliars del pas (per exemple, $2k^{2} ≥ (k + 1)^{2}$ per a $k ≥ 3$) no són al formulari: demostra-les a part.', 'Las desigualdades auxiliares del paso (por ejemplo, $2k^{2} ≥ (k + 1)^{2}$ para $k ≥ 3$) no están en el formulario: demuéstralas aparte.')]) }),
+      () => fxInd({ plan: FXI.plan() + ' ' + L('Aquí $P(n)$ és «$a_{n} =$ la fórmula», i al pas fas servir la recurrència per passar de $a_{k}$ a $a_{k + 1}$.', 'Aquí $P(n)$ es «$a_{n} =$ la fórmula», y en el paso usas la recurrencia para pasar de $a_{k}$ a $a_{k + 1}$.') }),
+      () => ({ on: ['IND1', 'IND2', 'IND'], plan: L('Comprova les dues condicions de §4 per separat: (1) $1 ∈ S$ amb números; (2) $k ∈ S ⇒ k + 1 ∈ S$ per a <b>tot</b> $k ≥ 1$. Si en falla una, la «demostració» no val, encara que l\'altra sigui correcta.', 'Comprueba las dos condiciones de §4 por separado: (1) $1 ∈ S$ con números; (2) $k ∈ S ⇒ k + 1 ∈ S$ para <b>todo</b> $k ≥ 1$. Si falla una, la «demostración» no vale, aunque la otra sea correcta.'), compte: [], fora: [] })]
+  };
+  [1, 2, 3].forEach(l => BKT.ind.lv[l].forEach((tp, i) => {
+    const g0 = tp.g;
+    tp.g = () => {
+      const I = g0(); if (!I) return I;
+      const s0 = I.sol; I.sol = () => { const r = s0(); return Array.isArray(r) ? indTag(r) : r; };
+      const pool = l === 3 && i === 0 ? BKDIV : l === 3 && i === 1 ? BKINEQ : null, j = pool && I.it ? pool.indexOf(I.it) : -1;
+      I.fx = () => INDFX[l][i](j);
+      return I;
+    };
+  }));
+  return { polyTx, m2, bkSumF, indProof, bkIndEvalGen, bkIndPk1Gen, bkIndTermGen, bkIndProofGen, bkIndDivGen, bkIndHiGen, BKDIV, bkIndDivHardGen, BKINEQ, bkIndIneqGen, BKREC, subN, bkIndRecGen, BKERR, bkIndErrGen, indTag, FXI, fxInd, INDFX };
+}
