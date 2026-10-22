@@ -32,7 +32,7 @@ export default function Navbar({ active }) {
       if (e.key !== 'Escape') return;
       const wasUser = menu === 'user';
       setMenu(null);
-      (wasUser ? ubtn : mbtn).current?.focus();
+      (wasUser ? ubtn : mbtn).current?.focus({ preventScroll: true });
     };
     document.addEventListener('click', onDoc);
     document.addEventListener('keydown', onKey);
@@ -43,7 +43,7 @@ export default function Navbar({ active }) {
   useEffect(() => {
     if (menu !== 'user') return;
     const first = umenu.current?.querySelector(panel === 'main' ? '#m-up-main a, #m-up-main button' : '#m-up-lang button');
-    first?.focus();
+    first?.focus({ preventScroll: true });
   }, [menu, panel]);
 
   const links = PRIMARY.map(([v, to, key]) => (
@@ -56,7 +56,7 @@ export default function Navbar({ active }) {
     setMenu((m) => (m === which ? null : which));
     setPanel('main');
   };
-  const choose = (l) => { setMenu(null); setLang(l); ubtn.current?.focus(); };
+  const choose = (l) => { setMenu(null); setLang(l); ubtn.current?.focus({ preventScroll: true }); };
   const course = slots?.course || undefined;
 
   return (
