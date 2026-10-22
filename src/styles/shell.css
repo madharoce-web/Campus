@@ -64,8 +64,8 @@
 /* capçalera del curs */
 .m-hd{font-family:var(--m-sans); color:var(--m-ink); display:flex; flex-direction:column; gap:6px; margin-bottom:14px}
 .m-crumbs{font-size:.8203rem; display:flex; flex-wrap:wrap; gap:4px; align-items:center; line-height:1.4}
-.m-crumbs a{color:var(--m-ink); text-decoration:none}
-.m-crumbs a:hover{text-decoration:underline; color:var(--m-olive-dark)}
+.m-hd .m-crumbs a{color:var(--m-ink); text-decoration:none}
+.m-hd .m-crumbs a:hover{text-decoration:underline; color:var(--m-olive-dark)}
 .m-crumbs .m-sep{color:var(--m-ink-3); padding:0 4px}
 .m-ph{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:6px}
 .m-ph h1{font-family:var(--m-sans); font-size:1.875rem; font-weight:700; line-height:1.2; margin:0; color:var(--m-ink); letter-spacing:0; text-wrap:balance}
@@ -77,10 +77,10 @@
 
 /* navegació secundària del curs */
 .m-snav{display:flex; gap:2px; border-bottom:1px solid var(--m-line); margin:0 0 20px; overflow-x:auto; overflow-y:hidden; scrollbar-width:thin; font-family:var(--m-sans)}
-.m-snav button,.m-snav a{flex:0 0 auto; border:0; border-radius:0; background:transparent; padding:.55rem .8rem; border-bottom:3px solid transparent; cursor:pointer; color:var(--m-ink); white-space:nowrap; font:inherit; font-size:.9375rem; line-height:1.5; text-decoration:none; box-shadow:none}
-.m-snav button:hover,.m-snav a:hover{background:#f5f5f5; text-decoration:none}
-.m-snav button[aria-selected="true"],.m-snav button[aria-current="true"],.m-snav a[aria-current="page"]{border-bottom-color:var(--m-olive); background:transparent; color:var(--m-ink)}
-.m-snav button:focus-visible,.m-snav a:focus-visible{outline:none; box-shadow:inset 0 0 0 .2rem rgba(105,110,46,.4)}
+.m-snav button,.m-snav a[href]{flex:0 0 auto; border:0; border-radius:0; background:transparent; padding:.55rem .8rem; border-bottom:3px solid transparent; cursor:pointer; color:var(--m-ink); white-space:nowrap; font:inherit; font-size:.9375rem; line-height:1.5; text-decoration:none; box-shadow:none}
+.m-snav button:hover,.m-snav a[href]:hover{background:#f5f5f5; text-decoration:none; color:var(--m-ink)}
+.m-snav button[aria-selected="true"],.m-snav button[aria-current="true"],.m-snav a[href][aria-current="page"]{border-bottom-color:var(--m-olive); background:transparent; color:var(--m-ink)}
+.m-snav button:focus-visible,.m-snav a[href]:focus-visible{outline:none; box-shadow:inset 0 0 0 .2rem rgba(105,110,46,.4)}
 
 @media (max-width:767px){
   .m-pnav{display:none}
