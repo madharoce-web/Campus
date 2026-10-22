@@ -1,0 +1,182 @@
+/* ==========================================================================
+   Pell Moodle per a les webs de la família «document» (Lògica i grafs, Economia).
+   Calaix esquerre = índex del curs; el selector de tema passa a la navegació secundària.
+   ========================================================================== */
+:root{
+  color-scheme:light;
+  --paper:#ffffff; --card:#ffffff; --sunk:#f8f9fa; --ink:#1d2125; --ink-2:#495057; --ink-3:#6a737b;
+  --rule:#dee2e6; --rule-2:#e9ecef;
+  --accent:#0f6cbf; --accent-soft:#e7f1fa; --accent-line:#9ec5e8;
+  --info:#00434e; --info-bg:#e7f3f5;
+  --tip:#1c411a; --tip-bg:#e2f0e1;
+  --warn:#7d5a29; --warn-bg:#fcefdc;
+  --danger:#6a1a11; --danger-bg:#f4d6d2;
+  --quiz:#001a1e; --quiz-bg:#e7f3f5;
+  --sel:#cfe2f2;
+  --bar-h:60px;
+  --shadow:none;
+  --ok:#357a32; --ok-bg:#d7e4d6;
+  --code-pink:#c7254e;
+}
+html{scroll-behavior:auto}
+body{background:#fff; color:var(--ink); font-family:var(--m-sans); font-size:.9375rem; line-height:1.55}
+body::before{z-index:61; background:#fff}
+::selection{background:var(--sel)}
+:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(15,108,191,.5); border-radius:.25rem}
+.prog{background:var(--accent); height:3px; bottom:-1px}
+
+/* ---------- calaix esquerre: índex del curs ---------- */
+.shell{max-width:none}
+@media (min-width:1081px){ .shell{grid-template-columns:285px minmax(0,1fr)} }
+.side{background:var(--m-drawer); border-right:1px solid var(--rule); padding:18px 12px 60px; padding-left:max(12px, env(safe-area-inset-left, 0px))}
+.toclab{font-size:.9375rem; letter-spacing:0; text-transform:none; color:var(--ink); font-weight:700; margin:0 0 10px 8px}
+.toc{gap:1px}
+.toc a{color:var(--ink); font-size:.875rem; padding:.32rem .6rem; border-radius:.5rem; border-left:0; line-height:1.35}
+.toc a:hover{background:#e9ecef; color:var(--ink); text-decoration:none}
+.toc .l3 a{padding-left:1.6rem; font-size:.82rem; color:var(--ink-2)}
+.toc a.on{background:var(--m-olive); color:#fff; font-weight:400}
+.toc .part{color:var(--ink-3); letter-spacing:.06em; font-size:.68rem}
+
+/* ---------- columna principal ---------- */
+.main{padding:28px 32px 120px}
+.m-hd,.m-pick,.doc,.foot{max-width:860px; margin-left:auto; margin-right:auto}
+.m-hd .m-ph{flex-wrap:nowrap}
+.m-hd .m-ph h1{flex:1 1 auto; min-width:0}
+#burger{width:36px; height:36px; border-radius:50%; border:0; background:#e9ecef; flex:0 0 auto}
+#burger:hover{background:#dee2e6}
+#burger svg{stroke:var(--ink)}
+.searchwrap{width:260px; flex:0 1 260px; justify-self:auto}
+#q{height:36px; border:1px solid #8f959e; border-radius:.5rem; background:#fff; font-size:.875rem; padding:0 12px 0 32px}
+#q:focus{outline:none; border-color:#87b6df; box-shadow:0 0 0 .2rem rgba(15,108,191,.25)}
+.searchwrap .ic{top:10.5px; stroke:var(--ink-2)}
+.kbd{display:none}
+.res{top:42px; left:auto; right:0; width:min(460px, calc(100vw - 32px)); border:1px solid rgba(0,0,0,.15); border-radius:.5rem; box-shadow:0 .5rem 1rem rgba(0,0,0,.15)}
+.res a:hover,.res a.k{background:#e9ecef}
+.res .tag{border-radius:.25rem}
+.res mark{background:#fff3cd}
+
+/* selector de tema com a navegació secundària */
+.m-pick{flex-wrap:wrap; overflow:visible}
+.m-pick .pk{display:inline-flex; align-items:center; gap:7px; border:0; border-bottom:3px solid transparent; border-radius:0; background:transparent; box-shadow:none; padding:.55rem .8rem; text-align:left}
+.m-pick .pk:hover{background:#f5f5f5}
+.m-pick .pk[aria-current="true"]{border-bottom-color:var(--m-olive); background:transparent; box-shadow:none}
+.m-pick .pk .dot{width:8px; height:8px}
+.m-pick .pk .nm{font-family:var(--m-sans); font-size:.9375rem; font-weight:400}
+.m-pick .pk .ct{font-size:.8rem; color:var(--ink-3)}
+
+/* ---------- document ---------- */
+.doc .head{margin-bottom:22px; gap:22px}
+.eyebrow{font-size:.75rem; letter-spacing:.04em; color:var(--ink-3)}
+.doc h1{font-family:var(--m-sans); font-size:1.65rem; font-weight:700; letter-spacing:0; line-height:1.2}
+.doc h2{font-family:var(--m-sans); font-size:1.4rem; font-weight:700; border-top-color:var(--rule); scroll-margin-top:76px}
+.doc h3{font-family:var(--m-sans); font-size:1.12rem; font-weight:700; color:var(--ink); scroll-margin-top:76px}
+.doc h4{font-family:var(--m-sans); scroll-margin-top:76px}
+.doc h5{letter-spacing:.06em; scroll-margin-top:76px}
+.doc a{color:var(--accent); text-decoration:none}
+.doc a:hover{text-decoration:underline; color:#0c589c}
+.doc blockquote{border-left:3px solid var(--rule); color:var(--ink-2)}
+.doc code{font-family:var(--m-mono); background:transparent; color:var(--code-pink); padding:0; font-size:87.5%}
+.doc pre{background:#f8f9fa; border:1px solid var(--rule); border-left:1px solid var(--rule); border-radius:.5rem}
+.doc pre code{color:var(--ink)}
+.formula{font-family:var(--m-mono); color:var(--ink-2); border-left-color:var(--rule)}
+.kb .e{stroke:var(--accent)} .kb .n{fill:var(--accent)}
+.tw{border-color:var(--rule); border-radius:.5rem}
+.doc th{font-size:.875rem; letter-spacing:0; text-transform:none; color:var(--ink); font-weight:700; background:#fff; border-bottom:2px solid var(--rule); white-space:normal}
+.doc .tw tbody tr:nth-child(odd) td{background:rgba(0,0,0,.025)}
+.doc td{border-bottom-color:var(--rule-2)}
+.doc math{font-family:"Cambria Math","STIX Two Math","Latin Modern Math",math,serif}
+
+/* avisos com els de Moodle */
+.co{border:1px solid color-mix(in srgb, var(--c) 22%, transparent); border-radius:.5rem; padding:13px 16px}
+.co-t{text-transform:none; letter-spacing:0; font-size:.9375rem; font-weight:700}
+.co-i{display:none}
+.co-note{--c:#495057; --b:#f8f9fa}
+.co-info{--c:#00434e; --b:#e7f3f5}
+.co-abstract,.co-important{--c:#08385e; --b:#e7f1fa}
+.co-tip{--c:#1c411a; --b:#e2f0e1}
+.co-warning{--c:#7d5a29; --b:#fcefdc}
+.co-danger{--c:#6a1a11; --b:#f4d6d2}
+.co-example{--c:#00434e; --b:#f1f8f9}
+.co-quote{--c:#6a737b; --b:#f8f9fa}
+.co-question{--c:#001a1e; --b:#e7f3f5; border-color:#b8dce2}
+details.co-question > .co-t{font-weight:700}
+details.co-question .co-i{display:inline-block}
+details.co > summary.co-t{cursor:pointer}
+.co pre{background:#fff}
+
+/* ---------- peu ---------- */
+.foot{color:var(--ink-3); border-top-color:var(--rule)}
+.foot .top{border:1px solid #ced4da; background:#ced4da; color:var(--ink); border-radius:.5rem; padding:.25rem .6rem; font-size:.82rem}
+.foot .top:hover{background:#b8c1ca; border-color:#b8c1ca}
+
+/* ---------- figures ---------- */
+.vz-scroll{border-color:var(--rule); border-radius:.5rem}
+.vz-t,.vz-sm,.vz-lab,.vz-cap,.g-t,.g-s{font-family:var(--m-sans)}
+.vz-dl{font-family:Georgia,"Times New Roman",serif}
+
+/* ---------- laboratoris ---------- */
+.doc .lab{border:1px solid var(--rule); border-radius:.5rem; box-shadow:none; padding:16px}
+.doc .lb-title,.doc .lab-t{font-family:var(--m-sans); font-weight:700; font-size:1.02rem}
+.lab-k{color:#c4307b; letter-spacing:.06em}
+.lb-tg,.lab-f input,.lab-sel,.lab-tbl input{border-color:#8f959e; border-radius:.5rem; background:#fff}
+.lb-tg.on{background:#d7e4d6; border-color:var(--ok); color:#1c411a}
+.lb-seg,.seg{border-radius:.5rem; border-color:#8f959e; background:#fff}
+.lb-seg button{color:var(--ink); border-right-color:#8f959e}
+.lb-seg button[aria-pressed="true"]{background:var(--accent); color:#fff}
+.lb-f{border-radius:.5rem; background:#fff; border-color:var(--rule)}
+.lb-f.sel{background:var(--accent-soft); border-color:var(--accent-line)}
+.lab-kv{border-radius:.5rem; background:#f8f9fa; border-color:var(--rule)}
+.lab-msg{border-radius:.5rem; background:#f8f9fa}
+.lab-msg.warn{background:#fcefdc; color:#7d5a29}
+.lab-steps li{border-radius:.5rem; background:#fff; border-color:var(--rule)}
+.btn{border-radius:.5rem; padding:.375rem .75rem; font-size:.875rem; background:#ced4da; border:1px solid #ced4da; color:var(--ink)}
+.btn:hover{background:#b8c1ca; border-color:#b8c1ca; color:var(--ink)}
+.btn.pri{background:var(--accent); border-color:var(--accent); color:#fff; font-weight:400}
+.btn.pri:hover{background:#0c589c; border-color:#0c589c; color:#fff; filter:none}
+
+/* ---------- pràctica (aspecte de pregunta de qüestionari) ---------- */
+.px-bar{border-radius:.5rem; border-color:var(--rule); background:#fff; box-shadow:0 2px 4px rgba(0,0,0,.06); backdrop-filter:none}
+.px-lbl{letter-spacing:.06em}
+.chip{border-radius:.5rem; border-color:#8f959e; background:#fff; color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+.px-meter{background:#e9ecef}
+.px-meter i{background:var(--accent)}
+.px-reset{color:var(--accent)}
+.ex{border:1px solid #b8dce2; border-radius:.5rem; background:#e7f3f5; color:#001a1e}
+.ex.done{border-color:#a9c8a7}
+.doc .ex-h h4{font-family:var(--m-sans); font-weight:700; font-size:1rem}
+.ex-id{font-family:var(--m-sans)}
+.ex-num input{border:1px solid #8f959e; border-radius:.5rem; background:#fff}
+.opt{border-radius:.5rem; background:#fff; border-color:var(--rule)}
+.it{border-radius:.5rem; background:#fff; border-color:var(--rule)}
+.it-o button{border-radius:.5rem; border-color:#8f959e; background:#fff; color:var(--ink)}
+.it-o button[aria-pressed="true"]{background:var(--accent-soft); border-color:var(--accent)}
+.lvl{border-radius:.4rem; letter-spacing:.04em}
+.lvl.facil{color:#1c411a; background:#e2f0e1; border-color:#c3d7c2}
+.lvl.mitja{color:#7d5a29; background:#fdf3e1; border-color:#f8d9a8}
+.lvl.dificil{color:#6a1a11; background:#f4d6d2; border-color:#efc1bb}
+.ex-fb{border-radius:.5rem}
+.ex-fb.y{background:#d7e4d6; color:#1c411a} .ex-fb.n{background:#f4d6d2; color:#6a1a11} .ex-fb.p{background:#fcefdc; color:#7d5a29}
+.ex details{border-top-color:#b8dce2}
+.ex summary{color:var(--accent); font-weight:700}
+.ex details > div{background:#fcefdc; border:1px solid #fbe8cd; border-radius:.5rem; padding:10px 12px}
+.pi{border-radius:.5rem; border-color:var(--rule)}
+.pi b{font-family:var(--m-sans)}
+
+@media (max-width:1080px){
+  .side{top:var(--bar-h); background:var(--m-drawer); width:300px}
+  .main{padding:22px max(16px, env(safe-area-inset-right, 0px)) 110px max(16px, env(safe-area-inset-left, 0px))}
+}
+@media (max-width:760px){
+  .m-hd .m-ph{flex-wrap:wrap}
+  .searchwrap{flex:1 1 100%; width:100%; order:3}
+  .res{left:0; right:0; width:auto}
+}
+@media (max-width:680px){
+  .main{padding:18px max(16px, env(safe-area-inset-right, 0px)) 90px max(16px, env(safe-area-inset-left, 0px))}
+}
+
+/* ---------- port ---------- */
+/* base.css ja reserva 76 px a dalt (scroll-padding-top): els títols no hi han de sumar el seu marge */
+.doc h2,.doc h3,.doc h4,.doc h5{scroll-margin-top:0}
+.doc .ex-h h4{scroll-margin-top:calc(var(--bar-h) + 44px)}
