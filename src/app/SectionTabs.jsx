@@ -7,7 +7,7 @@ import { T } from './strings.js';
  * items: [{ k, label, to }]; current: k de la secció activa.
  */
 export default function SectionTabs({ items, current, className = '', id = 'rail', ...rest }) {
-  const { lang } = useLang();
+  const { ui: lang } = useLang();
   return (
     <nav className={'m-snav ' + className} id={id} aria-label={T[lang].secs} {...rest}>
       {items.map((it) => (

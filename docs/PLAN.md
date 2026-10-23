@@ -80,13 +80,15 @@ principal), añadir el dominio de Supabase a `connect-src` de la CSP en `public/
 | `/precios` | Preparada, oculta mientras `PRO_ENABLED=false` | pública |
 | `/entrar`, `/registro`, `/auth/callback` | Login email (magic link/contraseña) y Google | pública |
 | `/campus` (+ `/campus/tablero`) | La portada actual "Mis cursos" / tablero, ahora con progreso de la cuenta | usuario |
-| `/:grado/:asignatura/*` (ej. `/informatica/mates/exam`) | Cursos | gratis/pro según metadatos |
+| `/mates/…`, `/logica/…` (rutas actuales) | Cursos | gratis/pro según metadatos |
 | `/cuenta` | Perfil, grado, idioma, exportar/borrar datos | usuario |
 | `/admin` | Panel admin | rol admin |
 | `/legal/*` | Privacidad, aviso legal, términos | pública |
 
-Las rutas antiguas (`/mates/...`, `mates.html#...`) se redirigen ampliando `LegacyRedirect.jsx` y
-`LEGACY_PAGES`. Decisión de producto: el contenido gratis puede seguir abierto sin cuenta (mejor
+**Hecho (fase 2):** los cursos conservan sus rutas cortas (`/mates/...`): hay más de 200 enlaces
+internos escritos a mano en los cursos y en sus datos, y cambiarlos rompería marcadores sin aportar
+nada. Las asignaturas nuevas usarán un *slug* único (p. ej. `/ade-comptabilitat`) y el grado se lee
+del catálogo. Las rutas públicas son `/graus` y `/graus/:grau`; `/grados/…` y `/degrees/…` redirigen. Decisión de producto: el contenido gratis puede seguir abierto sin cuenta (mejor
 SEO y conversión) y la cuenta sirve para guardar progreso — recomendado; se puede cerrar luego con un flag.
 
 **Catálogo**: nuevo `src/catalog/` (sustituye y envuelve `registry.js`):

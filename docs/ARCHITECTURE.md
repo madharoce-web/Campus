@@ -1,19 +1,22 @@
 # Arquitectura
 
-Campus és una aplicació de pàgina única (SPA) feta amb **React 19**, **React Router 7** i **Vite**.
-Reuneix els cursos del primer semestre amb l'aspecte de l'aula virtual.
+Aula Mada és una aplicació de pàgina única (SPA) feta amb **React 19**, **React Router 7** i **Vite**.
+Té una part pública (portada i catàleg de graus) i el campus, amb els cursos i l'aspecte de l'aula virtual.
 
 ```
 src/
   main.jsx               punt d'entrada: router, idioma i forats de la barra
-  app/                   closca: barra superior, capçalera de curs, pestanyes, rutes, 404
-  pages/home/            portada (Inici, Tauler, Els meus cursos)
+  app/                   closca: barra superior, peu, capçalera de curs, pestanyes, rutes, 404
+  catalog/degrees.js     graus i semestres: què està disponible i què arribarà aviat
+  pages/landing/         portada pública
+  pages/graus/           catàleg de graus i pàgina de cada grau
+  pages/home/            campus: Tauler i Els meus cursos
   courses/
     registry.js          metadades dels cursos, targetes de la portada i activitats
     <curs>/index.jsx     cada curs, carregat sota demanda (un fragment de codi per curs)
   shared/cpp/            motor de C++ compartit (Clang a WebAssembly + intèrpret de reserva)
   lib/                   utilitats: idioma, localStorage, contingut ric, enllaços interns
-  styles/                estils base i de la closca
+  styles/                fitxes de disseny (tokens.css), estils base, de la closca i de les pàgines públiques
 public/
   clang/                 binaris del compilador (≈29 MB, només es baixen si s'executa C++)
   compiler/              workers del compilador, de l'executor i de l'intèrpret
@@ -25,8 +28,10 @@ tests/e2e/               proves de Playwright
 
 | Ruta | Pàgina |
 |---|---|
-| `/`, `/cursos` | Els meus cursos |
-| `/inici`, `/tauler` | Inici del lloc i tauler |
+| `/` | Portada pública |
+| `/graus`, `/graus/:grau` | Catàleg de graus (`/grados/…` i `/degrees/…` hi redirigeixen) |
+| `/cursos`, `/tauler` | Els meus cursos i tauler |
+| `/inici` | Redirigeix a `/graus/informatica` |
 | `/mates/:secció` | Teoria Mates CP1 |
 | `/logica/:secció` | Lògica i grafs |
 | `/economia/:secció` | Principis d'economia |
@@ -40,10 +45,18 @@ la ruta nova (`/mates/exam`).
 
 ## Convencions
 
-- **Idioma**: `const { lang, L, li } = useLang()`. `L('text en català', 'texto en castellano')`.
-  Tot es torna a pintar en canviar l'idioma, sense perdre l'estat.
+- **Idioma**: la interfície té tres idiomes (`ui`: `ca`, `es`, `en`) i el contingut dels cursos, dos
+  (`lang`: `ca`, `es`; en anglès els cursos es mostren en castellà, amb un avís).
+  Als cursos: `const { lang, L, li } = useLang()` i `L('text en català', 'texto en castellano')`.
+  A les pàgines noves i a la closca: `const { ui, t } = useLang()` i `t(['ca', 'es', 'en'])` o
+  `t({ ca, es, en })` (si falta l'anglès, es mostra el castellà).
+  Tot es torna a pintar en canviar l'idioma, sense perdre l'estat. El primer cop es tria l'idioma del navegador.
 - **Estat desat**: `lib/storage.js` i `lib/useStoredState.js` (sempre amb `try/catch`:
   en mode privat `localStorage` pot fallar).
+- **Catàleg**: una assignatura nova s'afegeix a `src/courses/registry.js` (`COURSES` i `CARDS`, amb
+  `degree` i `term`) i a la llista `subjects` del seu semestre a `src/catalog/degrees.js`.
+- **Disseny**: les pàgines públiques fan servir les fitxes `--am-*` de `src/styles/tokens.css` i les
+  peces comunes `am-*` de `src/styles/site.css` (botons, insígnies, peu).
 - **Estils**: cada curs importa el seu CSS des de `src/courses/<curs>/`. El connector
   `tools/postcss-scope-courses.js` prefixa tots els selectors amb `[data-course="<curs>"]`,
   l'atribut de l'element arrel del curs (`<CourseScope>`), de manera que els estils d'un curs

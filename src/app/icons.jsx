@@ -12,6 +12,7 @@ export function CourseIcon({ name }) {
   return <svg viewBox="0 0 24 24" aria-hidden="true">{COURSE_ICONS[name] || COURSE_ICONS.home}</svg>;
 }
 
+export const UserIcon = () => <svg className="m-uico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8" /><path d="M4.5 20c1.2-3.7 4-5.6 7.5-5.6s6.3 1.9 7.5 5.6" /></svg>;
 export const MenuIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>;
 export const Chevron = ({ className = 'm-chev' }) => <svg className={className} viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" /></svg>;
 export const ChevronRight = () => <svg className="m-chev m-unext" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5" /></svg>;

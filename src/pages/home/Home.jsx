@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
 import { useStoredState } from '../../lib/useStoredState.js';
 import { lsGet, lsSet } from '../../lib/storage.js';
-import { visitOf } from '../../lib/visits.js';
+import { agoText, cardVisitOf } from '../../lib/visits.js';
 import { fold } from '../../lib/html.js';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import { ACTIVITIES, CARDS, CARD_BY_KEY } from '../../courses/registry.js';
@@ -23,25 +23,13 @@ const AICO = {
   page: ['#0d8ba1', <><path d="M7 3.5h10v17H7z" /><path d="M10 8h4M10 11.5h4M10 15h4" /></>],
 };
 
-/** Darrer accés d'una targeta (el curs i les pàgines que agrupa). */
-function visit(k) {
-  const c = CARD_BY_KEY[k];
-  return Math.max(visitOf(k), ...((c && c.also) || []).map(visitOf));
-}
-function ago(t, Lx) {
-  if (!t) return null;
-  const s = (Date.now() - t) / 1000, m = Math.floor(s / 60), h = Math.floor(m / 60), d = Math.floor(h / 24);
-  if (m < 1) return Lx.now;
-  if (m < 60) return Lx.min.replace('%d', m);
-  if (h < 24) return Lx.h.replace('%d', h);
-  if (d === 1) return Lx.d1;
-  return Lx.d.replace('%d', d);
-}
+const visit = (k) => cardVisitOf(CARD_BY_KEY[k]);
+const ago = agoText;
 const oneOf = (list) => (v, d) => (list.includes(v) ? v : d);
 
 export default function Home({ view }) {
-  const { lang, li } = useLang();
-  const Lx = S[lang];
+  const { ui, t } = useLang();
+  const Lx = S[ui];
   const [q, setQ] = useState('');
   const [filter, setFilter] = useStoredState('sem1-filter-v', () => oneOf(['all', 'star', 'hid'])(lsGet('sem1-filter'), 'all'), oneOf(['all', 'star', 'hid']));
   const [sort, setSort] = useStoredState('sem1-sort-v', () => (lsGet('sem1-sort') === 'last' ? 'last' : 'name'), oneOf(['name', 'last']));
@@ -53,9 +41,9 @@ export default function Home({ view }) {
     return v ? v === 'open' : window.innerWidth >= 1000;
   });
   const setDrawer = (open) => { setDrawerState(open); lsSet('sem1-drawer', open ? 'open' : 'closed'); };
-  useDocumentTitle(view === 'tauler' ? Lx.dash : view === 'inici' ? null : Lx.mycourses);
+  useDocumentTitle(view === 'tauler' ? Lx.dash : Lx.mycourses);
 
-  const cname = (c) => c.name[li];
+  const cname = (c) => t(c.name);
   const NameLink = ({ c }) => (
     <>
       {stars.includes(c.k) && <span className="m-starw" title={Lx.starred}>{STAR}<span className="m-sr">{Lx.starred}</span></span>}
@@ -83,13 +71,13 @@ export default function Home({ view }) {
       if (filter === 'all' && h) return false;
       if (filter === 'hid' && !h) return false;
       if (filter === 'star' && !stars.includes(c.k)) return false;
-      if (qq && !fold(c.name[li] + ' ' + c.cat[li]).includes(qq)) return false;
+      if (qq && !fold(t(c.name) + ' ' + t(c.cat)).includes(qq)) return false;
       return true;
     });
-    if (sort === 'last') out.sort((a, b) => visit(b.k) - visit(a.k) || a.name[li].localeCompare(b.name[li]));
-    else out.sort((a, b) => a.name[li].localeCompare(b.name[li]));
+    if (sort === 'last') out.sort((a, b) => visit(b.k) - visit(a.k) || t(a.name).localeCompare(t(b.name)));
+    else out.sort((a, b) => t(a.name).localeCompare(t(b.name)));
     return out;
-  }, [q, filter, sort, stars, hid, li]);
+  }, [q, filter, sort, stars, hid, t]);
 
   const grid = () => {
     if (!list.length) return (
@@ -103,7 +91,7 @@ export default function Home({ view }) {
         {list.map((c) => (
           <article key={c.k} className={'m-card' + (hid.includes(c.k) ? ' m-isHidden' : '')}>
             <Link className="m-cimgw" to={c.to} tabIndex={-1} aria-hidden="true"><Pattern card={c} /></Link>
-            <div className="m-cbody"><div className="m-cnm"><NameLink c={c} /></div><div className="m-ccat">{c.cat[li]}</div></div>
+            <div className="m-cbody"><div className="m-cnm"><NameLink c={c} /></div><div className="m-ccat">{t(c.cat)}</div></div>
             <div className="m-cfoot"><Actions c={c} /></div>
           </article>
         ))}
@@ -117,9 +105,9 @@ export default function Home({ view }) {
             <li key={c.k} className="m-crow">
               <Link className="m-cthumb" to={c.to} tabIndex={-1} aria-hidden="true"><Pattern card={c} className="m-timg" /></Link>
               <div className="m-crowb">
-                <div className="m-ccat">{c.cat[li]}</div>
+                <div className="m-ccat">{t(c.cat)}</div>
                 <div className="m-cnm"><NameLink c={c} /></div>
-                {disp === 'sum' && <><p className="m-cdesc">{c.desc[li]}</p><p className="m-clast">{t ? Lx.last + ago(t, Lx) : Lx.never}</p></>}
+                {disp === 'sum' && <><p className="m-cdesc">{t(c.desc)}</p><p className="m-clast">{t ? Lx.last + ago(t, Lx) : Lx.never}</p></>}
               </div>
               <Actions c={c} />
             </li>
@@ -161,7 +149,7 @@ export default function Home({ view }) {
             {recent.map((c) => (
               <article key={c.k} className="m-card m-mini">
                 <Link className="m-cimgw" to={c.to} tabIndex={-1} aria-hidden="true"><Pattern card={c} /></Link>
-                <div className="m-cbody"><div className="m-ccat">{c.cat[li]}</div><div className="m-cnm"><NameLink c={c} /></div><div className="m-clast">{ago(visit(c.k), Lx)}</div></div>
+                <div className="m-cbody"><div className="m-ccat">{t(c.cat)}</div><div className="m-cnm"><NameLink c={c} /></div><div className="m-clast">{ago(visit(c.k), Lx)}</div></div>
               </article>
             ))}
           </div>
@@ -174,7 +162,7 @@ export default function Home({ view }) {
             <li key={c.k}>
               <div className="m-sech"><span className="m-sdot" style={{ background: c.color }} /><NameLink c={c} /></div>
               <div className="m-csecs">
-                {c.secs.map((s) => <Link key={s[0]} className="m-badge" to={c.to + '/' + s[0]}>{s[1 + li]}</Link>)}
+                {c.secs.map((s) => <Link key={s[0]} className="m-badge" to={c.to + '/' + s[0]}>{t(s.slice(1))}</Link>)}
               </div>
             </li>
           ))}
@@ -183,36 +171,10 @@ export default function Home({ view }) {
     </>
   );
 
-  const viewInici = (
-    <>
-      <h1 className="m-h1">{Lx.site}</h1>
-      <p className="m-intro">{Lx.intro}</p>
-      <section aria-labelledby="m-avh">
-        <h2 className="m-h5" id="m-avh">{Lx.avail}</h2><hr className="m-hr" />
-        <div className="m-cboxes">
-          {CARDS.map((c) => {
-            const t = visit(c.k);
-            return (
-              <article key={c.k} className="m-cbox">
-                <Link className="m-cthumb" to={c.to} tabIndex={-1} aria-hidden="true"><Pattern card={c} className="m-timg" /></Link>
-                <div className="m-crowb">
-                  <h3 className="m-cbh"><NameLink c={c} /></h3>
-                  <div className="m-ccat">{c.cat[li]}</div>
-                  <p className="m-cdesc">{c.desc[li]}</p>
-                  <div className="m-cboxf"><Link className="m-btn m-btn-primary" to={c.to}>{Lx.enter}</Link><span className="m-clast">{t ? Lx.last + ago(t, Lx) : Lx.never}</span></div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-    </>
-  );
-
   return (
     <div data-page="home">
     <div id="m-home" className={'m-layout' + (drawer ? ' m-dopen' : '')}>
-      <div className="m-main"><main className="m-main-in">{view === 'tauler' ? viewTauler : view === 'inici' ? viewInici : viewCursos}</main></div>
+      <div className="m-main"><main className="m-main-in">{view === 'tauler' ? viewTauler : viewCursos}</main></div>
       <aside className="m-drawer" id="m-drawer" aria-label={Lx.extra}>
         <div className="m-dhead">
           <button type="button" className="m-dclose" id="m-dclose" aria-label={Lx.close} title={Lx.close} onClick={() => setDrawer(false)}>{XICO}</button>
@@ -226,7 +188,7 @@ export default function Home({ view }) {
                 <li key={a[1]}>
                   <Link to={a[1]}>
                     <span className="m-aico" style={{ color: ic[0] }}><svg viewBox="0 0 24 24" aria-hidden="true">{ic[1]}</svg></span>
-                    <span className="m-atx"><span>{a[3 + li]}</span><small>{cname(c)}</small></span>
+                    <span className="m-atx"><span>{t(a.slice(3))}</span><small>{cname(c)}</small></span>
                   </Link>
                 </li>
               );

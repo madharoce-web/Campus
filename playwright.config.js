@@ -18,8 +18,9 @@ export default defineConfig({
     launchOptions: process.env.PW_CHROMIUM ? { executablePath: process.env.PW_CHROMIUM } : {},
   },
   projects: [
-    { name: 'escriptori', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } } },
-    { name: 'mobil', use: { ...devices['Pixel 7'] } },
+    // locale: el primer cop la web tria l'idioma del navegador; les proves comencen en català
+    { name: 'escriptori', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 }, locale: 'ca-ES' } },
+    { name: 'mobil', use: { ...devices['Pixel 7'], locale: 'ca-ES' } },
   ],
   webServer: external ? undefined : {
     command: 'npm run preview -- --port 4173 --strictPort',

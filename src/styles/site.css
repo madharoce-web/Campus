@@ -1,0 +1,41 @@
+/* ==========================================================================
+   AULA MADA · peces comunes de les pàgines públiques (botons, insígnies, peu).
+   Classes amb prefix am-; fan servir les fitxes de tokens.css.
+   ========================================================================== */
+.am-btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:40px; padding:0 18px; border-radius:var(--am-r2); border:1px solid transparent; font:600 var(--am-fs-sm)/1.2 var(--am-sans); text-decoration:none; cursor:pointer; white-space:nowrap; transition:background-color .15s, border-color .15s, color .15s, box-shadow .15s, transform .15s}
+.am-btn:hover{text-decoration:none}
+.am-btn:focus-visible{outline:none; box-shadow:var(--am-focus)}
+.am-btn:active{transform:translateY(1px)}
+.am-btn-lg{min-height:50px; padding:0 24px; font-size:var(--am-fs); border-radius:12px}
+.am-btn-block{display:flex; width:100%}
+.am-btn-primary{background:var(--am-brand); color:#fff; box-shadow:0 1px 0 rgba(255,255,255,.15) inset, var(--am-sh1)}
+.am-btn-primary:hover{background:var(--am-brand-dark); color:#fff}
+.am-btn-ghost{background:#fff; color:var(--am-ink); border-color:var(--am-line-2)}
+.am-btn-ghost:hover{background:var(--am-bg-2); color:var(--am-ink); border-color:var(--am-ink-3)}
+.am-btn-light{background:#fff; color:var(--am-brand-ink)}
+.am-btn-light:hover{background:var(--am-brand-soft); color:var(--am-brand-ink)}
+.am-btn:disabled,.am-btn[aria-disabled="true"]{opacity:.55; cursor:not-allowed; transform:none}
+.am-arrow{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform .15s}
+.am-btn:hover .am-arrow{transform:translateX(2px)}
+.am-check{width:18px; height:18px; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
+
+.am-badge{display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:999px; background:var(--am-bg-3); color:var(--am-ink-2); font:600 .75rem/1.4 var(--am-sans); letter-spacing:.02em; white-space:nowrap}
+.am-badge::before{content:""; width:6px; height:6px; border-radius:50%; background:currentColor; opacity:.7}
+.am-badge-live{background:var(--am-brand-soft); color:var(--am-brand-dark)}
+
+/* peu */
+.am-foot{background:var(--am-brand-ink); color:#cfe0d9; font-family:var(--am-sans); font-size:var(--am-fs-sm); line-height:1.6}
+.am-foot a{color:#e9f3ef; text-decoration:none}
+.am-foot a:hover{color:#fff; text-decoration:underline}
+.am-foot a:focus-visible{outline:none; box-shadow:0 0 0 3px rgba(255,255,255,.35); border-radius:4px}
+.am-foot-in{max-width:var(--am-wrap); margin:0 auto; padding:var(--am-s7) max(16px, env(safe-area-inset-right, 0px)) var(--am-s6) max(16px, env(safe-area-inset-left, 0px)); display:grid; grid-template-columns:minmax(0,2fr) repeat(3, minmax(0,1fr)); gap:var(--am-s6)}
+.am-foot-logo{display:inline-flex; align-items:center; gap:10px; font:600 1.125rem/1 var(--am-serif); color:#fff !important; text-decoration:none !important}
+.am-logo-mark{width:34px; height:34px; border-radius:8px; display:grid; place-items:center; background:#fff; color:var(--am-brand-ink); font:600 14px/1 var(--am-serif)}
+.am-foot-brand p{margin:12px 0 0; max-width:34ch}
+.am-foot-col h2{margin:0 0 10px; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:#9fbdb2; font-weight:700}
+.am-foot-col ul{list-style:none; margin:0; padding:0; display:grid; gap:6px}
+.am-foot-legal{max-width:var(--am-wrap); margin:0 auto; padding:var(--am-s4) max(16px, env(safe-area-inset-right, 0px)) calc(var(--am-s5) + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); border-top:1px solid rgba(255,255,255,.12); display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px; color:#9fbdb2; font-size:.8125rem}
+@media (max-width:767px){
+  .am-foot-in{grid-template-columns:repeat(2, minmax(0,1fr))}
+  .am-foot-brand{grid-column:1 / -1}
+}
