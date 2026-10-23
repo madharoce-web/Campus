@@ -3,8 +3,11 @@
  * Els totals són fixos per no carregar les dades dels cursos al tauler; la prova
  * tests/e2e/progress.spec.js comprova que coincideixen amb les dades.
  * Mates i Computadors no desen el progrés entre visites (null: «sense seguiment»).
+ * Les assignatures que ja fan servir la plantilla (src/courses/_kit) desen el progrés a kit-<k>-v1
+ * amb els totals (apartats + exercicis); fins a la primera visita es compta l'estat antic.
  */
 import { lsJSON } from '../lib/storage.js';
+import { kitProgress } from '../courses/_kit/state.js';
 
 export const TOTALS = { logica: 46, eco: 43, progPages: 10, cpp: 71, pseudo: 29 };
 
@@ -14,7 +17,7 @@ const count = (o) => Object.values(obj(o)).filter(Boolean).length;
 /** { done, total } de cada targeta del tauler; null si el curs no en desa. */
 export const PROGRESS = {
   logica: () => ({ done: count(lsJSON('lx-done', {})), total: TOTALS.logica }),
-  eco: () => ({ done: count(obj(lsJSON('eco-prac', {})).done), total: TOTALS.eco }),
+  eco: () => kitProgress('eco') || { done: count(obj(lsJSON('eco-prac', {})).done), total: TOTALS.eco },
   prog: () => {
     const pages = count(obj(lsJSON('ip-curs-v1', {})).done);
     const cpp = Object.values(obj(obj(lsJSON('cpp-contrarellotge-v1', {})).prog)).filter((p) => p && p.solved).length;
