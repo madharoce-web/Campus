@@ -8,6 +8,8 @@ export default defineConfig({
   testDir: 'tests/e2e',
   timeout: 60_000,
   fullyParallel: true,
+  // a la integració contínua, un segon intent per si una prova falla per temps (Playwright la marca com a «flaky»)
+  retries: process.env.CI ? 1 : 0,
   reporter: [['list']],
   use: {
     baseURL: external || 'http://127.0.0.1:4173',

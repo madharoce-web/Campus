@@ -91,6 +91,7 @@ test('programació: fet, seccions plegades i índex es desen', async ({ page }) 
   if (await page.locator('.ip-ciopen').isVisible()) await page.locator('.ip-ciopen').click();
   await page.locator('.ip-cisech', { hasText: 'Setmana 2' }).click();
   await page.goto('/programacio');
+  await page.locator('[data-coll="0"]').waitFor();
   // a les pantalles estretes els botons de la llista d'activitats s'amaguen (com a l'original)
   if (await page.locator('[data-done="t1"]').isVisible()) await page.locator('[data-done="t1"]').click();
   else { await page.goto('/programacio/t1'); await page.locator('[data-done="t1"]').click(); await page.goto('/programacio'); }
