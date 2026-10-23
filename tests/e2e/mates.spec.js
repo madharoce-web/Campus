@@ -240,6 +240,7 @@ test('banc d\'exercicis: tema, nivell, correcció, solució i el mateix exercici
   await page.click('#bk-t button[data-bkk="mat"]');
   await page.click('#bk-l button[data-bkl="1"]');
   await page.click('[data-bkn="10"]');
+  await expect(page.locator('#bk-list .exc')).toHaveCount(10);
   const mat = page.locator('input.bkin[data-k="mat"]').first();
   if (await mat.count()) {
     await mat.fill('1 2; 3 4');

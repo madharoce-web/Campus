@@ -149,7 +149,9 @@ test('preguntes de tria i prioritats compten al marcador', async ({ page }) => {
 
   await page.locator('#rail a[data-k="prior"]').click();
   for (let n = 0; n < 3; n++) {
-    if (await page.locator('[data-a]').count()) await page.click('[data-a="cert"]');
+    // la pregunta pot ser de cert/fals o de calcular un valor: s'espera que sigui a la pàgina abans de mirar-ho
+    await page.locator('#main [data-a="cert"], #pr-in').first().waitFor();
+    if (await page.locator('#main [data-a="cert"]').count()) await page.click('#main [data-a="cert"]');
     else { await page.fill('#pr-in', '7'); await page.press('#pr-in', 'Enter'); }
     await expect(page.locator('#pr-fb .fb')).toContainText(' = ');
     await page.click('#pr-next');
