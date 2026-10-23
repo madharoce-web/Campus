@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
+import { AUTH_ENABLED } from '../../lib/supabase.js';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import { DEGREES, subjectsOf } from '../../catalog/degrees.js';
 import SiteFooter from '../../app/SiteFooter.jsx';
@@ -152,8 +153,8 @@ export default function Landing() {
               <h2 id="lp-faq">{L.faqH}</h2>
             </div>
             <div className="lp-faq">
-              {L.faq.map(([q, a]) => (
-                <details key={q}><summary>{q}</summary><p>{a}</p></details>
+              {L.faq.map(([q, a, withAccounts]) => (
+                <details key={q}><summary>{q}</summary><p>{AUTH_ENABLED && withAccounts ? withAccounts : a}</p></details>
               ))}
             </div>
           </div>

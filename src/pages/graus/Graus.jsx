@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
+import { useAuth } from '../../lib/auth.jsx';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import { agoText, cardVisitOf } from '../../lib/visits.js';
 import { DEGREES, DEGREE_BY_KEY, subjectsOf } from '../../catalog/degrees.js';
@@ -80,6 +82,36 @@ function Subject({ card, Lx }) {
   );
 }
 
+/** «Avisa'm quan estigui disponible» (llista d'espera; només si la web té comptes). */
+function Notify({ d, Lx }) {
+  const auth = useAuth();
+  const [email, setEmail] = useState(auth.user?.email || '');
+  const [state, setState] = useState(null); // null | busy | done | bad | error
+  if (!auth.enabled) return null;
+  const submit = async (e) => {
+    e.preventDefault();
+    const em = email.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { setState('bad'); return; }
+    setState('busy');
+    try { await auth.joinWaitlist(em, d.k); setState('done'); } catch { setState('error'); }
+  };
+  if (state === 'done') return <div className="gr-notified" role="status">{Lx.notified}</div>;
+  return (
+    <form className="gr-notify" onSubmit={submit} noValidate>
+      <h3>{Lx.notifyH}</h3>
+      <p>{Lx.notifyP}</p>
+      <div className="gr-notify-row">
+        <label className="gr-sr" htmlFor="gr-email">{Lx.email}</label>
+        <input id="gr-email" className="gr-input" type="email" inputMode="email" autoComplete="email" placeholder={Lx.emailPh}
+          value={email} onChange={(e) => { setEmail(e.target.value); setState(null); }} aria-invalid={state === 'bad'} />
+        <button type="submit" className="am-btn am-btn-primary" disabled={state === 'busy'}>{state === 'busy' ? Lx.notifying : Lx.notify}</button>
+      </div>
+      {state === 'bad' && <p className="gr-err" role="alert">{Lx.errEmail}</p>}
+      {state === 'error' && <p className="gr-err" role="alert">{Lx.errNotify}</p>}
+    </form>
+  );
+}
+
 /** Pàgina d'un grau (/graus/:grau). */
 function Degree({ d, Lx }) {
   const { t } = useLang();
@@ -117,6 +149,7 @@ function Degree({ d, Lx }) {
               <Link className="am-btn am-btn-primary" to="/graus/informatica">{Lx.seeLive}<ArrowIcon /></Link>
               <Link className="am-btn am-btn-ghost" to="/graus">{Lx.allDeg}</Link>
             </div>
+            <Notify d={d} Lx={Lx} />
           </div>
         )}
       </div>

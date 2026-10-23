@@ -121,6 +121,13 @@ RLS: cada usuario lee/escribe solo sus filas; `role='admin'` (función `is_admin
 `plan` y `role` solo modificables por service role / webhook, nunca desde el cliente.
 Trigger `on auth.users insert` → crea `profiles`.
 
+**Hecho (fase 3):** migración `supabase/migrations/20261023120000_comptes.sql` (probada con
+`npm run test:db`), entrar con correo (enlace + código de 6 cifras, sin contraseñas) o Google,
+sincronización de `localStorage`, `/compte` (perfil, exportar, borrar), «Avísame» en los grados
+próximos y pruebas con un Supabase simulado. `user_state.value` es `text` (no `jsonb`): no todas las
+claves guardan JSON. Pendiente: llamar a `activity` desde los correctores de los cursos (fase 5).
+Guía de configuración: `docs/COMPTES.md`.
+
 **Frontend**:
 - `src/lib/supabase.js` (cliente; si faltan las variables la web sigue funcionando en modo local).
 - `src/lib/auth.jsx`: `AuthProvider` + `useAuth()` (`user`, `profile`, `signInWithEmail`, `signInWithGoogle`, `signOut`).

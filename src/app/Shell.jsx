@@ -6,7 +6,9 @@ import Navbar from './Navbar.jsx';
 export default function Shell() {
   const { pathname } = useLocation();
   const first = pathname.split('/')[1] || '';
-  const active = first === '' ? 'inici' : first === 'graus' || first === 'tauler' ? first : 'cursos';
+  // les pàgines del compte no marquen cap pestanya; els cursos marquen «Els meus cursos»
+  const active = first === '' ? 'inici' : ['graus', 'tauler', 'cursos'].includes(first) ? first
+    : ['entrar', 'compte', 'auth'].includes(first) ? null : 'cursos';
   useEffect(() => { window.scrollTo(0, 0); }, [first]);
   return (
     <>
