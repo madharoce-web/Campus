@@ -4,17 +4,17 @@ import { expectNoOverflow, setLang, watchErrors } from './helpers.js';
 test('portada pública: presentació, graus i crida a començar', async ({ page }) => {
   const errors = watchErrors(page);
   await page.goto('/');
-  await expect(page.locator('h1')).toContainText('Aprova estudiant');
+  await expect(page.locator('h1')).toHaveText('Aula Mada');
   await expect(page).toHaveTitle(/Aula Mada/);
-  await expect(page.locator('.lp-deg')).toHaveCount(4);
-  await expect(page.locator('.lp-deg.is-live h3')).toHaveText('Enginyeria Informàtica');
-  await expect(page.locator('.lp-deg:not(.is-live) .am-badge')).toHaveText(['Properament', 'Properament', 'Properament']);
+  await expect(page.locator('#graus [data-degree]')).toHaveCount(4);
+  await expect(page.locator('#graus [data-degree="informatica"] h3')).toHaveText('Enginyeria Informàtica');
+  await expect(page.locator('#graus [data-degree]:not([data-degree="informatica"]) .am-badge')).toHaveText(['Properament', 'Properament', 'Properament']);
   await expectNoOverflow(page);
 
   await page.locator('.lp-faq summary').first().click();
   await expect(page.locator('.lp-faq details').first()).toHaveAttribute('open', '');
 
-  await page.locator('.lp-hero .am-btn-primary').click();
+  await page.locator('.lp-ctas .am-btn-primary').click();
   await expect(page).toHaveURL(/\/cursos$/);
   await expect(page.locator('h1')).toHaveText('Els meus cursos');
   expect(errors).toEqual([]);
@@ -71,13 +71,13 @@ test('catàleg de graus: disponibles, properament i adreces alternatives', async
   const errors = watchErrors(page);
   await page.goto('/graus');
   await expect(page.locator('h1')).toHaveText('Graus');
-  await expect(page.locator('.gr-deg')).toHaveCount(4);
+  await expect(page.locator('[data-degree]')).toHaveCount(4);
   await expectNoOverflow(page);
 
   await page.click('[data-degree="informatica"] h2 a');
   await expect(page).toHaveURL(/\/graus\/informatica$/);
   await expect(page.locator('h1')).toHaveText('Enginyeria Informàtica');
-  await expect(page.locator('[data-term="s1"] .gr-sub')).toHaveCount(5);
+  await expect(page.locator('[data-term="s1"] [data-subject]')).toHaveCount(5);
   await expectNoOverflow(page);
   await page.click('[data-subject="logica"] h3 a');
   await expect(page).toHaveURL(/\/logica$/);

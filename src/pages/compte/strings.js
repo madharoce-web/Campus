@@ -4,7 +4,7 @@ export const S = {
     home: 'Inici', crumbs: 'Molles de pa',
     // entrar
     loginTitle: 'Entra', loginH: 'Entra a Aula Mada', loginSub: 'Fes servir el teu compte de Google o el teu correu. Si encara no en tens, el crearem ara mateix.',
-    google: 'Continua amb Google', or: 'o amb el teu correu', email: 'Correu electrònic', emailPh: 'nom@exemple.com',
+    google: 'Continua amb Google', or: 'o bé', email: 'Correu electrònic', emailPh: 'nom@exemple.com',
     send: 'Envia’m l’enllaç', sending: 'Enviant…',
     sentH: 'Revisa el correu', sentP: 'Hem enviat un correu a %s. Fes clic a l’enllaç o escriu aquí el codi de 6 xifres.',
     code: 'Codi del correu', codePh: '123456', verify: 'Entra', verifying: 'Comprovant…',
@@ -35,7 +35,7 @@ export const S = {
   es: {
     home: 'Inicio', crumbs: 'Migas de pan',
     loginTitle: 'Entra', loginH: 'Entra en Aula Mada', loginSub: 'Usa tu cuenta de Google o tu correo. Si todavía no tienes cuenta, la crearemos ahora mismo.',
-    google: 'Continuar con Google', or: 'o con tu correo', email: 'Correo electrónico', emailPh: 'nombre@ejemplo.com',
+    google: 'Continuar con Google', or: 'o bien', email: 'Correo electrónico', emailPh: 'nombre@ejemplo.com',
     send: 'Envíame el enlace', sending: 'Enviando…',
     sentH: 'Revisa tu correo', sentP: 'Hemos enviado un correo a %s. Haz clic en el enlace o escribe aquí el código de 6 cifras.',
     code: 'Código del correo', codePh: '123456', verify: 'Entrar', verifying: 'Comprobando…',
@@ -64,7 +64,7 @@ export const S = {
   en: {
     home: 'Home', crumbs: 'Breadcrumbs',
     loginTitle: 'Sign in', loginH: 'Sign in to Aula Mada', loginSub: 'Use your Google account or your email. If you don’t have an account yet, we’ll create one right away.',
-    google: 'Continue with Google', or: 'or with your email', email: 'Email', emailPh: 'name@example.com',
+    google: 'Continue with Google', or: 'or', email: 'Email', emailPh: 'name@example.com',
     send: 'Email me a link', sending: 'Sending…',
     sentH: 'Check your email', sentP: 'We sent an email to %s. Click the link or enter the 6-digit code here.',
     code: 'Code from the email', codePh: '123456', verify: 'Sign in', verifying: 'Checking…',

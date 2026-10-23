@@ -24,19 +24,17 @@ export default function Callback() {
   useEffect(() => { if (status === 'user') navigate(next, { replace: true }); }, [status, next, navigate]);
 
   return (
-    <div data-page="compte">
-      <main className="ac ac-auth">
-        <div className="ac-auth-in ac-auth-solo">
-          {failed && status !== 'user' ? (
-            <div className="ac-card" data-state="error" role="alert">
-              <h1>{Lx.cbErrH}</h1>
-              <p className="ac-sub">{Lx.cbErrP}</p>
-              <Link className="am-btn am-btn-primary am-btn-block am-btn-lg" to={'/entrar?next=' + encodeURIComponent(next)}>{Lx.cbRetry}</Link>
-            </div>
-          ) : (
-            <div className="ac-card ac-wait" role="status"><Spinner /><span>{Lx.cbWait}</span></div>
-          )}
-        </div>
+    <div data-page="compte" className="am-site">
+      <main className="ac-login">
+        {failed && status !== 'user' ? (
+          <div className="ac-card" data-state="error" role="alert">
+            <h1 className="ac-h">{Lx.cbErrH}</h1>
+            <p className="ac-sub">{Lx.cbErrP}</p>
+            <Link className="am-btn am-btn-primary am-btn-block" to={'/entrar?next=' + encodeURIComponent(next)}>{Lx.cbRetry}</Link>
+          </div>
+        ) : (
+          <div className="ac-card ac-wait" role="status"><Spinner /><span>{Lx.cbWait}</span></div>
+        )}
       </main>
     </div>
   );

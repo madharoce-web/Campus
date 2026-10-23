@@ -16,5 +16,3 @@ const FEATURE = {
 
 export const DegreeIcon = ({ name }) => <svg viewBox="0 0 24 24" aria-hidden="true">{DEGREE[name] || DEGREE.book}</svg>;
 export const FeatureIcon = ({ name }) => <svg viewBox="0 0 24 24" aria-hidden="true">{FEATURE[name] || FEATURE.notes}</svg>;
-export const CheckIcon = () => <svg className="am-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>;
-export const ArrowIcon = () => <svg className="am-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>;

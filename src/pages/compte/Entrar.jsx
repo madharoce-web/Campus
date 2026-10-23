@@ -4,13 +4,19 @@ import { useLang } from '../../lib/i18n.jsx';
 import { safeNext, useAuth } from '../../lib/auth.jsx';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import SiteFooter from '../../app/SiteFooter.jsx';
-import { CheckIcon } from '../graus/icons.jsx';
 import { GoogleIcon, MailIcon, Spinner } from './ui.jsx';
 import { S } from './strings.js';
 import './compte.css';
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const COOLDOWN = 60;
+
+/** Marca a dalt de la targeta d'entrar, com a la barra. */
+const Logo = () => (
+  <div className="ac-logo" aria-hidden="true">
+    <span className="ac-mark">AM</span><span className="ac-wm"><span>Aula</span><span>Mada</span></span>
+  </div>
+);
 
 /** Entrar o crear un compte (/entrar): Google o correu amb enllaç i codi. */
 export default function Entrar() {
@@ -67,45 +73,50 @@ export default function Entrar() {
   if (status === 'disabled') {
     card = (
       <div className="ac-card" data-state="off">
-        <h1>{Lx.offH}</h1>
+        <Logo />
+        <h1 className="ac-h">{Lx.offH}</h1>
         <p className="ac-sub">{Lx.offP}</p>
-        <Link className="am-btn am-btn-primary am-btn-block am-btn-lg" to="/cursos">{Lx.offCta}</Link>
+        <Link className="am-btn am-btn-primary am-btn-block" to="/cursos">{Lx.offCta}</Link>
       </div>
     );
   } else if (step === 'email') {
     card = (
       <div className="ac-card" data-state="email">
-        <span className="am-logo-mark ac-mark" aria-hidden="true">AM</span>
-        <h1>{Lx.loginH}</h1>
+        <Logo />
+        <h1 className="ac-h">{Lx.loginH}</h1>
         <p className="ac-sub">{Lx.loginSub}</p>
-        <button type="button" className="am-btn ac-google am-btn-block am-btn-lg" onClick={google} disabled={!!busy || status === 'loading'}>
-          {busy === 'google' ? <Spinner /> : <GoogleIcon />}<span>{Lx.google}</span>
-        </button>
-        <div className="ac-or"><span>{Lx.or}</span></div>
         <form onSubmit={send} noValidate>
-          <label className="ac-label" htmlFor="ac-email">{Lx.email}</label>
-          <input id="ac-email" className="ac-input" type="email" inputMode="email" autoComplete="email" placeholder={Lx.emailPh}
-            value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={!!err} aria-describedby={err ? 'ac-err' : undefined} />
-          {err && <p className="ac-err" id="ac-err" role="alert">{err}</p>}
-          <button type="submit" className="am-btn am-btn-primary am-btn-block am-btn-lg" disabled={!!busy}>
+          <div className="am-field">
+            <label className="am-label" htmlFor="ac-email">{Lx.email}</label>
+            <input id="ac-email" className="am-input" type="email" inputMode="email" autoComplete="email" placeholder={Lx.emailPh}
+              value={email} onChange={(e) => setEmail(e.target.value)} aria-invalid={!!err} aria-describedby={err ? 'ac-err' : undefined} />
+            {err && <p className="am-invalid" id="ac-err" role="alert">{err}</p>}
+          </div>
+          <button type="submit" className="am-btn am-btn-primary am-btn-block ac-submit" disabled={!!busy}>
             {busy === 'send' ? <><Spinner />{Lx.sending}</> : Lx.send}
           </button>
         </form>
+        <div className="ac-or"><span>{Lx.or}</span></div>
+        <button type="button" className="am-btn am-btn-outline am-btn-block ac-google" onClick={google} disabled={!!busy || status === 'loading'}>
+          {busy === 'google' ? <Spinner /> : <GoogleIcon />}<span>{Lx.google}</span>
+        </button>
         <p className="ac-fine">{Lx.privacy}</p>
       </div>
     );
   } else {
     card = (
       <div className="ac-card" data-state="code">
-        <span className="ac-mailmark"><MailIcon /></span>
-        <h1>{Lx.sentH}</h1>
+        <Logo />
+        <h1 className="ac-h"><MailIcon />{Lx.sentH}</h1>
         <p className="ac-sub">{Lx.sentP.split('%s')[0]}<b>{email}</b>{Lx.sentP.split('%s')[1]}</p>
         <form onSubmit={verify} noValidate>
-          <label className="ac-label" htmlFor="ac-code">{Lx.code}</label>
-          <input id="ac-code" ref={codeRef} className="ac-input ac-code" inputMode="numeric" autoComplete="one-time-code" maxLength={10} placeholder={Lx.codePh}
-            value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))} aria-invalid={!!err} aria-describedby={err ? 'ac-err' : undefined} />
-          {err && <p className="ac-err" id="ac-err" role="alert">{err}</p>}
-          <button type="submit" className="am-btn am-btn-primary am-btn-block am-btn-lg" disabled={!!busy}>
+          <div className="am-field">
+            <label className="am-label" htmlFor="ac-code">{Lx.code}</label>
+            <input id="ac-code" ref={codeRef} className="am-input ac-code" inputMode="numeric" autoComplete="one-time-code" maxLength={10} placeholder={Lx.codePh}
+              value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))} aria-invalid={!!err} aria-describedby={err ? 'ac-err' : undefined} />
+            {err && <p className="am-invalid" id="ac-err" role="alert">{err}</p>}
+          </div>
+          <button type="submit" className="am-btn am-btn-primary am-btn-block ac-submit" disabled={!!busy}>
             {busy === 'verify' ? <><Spinner />{Lx.verifying}</> : Lx.verify}
           </button>
         </form>
@@ -120,15 +131,15 @@ export default function Entrar() {
   }
 
   return (
-    <div data-page="compte">
-      <main className="ac ac-auth">
-        <div className="ac-auth-in">
+    <div data-page="compte" className="am-site">
+      <main className="ac-login">
+        {card}
+        {status !== 'disabled' && (
           <section className="ac-perks" aria-labelledby="ac-perks-h">
             <h2 id="ac-perks-h">{Lx.perksH}</h2>
-            <ul>{Lx.perks.map((p) => <li key={p}><span className="ac-perk-ico"><CheckIcon /></span>{p}</li>)}</ul>
+            <ul>{Lx.perks.map((p) => <li key={p}>{p}</li>)}</ul>
           </section>
-          {card}
-        </div>
+        )}
       </main>
       <SiteFooter />
     </div>

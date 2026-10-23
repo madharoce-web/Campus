@@ -1,26 +1,24 @@
 /* ==========================================================================
-   AULA MADA · fitxes de disseny de les pàgines públiques (portada, graus) i de
-   les pàgines noves de l'aplicació. Prefix --am-. Els cursos conserven els seus estils.
+   AULA MADA · fitxes de disseny de les pàgines del lloc (portada, graus, compte).
+   Mateix llenguatge que la closca de l'aula virtual (shell.css): blanc pla, línies
+   fines, enllaços i accents oliva, botons blaus, sense degradats ni ombres grans.
    ========================================================================== */
 :root{
-  /* marca */
-  --am-brand:#2f6f5e; --am-brand-dark:#235546; --am-brand-ink:#163a30; --am-brand-soft:#e3f2ec; --am-brand-tint:#f2f8f5;
-  --am-accent:#e8a33d; --am-accent-soft:#fdf1dc;
+  /* accent del lloc (enllaços, pestanyes, marca) i botó principal */
+  --am-brand:#696e2e; --am-brand-dark:#55591f; --am-brand-soft:#f1f2e6; --am-brand-mark:#6d7637;
+  --am-primary:#0f6cbf; --am-primary-dark:#0c589c; --am-primary-soft:#e7f1fa;
+  --am-success:#357a32; --am-warning-bg:#fcefdc; --am-warning-line:#f6d9b2; --am-warning-ink:#6b4a0c;
+  --am-danger:#ca3120; --am-danger-dark:#a32718; --am-danger-soft:#f6e1de;
   /* tinta i superfícies */
-  --am-ink:#14201c; --am-ink-2:#42504b; --am-ink-3:#6b7773;
-  --am-bg:#ffffff; --am-bg-2:#f7f8f6; --am-bg-3:#eef1ee;
-  --am-line:#e2e6e3; --am-line-2:#cdd4d0;
-  /* tipografia */
+  --am-ink:#1d2125; --am-ink-2:#495057; --am-ink-3:#6a737b;
+  --am-bg:#ffffff; --am-bg-2:#f8f9fa; --am-bg-3:#e9ecef;
+  --am-line:#dee2e6; --am-line-2:#ced4da; --am-line-3:#8f959e;
+  /* tipografia: la del sistema, com l'aula virtual; la romana només a la marca */
   --am-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif;
-  --am-serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
-  --am-fs-sm:.875rem; --am-fs:1rem; --am-fs-lg:1.125rem;
-  --am-fs-h3:1.25rem; --am-fs-h2:clamp(1.6rem, 1.2rem + 1.6vw, 2.25rem); --am-fs-h1:clamp(2.1rem, 1.4rem + 3vw, 3.5rem);
-  /* espais, radis, ombres */
-  --am-s1:4px; --am-s2:8px; --am-s3:12px; --am-s4:16px; --am-s5:24px; --am-s6:32px; --am-s7:48px; --am-s8:72px; --am-s9:104px;
-  --am-r1:6px; --am-r2:10px; --am-r3:16px; --am-r4:24px;
-  --am-sh1:0 1px 2px rgba(20,32,28,.06), 0 1px 1px rgba(20,32,28,.04);
-  --am-sh2:0 6px 16px -4px rgba(20,32,28,.10), 0 2px 4px rgba(20,32,28,.05);
-  --am-sh3:0 24px 48px -16px rgba(20,32,28,.22), 0 4px 10px rgba(20,32,28,.06);
-  --am-wrap:1120px;
-  --am-focus:0 0 0 3px rgba(47,111,94,.35);
+  --am-serif:"Times New Roman",Times,Georgia,serif;
+  --am-fs:.9375rem; --am-fs-sm:.8203rem;
+  /* mides */
+  --am-r:.5rem; --am-wrap:1140px;
+  --am-focus:0 0 0 .2rem rgba(105,110,46,.4);
+  --am-focus-blue:0 0 0 .2rem rgba(15,108,191,.4);
 }
