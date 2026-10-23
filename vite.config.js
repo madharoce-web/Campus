@@ -6,6 +6,28 @@ import scopeCourses from './tools/postcss-scope-courses.js';
 // Per defecte es publica a l'arrel del domini.
 const base = process.env.BASE_PATH || '/';
 
+// Capçaleres de seguretat: les mateixes que a deploy/nginx.conf, perquè `npm run preview`
+// (i les proves) funcionin amb les mateixes restriccions que la web publicada.
+// 'wasm-unsafe-eval' cal per compilar el C++ amb Clang (WebAssembly) dins el navegador.
+export const SECURITY_HEADERS = {
+  'Content-Security-Policy': [
+    "default-src 'self'",
+    "script-src 'self' 'wasm-unsafe-eval'",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob:",
+    "font-src 'self' data:",
+    "connect-src 'self'",
+    "worker-src 'self' blob:",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+  ].join('; '),
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+};
+
 export default defineConfig({
   base,
   // VITE_CACHE_DIR permet tenir diversos servidors de desenvolupament alhora
@@ -27,5 +49,5 @@ export default defineConfig({
     assetsInlineLimit: 0,
   },
   server: { port: 5173, host: true },
-  preview: { port: 4173, host: true },
+  preview: { port: 4173, host: true, headers: SECURITY_HEADERS },
 });
