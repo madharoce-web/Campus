@@ -69,8 +69,9 @@
 .am-btn:hover{text-decoration:none}
 .am-btn:focus-visible{outline:none; box-shadow:var(--am-focus)}
 .am-btn:disabled{opacity:.65; cursor:default}
-.am-btn-primary{background:var(--am-brand); border-color:var(--am-brand); color:#fff}
-.am-btn-primary:hover:not(:disabled){background:var(--am-brand-dark); border-color:var(--am-brand-dark); color:#fff}
+.am-btn-primary{background:var(--am-primary); border-color:var(--am-primary); color:#fff}
+.am-btn-primary:hover:not(:disabled){background:var(--am-primary-dark); border-color:var(--am-primary-dark); color:#fff}
+.am-btn-primary:focus-visible{box-shadow:0 0 0 .2rem rgba(15,108,191,.4)}
 .am-btn-secondary{background:var(--am-line-2); border-color:var(--am-line-2); color:var(--am-ink)}
 .am-btn-secondary:hover:not(:disabled){background:#b8c1ca; border-color:#b2bcc5; color:var(--am-ink)}
 .am-btn-outline{background:#fff; border-color:var(--am-line-3); color:var(--am-ink)}

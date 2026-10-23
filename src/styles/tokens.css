@@ -1,10 +1,12 @@
 /* ==========================================================================
    AULA MADA · fitxes de disseny del lloc. Mateixos colors que l'aula virtual:
-   oliva (marca, enllaços i botons), grisos, i turquesa i lila per a les icones.
+   oliva (marca i enllaços), blau (botó principal), grisos, i turquesa i lila per a les icones.
    ========================================================================== */
 :root{
-  /* oliva: marca, enllaços, pestanyes i botó principal */
+  /* oliva: marca, enllaços i pestanyes */
   --am-brand:#696e2e; --am-brand-dark:#55591f; --am-brand-soft:#f1f2e6; --am-brand-mark:#6d7637; --am-brand-line:#d5d7b8;
+  /* blau: botó principal, com a l'aula virtual */
+  --am-primary:#0f6cbf; --am-primary-dark:#0c589c; --am-primary-soft:#e7f1fa;
   /* icones (com les de les activitats de l'aula) */
   --am-teal:#0d8ba1; --am-teal-soft:#e2f3f6; --am-purple:#7e66e0; --am-purple-soft:#efecfc; --am-pink:#c4307b;
   /* estats */
