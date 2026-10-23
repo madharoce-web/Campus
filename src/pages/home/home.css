@@ -110,9 +110,8 @@ h1,h2,h3,h4,h5{margin:0; line-height:1.2; text-wrap:balance}
 .m-badge{display:inline-flex; align-items:center; font-size:.8rem; border:1px solid var(--m-line-2); border-radius:.4rem; padding:.15rem .55rem; color:var(--m-ink-2); background:#fff; white-space:nowrap}
 .m-badge:hover{border-color:var(--m-olive); color:var(--m-olive-dark); text-decoration:none; background:var(--m-olive-soft)}
 
-.m-save{display:flex; align-items:center; gap:14px 20px; flex-wrap:wrap; margin:-6px 0 26px; padding:14px 16px 14px 18px; border:1px solid color-mix(in srgb, var(--am-brand) 30%, white); border-left:4px solid var(--am-brand); border-radius:.5rem; background:var(--am-brand-tint)}
-.m-save p{flex:1 1 320px; margin:0; color:var(--m-ink-2)}
-.m-save b{color:var(--m-ink)}
+.m-save{display:flex; align-items:center; gap:10px 16px; flex-wrap:wrap; margin:-10px 0 24px; padding:.75rem 1.25rem; border:1px solid #c3dbf1; border-radius:.5rem; background:#e7f1fa; color:#0a4580}
+.m-save p{flex:1 1 320px; margin:0}
 .m-save .am-btn-primary,.m-save .am-btn-primary:hover{color:#fff; text-decoration:none}
 
 /* ---------- pantalles estretes: el calaix passa per sobre ---------- */

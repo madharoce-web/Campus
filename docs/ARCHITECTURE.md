@@ -64,8 +64,12 @@ la ruta nova (`/mates/exam`).
   [COMPTES.md](COMPTES.md).
 - **Catàleg**: una assignatura nova s'afegeix a `src/courses/registry.js` (`COURSES` i `CARDS`, amb
   `degree` i `term`) i a la llista `subjects` del seu semestre a `src/catalog/degrees.js`.
-- **Disseny**: les pàgines públiques fan servir les fitxes `--am-*` de `src/styles/tokens.css` i les
-  peces comunes `am-*` de `src/styles/site.css` (botons, insígnies, peu).
+- **Disseny**: tot el lloc té l'aspecte d'una aula virtual acadèmica (com la closca i «Els meus cursos»):
+  fons blanc pla, línies fines, enllaços oliva, botons blaus, targetes amb patró, blocs a la dreta.
+  Res de degradats, ombres grans, tipografies decoratives ni «maquetes» de màrqueting. Les pàgines
+  del lloc fan servir les fitxes `--am-*` de `src/styles/tokens.css` i les peces `am-*` de
+  `src/styles/site.css` (maquetació amb blocs, molles de pa, botons, insígnies, avisos, blocs,
+  targetes, formularis i peu); cada pàgina només afegeix el que és propi.
 - **Estils**: cada curs importa el seu CSS des de `src/courses/<curs>/`. El connector
   `tools/postcss-scope-courses.js` prefixa tots els selectors amb `[data-course="<curs>"]`,
   l'atribut de l'element arrel del curs (`<CourseScope>`), de manera que els estils d'un curs

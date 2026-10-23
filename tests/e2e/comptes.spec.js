@@ -121,10 +121,10 @@ test('llista d’espera d’un grau que encara no hi és', async ({ page, contex
   const sb = await mockSupabase(context);
   await page.goto('/graus/infermeria');
   await page.fill('#gr-email', 'nou');
-  await page.click('.gr-notify button');
+  await page.click('.gr-notify button[type="submit"]');
   await expect(page.locator('.gr-err')).toBeVisible();
   await page.fill('#gr-email', ' Nou@Example.com ');
-  await page.click('.gr-notify button');
+  await page.click('.gr-notify button[type="submit"]');
   await expect(page.locator('.gr-notified')).toBeVisible();
   expect(sb.db.waitlist).toEqual([{ email: 'nou@example.com', degree: 'infermeria', lang: 'ca' }]);
 });

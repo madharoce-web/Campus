@@ -4,12 +4,13 @@
  * aquí i al registre. Textos en [ca, es, en].
  *
  * status: 'live' (disponible) | 'soon' (properament)
+ * color/bg: icona; img/pat: imatge de la targeta (patró de src/pages/home/Pattern.jsx)
  */
 import { CARD_BY_KEY } from '../courses/registry.js';
 
 export const DEGREES = [
   {
-    k: 'informatica', status: 'live', icon: 'code', color: '#2f6f5e', bg: '#e3f2ec',
+    k: 'informatica', status: 'live', icon: 'code', color: '#0f7f80', bg: '#dcf7f7', img: '#20b39b', pat: 'diamonds',
     name: ['Enginyeria Informàtica', 'Ingeniería Informática', 'Computer Engineering'],
     short: ['Informàtica', 'Informática', 'Computer Science'],
     desc: [
@@ -25,7 +26,7 @@ export const DEGREES = [
     ],
   },
   {
-    k: 'ade', status: 'soon', icon: 'chart', color: '#9a6a06', bg: '#fdf2d6',
+    k: 'ade', status: 'soon', icon: 'chart', color: '#9a6a06', bg: '#fdf2d6', img: '#fdcb6e', pat: 'hex',
     name: ["Administració i Direcció d'Empreses", 'Administración y Dirección de Empresas', 'Business Administration'],
     short: ['ADE', 'ADE', 'Business'],
     desc: [
@@ -36,7 +37,7 @@ export const DEGREES = [
     terms: [],
   },
   {
-    k: 'infermeria', status: 'soon', icon: 'heart', color: '#b4365a', bg: '#fbe4ea',
+    k: 'infermeria', status: 'soon', icon: 'heart', color: '#b4365a', bg: '#fbe4ea', img: '#fab1a0', pat: 'rings',
     name: ['Infermeria', 'Enfermería', 'Nursing'],
     short: ['Infermeria', 'Enfermería', 'Nursing'],
     desc: [
@@ -47,7 +48,7 @@ export const DEGREES = [
     terms: [],
   },
   {
-    k: 'magisteri', status: 'soon', icon: 'book', color: '#5b4fd1', bg: '#ecebff',
+    k: 'magisteri', status: 'soon', icon: 'book', color: '#5b4fd1', bg: '#ecebff', img: '#a29bfe', pat: 'squares',
     name: ['Magisteri', 'Magisterio', 'Teacher Education'],
     short: ['Magisteri', 'Magisterio', 'Teaching'],
     desc: [

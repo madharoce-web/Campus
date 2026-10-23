@@ -3,7 +3,7 @@ import { useLang } from '../lib/i18n.jsx';
 import { DEGREES } from '../catalog/degrees.js';
 import { BRAND, T } from './strings.js';
 
-/** Peu de les pàgines públiques (portada i graus). */
+/** Peu de les pàgines del lloc (portada, graus i compte). */
 export default function SiteFooter() {
   const { ui, t } = useLang();
   const S = T[ui];
@@ -11,9 +11,7 @@ export default function SiteFooter() {
     <footer className="am-foot">
       <div className="am-foot-in">
         <div className="am-foot-brand">
-          <Link to="/" className="am-foot-logo" aria-label={BRAND}>
-            <span className="am-logo-mark" aria-hidden="true">AM</span><span>{BRAND}</span>
-          </Link>
+          <p className="am-foot-name">{BRAND}</p>
           <p>{S.fTag}</p>
         </div>
         <nav className="am-foot-col" aria-label={S.degrees}>

@@ -41,21 +41,21 @@ function Profile({ Lx }) {
   };
   return (
     <form className="ac-form" onSubmit={save}>
-      <div className="ac-field">
-        <label className="ac-label" htmlFor="ac-name">{Lx.name}</label>
-        <input id="ac-name" className="ac-input" maxLength={80} autoComplete="name" placeholder={Lx.namePh} value={name}
+      <div className="am-field">
+        <label className="am-label" htmlFor="ac-name">{Lx.name}</label>
+        <input id="ac-name" className="am-input" maxLength={80} autoComplete="name" placeholder={Lx.namePh} value={name}
           onChange={(e) => { setName(e.target.value); setState(null); }} />
       </div>
-      <div className="ac-field">
-        <label className="ac-label" htmlFor="ac-degree">{Lx.degree}</label>
-        <select id="ac-degree" className="ac-input" value={degree} onChange={(e) => { setDegree(e.target.value); setState(null); }}>
+      <div className="am-field">
+        <label className="am-label" htmlFor="ac-degree">{Lx.degree}</label>
+        <select id="ac-degree" className="am-input" value={degree} onChange={(e) => { setDegree(e.target.value); setState(null); }}>
           <option value="">{Lx.noDegree}</option>
           {DEGREES.map((d) => <option key={d.k} value={d.k}>{t(d.name)}</option>)}
         </select>
       </div>
-      <div className="ac-field">
-        <label className="ac-label" htmlFor="ac-lang">{Lx.lang}</label>
-        <select id="ac-lang" className="ac-input" value={ui} onChange={(e) => setLang(e.target.value)}>
+      <div className="am-field">
+        <label className="am-label" htmlFor="ac-lang">{Lx.lang}</label>
+        <select id="ac-lang" className="am-input" value={ui} onChange={(e) => setLang(e.target.value)}>
           {Lx.langs.map(([k, n]) => <option key={k} value={k}>{n}</option>)}
         </select>
       </div>
@@ -64,7 +64,7 @@ function Profile({ Lx }) {
           {state === 'saving' ? <><Spinner />{Lx.saving}</> : Lx.save}
         </button>
         {state === 'saved' && <span className="ac-ok" role="status">{Lx.saved}</span>}
-        {state === 'error' && <span className="ac-err" role="alert">{Lx.errSave}</span>}
+        {state === 'error' && <span className="am-invalid" role="alert">{Lx.errSave}</span>}
       </div>
     </form>
   );
@@ -82,19 +82,19 @@ function Danger({ Lx }) {
     setState('deleting');
     try { await deleteAccount(); } catch { setState('error'); }
   };
-  if (!open) return <button type="button" className="am-btn ac-danger-btn" onClick={() => setOpen(true)}>{Lx.del}</button>;
+  if (!open) return <div className="ac-actions"><button type="button" className="am-btn am-btn-outline-danger ac-danger-btn" onClick={() => setOpen(true)}>{Lx.del}</button></div>;
   return (
     <form className="ac-form" onSubmit={del}>
-      <div className="ac-field">
-        <label className="ac-label" htmlFor="ac-del">{Lx.delConfirm}</label>
-        <input id="ac-del" className="ac-input" type="email" autoComplete="off" placeholder={user?.email} value={typed} onChange={(e) => setTyped(e.target.value)} />
+      <div className="am-field">
+        <label className="am-label" htmlFor="ac-del">{Lx.delConfirm}</label>
+        <input id="ac-del" className="am-input" type="email" autoComplete="off" placeholder={user?.email} value={typed} onChange={(e) => setTyped(e.target.value)} />
       </div>
       <div className="ac-actions">
-        <button type="submit" className="am-btn ac-danger-btn ac-danger-solid" disabled={!ok || state === 'deleting'}>
+        <button type="submit" className="am-btn am-btn-danger ac-danger-solid" disabled={!ok || state === 'deleting'}>
           {state === 'deleting' ? <><Spinner />{Lx.deleting}</> : Lx.delGo}
         </button>
-        <button type="button" className="am-btn am-btn-ghost" onClick={() => { setOpen(false); setTyped(''); setState(null); }}>{Lx.cancel}</button>
-        {state === 'error' && <span className="ac-err" role="alert">{Lx.errDel}</span>}
+        <button type="button" className="am-btn am-btn-secondary" onClick={() => { setOpen(false); setTyped(''); setState(null); }}>{Lx.cancel}</button>
+        {state === 'error' && <span className="am-invalid" role="alert">{Lx.errDel}</span>}
       </div>
     </form>
   );
@@ -123,53 +123,53 @@ export default function Compte() {
 
   let body;
   if (status === 'loading') {
-    body = <div className="ac-card ac-wait" role="status"><Spinner /></div>;
+    body = <div className="ac-wait" role="status"><Spinner /></div>;
   } else if (status !== 'user') {
     body = (
-      <div className="ac-card ac-card-narrow" data-state="guest">
-        <h2>{Lx.guestH}</h2>
-        <p className="ac-sub">{Lx.guestP}</p>
-        <Link className="am-btn am-btn-primary am-btn-lg" to="/entrar?next=%2Fcompte">{Lx.guestCta}</Link>
+      <div className="am-block ac-guest" data-state="guest">
+        <h2 className="am-bt">{Lx.guestH}</h2>
+        <p>{Lx.guestP}</p>
+        <div className="am-btn-row"><Link className="am-btn am-btn-primary" to="/entrar?next=%2Fcompte">{Lx.guestCta}</Link></div>
       </div>
     );
   } else {
     const plan = profile?.plan === 'pro' ? Lx.planPro : Lx.planFree;
     body = (
       <div className="ac-grid">
-        <section className="ac-panel" aria-labelledby="ac-h-profile">
-          <h2 id="ac-h-profile">{Lx.profileH}</h2>
+        <section className="am-block" aria-labelledby="ac-h-profile">
+          <h2 className="am-bt" id="ac-h-profile">{Lx.profileH}</h2>
           <Profile Lx={Lx} />
         </section>
-        <div className="ac-side">
-          <section className="ac-panel" aria-labelledby="ac-h-sync">
-            <h2 id="ac-h-sync">{Lx.syncH}</h2>
+        <div className="ac-col">
+          <section className="am-block" aria-labelledby="ac-h-sync">
+            <h2 className="am-bt" id="ac-h-sync">{Lx.syncH}</h2>
             <p className="ac-p">{Lx.syncP}</p>
             <SyncLine Lx={Lx} />
           </section>
-          <section className="ac-panel" aria-labelledby="ac-h-plan">
-            <div className="ac-panel-head"><h2 id="ac-h-plan">{Lx.planH}</h2><span className="am-badge am-badge-live">{plan}</span></div>
+          <section className="am-block" aria-labelledby="ac-h-plan">
+            <h2 className="am-bt" id="ac-h-plan">{Lx.planH} <span className="am-badge am-badge-live">{plan}</span></h2>
             <p className="ac-p">{Lx.planP}</p>
           </section>
+          <section className="am-block" aria-labelledby="ac-h-data">
+            <h2 className="am-bt" id="ac-h-data">{Lx.dataH}</h2>
+            <p className="ac-p">{Lx.dataP}</p>
+            <div className="ac-actions">
+              <button type="button" className="am-btn am-btn-secondary" onClick={download} disabled={dl === 'busy'}>
+                {dl === 'busy' ? <><Spinner />{Lx.preparing}</> : Lx.download}
+              </button>
+              {dl === 'error' && <span className="am-invalid" role="alert">{Lx.errData}</span>}
+            </div>
+          </section>
         </div>
-        <section className="ac-panel" aria-labelledby="ac-h-data">
-          <h2 id="ac-h-data">{Lx.dataH}</h2>
-          <p className="ac-p">{Lx.dataP}</p>
-          <div className="ac-actions">
-            <button type="button" className="am-btn am-btn-ghost" onClick={download} disabled={dl === 'busy'}>
-              {dl === 'busy' ? <><Spinner />{Lx.preparing}</> : Lx.download}
-            </button>
-            {dl === 'error' && <span className="ac-err" role="alert">{Lx.errData}</span>}
-          </div>
-        </section>
-        <section className="ac-panel" aria-labelledby="ac-h-session">
-          <h2 id="ac-h-session">{Lx.sessionH}</h2>
+        <section className="am-block" aria-labelledby="ac-h-session">
+          <h2 className="am-bt" id="ac-h-session">{Lx.sessionH}</h2>
           <p className="ac-p">{Lx.sessionP}</p>
           <div className="ac-actions">
-            <button type="button" className="am-btn am-btn-ghost" id="ac-signout" onClick={() => auth.signOut()}>{Lx.signOut}</button>
+            <button type="button" className="am-btn am-btn-secondary" id="ac-signout" onClick={() => auth.signOut()}>{Lx.signOut}</button>
           </div>
         </section>
-        <section className="ac-panel ac-danger" aria-labelledby="ac-h-danger">
-          <h2 id="ac-h-danger">{Lx.dangerH}</h2>
+        <section className="am-block ac-danger" aria-labelledby="ac-h-danger">
+          <h2 className="am-bt" id="ac-h-danger">{Lx.dangerH}</h2>
           <p className="ac-p">{Lx.dangerP}</p>
           <Danger Lx={Lx} />
         </section>
@@ -178,22 +178,22 @@ export default function Compte() {
   }
 
   return (
-    <div data-page="compte">
-      <main className="ac">
-        <header className="ac-hero">
-          <div className="ac-wrap">
+    <div data-page="compte" className="am-site">
+      <div className="am-layout">
+        <main className="am-main">
+          <div className="am-main-in">
             <Crumbs Lx={Lx}><span>{Lx.title}</span></Crumbs>
-            <div className="ac-title">
+            <div className="am-ph ac-head">
               {status === 'user' && <span className="ac-avatar" aria-hidden="true">{initials(profile?.display_name, user?.email)}</span>}
               <div>
-                <h1>{Lx.title}</h1>
+                <h1 className="am-h1">{status === 'user' && profile?.display_name ? profile.display_name : Lx.title}</h1>
                 {status === 'user' && <p className="ac-email">{user?.email}</p>}
               </div>
             </div>
+            {body}
           </div>
-        </header>
-        <div className="ac-wrap ac-body">{body}</div>
-      </main>
+        </main>
+      </div>
       <SiteFooter />
     </div>
   );

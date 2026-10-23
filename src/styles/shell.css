@@ -22,8 +22,8 @@
 .m-brand{display:flex; align-items:center; gap:9px; height:100%; padding:0 8px; color:var(--m-word); white-space:nowrap; text-decoration:none; flex:0 0 auto}
 .m-brand:hover{text-decoration:none; color:var(--m-word)}
 .m-brand:focus-visible{outline:none; box-shadow:inset 0 0 0 .2rem rgba(105,110,46,.45)}
-.m-mark{width:46px; height:46px; border-radius:10px; background:var(--am-brand); color:#fff; display:grid; place-items:center; font-family:var(--am-serif); font-size:19px; font-weight:600; letter-spacing:-.02em}
-.m-wm{display:flex; flex-direction:column; font-family:var(--am-serif); text-transform:uppercase; font-size:19.5px; line-height:1.04; letter-spacing:.005em; color:var(--m-word)}
+.m-mark{width:46px; height:46px; background:var(--m-olive-mark); color:#fff; display:grid; place-items:center; font-family:var(--m-serif); font-size:20px; letter-spacing:-.02em}
+.m-wm{display:flex; flex-direction:column; font-family:var(--m-serif); text-transform:uppercase; font-size:19.5px; line-height:1.04; letter-spacing:.005em; color:var(--m-word)}
 
 /* navegació primària */
 .m-pnav{display:flex; align-items:stretch; height:100%; gap:0; min-width:0; margin-left:22px}
@@ -39,11 +39,9 @@
 .m-ubtn{display:flex; align-items:center; gap:9px; border:0; background:transparent; padding:6px 4px; cursor:pointer; color:var(--m-ink); font:inherit; border-radius:.5rem}
 .m-ubtn:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(105,110,46,.45)}
 .m-av{width:35px; height:35px; border-radius:50%; background:#e9ecef; display:grid; place-items:center; font-size:.9375rem; color:var(--m-ink); letter-spacing:.01em}
-.m-ubtn .m-av.m-av-on{background:var(--am-brand); color:#fff; font-weight:600; font-size:.875rem}
-.m-ubtn:hover .m-av.m-av-on{background:var(--am-brand-dark)}
-.m-login{display:inline-flex; align-items:center; height:34px; padding:0 14px; margin-right:10px; border-radius:8px; background:var(--am-brand); color:#fff; font-weight:600; font-size:.875rem; text-decoration:none; white-space:nowrap}
-.m-login:hover{background:var(--am-brand-dark); color:#fff; text-decoration:none}
-.m-login:focus-visible{outline:none; box-shadow:var(--am-focus)}
+.m-login{display:flex; align-items:center; height:100%; padding:0 10px; margin-right:6px; color:var(--m-ink); text-decoration:none; white-space:nowrap}
+.m-login:hover{background:#f5f5f5; color:var(--m-ink); text-decoration:none}
+.m-login:focus-visible{outline:none; box-shadow:inset 0 0 0 .2rem rgba(105,110,46,.45)}
 .m-umenu .m-uwho{display:flex; flex-direction:column; line-height:1.35; padding-bottom:.5rem}
 .m-umenu .m-uwho b{color:var(--m-ink); font-size:.9375rem; font-weight:600}
 .m-umenu .m-uwho span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
@@ -113,7 +111,7 @@
 @media (max-width:767px){ .m-tools{gap:6px; margin-right:8px} }
 
 /* avís d'idioma dels cursos en anglès */
-.app-langnote{margin:0; padding:8px max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px)); background:var(--am-accent-soft); border-bottom:1px solid #f1dcb3; color:#6b4a0c; font:500 .8125rem/1.4 var(--m-sans); text-align:center}
+.app-langnote{margin:0; padding:8px max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px)); background:var(--am-warning-bg); border-bottom:1px solid var(--am-warning-line); color:var(--am-warning-ink); font:.8203rem/1.4 var(--m-sans); text-align:center}
 
 /* pàgines senzilles de l'aplicació (càrrega, error, 404) */
 .app-page{max-width:830px; margin:0 auto; padding-block:44px 64px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); font-family:var(--m-sans); font-size:.9375rem; line-height:1.5; color:var(--m-ink)}

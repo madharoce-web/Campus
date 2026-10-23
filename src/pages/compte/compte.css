@@ -1,96 +1,49 @@
-/* Aula Mada · entrar i el meu compte. Tots els selectors queden dins [data-page="compte"]. */
-*{box-sizing:border-box}
-.ac{font-family:var(--am-sans); font-size:var(--am-fs); line-height:1.6; color:var(--am-ink); background:var(--am-bg-2); min-height:calc(100vh - 60px)}
-.ac :where(h1,h2,h3){margin:0; line-height:1.2; text-wrap:balance; color:var(--am-ink)}
-.ac :where(p){margin:0}
-.ac :where(a:not(.am-btn)){color:var(--am-brand-dark)}
-.ac a:focus-visible,.ac button:focus-visible,.ac .ac-input:focus-visible{outline:none; box-shadow:var(--am-focus)}
-.ac-wrap{max-width:var(--am-wrap); margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
-@media (min-width:768px){ .ac-wrap{padding-left:max(32px, env(safe-area-inset-left, 0px)); padding-right:max(32px, env(safe-area-inset-right, 0px))} }
+/* Aula Mada · entrar i el meu compte. Peces comunes a src/styles/site.css; aquí només el que és propi. */
 
-/* ---------- entrar ---------- */
-.ac-auth{display:flex; align-items:center; background:
-  radial-gradient(900px 480px at 85% -10%, var(--am-brand-soft), transparent 70%),
-  radial-gradient(700px 420px at -10% 110%, var(--am-accent-soft), transparent 70%),
-  var(--am-bg)}
-.ac-auth-in{width:100%; max-width:980px; margin:0 auto; padding:var(--am-s7) max(16px, env(safe-area-inset-right, 0px)) var(--am-s8) max(16px, env(safe-area-inset-left, 0px)); display:grid; grid-template-columns:minmax(0,1fr) minmax(0,440px); gap:var(--am-s7); align-items:center}
-.ac-auth-solo{grid-template-columns:minmax(0,440px); justify-content:center}
-.ac-perks h2{font-family:var(--am-serif); font-size:var(--am-fs-h2); font-weight:600; letter-spacing:-.01em; max-width:16ch}
-.ac-perks ul{list-style:none; margin:var(--am-s5) 0 0; padding:0; display:grid; gap:14px}
-.ac-perks li{display:flex; gap:12px; align-items:flex-start; font-size:var(--am-fs-lg); color:var(--am-ink-2)}
-.ac-perk-ico{flex:0 0 auto; display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:var(--am-brand-soft); color:var(--am-brand-dark); margin-top:1px}
-
-.ac-card{background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r4); box-shadow:var(--am-sh3); padding:var(--am-s6)}
-.ac-card h1,.ac-card h2{font-family:var(--am-serif); font-size:1.75rem; font-weight:600; letter-spacing:-.01em}
-.ac-mark{width:44px; height:44px; border-radius:12px; font-size:16px; background:var(--am-brand); color:#fff; margin-bottom:var(--am-s4)}
-.ac-mailmark{display:grid; place-items:center; width:48px; height:48px; border-radius:14px; background:var(--am-brand-soft); color:var(--am-brand-dark); margin-bottom:var(--am-s4)}
-.ac-ico{width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
-.ac-sub{margin-top:8px; color:var(--am-ink-2)}
+/* ---------- entrar: com la pàgina d'accés de l'aula virtual ---------- */
+.ac-login{min-height:calc(100vh - 60px); background:var(--am-bg-2); padding:48px max(16px, env(safe-area-inset-right, 0px)) 64px max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction:column; align-items:center; gap:16px}
+.ac-card{width:100%; max-width:460px; background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); box-shadow:0 .125rem .25rem rgba(0,0,0,.075); padding:32px 32px 28px}
+.ac-logo{display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:24px; color:#555a5e}
+.ac-mark{width:46px; height:46px; background:var(--am-brand-mark); color:#fff; display:grid; place-items:center; font-family:var(--am-serif); font-size:20px; letter-spacing:-.02em}
+.ac-wm{display:flex; flex-direction:column; font-family:var(--am-serif); text-transform:uppercase; font-size:19.5px; line-height:1.04}
+.ac-h{display:flex; align-items:center; gap:8px; font-size:1.4rem; font-weight:700}
+.ac-mailico{width:22px; height:22px; flex:0 0 auto; fill:none; stroke:var(--am-ink-2); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.ac-sub{margin:8px 0 20px; color:var(--am-ink-2)}
 .ac-sub b{color:var(--am-ink); word-break:break-all}
-.ac-card .ac-sub{margin-bottom:var(--am-s5)}
-.ac-google{background:#fff; color:var(--am-ink); border-color:var(--am-line-2); gap:12px}
-.ac-google:hover{background:var(--am-bg-2); border-color:var(--am-ink-3); color:var(--am-ink)}
-.ac-g{width:20px; height:20px; flex:0 0 auto}
-.ac-or{display:flex; align-items:center; gap:12px; margin:var(--am-s5) 0; color:var(--am-ink-3); font-size:var(--am-fs-sm)}
+.ac-submit{margin-top:16px}
+.ac-code{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; font-size:1.25rem; letter-spacing:.3em}
+.ac-or{display:flex; align-items:center; gap:12px; margin:20px 0 14px; color:var(--am-ink-3); font-size:var(--am-fs-sm)}
 .ac-or::before,.ac-or::after{content:""; flex:1; height:1px; background:var(--am-line)}
-.ac-label{display:block; margin-bottom:6px; font-size:var(--am-fs-sm); font-weight:600; color:var(--am-ink)}
-.ac-input{display:block; width:100%; min-height:46px; padding:10px 14px; border:1px solid var(--am-line-2); border-radius:var(--am-r2); background:#fff; color:var(--am-ink); font:inherit; font-size:var(--am-fs); transition:border-color .15s, box-shadow .15s}
-.ac-input:hover{border-color:var(--am-ink-3)}
-.ac-input:focus{outline:none; border-color:var(--am-brand); box-shadow:var(--am-focus)}
-.ac-input[aria-invalid="true"]{border-color:#c0392b}
-select.ac-input{appearance:none; padding-right:40px; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%2342504b' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center / 12px}
-.ac-code{font:600 1.5rem/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:.35em; text-align:center}
-.ac-card form .am-btn{margin-top:var(--am-s4)}
-.ac-err{margin-top:8px; color:#b0322a; font-size:var(--am-fs-sm); font-weight:500}
-.ac-ok{color:var(--am-brand-dark); font-size:var(--am-fs-sm); font-weight:600}
-.ac-fine{margin-top:var(--am-s5); font-size:.8125rem; color:var(--am-ink-3)}
-.ac-links{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 16px; margin-top:var(--am-s5)}
-.ac-link{border:0; background:none; padding:0; font:inherit; font-size:var(--am-fs-sm); font-weight:600; color:var(--am-brand-dark); cursor:pointer; border-radius:4px}
-.ac-link:hover{text-decoration:underline}
-.ac-link:disabled{color:var(--am-ink-3); font-weight:500; cursor:default; text-decoration:none}
-.ac-wait{display:flex; align-items:center; justify-content:center; gap:12px; color:var(--am-ink-2); min-height:120px}
-.ac-spin{display:inline-block; width:16px; height:16px; flex:0 0 auto; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; animation:ac-spin .8s linear infinite; opacity:.8}
-@keyframes ac-spin{to{transform:rotate(360deg)}}
+.ac-google{gap:10px}
+.ac-g{width:18px; height:18px; flex:0 0 auto}
+.ac-fine{margin-top:20px; padding-top:14px; border-top:1px solid var(--am-line); font-size:var(--am-fs-sm); color:var(--am-ink-3)}
+.ac-links{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 16px; margin-top:16px}
+.ac-link{border:0; background:none; padding:0; font:inherit; color:var(--am-brand); cursor:pointer}
+.ac-link:hover{color:var(--am-brand-dark); text-decoration:underline}
+.ac-link:disabled{color:var(--am-ink-3); cursor:default; text-decoration:none}
+.ac-perks{width:100%; max-width:460px; font-size:var(--am-fs-sm); color:var(--am-ink-2)}
+.ac-perks h2{font-size:var(--am-fs-sm); font-weight:700; color:var(--am-ink); margin-bottom:4px}
+.ac-perks ul{margin:0; padding-left:1.2rem}
+.ac-wait{display:flex; align-items:center; justify-content:center; gap:10px; color:var(--am-ink-3); min-height:96px}
 
-/* ---------- el meu compte ---------- */
-.ac-hero{background:radial-gradient(800px 360px at 90% -20%, var(--am-brand-soft), transparent 70%), #fff; border-bottom:1px solid var(--am-line); padding:var(--am-s6) 0 var(--am-s6)}
-.ac-crumbs{display:flex; flex-wrap:wrap; gap:6px; font-size:var(--am-fs-sm); color:var(--am-ink-3)}
-.ac-crumbs a{color:var(--am-ink-2); text-decoration:none}
-.ac-crumbs a:hover{color:var(--am-brand-dark); text-decoration:underline}
-.ac-title{display:flex; align-items:center; gap:16px; margin-top:var(--am-s4)}
-.ac-title h1{font-family:var(--am-serif); font-size:clamp(1.9rem, 1.4rem + 2vw, 2.75rem); font-weight:600; letter-spacing:-.01em}
-.ac-avatar{flex:0 0 auto; display:grid; place-items:center; width:56px; height:56px; border-radius:50%; background:var(--am-brand); color:#fff; font:600 1.25rem/1 var(--am-sans)}
+/* ---------- el meu compte: com el perfil de l'aula virtual ---------- */
+.ac-head{gap:16px; margin-bottom:24px}
+.ac-avatar{flex:0 0 auto; display:grid; place-items:center; width:64px; height:64px; border-radius:50%; background:var(--am-bg-3); color:var(--am-ink); font-size:1.4rem}
 .ac-email{color:var(--am-ink-2); word-break:break-all}
-.ac-body{padding-top:var(--am-s6); padding-bottom:var(--am-s8)}
-.ac-card-narrow{max-width:520px}
-.ac-card-narrow .ac-sub{margin-bottom:var(--am-s5)}
-.ac-grid{display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:var(--am-s4); align-items:start}
-.ac-side{display:grid; gap:var(--am-s4)}
-.ac-panel{background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r3); padding:var(--am-s5)}
-.ac-panel h2{font-size:1.125rem; font-weight:650}
-.ac-panel-head{display:flex; align-items:center; justify-content:space-between; gap:12px}
-.ac-p{margin-top:6px; color:var(--am-ink-2); font-size:.9375rem}
-.ac-form{display:grid; gap:var(--am-s4); margin-top:var(--am-s4)}
-.ac-actions{display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; margin-top:var(--am-s4)}
-.ac-form .ac-actions{margin-top:0}
-.ac-sync{display:flex; align-items:center; gap:8px; margin-top:var(--am-s4); font-size:var(--am-fs-sm); font-weight:600; color:var(--am-ink-2)}
-.ac-sync-dot{width:9px; height:9px; border-radius:50%; background:var(--am-line-2)}
-.ac-sync.is-ok .ac-sync-dot{background:var(--am-brand); box-shadow:0 0 0 4px var(--am-brand-soft)}
-.ac-sync.is-syncing .ac-sync-dot{background:var(--am-accent); box-shadow:0 0 0 4px var(--am-accent-soft)}
-.ac-sync.is-error{color:#b0322a}
-.ac-sync.is-error .ac-sync-dot{background:#c0392b}
-.ac-danger{border-color:#f0c9c5}
-.ac-danger-btn{background:#fff; color:#b0322a; border-color:#e6a49d; margin-top:var(--am-s4)}
-.ac-danger-btn:hover{background:#fdf1ef; color:#922820; border-color:#c0392b}
-.ac-danger-solid{background:#b0322a; color:#fff; border-color:#b0322a; margin-top:0}
-.ac-danger-solid:hover{background:#922820; color:#fff}
+.ac-guest{max-width:560px}
+.ac-grid{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:12px; align-items:start}
+.ac-col{display:grid; gap:12px}
+.ac-p{color:var(--am-ink-2)}
+.ac-form{margin-top:4px}
+.ac-actions{display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-top:14px}
+.ac-ok{color:var(--am-success)}
+.ac-sync{display:flex; align-items:center; gap:8px; margin-top:12px}
+.ac-sync-dot{width:10px; height:10px; border-radius:50%; background:var(--am-line-2)}
+.ac-sync.is-ok .ac-sync-dot{background:var(--am-success)}
+.ac-sync.is-syncing .ac-sync-dot{background:#f0ad4e}
+.ac-sync.is-error{color:var(--am-danger)}
+.ac-sync.is-error .ac-sync-dot{background:var(--am-danger)}
+.ac-danger{border-color:#efcbc6}
 
-@media (max-width:860px){
-  .ac-auth-in{grid-template-columns:minmax(0,1fr); gap:var(--am-s6); padding-top:var(--am-s6)}
-  .ac-perks{order:2}
-  .ac-grid{grid-template-columns:minmax(0,1fr)}
-}
-@media (max-width:480px){
-  .ac-card{padding:var(--am-s5); border-radius:var(--am-r3)}
-}
-@media (prefers-reduced-motion:reduce){ .ac-spin{animation:none} .ac-input{transition:none} }
+@media (max-width:860px){ .ac-grid{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:480px){ .ac-card{padding:24px 18px 20px} .ac-login{padding-top:24px} }

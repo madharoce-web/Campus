@@ -11,16 +11,16 @@ export const GoogleIcon = () => (
 );
 
 export const MailIcon = () => (
-  <svg className="ac-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 6.5 12 13l8.5-6.5" /></svg>
+  <svg className="ac-mailico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 6.5 12 13l8.5-6.5" /></svg>
 );
 
-export const Spinner = () => <span className="ac-spin" aria-hidden="true" />;
+export const Spinner = () => <span className="am-spin" aria-hidden="true" />;
 
 /** Molles de pa de les pàgines del compte. */
 export function Crumbs({ Lx, children }) {
   return (
-    <nav className="ac-crumbs" aria-label={Lx.crumbs}>
-      <Link to="/">{Lx.home}</Link><span aria-hidden="true">/</span>{children}
+    <nav className="am-crumbs" aria-label={Lx.crumbs}>
+      <Link to="/">{Lx.home}</Link><span className="am-sep">/</span>{children}
     </nav>
   );
 }

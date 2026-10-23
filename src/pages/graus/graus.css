@@ -1,89 +1,21 @@
-/* Aula Mada · catàleg de graus. Tots els selectors queden dins [data-page="graus"]. */
-*{box-sizing:border-box}
-.gr{font-family:var(--am-sans); font-size:var(--am-fs); line-height:1.6; color:var(--am-ink); background:var(--am-bg-2); min-height:calc(100vh - 60px)}
-.gr :where(h1,h2,h3){margin:0; line-height:1.2; text-wrap:balance; color:var(--am-ink)}
-.gr :where(p){margin:0}
-.gr :where(a:not(.am-btn)){color:inherit}
-.gr a:focus-visible{outline:none; box-shadow:var(--am-focus); border-radius:6px}
-.gr-wrap{max-width:var(--am-wrap); margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
-@media (min-width:768px){ .gr-wrap{padding-left:max(32px, env(safe-area-inset-left, 0px)); padding-right:max(32px, env(safe-area-inset-right, 0px))} }
+/* Aula Mada · catàleg de graus. Peces comunes a src/styles/site.css; aquí només el que és propi. */
+.gr-thumb{flex:0 0 auto; display:block; line-height:0; border-radius:var(--am-r); overflow:hidden}
+.gr-timg{display:block; width:150px; height:100px}
+.gr-deg-head{display:flex; align-items:center; flex-wrap:wrap; gap:6px 10px}
+.gr-deg-name{font-size:1.1rem; font-weight:400}
+.gr-n{margin-top:6px; font-size:var(--am-fs-sm)}
+.gr-term-head{display:flex; align-items:center; flex-wrap:wrap; gap:6px 10px}
 
-/* capçalera */
-.gr-hero{background:radial-gradient(800px 360px at 90% -20%, var(--dbg, var(--am-brand-soft)), transparent 70%), #fff; border-bottom:1px solid var(--am-line); padding:var(--am-s6) 0 var(--am-s7)}
-.gr-crumbs{display:flex; flex-wrap:wrap; gap:6px; font-size:var(--am-fs-sm); color:var(--am-ink-3)}
-.gr-crumbs a{color:var(--am-ink-2); text-decoration:none}
-.gr-crumbs a:hover{color:var(--am-brand-dark); text-decoration:underline}
-.gr-hero h1{margin-top:var(--am-s4); font-family:var(--am-serif); font-size:clamp(1.9rem, 1.4rem + 2vw, 2.75rem); font-weight:600; letter-spacing:-.01em}
-.gr-title{display:flex; align-items:center; flex-wrap:wrap; gap:14px; margin-top:var(--am-s4)}
-.gr-title h1{margin:0}
-.gr-lead{margin-top:var(--am-s3); font-size:var(--am-fs-lg); color:var(--am-ink-2); max-width:64ch}
-.gr-body{padding-top:var(--am-s6); padding-bottom:var(--am-s8)}
-.gr-muted{color:var(--am-ink-3)}
+.gr-soon{max-width:720px}
+.gr-soon-h{font-size:1.0625rem; font-weight:700; margin-bottom:4px}
+.gr-soon .am-btn-row{margin-top:12px}
+.gr-notify-block{max-width:720px}
+.gr-notify p{color:var(--am-ink-2)}
+.gr-notify-row{display:flex; gap:8px; margin-top:12px}
+.gr-notify-row .am-input{flex:1; min-width:0}
+.gr-notified{margin:0}
 
-/* llista de graus */
-.gr-degs{list-style:none; margin:0; padding:0; display:grid; gap:var(--am-s4)}
-.gr-deg{position:relative; display:flex; gap:var(--am-s5); align-items:flex-start; padding:var(--am-s5); background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r3); transition:box-shadow .2s, border-color .2s}
-.gr-deg:hover{box-shadow:var(--am-sh2); border-color:var(--am-line-2)}
-.gr-deg.is-live{border-color:color-mix(in srgb, var(--dc) 45%, white)}
-.gr-deg-ico{flex:0 0 auto; display:grid; place-items:center; width:52px; height:52px; border-radius:14px; background:var(--dbg); color:var(--dc)}
-.gr-deg-ico svg{width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
-.gr-deg-ico-lg{width:56px; height:56px}
-.gr-deg-main{flex:1; min-width:0}
-.gr-deg-head{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px}
-.gr-deg h2{font-size:1.25rem; font-weight:650}
-.gr-deg h2 a{text-decoration:none}
-.gr-deg h2 a::after{content:""; position:absolute; inset:0; border-radius:inherit}
-.gr-deg h2 a:focus-visible{box-shadow:none}
-.gr-deg h2 a:focus-visible::after{box-shadow:var(--am-focus)}
-.gr-deg-main > p{margin-top:6px; color:var(--am-ink-2); max-width:72ch}
-.gr-deg-n{font-size:var(--am-fs-sm); font-weight:600; color:var(--am-ink-3)}
-.gr-deg-go{align-self:center; color:var(--am-ink-3)}
-.gr-deg-go .am-arrow{width:22px; height:22px}
-.gr-deg:hover .gr-deg-go{color:var(--am-brand)}
-
-/* semestres i assignatures */
-.gr-term + .gr-term{margin-top:var(--am-s7)}
-.gr-term-head{display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; margin-bottom:var(--am-s4)}
-.gr-term-head h2{font-family:var(--am-serif); font-size:1.5rem; font-weight:600}
-.gr-subs{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:var(--am-s4)}
-.gr-sub{display:flex; flex-direction:column; background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r3); overflow:hidden; transition:box-shadow .2s}
-.gr-sub:hover{box-shadow:var(--am-sh2)}
-.gr-sub-img{display:block; height:96px}
-.gr-pat{display:block; width:100%; height:100%}
-.gr-sub-body{display:flex; flex-direction:column; flex:1; padding:var(--am-s5)}
-.gr-sub-cat{font-size:.8125rem; color:var(--am-ink-3)}
-.gr-sub h3{margin-top:2px; font-size:1.1875rem; font-weight:650}
-.gr-sub h3 a{text-decoration:none}
-.gr-sub h3 a:hover{color:var(--am-brand-dark); text-decoration:underline}
-.gr-sub-desc{margin-top:8px; font-size:.9375rem; color:var(--am-ink-2)}
-.gr-secs{list-style:none; margin:var(--am-s4) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:6px}
-.gr-secs a{display:inline-block; padding:3px 10px; border:1px solid var(--am-line); border-radius:999px; font-size:.8125rem; color:var(--am-ink-2); text-decoration:none; background:var(--am-bg-2)}
-.gr-secs a:hover{border-color:var(--am-brand); color:var(--am-brand-dark); background:var(--am-brand-tint)}
-.gr-sub-foot{margin-top:auto; padding-top:var(--am-s5); display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px}
-.gr-last{font-size:.8125rem; color:var(--am-ink-3)}
-
-/* grau que encara no hi és */
-.gr-soon{max-width:640px; padding:var(--am-s6); background:#fff; border:1px dashed var(--am-line-2); border-radius:var(--am-r3)}
-.gr-soon h2{font-size:1.375rem; font-weight:650}
-.gr-soon > p{margin-top:10px; color:var(--am-ink-2)}
-.gr-soon-ctas{display:flex; flex-wrap:wrap; gap:10px; margin-top:var(--am-s5)}
-
-.gr-notify,.gr-notified{margin-top:var(--am-s6); padding-top:var(--am-s5); border-top:1px solid var(--am-line)}
-.gr-notify h3{font-size:1.0625rem; font-weight:650}
-.gr-notify > p{margin-top:6px; color:var(--am-ink-2); font-size:.9375rem}
-.gr-notify-row{display:flex; gap:10px; margin-top:var(--am-s4)}
-.gr-input{flex:1; min-width:0; min-height:40px; padding:8px 12px; border:1px solid var(--am-line-2); border-radius:var(--am-r2); font:inherit; font-size:.9375rem; color:var(--am-ink); background:#fff}
-.gr-input:focus{outline:none; border-color:var(--am-brand); box-shadow:var(--am-focus)}
-.gr-input[aria-invalid="true"]{border-color:#c0392b}
-.gr-err{margin-top:8px; color:#b0322a; font-size:var(--am-fs-sm); font-weight:500}
-.gr-notified{color:var(--am-brand-dark); font-weight:600}
-.gr-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
-
-@media (max-width:767px){
+@media (max-width:640px){
+  .gr-timg{width:96px; height:68px}
   .gr-notify-row{flex-direction:column}
-  .gr-subs{grid-template-columns:minmax(0,1fr)}
-  .gr-deg{gap:var(--am-s4); padding:var(--am-s4)}
-  .gr-deg-ico{width:44px; height:44px; border-radius:12px}
-  .gr-deg-go{display:none}
 }
-@media (prefers-reduced-motion:reduce){ .gr-deg,.gr-sub{transition:none} }
