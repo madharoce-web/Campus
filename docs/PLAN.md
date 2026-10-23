@@ -32,8 +32,11 @@ logos de la universidad) · **ca + es + en** · **naming por definir** (se propo
 
 ## Fase 0 — Marca, legal y cimientos (antes de abrir a otros alumnos)
 
-1. **Naming**: proponer 5–8 nombres neutrales y cortos (ej. *Repasa*, *Apuntia*, *Temaris*, *Examina*,
-   *Estudium*, *Aula Nova*) y comprobar dominio `.com`/`.es`/`.eu`/`.app` y redes. Decide el usuario.
+1. **Naming**: marca elegida **Aula Mada**. Comprobación (23-10-2026): `aulamada.com`, `aulamada.app`,
+   `aulamada.es` y `aulamada.eu` aparecen libres; `mada.com`, `mada.es`, `mada.eu`, `mada.app` ya
+   están registrados ("mada" es además la red de pagos de Arabia Saudí). Registrar `aulamada.com`
+   (principal) y `aulamada.es` (redirige); reservar `@aulamada` en redes. Antes de invertir en la
+   marca, buscar "Aula Mada" en el buscador de marcas de la OEPM y en TMview (EUIPO).
 2. **Contenidos y derechos de autor** (riesgo principal del proyecto):
    - Reescribir siempre con palabras propias; no copiar diapositivas, figuras ni enunciados literales
      de exámenes; ejercicios "estilo examen" reformulados (otros datos, otra redacción).
