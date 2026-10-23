@@ -1,7 +1,7 @@
 import { useLang } from '../../../lib/i18n.jsx';
 import { useSlot } from '../../_doc/store.js';
 import Txt from '../../_doc/Txt.jsx';
-import { Q0, QF, Q_PRESETS, R0, RF, R_NAMES, qEval, qTagNote, qWhy, rEval, rGraph, rPreset, vennPlaces } from '../engine/quant.js';
+import { Q0, QF, Q_PRESETS, R0, RF, R_NAMES, qEval, qTagNote, qWhy, rEval, rGraph, rPreset, vennPlaces } from '../engine/quantificadors.js';
 
 const Pill = ({ v }) => <span className={'lb-pill ' + (v ? 't' : 'f')}>{v ? 'T' : 'F'}</span>;
 
