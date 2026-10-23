@@ -56,6 +56,10 @@ la ruta nova (`/mates/exam`).
   atributs `onclick` dins l'HTML ni funcions globals a `window`.
 - **Lògica pura** (generadors d'exercicis, motors matemàtics, intèrprets, correctors):
   mòduls ES sense accés al DOM, importats pels components.
+- **Noms de fitxer**: en desenvolupament el navegador demana cada mòdul pel seu nom, i els
+  bloquejadors de publicitat (uBlock Origin, AdGuard… amb la llista EasyPrivacy) bloquegen noms
+  com `quant.js`, `ads.js`, `analytics.js` o `track.js`. Feu servir noms descriptius en català
+  (`quantificadors.js`) i comproveu-ho si un mòdul no es carrega en un navegador amb bloquejador.
 - **Dades grans**: fitxers JSON dins del curs, carregats amb `import()` dinàmic quan
   convé (per exemple, un fitxer per idioma).
 
