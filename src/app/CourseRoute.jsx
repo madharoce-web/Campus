@@ -9,12 +9,12 @@ function lazyCourse(c) {
 }
 
 function Loading() {
-  const { lang } = useLang();
+  const { ui: lang } = useLang();
   return <div className="app-loading" role="status"><span className="app-spin" aria-hidden="true" />{T[lang].loading}</div>;
 }
 
 function LoadError({ onRetry }) {
-  const { lang } = useLang();
+  const { ui: lang } = useLang();
   return (
     <div className="app-page app-err" role="alert">
       <p>{T[lang].loadErr}</p>

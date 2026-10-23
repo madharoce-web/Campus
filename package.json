@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Campus Semestre 1: apunts, laboratoris i exercicis del primer semestre d'Informàtica (ca/es)",
+  "description": "Aula Mada: apunts, laboratoris, exercicis i simulacres d'examen per a estudiants universitaris (ca/es/en)",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

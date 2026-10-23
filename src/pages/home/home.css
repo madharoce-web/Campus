@@ -1,4 +1,4 @@
-/* Semestre 1 · pàgina principal (Inici, Tauler, Els meus cursos) */
+/* Aula Mada · campus (Tauler, Els meus cursos) */
 *{box-sizing:border-box}
 body{margin:0; background:#fff; color:var(--m-ink); font-family:var(--m-sans); font-size:.9375rem; line-height:1.5}
 body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top, 0px); z-index:61; background:#fff}
@@ -44,7 +44,6 @@ h1,h2,h3,h4,h5{margin:0; line-height:1.2; text-wrap:balance}
 .m-h1{font-size:2.05rem; font-weight:700; margin-bottom:26px; letter-spacing:-.005em}
 .m-h5{font-size:1.17rem; font-weight:400}
 .m-hr{border:0; border-top:1px solid var(--m-line); margin:14px 0 16px}
-.m-intro{max-width:68ch; color:var(--m-ink-2); margin:-12px 0 26px}
 
 /* ---------- barra de filtres ---------- */
 .m-filters{display:flex; gap:8px; align-items:stretch; margin-bottom:12px}
@@ -111,19 +110,6 @@ h1,h2,h3,h4,h5{margin:0; line-height:1.2; text-wrap:balance}
 .m-badge{display:inline-flex; align-items:center; font-size:.8rem; border:1px solid var(--m-line-2); border-radius:.4rem; padding:.15rem .55rem; color:var(--m-ink-2); background:#fff; white-space:nowrap}
 .m-badge:hover{border-color:var(--m-olive); color:var(--m-olive-dark); text-decoration:none; background:var(--m-olive-soft)}
 
-/* ---------- inici ---------- */
-.m-cboxes{display:flex; flex-direction:column}
-.m-cbox{display:flex; gap:18px; padding:16px 0; border-bottom:1px solid var(--m-line)}
-.m-cbox .m-timg{width:170px; height:112px}
-.m-cbh{font-size:1.1rem; font-weight:400; display:flex; gap:6px; align-items:baseline}
-.m-cbox .m-ccat{font-size:.85rem; color:var(--m-ink-3)}
-.m-cboxf{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:10px}
-.m-cboxf .m-clast{margin:0}
-.m-btn{display:inline-flex; align-items:center; justify-content:center; border:1px solid transparent; border-radius:.5rem; padding:.3rem .75rem; font-size:.9rem; line-height:1.5; cursor:pointer; white-space:nowrap}
-.m-btn:hover{text-decoration:none}
-.m-btn-primary{background:var(--m-primary); border-color:var(--m-primary); color:#fff}
-.m-btn-primary:hover{background:var(--m-primary-dark); border-color:var(--m-primary-dark); color:#fff}
-
 /* ---------- pantalles estretes: el calaix passa per sobre ---------- */
 @media (max-width:999px){
   .m-layout.m-dopen{grid-template-columns:minmax(0,1fr)}
@@ -140,9 +126,6 @@ h1,h2,h3,h4,h5{margin:0; line-height:1.2; text-wrap:balance}
   .m-main{padding-top:64px}
   .m-filters{flex-wrap:wrap}
   .m-search{flex:1 1 100%; order:-1}
-  .m-cbox{flex-direction:column; gap:10px}
-  .m-cbox .m-timg{width:100%; height:96px}
-  .m-cbox .m-cthumb{width:100%}
   .m-sum .m-crow{flex-wrap:wrap}
   .m-sum .m-timg{width:100px; height:70px}
 }

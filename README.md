@@ -1,8 +1,17 @@
-# Campus · Semestre 1
+# Aula Mada
 
-Web de estudio del primer semestre del grado en Informática: apuntes, laboratorios interactivos,
-ejercicios resueltos paso a paso y simulacros de examen, en catalán y castellano, con el aspecto
-de un aula virtual.
+Web de estudio universitaria: apuntes, laboratorios interactivos, ejercicios resueltos paso a paso
+y simulacros de examen. Ahora mismo incluye el primer semestre de Ingeniería Informática; ADE,
+Enfermería y Magisterio aparecen como «próximamente». La interfaz está en catalán, castellano e
+inglés; el contenido de los cursos, en catalán y castellano.
+
+| Página | Ruta |
+|---|---|
+| Portada pública (qué es, cómo funciona, grados, precio, preguntas) | `/` |
+| Catálogo de grados y página de cada grado | `/graus`, `/graus/:grau` (`/grados/…` y `/degrees/…` redirigen) |
+| Mis cursos y área personal | `/cursos`, `/tauler` |
+
+Cursos del primer semestre de Informática:
 
 | Curso | Ruta | Contenido |
 |---|---|---|
@@ -54,8 +63,11 @@ Cloudflare Pages y dominio propio, está en **[docs/DESPLIEGUE.md](docs/DESPLIEG
 
 ```
 src/
-  app/            barra superior, cabecera de curso, rutas
-  pages/home/     portada (Inicio, Área personal, Mis cursos)
+  app/            barra superior, pie, cabecera de curso, rutas
+  catalog/        grados y semestres (qué hay disponible y qué llegará)
+  pages/landing/  portada pública
+  pages/graus/    catálogo de grados
+  pages/home/     Mis cursos y área personal
   courses/<curso> cada curso, cargado bajo demanda
   shared/cpp/     motor de C++ compartido
   lib/            idioma, almacenamiento, utilidades
