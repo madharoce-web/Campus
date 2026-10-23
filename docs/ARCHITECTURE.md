@@ -9,9 +9,11 @@ src/
   app/                   closca: barra superior, peu, capçalera de curs, pestanyes, rutes, 404
   catalog/degrees.js     graus i semestres: què està disponible i què arribarà aviat
   pages/landing/         portada pública
-  pages/graus/           catàleg de graus i pàgina de cada grau
-  pages/compte/          entrar, tornada de l'inici de sessió i el meu compte
+  pages/inici/           campus: inici del lloc
   pages/home/            campus: Tauler i Els meus cursos
+  pages/graus/           catàleg de graus i pàgina de cada grau
+  pages/compte/          entrar, crear un compte i el meu compte
+  catalog/progress.js    progrés de cada assignatura per al tauler
   courses/
     registry.js          metadades dels cursos, targetes de la portada i activitats
     <curs>/index.jsx     cada curs, carregat sota demanda (un fragment de codi per curs)
@@ -30,18 +32,17 @@ tests/e2e/               proves de Playwright
 
 | Ruta | Pàgina |
 |---|---|
-| `/` | Portada pública |
-| `/graus`, `/graus/:grau` | Catàleg de graus (`/grados/…` i `/degrees/…` hi redirigeixen) |
-| `/cursos`, `/tauler` | Els meus cursos i tauler |
-| `/inici` | Redirigeix a `/graus/informatica` |
-| `/entrar`, `/auth/callback`, `/compte` | Entrar, tornada de Google o del correu, el meu compte |
-| `/mates/:secció` | Teoria Mates CP1 |
-| `/logica/:secció` | Lògica i grafs |
-| `/economia/:secció` | Principis d'economia |
-| `/computadors/:secció` | Computadors CP1 |
-| `/programacio/:pàgina` | Iniciació a la Programació |
-| `/pseudocodi/:secció` | Pseudocodi CP1 |
-| `/cpp/:vista` | C++ a contrarellotge |
+| `/` | Portada pública (pàgina a part, amb capçalera i peu propis): avantatges, graus i «Crea un compte» |
+| `/entrar`, `/registre`, `/auth/callback` | Entrar, crear un compte (el mateix camí) i tornada de Google o del correu |
+| `/graus`, `/graus/:grau` | Catàleg de graus, públic (`/grados/…` i `/degrees/…` hi redirigeixen) |
+| `/inici` | Campus: inici del lloc (resum, graus, notícies) |
+| `/tauler` | Campus: tauler (resum, progrés per assignatura, accedits recentment, calendari) |
+| `/cursos` | Campus: els meus cursos |
+| `/compte` | Campus: el meu compte |
+| `/mates/:secció`, `/logica/:secció`… | Campus: cada curs |
+
+Amb els comptes configurats, el campus és només per a qui ha entrat (`app/RequireAccount.jsx`):
+qui no ha entrat va a `/entrar` i en sortir torna a la portada. Sense comptes (mode local), és obert.
 
 Els enllaços de la versió antica d'un sol fitxer (`mates.html#exam`) es redirigeixen a
 la ruta nova (`/mates/exam`).
@@ -64,12 +65,14 @@ la ruta nova (`/mates/exam`).
   [COMPTES.md](COMPTES.md).
 - **Catàleg**: una assignatura nova s'afegeix a `src/courses/registry.js` (`COURSES` i `CARDS`, amb
   `degree` i `term`) i a la llista `subjects` del seu semestre a `src/catalog/degrees.js`.
-- **Disseny**: tot el lloc té l'aspecte d'una aula virtual acadèmica (com la closca i «Els meus cursos»):
-  fons blanc pla, línies fines, enllaços oliva, botons blaus, targetes amb patró, blocs a la dreta.
-  Res de degradats, ombres grans, tipografies decoratives ni «maquetes» de màrqueting. Les pàgines
-  del lloc fan servir les fitxes `--am-*` de `src/styles/tokens.css` i les peces `am-*` de
-  `src/styles/site.css` (maquetació amb blocs, molles de pa, botons, insígnies, avisos, blocs,
-  targetes, formularis i peu); cada pàgina només afegeix el que és propi.
+- **Disseny**: el campus té l'aspecte d'una aula virtual acadèmica (Moodle): fons blanc pla, línies
+  fines, enllaços i botons oliva, icones turquesa i lila, targetes amb patró i el calaix de blocs a la
+  dreta. Totes les pàgines del campus fan servir `app/Page.jsx` (contingut + calaix) i els blocs de
+  `app/blocks.jsx` (navegació, calendari, llistes d'enllaços). La portada pública és a part, amb els
+  mateixos colors. Res de degradats, ombres grans ni tipografies decoratives. Fitxes `--am-*` a
+  `src/styles/tokens.css`; peces `am-*` a `src/styles/site.css`.
+- **Progrés al tauler**: `catalog/progress.js` llegeix l'estat que ja desen els cursos. Un curs nou que
+  desi el progrés hi afegeix la seva funció (i el total a la prova `tests/e2e/progress.spec.js`).
 - **Estils**: cada curs importa el seu CSS des de `src/courses/<curs>/`. El connector
   `tools/postcss-scope-courses.js` prefixa tots els selectors amb `[data-course="<curs>"]`,
   l'atribut de l'element arrel del curs (`<CourseScope>`), de manera que els estils d'un curs

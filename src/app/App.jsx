@@ -9,6 +9,8 @@ import Home from '../pages/home/Home.jsx';
 import Entrar from '../pages/compte/Entrar.jsx';
 import Callback from '../pages/compte/Callback.jsx';
 import Compte from '../pages/compte/Compte.jsx';
+import Inici from '../pages/inici/Inici.jsx';
+import RequireAccount from './RequireAccount.jsx';
 import { COURSES } from '../courses/registry.js';
 
 /** /grados/ade i /degrees/ade → /graus/ade */
@@ -29,16 +31,17 @@ export default function App() {
           <Route key={p + '/:grau'} path={p + '/:grau'} element={<ToGraus />} />,
         ])}
         <Route path="entrar" element={<Entrar />} />
+        <Route path="registre" element={<Entrar signup />} />
         <Route path="login" element={<Navigate replace to="/entrar" />} />
         <Route path="auth/callback" element={<Callback />} />
-        <Route path="compte" element={<Compte />} />
-        <Route path="tauler" element={<Home view="tauler" />} />
-        <Route path="cursos" element={<Home view="cursos" />} />
-        {/* l'antiga pàgina d'inici del semestre és ara la pàgina del grau */}
-        <Route path="inici" element={<Navigate replace to="/graus/informatica" />} />
-        <Route path="campus" element={<Navigate replace to="/cursos" />} />
+        {/* el campus: amb comptes configurats, només per a qui ha entrat */}
+        <Route path="inici" element={<RequireAccount><Inici /></RequireAccount>} />
+        <Route path="tauler" element={<RequireAccount><Home view="tauler" /></RequireAccount>} />
+        <Route path="cursos" element={<RequireAccount><Home view="cursos" /></RequireAccount>} />
+        <Route path="compte" element={<RequireAccount><Compte /></RequireAccount>} />
+        <Route path="campus" element={<Navigate replace to="/tauler" />} />
         {COURSES.map((c) => (
-          <Route key={c.k} path={c.path.slice(1) + '/*'} element={<CourseRoute course={c} />} />
+          <Route key={c.k} path={c.path.slice(1) + '/*'} element={<RequireAccount><CourseRoute course={c} /></RequireAccount>} />
         ))}
         <Route path=":file" element={<LegacyRedirect />} />
         <Route path="*" element={<NotFound />} />

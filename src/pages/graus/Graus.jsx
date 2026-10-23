@@ -4,12 +4,13 @@ import { useLang } from '../../lib/i18n.jsx';
 import { useAuth } from '../../lib/auth.jsx';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import { agoText, cardVisitOf } from '../../lib/visits.js';
-import { DEGREES, DEGREE_BY_KEY, subjectsOf } from '../../catalog/degrees.js';
+import { DEGREES, DEGREE_BY_KEY } from '../../catalog/degrees.js';
 import { CARD_BY_KEY } from '../../courses/registry.js';
-import SiteFooter from '../../app/SiteFooter.jsx';
+import Page from '../../app/Page.jsx';
+import { NavBlock } from '../../app/blocks.jsx';
 import NotFound from '../../app/NotFound.jsx';
 import Pattern from '../home/Pattern.jsx';
-import { DegreeImage } from './DegreeCard.jsx';
+import DegreeCard from './DegreeCard.jsx';
 import { DegreeIcon } from './icons.jsx';
 import { S } from './strings.js';
 import './graus.css';
@@ -17,38 +18,23 @@ import './graus.css';
 function Crumbs({ Lx, children }) {
   return (
     <nav className="am-crumbs" aria-label={Lx.crumbs}>
-      <Link to="/">{Lx.home}</Link><span className="am-sep">/</span>{children}
+      <Link to="/inici">{Lx.home}</Link><span className="am-sep">/</span>{children}
     </nav>
   );
 }
 
-/** Llista de graus (/graus), com el resum de «Els meus cursos». */
+/** Llista de graus (/graus), com «Els meus cursos». */
 function DegreeList({ Lx }) {
-  const { t } = useLang();
   useDocumentTitle(Lx.title);
   return (
     <>
       <Crumbs Lx={Lx}><span>{Lx.title}</span></Crumbs>
       <h1 className="am-h1">{Lx.title}</h1>
-      <p className="am-lead">{Lx.lead}</p>
-      <ul className="am-rows">
-        {DEGREES.map((d) => {
-          const live = d.status === 'live';
-          return (
-            <li key={d.k} className="am-row gr-deg" data-degree={d.k}>
-              <Link className="gr-thumb" to={'/graus/' + d.k} tabIndex={-1} aria-hidden="true"><DegreeImage d={d} className="gr-timg" /></Link>
-              <div className="am-row-body">
-                <div className="gr-deg-head">
-                  <h2 className="gr-deg-name"><Link to={'/graus/' + d.k}>{t(d.name)}</Link></h2>
-                  <span className={'am-badge' + (live ? ' am-badge-live' : '')}>{live ? Lx.live : Lx.soon}</span>
-                </div>
-                <p>{t(d.desc)}</p>
-                {live && <p className="am-muted gr-n">{Lx.subjects.replace('%d', subjectsOf(d).length)}</p>}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <section aria-labelledby="gr-ovh">
+        <h2 className="am-h2" id="gr-ovh">{Lx.overview}</h2>
+        <hr className="am-hr" />
+        <ul className="am-cgrid">{DEGREES.map((d) => <DegreeCard key={d.k} d={d} Lx={Lx} />)}</ul>
+      </section>
     </>
   );
 }
@@ -63,7 +49,7 @@ function Subject({ card, Lx }) {
       <div className="am-cbody">
         <h3 className="am-cname"><Link to={card.to}>{t(card.name)}</Link></h3>
         <div className="am-ccat">{t(card.cat)}</div>
-        <p className="am-cdesc">{last ? Lx.last + agoText(last, Lx) : Lx.never}</p>
+        <p className="am-cmeta">{last ? Lx.last + agoText(last, Lx) : Lx.never}</p>
       </div>
     </li>
   );
@@ -115,10 +101,10 @@ function Degree({ d, Lx }) {
         <h1 className="am-h1">{t(d.name)}</h1>
         <span className={'am-badge' + (live ? ' am-badge-live' : '')}>{live ? Lx.live : Lx.soon}</span>
       </div>
-      <p className="am-lead">{t(d.desc)}</p>
+      <p className="am-sub">{t(d.desc)}</p>
       {live ? d.terms.map((term) => (
         <section key={term.k} className="am-section" data-term={term.k} aria-labelledby={'gr-t-' + term.k}>
-          <div className="gr-term-head">
+          <div className="am-shead">
             <h2 className="am-h2" id={'gr-t-' + term.k}>{t(term.name)}</h2>
             <span className={'am-badge' + (term.status === 'live' ? ' am-badge-live' : '')}>{term.status === 'live' ? Lx.live : Lx.soon}</span>
           </div>
@@ -151,15 +137,8 @@ export default function Graus() {
   const Lx = S[ui];
   if (grau && !DEGREE_BY_KEY[grau]) return <NotFound />;
   return (
-    <div data-page="graus" className="am-site">
-      <div className="am-layout">
-        <main className="am-main">
-          <div className="am-main-in">
-            {grau ? <Degree d={DEGREE_BY_KEY[grau]} Lx={Lx} /> : <DegreeList Lx={Lx} />}
-          </div>
-        </main>
-      </div>
-      <SiteFooter />
-    </div>
+    <Page name="graus" blocks={<NavBlock />}>
+      {grau ? <Degree d={DEGREE_BY_KEY[grau]} Lx={Lx} /> : <DegreeList Lx={Lx} />}
+    </Page>
   );
 }

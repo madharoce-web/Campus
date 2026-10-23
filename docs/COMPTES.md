@@ -1,8 +1,9 @@
 # Cuentas y progreso en la nube (Supabase)
 
-Aula Mada funciona **sin cuentas** mientras no se configuren las variables de Supabase: el progreso
-se guarda en el navegador, como siempre. Con Supabase configurado aparecen el botón **Entrar**,
-la página **Mi cuenta** y el «Avísame» de los grados que aún no están.
+Aula Mada funciona **sin cuentas** mientras no se configuren las variables de Supabase: el campus
+es abierto y el progreso se guarda en el navegador. Con Supabase configurado, **el campus pide
+cuenta**: la portada invita a crearla (`/registre`), quien no ha entrado va a `/entrar` y, al salir,
+vuelve a la portada. Aparecen también **Mi cuenta** y el «Avísame» de los grados que aún no están.
 
 - **Entrar**: con Google o con el correo (se envía un enlace y un código de 6 cifras; si la persona
   no tiene cuenta, se crea). No hay contraseñas que recordar ni que filtrar.

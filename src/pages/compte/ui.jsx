@@ -20,7 +20,7 @@ export const Spinner = () => <span className="am-spin" aria-hidden="true" />;
 export function Crumbs({ Lx, children }) {
   return (
     <nav className="am-crumbs" aria-label={Lx.crumbs}>
-      <Link to="/">{Lx.home}</Link><span className="am-sep">/</span>{children}
+      <Link to="/inici">{Lx.home}</Link><span className="am-sep">/</span>{children}
     </nav>
   );
 }

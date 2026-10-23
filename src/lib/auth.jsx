@@ -31,6 +31,8 @@ export function AuthProvider({ children }) {
   }));
   // canviar `rev` torna a muntar la pàgina perquè llegeixi el progrés que ha arribat del núvol
   const [rev, setRev] = useState(0);
+  // la persona acaba de sortir (o d'esborrar el compte): el campus la porta a la portada, no a /entrar
+  const [farewell, setFarewell] = useState(false);
   const sbRef = useRef(null);
   const uidRef = useRef(null);
 
@@ -41,6 +43,7 @@ export function AuthProvider({ children }) {
     if (uid && uid === uidRef.current) { setState((s) => ({ ...s, user })); return; }
     if (uid) {
       uidRef.current = uid;
+      setFarewell(false);
       setState({ status: 'user', user, profile: null });
       sb.from('profiles').select(PROFILE_COLS).eq('id', uid).maybeSingle()
         .then(({ data }) => { if (uidRef.current === uid) setState((s) => ({ ...s, profile: data })); });
@@ -89,6 +92,8 @@ export function AuthProvider({ children }) {
     return {
       ...state,
       enabled: AUTH_ENABLED,
+      farewell,
+      clearFarewell: () => setFarewell(false),
       ensureClient,
       /** Envia el correu amb l'enllaç i el codi d'accés (crea el compte si no existeix). */
       async signInWithEmail(email, next) {
@@ -112,6 +117,7 @@ export function AuthProvider({ children }) {
       async signOut() {
         const sb = await need();
         await stopSync();              // puja els darrers canvis abans de tancar
+        setFarewell(true);
         await sb.auth.signOut({ scope: 'local' });
       },
       async updateProfile(patch) {
@@ -145,10 +151,11 @@ export function AuthProvider({ children }) {
         await stopSync();
         const { error } = await sb.rpc('delete_my_account');
         if (error) throw error;
+        setFarewell(true);
         await sb.auth.signOut({ scope: 'local' });
       },
     };
-  }, [state, ensureClient, ui]);
+  }, [state, farewell, ensureClient, ui]);
 
   return (
     <AuthContext.Provider value={value}>

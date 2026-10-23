@@ -9,10 +9,12 @@ inglés; el contenido de los cursos, en catalán y castellano. Con Supabase conf
 
 | Página | Ruta |
 |---|---|
-| Portada pública (qué es, cómo funciona, grados, precio, preguntas) | `/` |
-| Catálogo de grados y página de cada grado | `/graus`, `/graus/:grau` (`/grados/…` y `/degrees/…` redirigen) |
-| Mis cursos y área personal | `/cursos`, `/tauler` |
-| Entrar y Mi cuenta | `/entrar`, `/compte` |
+| Portada pública: ventajas, grados y «Crear cuenta» | `/` |
+| Entrar y crear cuenta | `/entrar`, `/registre` |
+| Catálogo de grados | `/graus`, `/graus/:grau` |
+| Campus: Inicio, Área personal (panel), Mis cursos, Mi cuenta | `/inici`, `/tauler`, `/cursos`, `/compte` |
+
+Con cuentas configuradas, el campus pide entrar; sin configurar, es abierto.
 
 Cursos del primer semestre de Informática:
 
@@ -70,6 +72,7 @@ src/
   app/            barra superior, pie, cabecera de curso, rutas
   catalog/        grados y semestres (qué hay disponible y qué llegará)
   pages/landing/  portada pública
+  pages/inici/    inicio del campus
   pages/graus/    catálogo de grados
   pages/compte/   entrar y Mi cuenta
   pages/home/     Mis cursos y área personal

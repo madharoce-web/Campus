@@ -1,7 +1,7 @@
 /** Textos del catàleg de graus. */
 export const S = {
   ca: {
-    title: 'Graus', home: 'Inici', crumbs: 'Molles de pa', lead: 'Tria la teva carrera per veure les assignatures disponibles. Afegim assignatures i graus nous cada semestre.',
+    title: 'Graus', home: 'Inici', crumbs: 'Molles de pa', overview: 'Resum dels graus', liveCat: '1r semestre disponible', soonCat: 'En preparació', lead: 'Tria la teva carrera per veure les assignatures disponibles. Afegim assignatures i graus nous cada semestre.',
     live: 'Disponible', soon: 'Properament', subjects: '%d assignatures', explore: 'Explora el grau', soonCta: 'Mira què inclourà',
     terms: 'Semestres', enter: 'Entra a l’assignatura', last: 'Darrer accés: ', never: 'Encara no l’has oberta',
     termSoon: 'Estem preparant aquests continguts.',
@@ -11,7 +11,7 @@ export const S = {
     now: 'ara mateix', min: 'fa %d min', h: 'fa %d h', d: 'fa %d dies', d1: 'ahir',
   },
   es: {
-    title: 'Grados', home: 'Inicio', crumbs: 'Migas de pan', lead: 'Elige tu carrera para ver las asignaturas disponibles. Añadimos asignaturas y grados nuevos cada semestre.',
+    title: 'Grados', home: 'Inicio', crumbs: 'Migas de pan', overview: 'Vista general de grados', liveCat: '1.er semestre disponible', soonCat: 'En preparación', lead: 'Elige tu carrera para ver las asignaturas disponibles. Añadimos asignaturas y grados nuevos cada semestre.',
     live: 'Disponible', soon: 'Próximamente', subjects: '%d asignaturas', explore: 'Explora el grado', soonCta: 'Mira qué incluirá',
     terms: 'Semestres', enter: 'Entra en la asignatura', last: 'Último acceso: ', never: 'Todavía no la has abierto',
     termSoon: 'Estamos preparando estos contenidos.',
@@ -21,7 +21,7 @@ export const S = {
     now: 'ahora mismo', min: 'hace %d min', h: 'hace %d h', d: 'hace %d días', d1: 'ayer',
   },
   en: {
-    title: 'Degrees', home: 'Home', crumbs: 'Breadcrumbs', lead: 'Choose your degree to see the subjects available. We add new subjects and degrees every semester.',
+    title: 'Degrees', home: 'Home', crumbs: 'Breadcrumbs', overview: 'Degree overview', liveCat: 'Semester 1 available', soonCat: 'In preparation', lead: 'Choose your degree to see the subjects available. We add new subjects and degrees every semester.',
     live: 'Available', soon: 'Coming soon', subjects: '%d subjects', explore: 'Explore the degree', soonCta: 'See what it will include',
     terms: 'Semesters', enter: 'Open subject', last: 'Last opened: ', never: 'Not opened yet',
     termSoon: 'We are preparing this content.',

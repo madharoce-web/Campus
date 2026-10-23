@@ -7,7 +7,8 @@ import { agoText } from '../../lib/visits.js';
 import { initials } from '../../lib/initials.js';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import { DEGREES } from '../../catalog/degrees.js';
-import SiteFooter from '../../app/SiteFooter.jsx';
+import Page from '../../app/Page.jsx';
+import { NavBlock } from '../../app/blocks.jsx';
 import { Crumbs, Spinner } from './ui.jsx';
 import { S } from './strings.js';
 import './compte.css';
@@ -124,6 +125,14 @@ export default function Compte() {
   let body;
   if (status === 'loading') {
     body = <div className="ac-wait" role="status"><Spinner /></div>;
+  } else if (status === 'disabled') {
+    body = (
+      <div className="am-block ac-guest" data-state="off">
+        <h2 className="am-bt">{Lx.offH}</h2>
+        <p>{Lx.offP}</p>
+        <div className="am-btn-row"><Link className="am-btn am-btn-primary" to="/cursos">{Lx.offCta}</Link></div>
+      </div>
+    );
   } else if (status !== 'user') {
     body = (
       <div className="am-block ac-guest" data-state="guest">
@@ -178,23 +187,16 @@ export default function Compte() {
   }
 
   return (
-    <div data-page="compte" className="am-site">
-      <div className="am-layout">
-        <main className="am-main">
-          <div className="am-main-in">
-            <Crumbs Lx={Lx}><span>{Lx.title}</span></Crumbs>
-            <div className="am-ph ac-head">
-              {status === 'user' && <span className="ac-avatar" aria-hidden="true">{initials(profile?.display_name, user?.email)}</span>}
-              <div>
-                <h1 className="am-h1">{status === 'user' && profile?.display_name ? profile.display_name : Lx.title}</h1>
-                {status === 'user' && <p className="ac-email">{user?.email}</p>}
-              </div>
-            </div>
-            {body}
-          </div>
-        </main>
+    <Page name="compte" blocks={<NavBlock />}>
+      <Crumbs Lx={Lx}><span>{Lx.title}</span></Crumbs>
+      <div className="am-ph ac-head">
+        {status === 'user' && <span className="ac-avatar" aria-hidden="true">{initials(profile?.display_name, user?.email)}</span>}
+        <div>
+          <h1 className="am-h1">{status === 'user' && profile?.display_name ? profile.display_name : Lx.title}</h1>
+          {status === 'user' && <p className="ac-email">{user?.email}</p>}
+        </div>
       </div>
-      <SiteFooter />
-    </div>
+      {body}
+    </Page>
   );
 }
