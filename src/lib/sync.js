@@ -13,7 +13,7 @@ import { mergePlan } from './syncplan.js';
 
 const META = 'am-sync-meta'; // { [clau]: ms de la darrera escriptura; negatiu si s'ha esborrat }
 /** Claus que no es sincronitzen: preferències d'aquest dispositiu. */
-const LOCAL_ONLY = new Set(['sem1-lang', 'sem1-drawer']);
+const LOCAL_ONLY = new Set(['sem1-lang', 'sem1-drawer', 'kit-dock']);
 export const isSynced = (k) => !!k && !k.startsWith('am-') && !k.startsWith('sb-') && !LOCAL_ONLY.has(k);
 
 const PUSH_DELAY = 2000, RETRY_DELAY = 15000, PULL_EVERY = 60000;
@@ -162,7 +162,11 @@ export function pull() {
       saveMeta();
       lastPull = Date.now();
       setStatus('ok');
-      if (plan.toLocal.length) onRemoteChange?.();
+      if (plan.toLocal.length) {
+        // avisa els «stores» amb memòria cau (p. ex. la plantilla d'assignatures) i torna a muntar la pàgina
+        window.dispatchEvent(new CustomEvent('am-remote', { detail: plan.toLocal.map((r) => r.key) }));
+        onRemoteChange?.();
+      }
     } catch (e) {
       console.warn('sync: no s’ha pogut baixar el progrés', e);
       setStatus('error');
@@ -189,5 +193,6 @@ export async function stopSync({ clear = false } = {}) {
     for (const k of lsKeys()) if (isSynced(k)) { try { localStorage.removeItem(k); } catch { /* res */ } }
     meta = {};
     saveMeta();
+    window.dispatchEvent(new CustomEvent('am-remote', { detail: null }));
   }
 }

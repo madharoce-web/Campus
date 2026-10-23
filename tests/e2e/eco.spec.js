@@ -1,204 +1,149 @@
 import { test, expect } from '@playwright/test';
 import { expectNoOverflow, setLang, watchErrors } from './helpers.js';
+import toc from '../../src/courses/eco/kit/toc.js';
+import bank from '../../src/courses/eco/kit/bank.js';
 
-// Principis d'economia: temes, índex, cercador, laboratoris, pràctica, enllaços i estat desat.
-const DOCS = [
-  ['t1', "Tema 1: Conceptes bàsics d'economia", 'Tema 1: Conceptos básicos de economía'],
-  ['t2', 'Tema 2: Demanda, oferta i mercat', 'Tema 2: Demanda, oferta y mercado'],
-  ['t3', 'Tema 3: Magnituds agregades', 'Tema 3: Magnitudes agregadas'],
-  ['prac', 'Pràctica: exercicis dels temes 1, 2 i 3', 'Práctica: ejercicios de los temas 1, 2 y 3'],
-];
+// Principis d'economia a la plantilla d'assignatura (src/courses/_kit): temari, laboratoris,
+// pràctica, enllaços antics i progrés importat de la versió anterior.
+const kit = (page) => page.evaluate(() => JSON.parse(localStorage.getItem('kit-eco-v1') || 'null'));
 
-/** L'índex és un calaix a les pantalles estretes: s'obre amb el botó. */
+/** L'índex del temari és plegable a les pantalles estretes. */
 async function openToc(page) {
-  if (page.viewportSize().width <= 1080) {
-    await page.click('#burger');
-    await expect(page.locator('#side')).toHaveClass(/\bopen\b/);
-  }
+  await page.locator('.kit-toc').waitFor({ state: 'attached' });
+  const btn = page.locator('.kit-toc-btn');
+  if (await btn.isVisible()) await btn.click();
 }
 
-test('tots els temes es carreguen en els dos idiomes', async ({ page }) => {
+test('temari: els tres temes en els dos idiomes, amb l\'índex complet', async ({ page }) => {
   const errors = watchErrors(page);
   for (const lang of ['ca', 'es']) {
-    if (lang === 'es') { await page.goto('/economia'); await setLang(page, 'es'); }
-    for (const [k, ca, es] of DOCS) {
-      await page.goto('/economia/' + k);
-      await expect(page.locator('.doc .head h1')).toHaveText(lang === 'ca' ? ca : es);
-      await expect(page.locator('.m-pick [aria-current="page"]')).toHaveAttribute('id', 'pk-' + k);
-      await expect(page.locator('.toc a').first()).toBeAttached();
+    if (lang === 'es') await setLang(page, 'es');
+    for (const u of toc) {
+      await page.goto('/economia/temari/' + u.id);
+      await expect(page.locator('.kit-unit-h h2')).toHaveText(u.t[lang === 'ca' ? 0 : 1]);
+      await expect(page.locator('section.kit-sec')).toHaveCount(u.sections.length);
+      await expect(page.locator('.kit-toc-s li')).toHaveCount(u.sections.length);
+      await expect(page.locator('.kit-toc-u[aria-current="page"]')).toContainText(u.t[lang === 'ca' ? 0 : 1]);
       await expectNoOverflow(page);
     }
   }
-  await expect(page.locator('.m-ph h1')).toHaveText('Principios de economía');
-  await expect(page.locator('#ct-prac')).toHaveText('43 ejercicios');
   await expect(page).toHaveTitle(/Principios de economía/);
   expect(errors).toEqual([]);
 });
 
-test('índex, àncores, barra de progrés i cercador', async ({ page }) => {
+test('índex, apartat actual i fórmules', async ({ page }) => {
   const errors = watchErrors(page);
-  await page.goto('/economia/t2');
+  await page.goto('/economia/temari/t2');
   await openToc(page);
-  await page.click('.toc a:has-text("3. L\'equilibri de mercat")');
-  await expect(page).toHaveURL(/\/economia\/t2#3-l-equilibri-de-mercat$/);
-  await expect(page.locator('#side')).not.toHaveClass(/\bopen\b/);
-  await expect(page.locator('[id="3-l-equilibri-de-mercat"]')).toBeInViewport();
-  await expect(page.locator('.toc a.on')).toHaveCount(1);
-  expect(parseFloat(await page.locator('#prog').evaluate((e) => e.style.width))).toBeGreaterThan(5);
-  // canvi d'idioma: la mateixa secció en castellà
-  await setLang(page, 'es');
-  await expect(page.locator('[id="3-el-equilibrio-de-mercado"], [id="3-1-el-concepto"]').first()).toBeInViewport();
-  await setLang(page, 'ca');
-  // cercador: resultats destacats, teclat i navegació
-  await page.locator('#q').pressSequentially('excedent');
-  await expect(page.locator('#res')).toHaveClass(/\bon\b/);
-  await expect(page.locator('#res a').first()).toHaveClass('k');
-  await expect(page.locator('#res mark').first()).toHaveText(/excedent/i);
-  await page.keyboard.press('ArrowDown');
-  await expect(page.locator('#res a').nth(1)).toHaveClass('k');
-  await page.keyboard.press('Enter');
-  await expect(page.locator('#res')).not.toHaveClass(/\bon\b/);
-  await expect(page.locator('#q')).toHaveValue('');
-  await expect(page).toHaveURL(/#/);
-  await page.locator('#q').fill('zzqx');
-  await expect(page.locator('#res .none')).toHaveText('Cap resultat');
-  await page.keyboard.press('Escape');
-  await expect(page.locator('#res')).not.toHaveClass(/\bon\b/);
-  // «/» enfoca el cercador
-  await page.locator('.doc h1').click();
-  await page.keyboard.press('/');
-  await expect(page.locator('#q')).toBeFocused();
-  // amunt
-  await page.click('#totop');
-  await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
+  await page.click('.kit-toc-s a:has-text("L\'equilibri de mercat")');
+  await expect(page.locator('#t2-3-l-equilibri-de-mercat')).toBeInViewport();
+  await expect(page.locator('.kit-toc-s a.is-cur')).toHaveText("L'equilibri de mercat");
+  // les fórmules (abans MathML) es dibuixen amb Temml, sense errors de TeX
+  await expect(page.locator('#t2-3-l-equilibri-de-mercat .kit-math math').first()).toBeAttached();
+  await expect(page.locator('.kit-texerr')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
 
-test('enllaços directes, enllaços antics i referències entre temes', async ({ page }) => {
+test('enllaços antics: temes, pràctica i àncores', async ({ page }) => {
+  await page.goto('/economia/t2');
+  await expect(page).toHaveURL(/\/economia\/temari\/t2$/);
+  await page.goto('/economia/prac');
+  await expect(page).toHaveURL(/\/economia\/practica$/);
   await page.goto('/economia#t3');
-  await expect(page).toHaveURL(/\/economia\/t3$/);
+  await expect(page).toHaveURL(/\/economia\/temari\/t3$/);
   await page.goto('/economia.html#prac');
-  await expect(page).toHaveURL(/\/economia\/prac$/);
+  await expect(page).toHaveURL(/\/economia\/practica$/);
   await page.goto('/economia/no-existeix');
   await expect(page).toHaveURL(/\/economia$/);
-  // àncora d'una secció en un enllaç antic: es busca a l'índex
+  // l'àncora d'una secció de la versió anterior porta a l'apartat de la plantilla
   await page.goto('/economia.html#4-excedents-i-benestar-social');
-  await expect(page).toHaveURL(/\/economia\/t2#4-excedents-i-benestar-social$/);
-  await expect(page.locator('[id="4-excedents-i-benestar-social"]')).toBeInViewport();
+  await expect(page).toHaveURL(/\/economia\/temari\/t2#t2-4-excedents-i-benestar-social$/);
+  await expect(page.locator('#t2-4-excedents-i-benestar-social')).toBeInViewport();
   await page.goto('/economia/t2#3-l-equilibri-de-mercat');
-  await expect(page.locator('[id="3-l-equilibri-de-mercat"]')).toBeInViewport();
-  // referència del tema 2 al tema 1
-  await page.goto('/economia/t2');
-  await page.locator('.doc a.xref').first().click();
-  await expect(page).toHaveURL(/\/economia\/t1$/);
-  await expect(page.locator('.doc .head h1')).toHaveText("Tema 1: Conceptes bàsics d'economia");
-  // el darrer tema obert es recorda (eco-state)
-  await page.goto('/economia/t3');
-  await expect(page.locator('.doc .head h1')).toHaveText('Tema 3: Magnituds agregades');
-  await page.goto('/economia');
-  await expect(page.locator('#pk-t3')).toHaveAttribute('aria-current', 'page');
-  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('eco-state')))).toEqual({ s: 't3', l: 'ca' });
+  await expect(page).toHaveURL(/#t2-3-l-equilibri-de-mercat$/);
+  await expect(page.locator('#t2-3-l-equilibri-de-mercat')).toBeInViewport();
 });
 
-test('laboratoris: FPP, mercat i cadena, amb l\'estat conservat', async ({ page }) => {
+test('laboratoris: FPP, mercat i cadena, amb l\'estat conservat entre temes', async ({ page }) => {
   const errors = watchErrors(page);
-  await page.goto('/economia/t1');
-  const fpp = page.locator('.lab[data-lab="fpp"]');
+  await page.goto('/economia/temari/t1');
+  const fpp = page.locator('.kit-lab[data-lab="fpp"]');
   await expect(fpp.locator('#fpp-msg')).toContainText('(15, 14): ineficient');
-  await expect(fpp.locator('#fpp-co li')).toHaveCount(4);
   await page.fill('#fpp-tx', '35'); await page.fill('#fpp-ty', '12,5');
   await expect(fpp.locator('#fpp-msg')).toContainText('(35, 12,5): inabastable');
-  await page.fill('#fpp-tech', '20');
-  await expect(fpp.locator('#fpp-tv')).toHaveText('+20 %');
-  await expect(fpp.locator('svg text', { hasText: 'FPP nova' })).toHaveCount(1);
-  await page.fill('#fpp-y1', '25');
-  await expect(fpp.locator('#fpp-msg')).toHaveClass(/warn/);
-  await expect(fpp.locator('svg')).toHaveCount(0);
-  await page.fill('#fpp-y1', '18');
-  // canvi d'idioma i de tema: els valors es mantenen
   await setLang(page, 'es');
   await expect(fpp.locator('#fpp-msg')).toContainText('(35, 12,5): inalcanzable');
   await setLang(page, 'ca');
-  await page.click('#pk-t2');
-  const mk = page.locator('.lab[data-lab="mercat"]');
+  await openToc(page);
+  await page.click('.kit-toc-u:has-text("Demanda")');
+  const mk = page.locator('.kit-lab[data-lab="mercat"]');
   await expect(mk.locator('#mk-msg')).toHaveText('El mercat és en equilibri: Qd = Qo.');
-  await expect(mk.locator('.lab-kv').first()).toContainText('3,4');
   await page.fill('#mk-p', '800');
   await expect(mk.locator('#mk-msg')).toContainText("excés d'oferta");
-  await mk.locator('[data-sh="a+"]').click();
-  await expect(page.locator('#mk-a')).toHaveValue('1.100');
-  await mk.locator('[data-pre="2"]').click();
-  await expect(page.locator('#mk-e')).toHaveValue('−100');
-  await expect(mk.locator('.lab-kv').first()).toContainText('4');
-  await page.fill('#mk-b', '0');
-  await expect(mk.locator('#mk-msg')).toHaveClass(/warn/);
-  await page.click('#pk-t3');
-  const ch = page.locator('.lab[data-lab="cadena"]');
+  await openToc(page);
+  await page.click('.kit-toc-u:has-text("Magnituds")');
+  const ch = page.locator('.kit-lab[data-lab="cadena"]');
   await expect(ch.locator('#ch-steps li')).toHaveCount(11);
-  await expect(ch.locator('#ch-steps li').last()).toContainText('−50 (dèficit)');
-  await page.fill('#ch-d', '100');
-  await expect(ch.locator('#ch-steps li').last()).toContainText('230 (superàvit)');
-  await page.click('#pk-t1');
+  await openToc(page);
+  await page.click('.kit-toc-u:has-text("Conceptes")');
   await expect(page.locator('#fpp-tx')).toHaveValue('35');
-  await page.click('#fpp-reset');
-  await expect(page.locator('#fpp-tx')).toHaveValue('15');
   expect(errors).toEqual([]);
 });
 
-test('pràctica: filtres, correcció, progrés desat i canvi d\'idioma', async ({ page }) => {
+test('pràctica: filtres, correcció automàtica i progrés desat', async ({ page }) => {
   const errors = watchErrors(page);
-  await page.goto('/economia/prac');
-  await expect(page.locator('#px-c')).toHaveText('0 / 43 resolts');
-  // classificació (multi): dues respostes, una de malament
-  const c1 = page.locator('#ex-t1-f-01');
-  await c1.locator('.ex-check').click();
-  await expect(c1.locator('.ex-fb')).toHaveText('Tria una opció.');
-  const right = [0, 1, 0, 1, 1, 0];
-  for (let i = 0; i < 6; i++) await c1.locator('.it').nth(i).locator(`[data-o="${i === 0 ? 1 : right[i]}"]`).click();
-  await c1.locator('.ex-check').click();
-  await expect(c1.locator('.ex-fb')).toHaveClass(/\bp\b/);
-  await expect(c1.locator('.it.n')).toHaveCount(1);
-  await c1.locator('.it').first().locator('[data-o="0"]').click();
-  await c1.locator('.ex-check').click();
-  await expect(c1.locator('.ex-fb')).toHaveText('Correcte.');
-  await expect(c1).toHaveClass(/\bdone\b/);
-  await expect(page.locator('#px-c')).toHaveText('1 / 43 resolts');
-  // numèric: tolerància i lectura de comes
-  const c3 = page.locator('#ex-t1-f-03');
-  await page.fill('#in-t1-f-03-0', '6,0'); await page.fill('#in-t1-f-03-1', '9');
-  await c3.locator('.ex-check').click();
-  await expect(c3.locator('.okm.y')).toHaveCount(1);
-  await expect(c3.locator('.okm.n')).toHaveCount(1);
-  // opció múltiple, de malament
-  const c2 = page.locator('#ex-t1-f-02');
-  await c2.locator('.opt').nth(1).click();
-  await c2.locator('.ex-check').click();
-  await expect(c2.locator('.opt.n')).toHaveCount(1);
-  await expect(c2.locator('.ex-fb')).toHaveClass(/\bn\b/);
-  // canvi d'idioma: respostes i correcció es conserven
-  await setLang(page, 'es');
-  await expect(page.locator('#in-t1-f-03-1')).toHaveValue('9');
-  await expect(c2.locator('.ex-fb')).toContainText('No es correcto');
-  await expect(c1.locator('.ex-st')).toHaveText('✓ resuelto');
-  await setLang(page, 'ca');
-  await c3.locator('.ex-clear').click();
-  await expect(page.locator('#in-t1-f-03-0')).toHaveValue('');
-  await expect(c3.locator('.ex-fb')).toBeHidden();
-  // filtres
-  await page.click('[data-ft="2"]'); await page.click('[data-fn="dificil"]');
-  await expect(page.locator('article.ex:visible')).toHaveCount(4);
-  await expect(page.locator('#tema-1')).toBeHidden();
-  // una àncora amagada pels filtres (cercador): es treuen els filtres
-  await page.locator('#q').fill("cost d'oportunitat en una FPP");
-  await page.keyboard.press('Enter');
-  await expect(page.locator('[data-ft="all"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('#t1-f-03')).toBeInViewport();
-  // progrés desat
+  await page.goto('/economia/practica');
+  await expect(page.locator('#kit-count')).toHaveText(bank.items.length + ' exercicis');
+  // sense exercicis d'exàmens reals, no hi ha filtre d'origen
+  await expect(page.locator('#kit-f-origin')).toHaveCount(0);
+  // classificació: una resposta malament i després bé
+  const c1 = page.locator('article[data-ex="t1-f-01"]');
+  const ans = bank.items.find((e) => e.id === 't1-f-01').answer;
+  for (let i = 0; i < ans.length; i++) await c1.locator('.kit-match > li').nth(i).locator('.kit-chip').nth(i === 0 ? (ans[0] + 1) % 2 : ans[i]).click();
+  await c1.locator('.kit-check').click();
+  await expect(c1.locator('.kit-fb')).toHaveClass(/is-ko/);
+  await c1.locator('.kit-match > li').first().locator('.kit-chip').nth(ans[0]).click();
+  await c1.locator('.kit-check').click();
+  await expect(c1.locator('.kit-fb')).toHaveText('Correcte.');
+  await expect(c1).toHaveClass(/is-done/);
+  // numèric amb diverses parts: llegeix comes decimals
+  const n3 = bank.items.find((e) => e.id === 't1-f-03');
+  const c3 = page.locator('article[data-ex="t1-f-03"]');
+  for (let i = 0; i < n3.parts.length; i++) await c3.locator('.kit-nums input').nth(i).fill(String(n3.parts[i].answer).replace('.', ','));
+  await c3.locator('.kit-check').click();
+  await expect(c3.locator('.kit-fb')).toHaveClass(/is-ok/);
+  // filtres: tema 2, difícil
+  await page.selectOption('#kit-f-unit', 't2');
+  await page.click('#kit-f-level [data-v="hard"]');
+  const hard2 = bank.items.filter((e) => e.unit === 't2' && e.level === 'hard').length;
+  await expect(page.locator('#kit-count')).toHaveText(hard2 + ' exercicis');
+  await expect(page.locator('.kit-pitem')).toHaveCount(hard2);
+  await page.selectOption('#kit-f-unit', 'all');
+  await page.click('#kit-f-level [data-v="all"]');
+  await page.click('#kit-f-state [data-v="done"]');
+  await expect(page.locator('.kit-pitem')).toHaveCount(2);
+  // progrés desat i al tauler
   await page.reload();
-  await expect(page.locator('#px-c')).toHaveText('1 / 43 resolts');
-  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('eco-prac')))).toEqual({ done: { 't1-f-01': 1 } });
-  await page.click('#px-r');
-  await expect(page.locator('#px-c')).toHaveText('0 / 43 resolts');
+  expect(Object.keys((await kit(page)).practice).sort()).toEqual(['t1-f-01', 't1-f-03']);
+  await page.goto('/tauler');
+  const total = toc.reduce((n, u) => n + u.sections.length, 0) + bank.items.length;
+  await expect(page.locator('[data-progress="eco"] .am-prog-num')).toHaveText('2 de ' + total);
   await expectNoOverflow(page);
   expect(errors).toEqual([]);
+});
+
+test('el progrés de la versió anterior (eco-prac) passa a la plantilla', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (localStorage.getItem('prova-sembrada')) return;
+    localStorage.setItem('prova-sembrada', '1');
+    localStorage.setItem('eco-prac', JSON.stringify({ done: { 't1-f-01': 1, 't2-f-02': 1 } }));
+  });
+  await page.goto('/economia');
+  await expect(page.locator('#kit-tabs')).toBeVisible();
+  await expect.poll(async () => (await kit(page))?.mig).toBe(true);
+  const st = await kit(page);
+  expect(Object.keys(st.practice).sort()).toEqual(['t1-f-01', 't2-f-02']);
+  await page.goto('/economia/practica');
+  await page.click('#kit-f-state [data-v="done"]');
+  await expect(page.locator('.kit-pitem')).toHaveCount(2);
 });

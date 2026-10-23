@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar from './Navbar.jsx';
+import DockHost from './DockHost.jsx';
 
 /** Barra superior + pàgina actual. Torna a dalt en canviar de pàgina. */
 export default function Shell() {
@@ -15,6 +16,7 @@ export default function Shell() {
       {/* la portada pública (/) té la seva pròpia capçalera */}
       {first !== '' && <Navbar active={active} />}
       <Outlet />
+      <DockHost />
     </>
   );
 }

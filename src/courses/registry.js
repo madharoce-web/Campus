@@ -21,7 +21,7 @@ export const COURSES = [
   },
   {
     k: 'eco', path: '/economia', degree: 'informatica', term: 's1', tier: 'free',
-    load: () => import('./eco/index.jsx'),
+    load: () => import('./eco/index.jsx'), formulas: () => import('./eco/kit/formulas.js'),
     title: ["Principis d'economia", 'Principios de economía'],
     sub: ["Principis d'economia i empresa", 'Principios de economía y empresa'],
     color: '#9a6a06', bg: '#fdf2d6', icon: 'eco',
