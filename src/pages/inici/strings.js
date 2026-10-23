@@ -1,0 +1,51 @@
+/** Textos de la pàgina d'inici del campus. Notícies: [títol, data, paràgrafs i llista]. */
+export const S = {
+  ca: {
+    title: 'Inici', summaryH: 'Resum del lloc',
+    summary: 'Aula Mada és un campus d’estudi per preparar les assignatures de la universitat: apunts per temes, laboratoris interactius, exercicis resolts pas a pas i simulacres d’examen basats en convocatòries d’anys anteriors. L’accés és gratuït.',
+    degH: 'Graus', live: 'Disponible', soon: 'Properament', subjects: '%d assignatures', liveCat: '1r semestre disponible', soonCat: 'En preparació',
+    newsH: 'Notícies del lloc', by: 'per Aula Mada',
+    news: [
+      { h: 'Benvinguda a Aula Mada', date: '23/10/2026',
+        p: ['Des del Tauler pots seguir el teu progrés i reprendre el darrer curs que has obert. A Els meus cursos hi ha totes les assignatures del teu grau.',
+          'Cada assignatura té els apunts ordenats per temes, exercicis resolts, laboratoris i simulacres d’examen amb rellotge.'] },
+      { h: 'Disponible el 1r semestre d’Enginyeria Informàtica', date: '23/10/2026',
+        p: ['Ja hi ha les cinc assignatures del primer semestre:'],
+        list: ['Teoria Mates CP1', 'Lògica i grafs', 'Iniciació a la Programació (amb pseudocodi i C++)', 'Computadors CP1', 'Principis d’economia'] },
+      { h: 'Properament: ADE, Infermeria i Magisteri', date: '23/10/2026',
+        p: ['Estem preparant les assignatures de tres graus més. A la pàgina de cada grau pots deixar el correu perquè t’avisem quan estiguin disponibles.'] },
+    ],
+  },
+  es: {
+    title: 'Inicio', summaryH: 'Resumen del sitio',
+    summary: 'Aula Mada es un campus de estudio para preparar las asignaturas de la universidad: apuntes por temas, laboratorios interactivos, ejercicios resueltos paso a paso y simulacros de examen basados en convocatorias de años anteriores. El acceso es gratuito.',
+    degH: 'Grados', live: 'Disponible', soon: 'Próximamente', subjects: '%d asignaturas', liveCat: '1.er semestre disponible', soonCat: 'En preparación',
+    newsH: 'Novedades del sitio', by: 'por Aula Mada',
+    news: [
+      { h: 'Bienvenida a Aula Mada', date: '23/10/2026',
+        p: ['Desde el Área personal puedes seguir tu progreso y retomar el último curso que has abierto. En Mis cursos están todas las asignaturas de tu grado.',
+          'Cada asignatura tiene los apuntes ordenados por temas, ejercicios resueltos, laboratorios y simulacros de examen con reloj.'] },
+      { h: 'Disponible el 1.er semestre de Ingeniería Informática', date: '23/10/2026',
+        p: ['Ya están las cinco asignaturas del primer semestre:'],
+        list: ['Teoría Mates CP1', 'Lógica y grafos', 'Iniciación a la Programación (con pseudocódigo y C++)', 'Computadores CP1', 'Principios de economía'] },
+      { h: 'Próximamente: ADE, Enfermería y Magisterio', date: '23/10/2026',
+        p: ['Estamos preparando las asignaturas de tres grados más. En la página de cada grado puedes dejar tu correo para que te avisemos cuando estén disponibles.'] },
+    ],
+  },
+  en: {
+    title: 'Home', summaryH: 'Site summary',
+    summary: 'Aula Mada is a study campus for university subjects: notes organised by unit, interactive labs, exercises solved step by step and mock exams based on past papers. Access is free.',
+    degH: 'Degrees', live: 'Available', soon: 'Coming soon', subjects: '%d subjects', liveCat: 'Semester 1 available', soonCat: 'In preparation',
+    newsH: 'Site news', by: 'by Aula Mada',
+    news: [
+      { h: 'Welcome to Aula Mada', date: '23/10/2026',
+        p: ['From the Dashboard you can follow your progress and pick up the last course you opened. My courses lists every subject in your degree.',
+          'Each subject has notes organised by unit, solved exercises, labs and timed mock exams.'] },
+      { h: 'Computer Engineering, semester 1, is available', date: '23/10/2026',
+        p: ['All five first-semester subjects are ready:'],
+        list: ['Maths Theory CP1', 'Logic and Graphs', 'Introduction to Programming (with pseudocode and C++)', 'Computers CP1', 'Principles of Economics'] },
+      { h: 'Coming soon: Business, Nursing and Teacher Education', date: '23/10/2026',
+        p: ['We are preparing the subjects of three more degrees. On each degree’s page you can leave your email and we’ll let you know when they are available.'] },
+    ],
+  },
+};

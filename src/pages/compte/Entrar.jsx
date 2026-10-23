@@ -18,8 +18,8 @@ const Logo = () => (
   </div>
 );
 
-/** Entrar o crear un compte (/entrar): Google o correu amb enllaç i codi. */
-export default function Entrar() {
+/** Entrar (/entrar) o crear un compte (/registre): Google o correu amb enllaç i codi. És el mateix camí. */
+export default function Entrar({ signup = false }) {
   const { ui } = useLang();
   const Lx = S[ui];
   const auth = useAuth();
@@ -33,7 +33,8 @@ export default function Entrar() {
   const [err, setErr] = useState('');
   const [wait, setWait] = useState(0);
   const codeRef = useRef(null);
-  useDocumentTitle(Lx.loginTitle);
+  useDocumentTitle(signup ? Lx.signupTitle : Lx.loginTitle);
+  const q = '?next=' + encodeURIComponent(next);
 
   const { status, ensureClient } = auth;
   // la biblioteca de comptes es baixa mentre la persona escriu
@@ -83,8 +84,8 @@ export default function Entrar() {
     card = (
       <div className="ac-card" data-state="email">
         <Logo />
-        <h1 className="ac-h">{Lx.loginH}</h1>
-        <p className="ac-sub">{Lx.loginSub}</p>
+        <h1 className="ac-h">{signup ? Lx.signupH : Lx.loginH}</h1>
+        <p className="ac-sub">{signup ? Lx.signupSub : Lx.loginSub}</p>
         <form onSubmit={send} noValidate>
           <div className="am-field">
             <label className="am-label" htmlFor="ac-email">{Lx.email}</label>
@@ -100,6 +101,7 @@ export default function Entrar() {
         <button type="button" className="am-btn am-btn-outline am-btn-block ac-google" onClick={google} disabled={!!busy || status === 'loading'}>
           {busy === 'google' ? <Spinner /> : <GoogleIcon />}<span>{Lx.google}</span>
         </button>
+        <p className="ac-switch">{signup ? <Link to={'/entrar' + q}>{Lx.toLogin}</Link> : <Link to={'/registre' + q}>{Lx.toSignup}</Link>}</p>
         <p className="ac-fine">{Lx.privacy}</p>
       </div>
     );

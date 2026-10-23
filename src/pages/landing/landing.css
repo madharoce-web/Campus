@@ -1,36 +1,105 @@
-/* Aula Mada · portada. Peces comunes a src/styles/site.css; aquí només el que és propi. */
-.lp-ctas{margin-bottom:8px}
+/* Aula Mada · portada pública. Mateixos colors i tipografia que el campus (site.css),
+   amb una maquetació de pàgina institucional: franges, columnes i línies fines. */
+.lp-wrap{max-width:var(--am-wrap); margin:0 auto; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+@media (min-width:1000px){ .lp-wrap{padding-left:max(32px, env(safe-area-inset-left, 0px)); padding-right:max(32px, env(safe-area-inset-right, 0px))} }
+
+/* ---------- capçalera ---------- */
+.lp-top{position:sticky; top:env(safe-area-inset-top, 0px); z-index:60; height:60px; background:#fff; border-bottom:1px solid var(--am-line); box-shadow:0 2px 4px rgba(0,0,0,.08)}
+.lp-top-in{height:100%; display:flex; align-items:center; gap:20px}
+.lp-brand{padding-left:0}
+.lp-nav{display:flex; align-items:stretch; height:100%; margin-left:8px}
+.lp-nav a{display:flex; align-items:center; padding:0 10px; color:var(--am-ink); border-bottom:3px solid transparent; border-top:3px solid transparent}
+.am-site .lp-nav a:hover{background:#f5f5f5; color:var(--am-ink); text-decoration:none; border-bottom-color:var(--am-brand)}
+.lp-langs{display:flex; margin-left:auto; border:1px solid var(--am-line-2); border-radius:var(--am-r); overflow:hidden}
+.lp-langs button{border:0; background:#fff; padding:4px 9px; font:inherit; font-size:var(--am-fs-sm); color:var(--am-ink-2); cursor:pointer}
+.lp-langs button + button{border-left:1px solid var(--am-line-2)}
+.lp-langs button[aria-pressed="true"]{background:var(--am-brand); color:#fff}
+.lp-acts{display:flex; align-items:center; gap:14px}
+.am-site .lp-signin{color:var(--am-ink)}
+
+/* ---------- presentació ---------- */
+.lp-hero{background:var(--am-bg-2); border-bottom:1px solid var(--am-line)}
+.lp-hero-in{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:48px; align-items:center; padding-top:64px; padding-bottom:64px}
+.lp-kicker{font-size:var(--am-fs-sm); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--am-brand)}
+.lp-h1{margin-top:10px; font-size:clamp(1.75rem, 1.2rem + 1.8vw, 2.4rem); font-weight:700; line-height:1.2; letter-spacing:-.005em}
+.lp-lead{margin-top:16px; font-size:1.0625rem; color:var(--am-ink-2); max-width:60ch}
+.lp-ctas{margin-top:24px}
+.lp-btn-lg{padding:.5rem 1rem; font-size:1rem}
+.lp-note{margin-top:12px; font-size:var(--am-fs-sm); color:var(--am-ink-3)}
+.lp-preview{margin:0; background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); padding:16px 16px 18px}
+.lp-preview figcaption{font-size:1.17rem; padding-bottom:10px; margin-bottom:12px; border-bottom:1px solid var(--am-line)}
+.lp-preview-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px}
+.lp-pimg{display:block; width:100%; height:72px}
+.lp-preview .am-cbody{padding:10px 11px 12px}
+.lp-pname{color:var(--am-brand); line-height:1.35}
+.lp-preview .am-ccat{font-size:var(--am-fs-sm); color:var(--am-ink-3)}
+
+/* ---------- seccions ---------- */
+.lp-sec{padding:56px 0}
+.lp-sec + .lp-sec{border-top:1px solid var(--am-line)}
+.lp-sec-gray{background:var(--am-bg-2)}
+.lp-h2{font-size:1.6rem; font-weight:700}
+.lp-sub{margin-top:8px; color:var(--am-ink-2); max-width:70ch}
+
+/* avantatges: graella amb línies, com una taula */
+.lp-adv{list-style:none; margin:28px 0 0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); border-top:1px solid var(--am-line); border-left:1px solid var(--am-line)}
+.lp-adv li{display:flex; gap:14px; align-items:flex-start; padding:20px 18px; border-right:1px solid var(--am-line); border-bottom:1px solid var(--am-line)}
+.lp-adv h3,.lp-steps h3{font-size:var(--am-fs); font-weight:700}
+.lp-adv p,.lp-steps p{margin-top:4px; color:var(--am-ink-2)}
 
 /* com funciona */
-.lp-steps{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:10px}
-.lp-steps li{display:flex; gap:12px; align-items:flex-start; padding:16px 14px; border:1px solid var(--am-line); border-radius:var(--am-r)}
-.lp-n{flex:0 0 auto; width:28px; height:28px; border-radius:50%; display:grid; place-items:center; background:var(--am-bg-3); color:var(--am-ink); font-weight:700; font-size:var(--am-fs-sm)}
-.lp-steps p,.lp-feats p{margin-top:4px; color:var(--am-ink-2)}
+.lp-steps{list-style:none; margin:28px 0 0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px}
+.lp-steps li{background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); padding:20px 18px}
+.lp-n{display:grid; place-items:center; width:32px; height:32px; margin-bottom:12px; background:var(--am-brand-mark); color:#fff; font:17px/1 var(--am-serif)}
 
-/* què hi trobaràs: com la llista d'activitats del calaix */
-.lp-feats{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); column-gap:24px}
-.lp-feats li{display:flex; gap:14px; align-items:flex-start; padding:13px 2px; border-bottom:1px solid var(--am-line)}
-.lp-feats li:nth-last-child(-n+2){border-bottom:0}
-.lp-fico{flex:0 0 auto; width:26px; height:26px; display:grid; place-items:center; margin-top:1px}
-.lp-fico svg{width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+/* graus */
+.lp-degs{margin-top:24px}
+
+/* accés gratuït */
+.lp-plan{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:48px; align-items:center}
+.lp-plan-box{background:#fff; border:1px solid var(--am-line); border-top:4px solid var(--am-brand); border-radius:var(--am-r); padding:20px 22px 22px}
+.lp-plan-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding-bottom:12px; border-bottom:1px solid var(--am-line)}
+.lp-plan-head h3{font-size:1.17rem; font-weight:400}
+.lp-plan-head b{font-size:1.6rem}
+.lp-plan-box ul{list-style:none; margin:14px 0 18px; padding:0; display:grid; gap:8px}
+.lp-plan-box li{display:flex; gap:8px; align-items:flex-start; color:var(--am-ink-2)}
+.lp-check{width:16px; height:16px; flex:0 0 auto; margin-top:3px; fill:none; stroke:var(--am-success); stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
 
 /* preguntes */
-.lp-faq details{border-bottom:1px solid var(--am-line)}
-.lp-faq details:last-child{border-bottom:0}
-.lp-faq summary{cursor:pointer; padding:12px 4px; color:var(--am-brand); list-style-position:inside}
-.lp-faq summary:hover{color:var(--am-brand-dark); text-decoration:underline}
-.lp-faq details[open] summary{color:var(--am-ink)}
-.lp-faq details p{padding:0 4px 14px 18px; color:var(--am-ink-2); max-width:72ch}
+.lp-faq-wrap{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:48px}
 
-/* blocs */
-.lp-news{list-style:none; margin:0; padding:0}
-.lp-news li{display:flex; flex-direction:column; padding:8px 0; border-top:1px solid var(--am-line)}
-.lp-news li:first-child{border-top:0; padding-top:0}
-.lp-news .am-muted{font-size:var(--am-fs-sm)}
-.lp-price{font-size:1.5rem; font-weight:700}
-.lp-plain{margin:8px 0 0; padding-left:1.2rem; color:var(--am-ink-2)}
+/* crida final: franja oliva */
+.lp-end{background:var(--am-brand); color:#fff}
+.lp-end-in{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px 32px; padding-top:36px; padding-bottom:36px}
+.lp-end h2{font-size:1.4rem; font-weight:700; color:#fff}
+.lp-end p{margin-top:4px; color:#eef0dc}
+.lp-btn-light{background:#fff; border-color:#fff; color:var(--am-brand-dark)}
+.lp-btn-light:hover{background:var(--am-brand-soft); color:var(--am-brand-dark)}
 
-@media (max-width:767px){
-  .lp-steps,.lp-feats{grid-template-columns:minmax(0,1fr)}
-  .lp-feats li:nth-last-child(2){border-bottom:1px solid var(--am-line)}
+/* peu */
+.lp-foot{background:var(--am-bg-2); border-top:1px solid var(--am-line); font-size:var(--am-fs-sm); color:var(--am-ink-2)}
+.lp-foot-in{display:grid; grid-template-columns:minmax(0,2fr) repeat(2, minmax(0,1fr)); gap:24px; padding-top:28px; padding-bottom:20px}
+.lp-foot-brand{display:flex; gap:12px; align-items:flex-start}
+.lp-foot-brand b{color:var(--am-ink)}
+.lp-foot-mark{width:36px; height:36px; font-size:15px; flex:0 0 auto}
+.lp-foot nav{display:flex; flex-direction:column; gap:2px}
+.lp-foot nav h2{font-size:var(--am-fs-sm); font-weight:700; color:var(--am-ink); margin-bottom:4px}
+.lp-copy{padding-top:12px; padding-bottom:calc(16px + env(safe-area-inset-bottom, 0px)); border-top:1px solid var(--am-line); color:var(--am-ink-3)}
+
+/* ---------- pantalles estretes ---------- */
+@media (max-width:999px){
+  .lp-nav{display:none}
+  .lp-hero-in,.lp-plan,.lp-faq-wrap{grid-template-columns:minmax(0,1fr); gap:28px}
+  .lp-adv{grid-template-columns:repeat(2, minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .lp-top-in{gap:10px}
+  .lp-langs button{padding:4px 7px}
+  .lp-brand .m-wm{display:none}
+  .lp-acts{margin-left:auto; gap:10px}
+  .lp-hero-in{padding-top:36px; padding-bottom:40px}
+  .lp-adv,.lp-steps{grid-template-columns:minmax(0,1fr)}
+  .lp-sec{padding:40px 0}
+  .lp-foot-in{grid-template-columns:repeat(2, minmax(0,1fr))}
+  .lp-foot-brand{grid-column:1 / -1}
 }

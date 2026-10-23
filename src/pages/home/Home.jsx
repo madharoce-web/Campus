@@ -1,13 +1,15 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
-import { useAuth } from '../../lib/auth.jsx';
 import { useStoredState } from '../../lib/useStoredState.js';
-import { lsGet, lsSet } from '../../lib/storage.js';
-import { agoText, cardVisitOf } from '../../lib/visits.js';
+import { lsGet } from '../../lib/storage.js';
+import { agoText, cardVisitOf, streakOf, studyDays } from '../../lib/visits.js';
 import { fold } from '../../lib/html.js';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import { ACTIVITIES, CARDS, CARD_BY_KEY } from '../../courses/registry.js';
+import { progressOf } from '../../catalog/progress.js';
+import Page from '../../app/Page.jsx';
+import { CalendarBlock, LinksBlock } from '../../app/blocks.jsx';
 import Dropdown from './Dropdown.jsx';
 import Pattern from './Pattern.jsx';
 import { S } from './strings.js';
@@ -15,15 +17,6 @@ import './home.css';
 
 const KEBAB = <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="3" r="1.5" /><circle cx="8" cy="8" r="1.5" /><circle cx="8" cy="13" r="1.5" /></svg>;
 const STAR = <svg className="m-star" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.2l2 4.3 4.7.5-3.5 3.2 1 4.6L8 11.5l-4.2 2.3 1-4.6L1.3 6l4.7-.5z" /></svg>;
-const XICO = <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" /></svg>;
-const DRAWERICO = <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="1.5" /><path d="M12.5 3.5v13M8.5 8l-2 2 2 2" /></svg>;
-const AICO = {
-  quiz: ['#c4307b', <><path d="M6 4.5h12v15H6z" /><path d="M9 9h6M9 12.5h6M9 16h3.5" /></>],
-  assign: ['#836fff', <><path d="M7 3.5h7l4 4v13H7z" /><path d="M14 3.5v4h4M10 13l2 2 3.5-4" /></>],
-  code: ['#0d8ba1', <path d="M9 7.5l-4.5 4.5L9 16.5M15 7.5l4.5 4.5-4.5 4.5" />],
-  page: ['#0d8ba1', <><path d="M7 3.5h10v17H7z" /><path d="M10 8h4M10 11.5h4M10 15h4" /></>],
-};
-
 const visit = (k) => cardVisitOf(CARD_BY_KEY[k]);
 const ago = agoText;
 const oneOf = (list) => (v, d) => (list.includes(v) ? v : d);
@@ -31,18 +24,12 @@ const oneOf = (list) => (v, d) => (list.includes(v) ? v : d);
 export default function Home({ view }) {
   const { ui, t } = useLang();
   const Lx = S[ui];
-  const { status: authStatus } = useAuth();
   const [q, setQ] = useState('');
   const [filter, setFilter] = useStoredState('sem1-filter-v', () => oneOf(['all', 'star', 'hid'])(lsGet('sem1-filter'), 'all'), oneOf(['all', 'star', 'hid']));
   const [sort, setSort] = useStoredState('sem1-sort-v', () => (lsGet('sem1-sort') === 'last' ? 'last' : 'name'), oneOf(['name', 'last']));
   const [disp, setDisp] = useStoredState('sem1-disp-v', () => oneOf(['card', 'list', 'sum'])(lsGet('sem1-disp'), 'card'), oneOf(['card', 'list', 'sum']));
   const [stars, setStars] = useStoredState('sem1-stars', [], (v) => (Array.isArray(v) ? v : []));
   const [hid, setHid] = useStoredState('sem1-hidden', [], (v) => (Array.isArray(v) ? v : []));
-  const [drawer, setDrawerState] = useState(() => {
-    const v = lsGet('sem1-drawer');
-    return v ? v === 'open' : window.innerWidth >= 1000;
-  });
-  const setDrawer = (open) => { setDrawerState(open); lsSet('sem1-drawer', open ? 'open' : 'closed'); };
   useDocumentTitle(view === 'tauler' ? Lx.dash : Lx.mycourses);
 
   const cname = (c) => t(c.name);
@@ -102,14 +89,14 @@ export default function Home({ view }) {
     return (
       <ul className={'m-clist' + (disp === 'sum' ? ' m-sum' : '')}>
         {list.map((c) => {
-          const t = visit(c.k);
+          const last = visit(c.k);
           return (
             <li key={c.k} className="m-crow">
               <Link className="m-cthumb" to={c.to} tabIndex={-1} aria-hidden="true"><Pattern card={c} className="m-timg" /></Link>
               <div className="m-crowb">
                 <div className="m-ccat">{t(c.cat)}</div>
                 <div className="m-cnm"><NameLink c={c} /></div>
-                {disp === 'sum' && <><p className="m-cdesc">{t(c.desc)}</p><p className="m-clast">{t ? Lx.last + ago(t, Lx) : Lx.never}</p></>}
+                {disp === 'sum' && <><p className="m-cdesc">{t(c.desc)}</p><p className="m-clast">{last ? Lx.last + ago(last, Lx) : Lx.never}</p></>}
               </div>
               <Actions c={c} />
             </li>
@@ -122,12 +109,6 @@ export default function Home({ view }) {
   const viewCursos = (
     <>
       <h1 className="m-h1">{Lx.mycourses}</h1>
-      {authStatus === 'guest' && (
-        <div className="m-save" id="m-save">
-          <p><b>{Lx.saveH}</b> {Lx.saveP}</p>
-          <Link className="am-btn am-btn-primary" to="/entrar?next=%2Fcursos">{Lx.saveCta}</Link>
-        </div>
-      )}
       <section className="m-ovw" aria-labelledby="m-ovh">
         <h2 className="m-h5" id="m-ovh">{Lx.overview}</h2><hr className="m-hr" />
         <div id="m-bar">
@@ -147,11 +128,35 @@ export default function Home({ view }) {
   );
 
   const recent = CARDS.filter((c) => visit(c.k)).sort((a, b) => visit(b.k) - visit(a.k));
+  const days = studyDays();
+  const now = new Date();
+  const month = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+  const progress = CARDS.map((c) => [c, progressOf(c.k)]);
+  const doneAll = progress.reduce((n, [, p]) => n + (p ? p.done : 0), 0);
   const viewTauler = (
     <>
       <h1 className="m-h1">{Lx.dash}</h1>
-      <section className="m-mblock">
-        <h2 className="m-bt">{Lx.recent}</h2>
+      <dl className="am-stats" id="m-stats">
+        <div className="am-stat"><dt className="am-sr">{Lx.stStarted}</dt><dd><b>{recent.length}/{CARDS.length}</b><span>{Lx.stStarted}</span></dd></div>
+        <div className="am-stat"><dt className="am-sr">{Lx.stDone}</dt><dd><b>{doneAll}</b><span>{Lx.stDone}</span></dd></div>
+        <div className="am-stat"><dt className="am-sr">{Lx.stDays}</dt><dd><b>{days.filter((d) => d.startsWith(month)).length}</b><span>{Lx.stDays}</span></dd></div>
+        <div className="am-stat"><dt className="am-sr">{Lx.stStreak}</dt><dd><b>{streakOf(days)}</b><span>{Lx.stStreak}</span></dd></div>
+      </dl>
+      <section className="am-mblock" id="m-progress" aria-labelledby="m-progh">
+        <h2 className="am-bt" id="m-progh">{Lx.progT}</h2>
+        <ul className="am-prog">
+          {progress.map(([c, p]) => (
+            <li key={c.k} data-progress={c.k}>
+              <span className="am-prog-name"><Link to={c.to}>{cname(c)}</Link><small>{t(c.cat)}</small></span>
+              {p ? <span className="am-bar" role="progressbar" aria-label={cname(c)} aria-valuemin={0} aria-valuemax={100} aria-valuenow={p.pct}><span style={{ width: p.pct + '%' }} /></span>
+                : <span className="am-muted am-prog-none">{Lx.progNone}</span>}
+              <span className="am-prog-num">{p ? Lx.progOf.replace('%a', p.done).replace('%b', p.total) : '—'}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section className="am-mblock">
+        <h2 className="am-bt">{Lx.recent}</h2>
         {recent.length ? (
           <div className="m-rgrid">
             {recent.map((c) => (
@@ -163,14 +168,14 @@ export default function Home({ view }) {
           </div>
         ) : <p className="m-muted">{Lx.norecent}</p>}
       </section>
-      <section className="m-mblock">
-        <h2 className="m-bt">{Lx.secsT}</h2>
+      <section className="am-mblock">
+        <h2 className="am-bt">{Lx.secsT}</h2>
         <ul className="m-seclist">
           {CARDS.map((c) => (
             <li key={c.k}>
               <div className="m-sech"><span className="m-sdot" style={{ background: c.color }} /><NameLink c={c} /></div>
               <div className="m-csecs">
-                {c.secs.map((s) => <Link key={s[0]} className="m-badge" to={c.to + '/' + s[0]}>{t(s.slice(1))}</Link>)}
+                {c.secs.map((sec) => <Link key={sec[0]} className="m-badge" to={c.to + '/' + sec[0]}>{t(sec.slice(1))}</Link>)}
               </div>
             </li>
           ))}
@@ -179,34 +184,15 @@ export default function Home({ view }) {
     </>
   );
 
+  const activities = (
+    <LinksBlock id="m-extra" title={Lx.extra} items={ACTIVITIES.map((a) => (
+      { to: a[1], label: t(a.slice(3)), sub: cname(CARD_BY_KEY[a[0]]), icon: a[2] }
+    ))} />
+  );
+
   return (
-    <div data-page="home">
-    <div id="m-home" className={'m-layout' + (drawer ? ' m-dopen' : '')}>
-      <div className="m-main"><main className="m-main-in">{view === 'tauler' ? viewTauler : viewCursos}</main></div>
-      <aside className="m-drawer" id="m-drawer" aria-label={Lx.extra}>
-        <div className="m-dhead">
-          <button type="button" className="m-dclose" id="m-dclose" aria-label={Lx.close} title={Lx.close} onClick={() => setDrawer(false)}>{XICO}</button>
-        </div>
-        <section className="m-block">
-          <h2 className="m-bt">{Lx.extra}</h2>
-          <ul className="m-acts">
-            {ACTIVITIES.map((a) => {
-              const c = CARD_BY_KEY[a[0]], ic = AICO[a[2]];
-              return (
-                <li key={a[1]}>
-                  <Link to={a[1]}>
-                    <span className="m-aico" style={{ color: ic[0] }}><svg viewBox="0 0 24 24" aria-hidden="true">{ic[1]}</svg></span>
-                    <span className="m-atx"><span>{t(a.slice(3))}</span><small>{cname(c)}</small></span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      </aside>
-      <button type="button" className="m-dopenbtn" id="m-dopen" aria-label={Lx.open} title={Lx.open} aria-controls="m-drawer" aria-expanded={drawer} onClick={() => setDrawer(true)}>{DRAWERICO}</button>
-      <div className="m-dscrim" id="m-dscrim" onClick={() => setDrawer(false)} />
-    </div>
-    </div>
+    <Page name="home" blocks={view === 'tauler' ? <><CalendarBlock />{activities}</> : activities}>
+      {view === 'tauler' ? viewTauler : viewCursos}
+    </Page>
   );
 }

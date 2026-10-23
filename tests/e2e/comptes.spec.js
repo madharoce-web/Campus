@@ -13,15 +13,16 @@ async function enterCode(page, email) {
   await page.click('[data-state="code"] button[type="submit"]');
 }
 
-test('convidat: el progrés passa al compte en entrar amb el codi del correu', async ({ page, context }) => {
+test('el campus demana compte; el progrés que ja hi havia al navegador passa al compte', async ({ page, context }) => {
   const errors = watchErrors(page);
   const sb = await mockSupabase(context);
+  // progrés d'abans de tenir compte (per exemple, de quan la web no en tenia)
+  await page.addInitScript(() => {
+    if (localStorage.getItem('prova-sembrada')) return;
+    localStorage.setItem('prova-sembrada', '1');
+    localStorage.setItem('sem1-stars', '["mates"]');
+  });
   await page.goto('/cursos');
-  await expect(page.locator('#m-save')).toBeVisible();
-  await page.click('[data-kebab="mates"] .m-kbtn');
-  await page.click('[data-kebab="mates"] [data-act="star"]');
-
-  await page.click('#m-login');
   await expect(page).toHaveURL(/\/entrar\?next=%2Fcursos$/);
   await expect(page.locator('h1')).toHaveText('Entra a Aula Mada');
   await expectNoOverflow(page);
@@ -42,8 +43,8 @@ test('convidat: el progrés passa al compte en entrar amb el codi del correu', a
   await page.click('[data-state="code"] button[type="submit"]');
   await expect(page).toHaveURL(/\/cursos$/);
   await expect(page.locator('.m-av-on')).toHaveText('A');
-  await expect(page.locator('#m-save')).toHaveCount(0);
   await expect(page.locator('#m-login')).toHaveCount(0);
+  await expect(page.locator('.m-card:has([data-kebab="mates"]) .m-starw')).toBeVisible();
   await expect.poll(() => sb.state('ana@example.com')['sem1-stars']).toBe('["mates"]');
 
   // els canvis següents també es pugen
@@ -52,6 +53,23 @@ test('convidat: el progrés passa al compte en entrar amb el codi del correu', a
   await expect.poll(() => sb.state('ana@example.com')['sem1-hidden'], { timeout: 10_000 }).toBe('["eco"]');
   // l'únic error és el 403 esperat del codi incorrecte
   expect(errors.filter((e) => !e.includes('status of 403'))).toEqual([]);
+});
+
+test('des de la portada: crear un compte porta al tauler', async ({ page, context }) => {
+  await mockSupabase(context);
+  await page.goto('/');
+  await page.click('.lp-acts .am-btn-primary');
+  await expect(page).toHaveURL(/\/registre\?next=%2Ftauler$/);
+  await expect(page.locator('h1')).toHaveText('Crea el teu compte');
+  await page.fill('#ac-email', 'nou@example.com');
+  await page.click('[data-state="email"] button[type="submit"]');
+  await page.fill('#ac-code', TEST_CODE);
+  await page.click('[data-state="code"] button[type="submit"]');
+  await expect(page).toHaveURL(/\/tauler$/);
+  await expect(page.locator('h1')).toHaveText('Tauler');
+  // amb la sessió iniciada, la portada porta al campus
+  await page.goto('/');
+  await expect(page.locator('.lp-acts .am-btn-primary')).toHaveText('Ves al campus');
 });
 
 test('un navegador nou rep el progrés del compte, i en sortir s’esborra d’aquí', async ({ page, context }) => {
@@ -68,9 +86,11 @@ test('un navegador nou rep el progrés del compte, i en sortir s’esborra d’a
   await page.click('#m-ubtn');
   await expect(page.locator('.m-uwho')).toContainText('bru@example.com');
   await page.click('#m-usignout');
-  await expect(page.locator('#m-login')).toBeVisible();
-  await expect(page.locator('.m-starw')).toHaveCount(0);
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator('.lp-signin')).toBeVisible();
   expect(await page.evaluate(() => localStorage.getItem('sem1-stars'))).toBeNull();
+  await page.goto('/cursos');
+  await expect(page).toHaveURL(/\/entrar\?next=%2Fcursos$/);
   expect(sb.state('bru@example.com')['sem1-stars']).toBe('["logica"]');
 });
 
@@ -88,8 +108,7 @@ test('entrar amb Google torna a la pàgina d’on venia', async ({ page, context
 test('el meu compte: perfil, descàrrega de dades i esborrat', async ({ page, context }) => {
   const sb = await mockSupabase(context, { users: [{ email: 'cai@example.com', state: [['eco-prac', '{"n":3}', '2026-10-01T10:00:00Z']] }] });
   await page.goto('/compte');
-  await expect(page.locator('[data-state="guest"]')).toBeVisible();
-  await page.click('[data-state="guest"] .am-btn');
+  await expect(page).toHaveURL(/\/entrar\?next=%2Fcompte$/);
   await enterCode(page, 'cai@example.com');
   await expect(page).toHaveURL(/\/compte$/);
   await expect(page.locator('.ac-email')).toHaveText('cai@example.com');
@@ -112,7 +131,7 @@ test('el meu compte: perfil, descàrrega de dades i esborrat', async ({ page, co
   await expect(page.locator('.ac-danger-solid')).toBeDisabled();
   await page.fill('#ac-del', 'cai@example.com');
   await page.click('.ac-danger-solid');
-  await expect(page.locator('[data-state="guest"]')).toBeVisible();
+  await expect(page).toHaveURL(/\/$/);
   expect(sb.db.users.map((u) => u.email)).not.toContain('cai@example.com');
   expect(await page.evaluate(() => localStorage.getItem('eco-prac'))).toBeNull();
 });

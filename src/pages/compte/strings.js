@@ -3,6 +3,8 @@ export const S = {
   ca: {
     home: 'Inici', crumbs: 'Molles de pa',
     // entrar
+    signupTitle: 'Crea un compte', signupH: 'Crea el teu compte', signupSub: 'És gratuït. Fes servir el teu compte de Google o el teu correu: t’enviarem un enllaç i un codi per entrar, sense contrasenyes.',
+    toSignup: 'No tens compte? Crea’n un', toLogin: 'Ja tens compte? Entra',
     loginTitle: 'Entra', loginH: 'Entra a Aula Mada', loginSub: 'Fes servir el teu compte de Google o el teu correu. Si encara no en tens, el crearem ara mateix.',
     google: 'Continua amb Google', or: 'o bé', email: 'Correu electrònic', emailPh: 'nom@exemple.com',
     send: 'Envia’m l’enllaç', sending: 'Enviant…',
@@ -34,6 +36,8 @@ export const S = {
   },
   es: {
     home: 'Inicio', crumbs: 'Migas de pan',
+    signupTitle: 'Crea una cuenta', signupH: 'Crea tu cuenta', signupSub: 'Es gratuita. Usa tu cuenta de Google o tu correo: te enviaremos un enlace y un código para entrar, sin contraseñas.',
+    toSignup: '¿No tienes cuenta? Crea una', toLogin: '¿Ya tienes cuenta? Entra',
     loginTitle: 'Entra', loginH: 'Entra en Aula Mada', loginSub: 'Usa tu cuenta de Google o tu correo. Si todavía no tienes cuenta, la crearemos ahora mismo.',
     google: 'Continuar con Google', or: 'o bien', email: 'Correo electrónico', emailPh: 'nombre@ejemplo.com',
     send: 'Envíame el enlace', sending: 'Enviando…',
@@ -63,6 +67,8 @@ export const S = {
   },
   en: {
     home: 'Home', crumbs: 'Breadcrumbs',
+    signupTitle: 'Create an account', signupH: 'Create your account', signupSub: 'It’s free. Use your Google account or your email: we’ll send you a link and a code to sign in, with no password.',
+    toSignup: 'No account yet? Create one', toLogin: 'Already have an account? Sign in',
     loginTitle: 'Sign in', loginH: 'Sign in to Aula Mada', loginSub: 'Use your Google account or your email. If you don’t have an account yet, we’ll create one right away.',
     google: 'Continue with Google', or: 'or', email: 'Email', emailPh: 'name@example.com',
     send: 'Email me a link', sending: 'Sending…',

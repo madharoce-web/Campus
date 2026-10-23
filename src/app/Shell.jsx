@@ -6,13 +6,14 @@ import Navbar from './Navbar.jsx';
 export default function Shell() {
   const { pathname } = useLocation();
   const first = pathname.split('/')[1] || '';
-  // les pàgines del compte no marquen cap pestanya; els cursos marquen «Els meus cursos»
-  const active = first === '' ? 'inici' : ['graus', 'tauler', 'cursos'].includes(first) ? first
-    : ['entrar', 'compte', 'auth'].includes(first) ? null : 'cursos';
+  // pestanya activa: Inici (i els graus), Tauler o Els meus cursos (i els cursos); el compte, cap
+  const active = ['inici', 'graus'].includes(first) ? 'inici' : ['tauler', 'cursos'].includes(first) ? first
+    : ['entrar', 'registre', 'compte', 'auth'].includes(first) ? null : 'cursos';
   useEffect(() => { window.scrollTo(0, 0); }, [first]);
   return (
     <>
-      <Navbar active={active} />
+      {/* la portada pública (/) té la seva pròpia capçalera */}
+      {first !== '' && <Navbar active={active} />}
       <Outlet />
     </>
   );

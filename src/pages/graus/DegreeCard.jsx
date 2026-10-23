@@ -19,7 +19,7 @@ export default function DegreeCard({ d, Lx }) {
       <div className="am-cbody">
         <h3 className="am-cname"><Link to={to}>{t(d.name)}</Link></h3>
         <div className="am-ccat">{live ? Lx.liveCat : Lx.soonCat}</div>
-        <div className="am-cfoot">
+        <div className="am-cmeta">
           <span className={'am-badge' + (live ? ' am-badge-live' : '')}>{live ? Lx.live : Lx.soon}</span>
           {live && <span className="am-muted">{Lx.subjects.replace('%d', subjectsOf(d).length)}</span>}
         </div>

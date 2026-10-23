@@ -1,24 +1,25 @@
 /* ==========================================================================
-   AULA MADA · fitxes de disseny de les pàgines del lloc (portada, graus, compte).
-   Mateix llenguatge que la closca de l'aula virtual (shell.css): blanc pla, línies
-   fines, enllaços i accents oliva, botons blaus, sense degradats ni ombres grans.
+   AULA MADA · fitxes de disseny del lloc. Mateixos colors que l'aula virtual:
+   oliva (marca, enllaços i botons), grisos, i turquesa i lila per a les icones.
    ========================================================================== */
 :root{
-  /* accent del lloc (enllaços, pestanyes, marca) i botó principal */
-  --am-brand:#696e2e; --am-brand-dark:#55591f; --am-brand-soft:#f1f2e6; --am-brand-mark:#6d7637;
-  --am-primary:#0f6cbf; --am-primary-dark:#0c589c; --am-primary-soft:#e7f1fa;
-  --am-success:#357a32; --am-warning-bg:#fcefdc; --am-warning-line:#f6d9b2; --am-warning-ink:#6b4a0c;
+  /* oliva: marca, enllaços, pestanyes i botó principal */
+  --am-brand:#696e2e; --am-brand-dark:#55591f; --am-brand-soft:#f1f2e6; --am-brand-mark:#6d7637; --am-brand-line:#d5d7b8;
+  /* icones (com les de les activitats de l'aula) */
+  --am-teal:#0d8ba1; --am-teal-soft:#e2f3f6; --am-purple:#7e66e0; --am-purple-soft:#efecfc; --am-pink:#c4307b;
+  /* estats */
+  --am-success:#357a32; --am-success-soft:#e3efe2;
+  --am-info-bg:#e6f4f6; --am-info-line:#c3e3e9; --am-info-ink:#155a66;
+  --am-warning-bg:#fcefdc; --am-warning-line:#f6d9b2; --am-warning-ink:#6b4a0c;
   --am-danger:#ca3120; --am-danger-dark:#a32718; --am-danger-soft:#f6e1de;
   /* tinta i superfícies */
   --am-ink:#1d2125; --am-ink-2:#495057; --am-ink-3:#6a737b;
   --am-bg:#ffffff; --am-bg-2:#f8f9fa; --am-bg-3:#e9ecef;
   --am-line:#dee2e6; --am-line-2:#ced4da; --am-line-3:#8f959e;
-  /* tipografia: la del sistema, com l'aula virtual; la romana només a la marca */
+  /* tipografia: la del sistema; la romana només a la marca */
   --am-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif;
   --am-serif:"Times New Roman",Times,Georgia,serif;
   --am-fs:.9375rem; --am-fs-sm:.8203rem;
-  /* mides */
   --am-r:.5rem; --am-wrap:1140px;
   --am-focus:0 0 0 .2rem rgba(105,110,46,.4);
-  --am-focus-blue:0 0 0 .2rem rgba(15,108,191,.4);
 }

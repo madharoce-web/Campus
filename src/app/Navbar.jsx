@@ -7,13 +7,13 @@ import { useNavbarSlots } from './NavbarSlots.jsx';
 import { BRAND, T } from './strings.js';
 import { Chevron, ChevronLeft, ChevronRight, MenuIcon, UserIcon } from './icons.jsx';
 
-const PRIMARY = [['inici', '/', 'home'], ['graus', '/graus', 'degrees'], ['tauler', '/tauler', 'dash'], ['cursos', '/cursos', 'mycourses']];
+const PRIMARY = [['inici', '/inici', 'home'], ['tauler', '/tauler', 'dash'], ['cursos', '/cursos', 'mycourses']];
 const LANGS = [['ca', 'Català ‎(ca)‎'], ['es', 'Español ‎(es)‎'], ['en', 'English ‎(en)‎']];
 
 /**
  * Barra superior amb l'aspecte de l'aula virtual: marca, navegació primària,
  * eines del curs obert, botó d'entrar, menú d'usuari (compte, idioma, sortir) i menú mòbil.
- * active: 'inici' | 'graus' | 'tauler' | 'cursos' | null
+ * active: 'inici' | 'tauler' | 'cursos' | null
  */
 export default function Navbar({ active }) {
   const { ui, setLang } = useLang();
@@ -73,14 +73,14 @@ export default function Navbar({ active }) {
         <button ref={mbtn} className="m-ib m-menubtn" id="m-menubtn" type="button" aria-expanded={menu === 'nav'} aria-controls="m-menu" aria-label={S.menu} onClick={toggle('nav')}>
           <MenuIcon />
         </button>
-        <Link className="m-brand" to="/" aria-label={BRAND}>
+        <Link className="m-brand" to="/inici" aria-label={BRAND}>
           <span className="m-mark" aria-hidden="true">AM</span>
           <span className="m-wm" aria-hidden="true"><span>Aula</span><span>Mada</span></span>
         </Link>
         <div className="m-pnav">{links}</div>
         <div className="m-spacer" />
         <div className="m-tools" ref={slots?.setToolsNode} data-course={course} />
-        {auth.status === 'guest' && pathname !== '/entrar' && (
+        {auth.status === 'guest' && !['/entrar', '/registre'].includes(pathname) && (
           <Link className="m-login" id="m-login" to={loginTo}>{S.signIn}</Link>
         )}
         <div className="m-user">
