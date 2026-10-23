@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useLang } from '../lib/i18n.jsx';
+import { useAuth } from '../lib/auth.jsx';
+import { initials } from '../lib/initials.js';
 import { useNavbarSlots } from './NavbarSlots.jsx';
 import { BRAND, T } from './strings.js';
 import { Chevron, ChevronLeft, ChevronRight, MenuIcon, UserIcon } from './icons.jsx';
@@ -10,13 +12,16 @@ const LANGS = [['ca', 'Català ‎(ca)‎'], ['es', 'Español ‎(es)‎'], ['en
 
 /**
  * Barra superior amb l'aspecte de l'aula virtual: marca, navegació primària,
- * eines del curs obert, menú d'usuari (amb el canvi d'idioma) i menú mòbil.
- * active: 'inici' | 'graus' | 'tauler' | 'cursos'
+ * eines del curs obert, botó d'entrar, menú d'usuari (compte, idioma, sortir) i menú mòbil.
+ * active: 'inici' | 'graus' | 'tauler' | 'cursos' | null
  */
 export default function Navbar({ active }) {
   const { ui, setLang } = useLang();
   const S = T[ui];
   const slots = useNavbarSlots();
+  const auth = useAuth();
+  const { pathname } = useLocation();
+  const signedIn = auth.status === 'user';
   const [menu, setMenu] = useState(null); // null | 'user' | 'nav'
   const [panel, setPanel] = useState('main'); // 'main' | 'lang'
   const ubtn = useRef(null), mbtn = useRef(null), umenu = useRef(null), mmenu = useRef(null);
@@ -59,6 +64,8 @@ export default function Navbar({ active }) {
   };
   const choose = (l) => { setMenu(null); setLang(l); ubtn.current?.focus({ preventScroll: true }); };
   const course = slots?.course || undefined;
+  const loginTo = '/entrar?next=' + encodeURIComponent(pathname);
+  const name = auth.profile?.display_name;
 
   return (
     <nav className="m-navbar" aria-label={S.nav}>
@@ -73,19 +80,30 @@ export default function Navbar({ active }) {
         <div className="m-pnav">{links}</div>
         <div className="m-spacer" />
         <div className="m-tools" ref={slots?.setToolsNode} data-course={course} />
+        {auth.status === 'guest' && pathname !== '/entrar' && (
+          <Link className="m-login" id="m-login" to={loginTo}>{S.signIn}</Link>
+        )}
         <div className="m-user">
           <button ref={ubtn} className="m-ubtn" id="m-ubtn" type="button" aria-haspopup="menu" aria-expanded={menu === 'user'} aria-controls="m-umenu" aria-label={S.user} onClick={toggle('user')}>
-            <span className="m-av"><UserIcon /></span><Chevron />
+            <span className={'m-av' + (signedIn ? ' m-av-on' : '')}>{signedIn ? initials(name, auth.user?.email) : <UserIcon />}</span><Chevron />
           </button>
           <div ref={umenu} className="m-umenu" id="m-umenu" role="menu" hidden={menu !== 'user'}>
             <div id="m-up-main" hidden={panel !== 'main'}>
-              <div className="m-uhead">{S.uhead}</div>
+              {signedIn ? (
+                <div className="m-uhead m-uwho">{name && <b>{name}</b>}<span>{auth.user?.email}</span></div>
+              ) : <div className="m-uhead">{S.uhead}</div>}
+              {signedIn && <Link to="/compte" role="menuitem" onClick={() => setMenu(null)}>{S.account}</Link>}
+              {auth.status === 'guest' && <Link to={loginTo} role="menuitem" onClick={() => setMenu(null)}>{S.signInLong}</Link>}
               <Link to="/tauler" role="menuitem" onClick={() => setMenu(null)}>{S.dash}</Link>
               <Link to="/cursos" role="menuitem" onClick={() => setMenu(null)}>{S.mycourses}</Link>
               <div className="m-udiv" />
               <button type="button" id="m-ulang" role="menuitem" onClick={(e) => { e.stopPropagation(); setPanel('lang'); }}>
                 <span>{S.lang}</span><ChevronRight />
               </button>
+              {signedIn && <>
+                <div className="m-udiv" />
+                <button type="button" id="m-usignout" role="menuitem" onClick={() => { setMenu(null); auth.signOut(); }}>{S.signOut}</button>
+              </>}
             </div>
             <div id="m-up-lang" hidden={panel !== 'lang'}>
               <button type="button" id="m-uback" className="m-uback" role="menuitem" onClick={(e) => { e.stopPropagation(); setPanel('main'); }}>

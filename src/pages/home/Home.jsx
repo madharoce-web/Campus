@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
+import { useAuth } from '../../lib/auth.jsx';
 import { useStoredState } from '../../lib/useStoredState.js';
 import { lsGet, lsSet } from '../../lib/storage.js';
 import { agoText, cardVisitOf } from '../../lib/visits.js';
@@ -30,6 +31,7 @@ const oneOf = (list) => (v, d) => (list.includes(v) ? v : d);
 export default function Home({ view }) {
   const { ui, t } = useLang();
   const Lx = S[ui];
+  const { status: authStatus } = useAuth();
   const [q, setQ] = useState('');
   const [filter, setFilter] = useStoredState('sem1-filter-v', () => oneOf(['all', 'star', 'hid'])(lsGet('sem1-filter'), 'all'), oneOf(['all', 'star', 'hid']));
   const [sort, setSort] = useStoredState('sem1-sort-v', () => (lsGet('sem1-sort') === 'last' ? 'last' : 'name'), oneOf(['name', 'last']));
@@ -120,6 +122,12 @@ export default function Home({ view }) {
   const viewCursos = (
     <>
       <h1 className="m-h1">{Lx.mycourses}</h1>
+      {authStatus === 'guest' && (
+        <div className="m-save" id="m-save">
+          <p><b>{Lx.saveH}</b> {Lx.saveP}</p>
+          <Link className="am-btn am-btn-primary" to="/entrar?next=%2Fcursos">{Lx.saveCta}</Link>
+        </div>
+      )}
       <section className="m-ovw" aria-labelledby="m-ovh">
         <h2 className="m-h5" id="m-ovh">{Lx.overview}</h2><hr className="m-hr" />
         <div id="m-bar">

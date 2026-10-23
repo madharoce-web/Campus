@@ -65,10 +65,22 @@
 /* grau que encara no hi és */
 .gr-soon{max-width:640px; padding:var(--am-s6); background:#fff; border:1px dashed var(--am-line-2); border-radius:var(--am-r3)}
 .gr-soon h2{font-size:1.375rem; font-weight:650}
-.gr-soon p{margin-top:10px; color:var(--am-ink-2)}
+.gr-soon > p{margin-top:10px; color:var(--am-ink-2)}
 .gr-soon-ctas{display:flex; flex-wrap:wrap; gap:10px; margin-top:var(--am-s5)}
 
+.gr-notify,.gr-notified{margin-top:var(--am-s6); padding-top:var(--am-s5); border-top:1px solid var(--am-line)}
+.gr-notify h3{font-size:1.0625rem; font-weight:650}
+.gr-notify > p{margin-top:6px; color:var(--am-ink-2); font-size:.9375rem}
+.gr-notify-row{display:flex; gap:10px; margin-top:var(--am-s4)}
+.gr-input{flex:1; min-width:0; min-height:40px; padding:8px 12px; border:1px solid var(--am-line-2); border-radius:var(--am-r2); font:inherit; font-size:.9375rem; color:var(--am-ink); background:#fff}
+.gr-input:focus{outline:none; border-color:var(--am-brand); box-shadow:var(--am-focus)}
+.gr-input[aria-invalid="true"]{border-color:#c0392b}
+.gr-err{margin-top:8px; color:#b0322a; font-size:var(--am-fs-sm); font-weight:500}
+.gr-notified{color:var(--am-brand-dark); font-weight:600}
+.gr-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
 @media (max-width:767px){
+  .gr-notify-row{flex-direction:column}
   .gr-subs{grid-template-columns:minmax(0,1fr)}
   .gr-deg{gap:var(--am-s4); padding:var(--am-s4)}
   .gr-deg-ico{width:44px; height:44px; border-radius:12px}

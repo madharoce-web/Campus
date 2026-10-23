@@ -6,3 +6,5 @@ Thumbs.db
 test-results/
 playwright-report/
 .vite/
+dist-*/
+.env

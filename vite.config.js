@@ -16,7 +16,8 @@ export const SECURITY_HEADERS = {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob:",
     "font-src 'self' data:",
-    "connect-src 'self'",
+    // comptes i progrés al núvol (Supabase); amb un domini propi per a Supabase, afegiu-lo aquí
+    "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",

@@ -6,6 +6,9 @@ import NotFound from './NotFound.jsx';
 import Landing from '../pages/landing/Landing.jsx';
 import Graus from '../pages/graus/Graus.jsx';
 import Home from '../pages/home/Home.jsx';
+import Entrar from '../pages/compte/Entrar.jsx';
+import Callback from '../pages/compte/Callback.jsx';
+import Compte from '../pages/compte/Compte.jsx';
 import { COURSES } from '../courses/registry.js';
 
 /** /grados/ade i /degrees/ade → /graus/ade */
@@ -25,6 +28,10 @@ export default function App() {
           <Route key={p} path={p} element={<ToGraus />} />,
           <Route key={p + '/:grau'} path={p + '/:grau'} element={<ToGraus />} />,
         ])}
+        <Route path="entrar" element={<Entrar />} />
+        <Route path="login" element={<Navigate replace to="/entrar" />} />
+        <Route path="auth/callback" element={<Callback />} />
+        <Route path="compte" element={<Compte />} />
         <Route path="tauler" element={<Home view="tauler" />} />
         <Route path="cursos" element={<Home view="cursos" />} />
         {/* l'antiga pàgina d'inici del semestre és ara la pàgina del grau */}

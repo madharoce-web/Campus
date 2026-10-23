@@ -10,17 +10,19 @@ src/
   catalog/degrees.js     graus i semestres: què està disponible i què arribarà aviat
   pages/landing/         portada pública
   pages/graus/           catàleg de graus i pàgina de cada grau
+  pages/compte/          entrar, tornada de l'inici de sessió i el meu compte
   pages/home/            campus: Tauler i Els meus cursos
   courses/
     registry.js          metadades dels cursos, targetes de la portada i activitats
     <curs>/index.jsx     cada curs, carregat sota demanda (un fragment de codi per curs)
   shared/cpp/            motor de C++ compartit (Clang a WebAssembly + intèrpret de reserva)
-  lib/                   utilitats: idioma, localStorage, contingut ric, enllaços interns
+  lib/                   utilitats: idioma, localStorage, comptes i sincronització, contingut ric, enllaços interns
   styles/                fitxes de disseny (tokens.css), estils base, de la closca i de les pàgines públiques
 public/
   clang/                 binaris del compilador (≈29 MB, només es baixen si s'executa C++)
   compiler/              workers del compilador, de l'executor i de l'intèrpret
 tools/                   connector de PostCSS que aïlla els estils de cada curs
+supabase/                migracions de la base de dades (comptes) i proves de RLS
 tests/e2e/               proves de Playwright
 ```
 
@@ -32,6 +34,7 @@ tests/e2e/               proves de Playwright
 | `/graus`, `/graus/:grau` | Catàleg de graus (`/grados/…` i `/degrees/…` hi redirigeixen) |
 | `/cursos`, `/tauler` | Els meus cursos i tauler |
 | `/inici` | Redirigeix a `/graus/informatica` |
+| `/entrar`, `/auth/callback`, `/compte` | Entrar, tornada de Google o del correu, el meu compte |
 | `/mates/:secció` | Teoria Mates CP1 |
 | `/logica/:secció` | Lògica i grafs |
 | `/economia/:secció` | Principis d'economia |
@@ -52,7 +55,13 @@ la ruta nova (`/mates/exam`).
   `t({ ca, es, en })` (si falta l'anglès, es mostra el castellà).
   Tot es torna a pintar en canviar l'idioma, sense perdre l'estat. El primer cop es tria l'idioma del navegador.
 - **Estat desat**: `lib/storage.js` i `lib/useStoredState.js` (sempre amb `try/catch`:
-  en mode privat `localStorage` pot fallar).
+  en mode privat `localStorage` pot fallar). **Totes les escriptures han de passar per
+  `lsSet`/`lsSetJSON`/`lsDel`**: és com la sincronització amb el compte (`lib/sync.js`) sap què
+  ha canviat. No crideu `localStorage.setItem` directament des d'un curs. Les claus que no s'han de
+  sincronitzar (preferències del dispositiu) van a `LOCAL_ONLY` de `lib/sync.js`.
+- **Comptes**: `const { status, user, profile } = useAuth()` (`status`: `disabled`, `loading`,
+  `guest` o `user`). Sense les variables `VITE_SUPABASE_*` la web funciona sense comptes. Vegeu
+  [COMPTES.md](COMPTES.md).
 - **Catàleg**: una assignatura nova s'afegeix a `src/courses/registry.js` (`COURSES` i `CARDS`, amb
   `degree` i `term`) i a la llista `subjects` del seu semestre a `src/catalog/degrees.js`.
 - **Disseny**: les pàgines públiques fan servir les fitxes `--am-*` de `src/styles/tokens.css` i les
@@ -84,7 +93,8 @@ npm run dev          # http://localhost:5173
 npm run lint
 npm run build        # genera dist/
 npm run preview      # serveix dist/ a http://localhost:4173
-npm run test:e2e     # proves de Playwright sobre dist/
+npm run test:e2e     # proves de Playwright sobre dist/ (i dist-comptes, amb Supabase simulat)
+npm run test:db      # la migració de supabase/ en un Postgres amb Docker
 ```
 
 Per tenir diversos servidors de desenvolupament alhora, cadascun amb la seva memòria

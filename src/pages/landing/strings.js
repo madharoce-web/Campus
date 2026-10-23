@@ -37,7 +37,8 @@ export const S = {
     faq: [
       ['És gratis de veritat?', 'Sí. Totes les assignatures disponibles són gratuïtes i no cal posar cap targeta. Més endavant hi haurà un pla Pro opcional amb eines extra.'],
       ['D’on surten els apunts i els exercicis?', 'Es redacten de nou a partir del temari de cada assignatura i de l’estil dels exàmens d’anys anteriors, amb explicacions i dades pròpies.'],
-      ['He de crear un compte?', 'De moment no: el progrés es desa en aquest navegador. Aviat podràs crear un compte amb el correu o amb Google per tenir-lo a tots els teus dispositius.'],
+      ['He de crear un compte?', 'De moment no: el progrés es desa en aquest navegador. Aviat podràs crear un compte amb el correu o amb Google per tenir-lo a tots els teus dispositius.',
+        'No és obligatori: pots estudiar sense compte i el progrés es desa en aquest navegador. Si entres amb el correu o amb Google, es desa al núvol i el tens a tots els teus dispositius.'],
       ['És una web oficial de la universitat?', 'No. Aula Mada és un projecte independent fet per estudiants, sense cap vincle amb cap universitat.'],
       ['Quins graus hi haurà?', 'Ara hi ha el 1r semestre d’Enginyeria Informàtica. Els propers són ADE, Infermeria i Magisteri, i després la resta de semestres.'],
     ],
@@ -80,7 +81,8 @@ export const S = {
     faq: [
       ['¿Es gratis de verdad?', 'Sí. Todas las asignaturas disponibles son gratuitas y no hace falta poner ninguna tarjeta. Más adelante habrá un plan Pro opcional con herramientas extra.'],
       ['¿De dónde salen los apuntes y los ejercicios?', 'Se redactan de nuevo a partir del temario de cada asignatura y del estilo de los exámenes de años anteriores, con explicaciones y datos propios.'],
-      ['¿Tengo que crear una cuenta?', 'De momento no: el progreso se guarda en este navegador. Pronto podrás crear una cuenta con tu correo o con Google para tenerlo en todos tus dispositivos.'],
+      ['¿Tengo que crear una cuenta?', 'De momento no: el progreso se guarda en este navegador. Pronto podrás crear una cuenta con tu correo o con Google para tenerlo en todos tus dispositivos.',
+        'No es obligatorio: puedes estudiar sin cuenta y el progreso se guarda en este navegador. Si entras con tu correo o con Google, se guarda en la nube y lo tienes en todos tus dispositivos.'],
       ['¿Es una web oficial de la universidad?', 'No. Aula Mada es un proyecto independiente hecho por estudiantes, sin ningún vínculo con ninguna universidad.'],
       ['¿Qué grados habrá?', 'Ahora está el 1.er semestre de Ingeniería Informática. Los próximos son ADE, Enfermería y Magisterio, y después el resto de semestres.'],
     ],
@@ -123,7 +125,8 @@ export const S = {
     faq: [
       ['Is it really free?', 'Yes. Every available subject is free and you never need a card. Later on there will be an optional Pro plan with extra tools.'],
       ['Where do the notes and exercises come from?', 'They are written from scratch following each subject’s syllabus and the style of previous years’ exams, with our own explanations and data.'],
-      ['Do I need an account?', 'Not for now: your progress is saved in this browser. Soon you will be able to sign up with email or Google to keep it on all your devices.'],
+      ['Do I need an account?', 'Not for now: your progress is saved in this browser. Soon you will be able to sign up with email or Google to keep it on all your devices.',
+        'It’s optional: you can study without an account and your progress is saved in this browser. Sign in with email or Google and it’s saved in the cloud, on all your devices.'],
       ['Is this an official university website?', 'No. Aula Mada is an independent project made by students, not affiliated with any university.'],
       ['Which degrees will be available?', 'Right now, semester 1 of Computer Engineering. Next come Business, Nursing and Teacher Education, followed by the remaining semesters.'],
     ],

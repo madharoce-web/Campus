@@ -39,6 +39,14 @@
 .m-ubtn{display:flex; align-items:center; gap:9px; border:0; background:transparent; padding:6px 4px; cursor:pointer; color:var(--m-ink); font:inherit; border-radius:.5rem}
 .m-ubtn:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(105,110,46,.45)}
 .m-av{width:35px; height:35px; border-radius:50%; background:#e9ecef; display:grid; place-items:center; font-size:.9375rem; color:var(--m-ink); letter-spacing:.01em}
+.m-ubtn .m-av.m-av-on{background:var(--am-brand); color:#fff; font-weight:600; font-size:.875rem}
+.m-ubtn:hover .m-av.m-av-on{background:var(--am-brand-dark)}
+.m-login{display:inline-flex; align-items:center; height:34px; padding:0 14px; margin-right:10px; border-radius:8px; background:var(--am-brand); color:#fff; font-weight:600; font-size:.875rem; text-decoration:none; white-space:nowrap}
+.m-login:hover{background:var(--am-brand-dark); color:#fff; text-decoration:none}
+.m-login:focus-visible{outline:none; box-shadow:var(--am-focus)}
+.m-umenu .m-uwho{display:flex; flex-direction:column; line-height:1.35; padding-bottom:.5rem}
+.m-umenu .m-uwho b{color:var(--m-ink); font-size:.9375rem; font-weight:600}
+.m-umenu .m-uwho span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .m-uico{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round}
 .m-ubtn:hover .m-av{background:#dee2e6}
 .m-chev{width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}

@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { LangProvider } from './lib/i18n.jsx';
+import { AuthProvider } from './lib/auth.jsx';
 import { NavbarSlotsProvider } from './app/NavbarSlots.jsx';
 import App from './app/App.jsx';
 import './styles/tokens.css';
@@ -16,9 +17,11 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter basename={basename}>
       <LangProvider>
-        <NavbarSlotsProvider>
-          <App />
-        </NavbarSlotsProvider>
+        <AuthProvider>
+          <NavbarSlotsProvider>
+            <App />
+          </NavbarSlotsProvider>
+        </AuthProvider>
       </LangProvider>
     </BrowserRouter>
   </StrictMode>,
