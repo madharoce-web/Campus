@@ -26,6 +26,11 @@
 .lp-ctas{margin-top:24px}
 .lp-btn-lg{padding:.5rem 1rem; font-size:1rem}
 .lp-note{margin-top:12px; font-size:var(--am-fs-sm); color:var(--am-ink-3)}
+.lp-have{margin-top:20px; font-size:1rem; color:var(--am-ink-2)}
+.lp-have a{font-weight:600}
+/* el formulari de registre (la mateixa targeta que a /entrar) */
+.lp-signup .ac-card{max-width:440px; margin-left:auto; box-shadow:0 .25rem .75rem rgba(0,0,0,.08); border-top:4px solid var(--am-brand)}
+.lp-signup .ac-h{font-size:1.35rem}
 .lp-preview{margin:0; background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); padding:16px 16px 18px}
 .lp-preview figcaption{font-size:1.17rem; padding-bottom:10px; margin-bottom:12px; border-bottom:1px solid var(--am-line)}
 .lp-preview-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px}
@@ -88,6 +93,7 @@
 
 /* ---------- pantalles estretes ---------- */
 @media (max-width:999px){
+  .lp-signup .ac-card{margin-right:auto}
   .lp-nav{display:none}
   .lp-hero-in,.lp-plan,.lp-faq-wrap{grid-template-columns:minmax(0,1fr); gap:28px}
   .lp-adv{grid-template-columns:repeat(2, minmax(0,1fr))}

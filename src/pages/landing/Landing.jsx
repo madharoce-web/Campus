@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { UI_LANGS, useLang } from '../../lib/i18n.jsx';
 import { useAuth } from '../../lib/auth.jsx';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
@@ -8,6 +8,8 @@ import { CARDS } from '../../courses/registry.js';
 import { BlockIcon } from '../../app/blocks.jsx';
 import { BRAND } from '../../app/strings.js';
 import DegreeCard from '../graus/DegreeCard.jsx';
+import AuthForm from '../compte/AuthForm.jsx';
+import '../compte/compte.css';
 import Pattern from '../home/Pattern.jsx';
 import { S } from './strings.js';
 import './landing.css';
@@ -31,7 +33,12 @@ export default function Landing() {
   const L = S[ui];
   const cta = useCtas(L);
   const { hash } = useLocation();
-  const { farewell, clearFarewell } = useAuth();
+  const { farewell, clearFarewell, status } = useAuth();
+  const navigate = useNavigate();
+  // sense sessió, el formulari per crear el compte és a la capçalera; en entrar, cap a l'aula
+  const [signing, setSigning] = useState(false);
+  const guest = status === 'guest' || (signing && status !== 'user');
+  useEffect(() => { if (status === 'user' && signing) navigate('/tauler'); }, [status, signing, navigate]);
   useDocumentTitle(L.title);
   // ja som a la portada després de sortir: la propera visita al campus torna a demanar d'entrar
   useEffect(() => { if (farewell) clearFarewell(); }, [farewell, clearFarewell]);
@@ -77,12 +84,22 @@ export default function Landing() {
               <p className="lp-kicker">{L.kicker}</p>
               <h1 className="lp-h1">{L.h1}</h1>
               <p className="lp-lead">{L.lead}</p>
-              <div className="am-btn-row lp-ctas">
-                <Link className="am-btn am-btn-primary lp-btn-lg" to={cta.primary[0]}>{cta.primary[1]}</Link>
-                {cta.secondary && <Link className="am-btn am-btn-secondary lp-btn-lg" to={cta.secondary[0]}>{cta.secondary[1]}</Link>}
-              </div>
+              {guest
+                ? <p className="lp-have">{L.haveAccount} <Link to={cta.secondary[0]}>{L.signIn}</Link></p>
+                : (
+                  <div className="am-btn-row lp-ctas">
+                    <Link className="am-btn am-btn-primary lp-btn-lg" to={cta.primary[0]}>{cta.primary[1]}</Link>
+                    {cta.secondary && <Link className="am-btn am-btn-secondary lp-btn-lg" to={cta.secondary[0]}>{cta.secondary[1]}</Link>}
+                  </div>
+                )}
               <p className="lp-note">{L.heroNote}</p>
             </div>
+            {guest ? (
+              // el registre, visible des del primer moment: correu (enllaç i codi) o Google → el tauler
+              <div data-page="compte" className="lp-signup" id="registre" onSubmitCapture={() => setSigning(true)}>
+                <AuthForm signup next="/tauler" h="h2" title={L.formH} switchLink={false} />
+              </div>
+            ) : (
             <figure className="lp-preview" aria-hidden="true">
               <figcaption>{L.preview}</figcaption>
               <div className="lp-preview-grid">
@@ -94,6 +111,7 @@ export default function Landing() {
                 ))}
               </div>
             </figure>
+            )}
           </div>
         </section>
 

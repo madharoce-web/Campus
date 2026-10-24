@@ -72,6 +72,26 @@ test('des de la portada: crear un compte porta al tauler', async ({ page, contex
   await expect(page.locator('.lp-acts .am-btn-primary')).toHaveText('Ves al campus');
 });
 
+test('la portada té el registre a la capçalera: correu, codi i a l’aula', async ({ page, context }) => {
+  const errors = watchErrors(page);
+  const sb = await mockSupabase(context);
+  await page.goto('/');
+  const form = page.locator('.lp-signup');
+  await expect(form.locator('h2')).toHaveText('Crea el teu compte gratuït');
+  await expect(form.locator('.ac-google')).toBeVisible();
+  await expect(page.locator('.lp-have a')).toHaveAttribute('href', '/entrar?next=%2Ftauler');
+  await expectNoOverflow(page);
+  await form.locator('#ac-email').fill('hero@example.com');
+  await form.locator('button[type="submit"]').click();
+  await expect(form.locator('[data-state="code"] h2')).toContainText('Revisa el correu');
+  expect(sb.db.otps).toEqual(['hero@example.com']);
+  await form.locator('#ac-code').fill(TEST_CODE);
+  await form.locator('button[type="submit"]').click();
+  await expect(page).toHaveURL(/\/tauler$/);
+  await expect(page.locator('h1')).toHaveText('Tauler');
+  expect(errors).toEqual([]);
+});
+
 test('un navegador nou rep el progrés del compte, i en sortir s’esborra d’aquí', async ({ page, context }) => {
   const sb = await mockSupabase(context, {
     users: [{ email: 'bru@example.com', profile: { display_name: 'Bru Vila' }, state: [['sem1-stars', '["logica"]', '2026-10-01T10:00:00Z']] }],
