@@ -119,7 +119,7 @@ export default function Exam() {
 
   const start = ({ min, units, print, format }) => {
     const seed = newSeed();
-    const built = format ? buildFormat(format, { min, seed }) : buildExam(bank, { units, min, seed });
+    const built = format ? buildFormat(format, { min, seed, bank }) : buildExam(bank, { units, min, seed });
     if (print) { setSim({ ...built, t0: null }); return; }
     setSim({ ...built, t0: Date.now(), answers: {}, self: {} });
     window.scrollTo(0, 0);

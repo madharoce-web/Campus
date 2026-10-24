@@ -91,6 +91,16 @@ function Table({ b }) {
 
 const Bare = ({ children }) => children;
 
+/**
+ * Àmbit d'estils de l'assignatura per al contingut que ve de la versió anterior (HTML, esquemes,
+ * laboratoris): data-course i, si l'assignatura en declara (course.legacyClass), el contenidor d'abans.
+ */
+function Scope({ className, children, ...rest }) {
+  const course = useCourse();
+  const inner = course.legacyClass ? <div className={course.legacyClass + ' kit-legacy'}>{children}</div> : children;
+  return <div data-course={course.k} className={className} {...rest}>{inner}</div>;
+}
+
 /** Laboratori de l'assignatura (course.labs[id]: un component, normalment amb React.lazy). */
 function Lab({ b }) {
   const course = useCourse();
@@ -101,13 +111,13 @@ function Lab({ b }) {
   const Wrap = course.LabWrap || Bare;
   // dins de l'àmbit d'estils de l'assignatura (data-course), com abans
   return (
-    <div className="kit-lab" data-course={course.k} data-lab={b.id}>
+    <Scope className="kit-lab" data-lab={b.id}>
       <Boundary>
         <Suspense fallback={<p className="kit-loading">{K[ui].loading}</p>}>
           <Wrap lab={b.id} props={b.props}><L {...(b.props || {})} /></Wrap>
         </Suspense>
       </Boundary>
-    </div>
+    </Scope>
   );
 }
 
@@ -136,13 +146,13 @@ export function Block({ b, mode }) {
   if (BOX.includes(b.t)) return <Box b={b} mode={mode} />;
   switch (b.t) {
     case 'p': return <p className="kit-p"><Tx x={b.x} /></p>;
-    case 'h': return <h3 className="kit-h3"><Tx x={b.x} /></h3>;
+    case 'h': return <h3 className="kit-h3" id={b.id}><Tx x={b.x} /></h3>;
     case 'list': return <List b={b} />;
     case 'table': return <Table b={b} />;
     case 'example': return <Example b={b} mode={mode} />;
     case 'diagram': return (
       <figure className={'kit-fig kit-diagram' + (b.wide ? ' is-wide' : '')}>
-        <div data-course={course.k}><Rich className={'kit-svg ' + (b.cls || '')} html={tr(b.svg)} /></div>
+        <Scope><Rich className={'kit-svg ' + (b.cls || '')} html={tr(b.svg)} /></Scope>
         {b.caption && <figcaption><Tx x={b.caption} /></figcaption>}
       </figure>
     );
@@ -151,7 +161,7 @@ export function Block({ b, mode }) {
     case 'check': return <Exercise ex={b.ex} variant="check" onResult={(r) => recordCheck(course.k, b.ex.id, r.ok)} />;
     case 'formula': return <Formula b={b} />;
     // HTML que encara no s'ha passat a blocs: amb els estils de l'assignatura, com abans
-    case 'html': return <div data-course={course.k}><Rich className="kit-html" html={tr(b.h)} /></div>;
+    case 'html': return <Scope><Rich className="kit-html" html={tr(b.h)} /></Scope>;
     case 'hr': return <hr className="kit-hr" />;
     case 'steps': return <Steps steps={b.steps} startOpen bare />;
     case 'details': return (

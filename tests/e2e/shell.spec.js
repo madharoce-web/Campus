@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test';
+import lgToc from '../../src/courses/logica/kit/toc.js';
+import lgBank from '../../src/courses/logica/kit/bank.js';
 import { expectNoOverflow, setLang, watchErrors } from './helpers.js';
 
 test('portada pública: presentació, graus i crida a començar', async ({ page }) => {
@@ -117,12 +119,14 @@ test('tauler: resum, progrés de cada assignatura, calendari i calaix de blocs',
     localStorage.setItem('eco-prac', JSON.stringify({ done: { x: true } }));
   });
   await page.goto('/logica');
-  await expect(page.locator('div.course[data-course="logica"]')).toBeVisible();
+  await expect(page.locator('.kit[data-kit="logica"]')).toBeVisible();
   await page.goto('/tauler');
   await expect(page.locator('h1')).toHaveText('Tauler');
   await expect(page.locator('#m-stats .am-stat')).toHaveCount(4);
   await expect(page.locator('#m-stats .am-stat').first()).toContainText('1/5');
-  await expect(page.locator('[data-progress="logica"] .am-prog-num')).toHaveText('3 de 46');
+  // a la plantilla: apartats + exercicis; el progrés antic (lx-done) s'hi ha importat
+  const lgTotal = lgToc.reduce((n, u) => n + u.sections.length, 0) + lgBank.items.length;
+  await expect(page.locator('[data-progress="logica"] .am-prog-num')).toHaveText('3 de ' + lgTotal);
   await expect(page.locator('[data-progress="eco"] .am-prog-num')).toHaveText('1 de 43');
   await expect(page.locator('[data-progress="mates"]')).toContainText('Sense seguiment');
   await expect(page.locator('#am-cal td.is-today.is-study')).toHaveCount(1);
