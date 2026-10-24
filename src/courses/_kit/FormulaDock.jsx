@@ -41,7 +41,8 @@ export default function FormulaDock() {
   const onDown = (e) => {
     // els botons de la capçalera no arrosseguen (la captura del punter els prendria el clic)
     if (e.button !== 0 || window.innerWidth < 640 || e.target.closest('button')) return;
-    drag.current = { sx: e.clientX, sy: e.clientY, x, y };
+    // des de la posició real (la mida desada pot haver mogut la finestra des de l'últim render)
+    drag.current = { sx: e.clientX, sy: e.clientY, x: box.current.offsetLeft, y: box.current.offsetTop };
     e.currentTarget.setPointerCapture(e.pointerId);
   };
   const onMove = (e) => {
@@ -63,11 +64,15 @@ export default function FormulaDock() {
     let t = 0;
     const ro = new ResizeObserver(() => {
       clearTimeout(t);
-      t = setTimeout(() => { if (!d.min && window.innerWidth >= 640) moveDock({ w: el.offsetWidth, h: el.offsetHeight }); }, 300);
+      t = setTimeout(() => {
+        // només si l'alumne l'ha redimensionat de debò (si no, cada desada tornaria a avisar)
+        if (d.min || window.innerWidth < 640 || drag.current) return;
+        if (Math.abs(el.offsetWidth - d.w) > 2 || Math.abs(el.offsetHeight - d.h) > 2) moveDock({ w: el.offsetWidth, h: el.offsetHeight });
+      }, 300);
     });
     ro.observe(el);
     return () => { ro.disconnect(); clearTimeout(t); };
-  }, [d.min]);
+  }, [d.min, d.w, d.h]);
   // Escape tanca
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape' && !e.defaultPrevented) closeDock(); };
@@ -98,7 +103,7 @@ export default function FormulaDock() {
         <div className="kit-dock-body">
           <input type="search" className="am-input kit-dock-q" placeholder={S.search} aria-label={S.search} value={q} onChange={(e) => setQ(e.target.value)} />
           {!data ? <p className="kit-loading">{K[ui].loading}</p> : !groups.length ? <p className="kit-muted">{S.none}</p> : groups.map((g) => (
-            <div key={g.unit || tr(g.t)} className="kit-fg">
+            <div key={(g.unit || '') + '·' + plain(tr(g.t))} className="kit-fg">
               <h3>{inline(tr(g.t))}</h3>
               <dl>
                 {g.items.map((f) => (

@@ -9,9 +9,10 @@ import { useMode } from '../Mode.jsx';
 
 /**
  * Solució pas a pas: cada pas es mostra quan es demana. Un pas pot ser text o
- * { x, why } (why: per què es fa, desplegable).
+ * { x, why, table: { head, rows }, done } (why: per què es fa, desplegable; done: el resultat).
+ * bare: sense el títol «Solució» (quan ja n'hi ha un a sobre).
  */
-export function Steps({ steps, startOpen = false }) {
+export function Steps({ steps, startOpen = false, bare = false }) {
   const { ui } = useLang();
   const S = K[ui];
   const tr = useTr();
@@ -19,14 +20,22 @@ export function Steps({ steps, startOpen = false }) {
   if (!steps || !steps.length) return null;
   if (n === 0) return <button type="button" className="kit-link kit-steps-open" onClick={() => setN(1)}>{S.showSteps}</button>;
   return (
-    <div className="kit-steps">
-      <p className="kit-steps-h">{S.solution}</p>
+    <div className={'kit-steps' + (bare ? ' is-bare' : '')}>
+      {!bare && <p className="kit-steps-h">{S.solution}</p>}
       <ol>
         {steps.slice(0, n).map((st, i) => {
           const x = st && typeof st === 'object' && !Array.isArray(st) && 'x' in st ? st : { x: st };
           return (
-            <li key={i}>
+            <li key={i} className={x.done ? 'is-res' : undefined}>
               <div>{inline(tr(x.x))}</div>
+              {x.table && (
+                <div className="kit-tw">
+                  <table className="kit-table kit-steptab">
+                    <thead><tr>{x.table.head.map((h, j) => <th key={j}>{tr(h)}</th>)}</tr></thead>
+                    <tbody>{x.table.rows.map((r, j) => <tr key={j}>{r.map((c, k) => <td key={k}>{tr(c)}</td>)}</tr>)}</tbody>
+                  </table>
+                </div>
+              )}
               {x.why && <details className="kit-why"><summary>{S.why}</summary><div>{inline(tr(x.why))}</div></details>}
             </li>
           );
@@ -64,6 +73,7 @@ export function Stem({ ex }) {
     <>
       {ex.title && <p className="kit-ex-title">{inline(tr(ex.title))}</p>}
       <div className="kit-ex-q">{ex.qb ? <Blocks blocks={ex.qb} mode={mode} /> : <Tx x={ex.q} />}</div>
+      {ex.note && <p className="kit-ex-note">{inline(tr(ex.note))}</p>}
     </>
   );
 }
@@ -98,6 +108,8 @@ export function ExTags({ ex }) {
  * Un exercici: enunciat, resposta, «Comprova», pista i solució pas a pas.
  * variant: 'check' (dins la lliçó) | 'practice' | 'end' (tipus examen al final del tema)
  * onResult({ ok, self }) quan es comprova (o s'autoavalua).
+ * check(ex, valor) pot tornar true/false, null (autoavaluació) o una fracció 0–1 (correcte en part).
+ * Els tipus amb `inline` (p. ex. exercicis amb apartats) es comproven des del seu propi control: onCheck(r).
  */
 export default function Exercise({ ex, variant = 'practice', n, onResult, done }) {
   const { ui } = useLang();
@@ -106,18 +118,19 @@ export default function Exercise({ ex, variant = 'practice', n, onResult, done }
   const course = useCourse();
   const T = typeOf(ex, course.types);
   const [value, setValue] = useState(undefined);
-  const [res, setRes] = useState(null); // null | true | false
+  const [res, setRes] = useState(null); // null | true | false | fracció
   const [hint, setHint] = useState(false);
   const [self, setSelf] = useState(null);
   const [sol, setSol] = useState(false);
   const [mode] = useMode();
   const auto = T.check !== undefined && ex.type !== 'open';
-  const verify = () => {
-    const ok = T.check(ex, value);
-    if (ok === null) return;
-    setRes(ok);
-    onResult?.({ ok });
+  const report = (r) => {
+    if (r === null || r === undefined) return;
+    setRes(r);
+    onResult?.({ ok: r === true || r === 1 });
   };
+  const verify = () => report(T.check(ex, value));
+  const full = res === true || res === 1, part = typeof res === 'number' && res > 0 && res < 1;
   const onSelf = (v) => { setSelf(v); onResult?.({ ok: v >= 3, self: v }); };
   return (
     <article className={'kit-ex kit-ex-' + variant + (done ? ' is-done' : '')} data-ex={ex.id} data-level={ex.level} data-type={ex.type}>
@@ -127,12 +140,12 @@ export default function Exercise({ ex, variant = 'practice', n, onResult, done }
         {done && <span className="kit-done">✓ {S.done}</span>}
       </header>
       <Stem ex={ex} />
-      {T.Input && <T.Input ex={ex} value={value} onChange={(v) => { setValue(v); setRes(null); }} disabled={false} />}
+      {T.Input && <T.Input ex={ex} value={value} onChange={(v) => { setValue(v); if (!T.inline) setRes(null); }} disabled={false} checked={res !== null} onCheck={report} />}
       <div className="kit-ex-acts">
-        {auto && T.Input && <button type="button" className="am-btn am-btn-primary kit-check" onClick={verify} disabled={value === undefined || value === ''}>{S.checkBtn}</button>}
+        {auto && T.Input && !T.inline && <button type="button" className="am-btn am-btn-primary kit-check" onClick={verify} disabled={value === undefined || value === ''}>{S.checkBtn}</button>}
         {(ex.hint || ex.hintb) && <button type="button" className="kit-link" aria-expanded={hint} onClick={() => setHint(!hint)}>{S.hint}</button>}
       </div>
-      {res !== null && <p className={'kit-fb ' + (res ? 'is-ok' : 'is-ko')} role="status">{res ? S.ok : S.ko}</p>}
+      {res !== null && !T.inline && <p className={'kit-fb ' + (full ? 'is-ok' : part ? 'is-mid' : 'is-ko')} role="status">{full ? S.ok : part ? S.part : ex.hint || ex.hintb ? S.ko : S.ko0}</p>}
       {hint && ex.hint && <p className="kit-hint">{inline(tr(ex.hint))}</p>}
       {hint && ex.hintb && <div className="kit-hint"><Blocks blocks={ex.hintb} mode={mode} /></div>}
       <Steps steps={ex.steps} />

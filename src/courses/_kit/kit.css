@@ -134,6 +134,7 @@
 .kit-box-warn .kit-box-t{color:var(--am-danger-dark)}
 .kit-box-summary{border-left-color:var(--am-purple); background:var(--am-purple-soft)}
 .kit-box-summary .kit-box-t{color:#5a44b8}
+.kit-box-box{border-left-color:var(--am-brand)}
 .kit-box-example{border-left-color:var(--am-success)}
 .kit-box-example .kit-box-t{color:var(--am-success)}
 .kit-box-day{border-left-color:var(--am-warning-ink); background:var(--am-warning-bg)}
@@ -208,6 +209,12 @@
 .kit-box .kit-steps{background:transparent; border:0; padding:4px 0 0; margin-top:6px}
 .kit-box .kit-steps-h{display:none}
 .kit-steps ol{margin:0; padding-left:1.4rem; line-height:1.6}
+.kit-steps.is-bare{background:transparent; border:0; padding:0; margin-top:6px}
+.kit-steps li.is-res > div:first-child{font-weight:600}
+.kit-steptab{width:auto; margin:6px 0 2px; font-size:.86rem}
+.kit-steptab th,.kit-steptab td{padding:3px 10px; text-align:center}
+.kit-ex-note{margin:-4px 0 10px !important; font-size:var(--am-fs-sm); color:var(--am-ink-3)}
+.kit-fb.is-mid{background:var(--am-warning-bg); color:var(--am-warning-ink)}
 .kit-steps li + li{margin-top:6px}
 .kit-steps-more{display:flex; gap:12px; align-items:center; margin-top:10px}
 .kit-why{margin-top:4px; font-size:.9rem}
@@ -218,6 +225,66 @@
 .kit-self-b{border:1px solid var(--am-line-2); background:#fff; border-radius:999px; padding:3px 10px; font:inherit; font-size:var(--am-fs-sm); cursor:pointer}
 .kit-self-b:hover{background:var(--am-bg-2)}
 .kit-self-b.is-on{background:var(--am-primary); border-color:var(--am-primary); color:#fff}
+
+/* exercicis amb apartats (p. ex. Computadors) */
+.cp-parts{display:grid; gap:8px; margin:6px 0 4px}
+.cp-part{padding:8px 10px; border:1px solid var(--am-line); border-radius:var(--am-r); background:#fff}
+.cp-part.is-ok{border-color:#b9d4b7; background:#f6fbf5}
+.cp-part.is-ko{border-color:#efcbc6}
+.cp-row{display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px}
+.cp-l{flex:0 0 auto; min-width:1.6em; font-weight:700; color:var(--am-ink-3)}
+.cp-q{flex:1 1 220px; min-width:0}
+.cp-in{flex:0 1 230px; width:230px; font-family:SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+.cp-acts{display:inline-flex; flex-wrap:wrap; align-items:center; gap:4px 12px}
+.cp-check{padding:.2rem .6rem; font-size:.875rem}
+.cp-mc{margin:6px 0 0}
+.kit-opt.is-right{border-color:var(--am-success); background:var(--am-success-soft)}
+.kit-opt.is-wrong{border-color:var(--am-danger); background:var(--am-danger-soft)}
+.cp-fb{margin-top:6px !important; padding:4px 8px; font-weight:500}
+.cp-res{font-family:SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-weight:600}
+.cp-sol{margin-top:8px; padding:8px 12px; background:var(--am-bg-2); border-radius:var(--am-r)}
+.cp-sol > p{margin:0 0 4px}
+@media (max-width:560px){ .cp-in{flex:1 1 100%; width:100%} }
+
+/* àlgebra de Boole (Computadors, T3): exercicis i laboratoris */
+.bl-tt{width:auto; min-width:220px; text-align:center}
+.bl-tt th,.bl-tt td{text-align:center; padding:4px 14px}
+.bl-tt td.bl-out{padding:2px 8px}
+.bl-tt td.is-ok{background:var(--am-success-soft)}
+.bl-tt td.is-ko{background:var(--am-danger-soft)}
+.bl-cell{min-width:44px; height:30px; border:1px solid var(--am-line-2); border-radius:6px; background:#fff; font:600 .95rem/1 SFMono-Regular,Menlo,Monaco,Consolas,monospace; cursor:pointer}
+.bl-cell:hover{background:var(--am-bg-2)}
+.bl-cell:disabled{cursor:default}
+.bl-bool{margin:4px 0 10px}
+.bl-in{width:100%; max-width:420px; font:1rem/1.4 SFMono-Regular,Menlo,Monaco,Consolas,monospace; padding:.375rem .75rem; border:1px solid var(--am-line-2); border-radius:var(--am-r)}
+.bl-prev{margin:6px 0 0 !important; min-height:1.6em; font-size:var(--am-fs-sm)}
+.bl-prev .kit-math math{font-size:1.15em}
+.bl-err{color:var(--am-danger-dark)}
+.bl-why{margin-top:8px !important; font-weight:500}
+.bl-switches{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.bl-sw{display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border:1px solid var(--am-line-2); border-radius:999px; background:#fff; font:inherit; cursor:pointer}
+.bl-sw-n{font-weight:700}
+.bl-sw-v{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; background:var(--am-bg-3); font:700 .9rem/1 SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+.bl-sw.is-on{border-color:var(--am-primary)}
+.bl-sw.is-on .bl-sw-v{background:var(--am-primary); color:#fff}
+.bl-three{display:inline-flex; gap:6px; align-items:center; font-size:var(--am-fs-sm)}
+.bl-ops td{vertical-align:middle}
+.bl-ops tr.is-sel td{background:var(--am-primary-soft) !important}
+.bl-opbtn{border:0; background:none; font:700 .875rem/1 var(--am-sans); color:var(--am-ink); cursor:pointer; padding:2px 0}
+.bl-led{display:inline-grid; place-items:center; width:28px; height:28px; border-radius:50%; background:#e9ecef; color:#6a737b; font:700 .9rem/1 SFMono-Regular,Menlo,Monaco,Consolas,monospace; border:2px solid #ced4da}
+.bl-led.is-on{background:#e3f6e1; color:#1c6b18; border-color:#3c9a36; box-shadow:0 0 0 3px rgba(60,154,54,.18)}
+.bl-mini table{width:auto}
+.bl-mini tr.is-cur td,.bl-truth tr.is-cur td{background:var(--am-warning-bg) !important; font-weight:700}
+.bl-truth .bl-final{background:var(--am-primary-soft) !important; font-weight:700}
+.bl-truth tr.is-diff td{background:var(--am-danger-soft) !important}
+.bl-field{display:flex; flex-direction:column; gap:4px; min-width:0}
+.bl-field > label,.bl-field > span{font-size:var(--am-fs-sm); font-weight:600}
+.bl-sel{max-width:420px; padding:.3rem .5rem; border:1px solid var(--am-line-2); border-radius:var(--am-r); font:inherit; background:#fff}
+.bl-verdict{margin:0 !important; padding:6px 10px; border-radius:var(--am-r); font-weight:600}
+.bl-verdict.is-yes{background:var(--am-success-soft); color:#1c401a}
+.bl-verdict.is-no{background:var(--am-danger-soft); color:#691911}
+.kp-tt{border-collapse:collapse; margin-top:6px}
+.kp-tt th,.kp-tt td{border:1px solid #000; padding:3px 12px; text-align:center; min-width:28px; height:7mm}
 
 /* ---------- pràctica i mètodes ---------- */
 .kit-filters{display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; padding:12px 14px; border:1px solid var(--am-line); border-radius:var(--am-r); background:var(--am-bg-2); margin-bottom:12px}
@@ -245,6 +312,8 @@
 .kit-fs legend{padding:0 6px; font-weight:700}
 .kit-cb{display:flex; gap:8px; align-items:flex-start; padding:4px 0; cursor:pointer}
 .kit-cb input{margin-top:4px}
+.kit-fmt{margin:4px 0 12px}
+.kit-fmt-d{margin:0 0 6px !important; line-height:1.55}
 .kit-hist{margin-top:30px}
 .kit-hist-t{max-width:560px}
 .kit-exam-bar{position:sticky; top:60px; z-index:6; display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; padding:10px 14px; margin-bottom:14px; background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); box-shadow:0 2px 4px rgba(0,0,0,.06)}
@@ -261,7 +330,7 @@
 .kit-mark{font-size:1.4rem}
 
 /* ---------- formulari flotant ---------- */
-.kit-dock{position:fixed; z-index:80; min-width:280px; min-height:44px; max-width:calc(100vw - 16px); max-height:calc(100vh - 70px); display:flex; flex-direction:column; background:#fff; border:1px solid var(--am-line-2); border-radius:var(--am-r); box-shadow:0 .75rem 1.5rem rgba(0,0,0,.18); resize:both; overflow:hidden; font-family:var(--am-sans); font-size:var(--am-fs); color:var(--am-ink)}
+.kit-dock{box-sizing:border-box; position:fixed; z-index:80; min-width:280px; min-height:44px; max-width:calc(100vw - 16px); max-height:calc(100vh - 70px); display:flex; flex-direction:column; background:#fff; border:1px solid var(--am-line-2); border-radius:var(--am-r); box-shadow:0 .75rem 1.5rem rgba(0,0,0,.18); resize:both; overflow:hidden; font-family:var(--am-sans); font-size:var(--am-fs); color:var(--am-ink)}
 .kit-dock.is-min{resize:none; height:auto !important}
 .kit-dock-h{display:flex; align-items:center; gap:4px; padding:6px 6px 6px 12px; background:var(--am-brand-mark); color:#fff; cursor:move; user-select:none; touch-action:none}
 .kit-dock-t{flex:1; font-weight:600; font-size:.875rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -316,6 +385,11 @@
 .kp-stem .kit-ex-q{margin-bottom:0}
 .kp-stem .kit-ex-title{margin:0 0 4px !important}
 .kp-key{font-weight:600; margin:0 0 4px}
+.kp-cparts{margin:6px 0 0; padding-left:0; list-style:none; display:grid; gap:9px}
+.kp-cparts li{display:grid; grid-template-columns:2.2em minmax(0,1fr) 55mm; gap:8px; align-items:end}
+.kp-cl{font-weight:600}
+.kp-cmc{grid-column:2 / -1; display:flex; flex-wrap:wrap; gap:4px 14px}
+.kp-cmc > span{display:inline-flex; gap:6px}
 .kp-sols{break-before:page; margin-top:20px}
 .kp-sols h2{font-size:1.15rem; border-bottom:1px solid #000; padding-bottom:4px}
 .kp-sol h3{font-size:.95rem; margin:12px 0 4px}

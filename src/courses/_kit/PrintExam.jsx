@@ -6,7 +6,7 @@ import { Blocks } from './blocks.jsx';
 import { Stem } from './exercise/Exercise.jsx';
 import { useMode } from './Mode.jsx';
 import { useCourse } from './context.js';
-import { K } from './strings.js';
+import { K, num } from './strings.js';
 import { typeOf } from './exercise/types.jsx';
 import { useModule } from './useAsync.js';
 import { examExercises, loadSim } from './examBuild.js';
@@ -29,7 +29,7 @@ export default function PrintExam() {
   const [sim] = useState(() => loadSim(course.k));
   const [sol, setSol] = useState(false);
   const [mode] = useMode();
-  const exs = useMemo(() => (bank && sim ? examExercises(bank, sim) : []), [bank, sim]);
+  const exs = useMemo(() => (bank && sim ? examExercises(bank, sim, course) : []), [bank, sim, course]);
   useEffect(() => { document.documentElement.classList.add('kit-printing'); return () => document.documentElement.classList.remove('kit-printing'); }, []);
 
   if (!sim) {
@@ -64,7 +64,7 @@ export default function PrintExam() {
           const T = typeOf(ex, course.types);
           return (
             <section key={ex.id + (ex.seed || '')} className="kp-q" data-ex={ex.id}>
-              <h2><span>{S.q} {i + 1}</span><small>({ex.pts} {ex.pts === 1 ? S.pt : S.pts})</small></h2>
+              <h2><span>{S.q} {i + 1}</span><small>({num(ex.pts, ui, 0)} {ex.pts === 1 ? S.pt : S.pts})</small></h2>
               <div className="kp-stem"><Stem ex={ex} /></div>
               {T.Print && <T.Print ex={ex} />}
               <Space spec={ex.space || T.space} />
