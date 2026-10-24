@@ -2,13 +2,14 @@ import { test, expect } from '@playwright/test';
 import { expectNoOverflow, watchErrors } from './helpers.js';
 
 // La plantilla d'assignatura (src/courses/_kit), igual per a totes les assignatures que la fan servir.
-// [ruta, clau, primer tema]
+// [ruta, clau, primer tema, tema amb comprovacions]
 const KIT = [
-  ['/economia', 'eco', 't1'],
+  ['/economia', 'eco', 't1', 't1'],
+  ['/computadors', 'comp', 't1', 't3'],
 ];
 const kit = (page, k) => page.evaluate((key) => JSON.parse(localStorage.getItem(key) || 'null'), 'kit-' + k + '-v1');
 
-for (const [path, k, u1] of KIT) {
+for (const [path, k, u1, uc] of KIT) {
   test.describe(path, () => {
     test('inici: pestanyes, temes i accessos', async ({ page }) => {
       const errors = watchErrors(page);
@@ -43,7 +44,7 @@ for (const [path, k, u1] of KIT) {
 
     test('comprovació dins la lliçó i apartats llegits', async ({ page }) => {
       const errors = watchErrors(page);
-      await page.goto(path + '/temari/' + u1);
+      await page.goto(path + '/temari/' + uc);
       const chk = page.locator('.kit-ex-check').first();
       await chk.scrollIntoViewIfNeeded();
       const id = await chk.getAttribute('data-ex');
@@ -73,7 +74,7 @@ for (const [path, k, u1] of KIT) {
       expect(n).toBeGreaterThan(0);
       // els punts sumen 10
       const pts = await page.locator('.kit-ex-exam .kit-pts').allTextContents();
-      expect(pts.reduce((s, t) => s + parseFloat(t), 0)).toBeCloseTo(10, 5);
+      expect(pts.reduce((s, t) => s + parseFloat(t.replace(',', '.')), 0)).toBeCloseTo(10, 5);
       // el simulacre continua després de recarregar
       await page.reload();
       await expect(page.locator('#kit-clock')).toBeVisible();
