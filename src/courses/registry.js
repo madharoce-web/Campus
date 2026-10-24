@@ -7,7 +7,7 @@
 export const COURSES = [
   {
     k: 'mates', path: '/mates', degree: 'informatica', term: 's1', tier: 'free',
-    load: () => import('./mates/index.jsx'),
+    load: () => import('./mates/index.jsx'), formulas: () => import('./mates/kit/formulas.js'),
     title: ['Teoria Mates CP1', 'Teoría Mates CP1', 'Maths Theory CP1'],
     sub: ['Matemàtica Computacional', 'Matemática Computacional', 'Computational Mathematics'],
     color: '#1b6fb5', bg: '#e3f0ff', icon: 'mates',

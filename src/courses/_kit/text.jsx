@@ -9,22 +9,12 @@
  */
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import temml from 'temml';
 import 'temml/dist/Temml-Local.css';
 import { pick, useLang } from '../../lib/i18n.jsx';
 import Rich from '../../lib/Rich.jsx';
+import { texToMathML } from './tex.js';
 
-const mathCache = new Map();
-/** TeX → MathML (en memòria cau; un error es mostra com el TeX original). */
-export function texToMathML(src, display = false) {
-  const key = (display ? 'D' : 'I') + src;
-  if (!mathCache.has(key)) {
-    let out;
-    try { out = temml.renderToString(src, { displayMode: display, throwOnError: true }); } catch { out = '<code class="kit-texerr">' + src.replace(/[<&]/g, (c) => (c === '<' ? '&lt;' : '&amp;')) + '</code>'; }
-    mathCache.set(key, out);
-  }
-  return mathCache.get(key);
-}
+export { texToMathML };
 
 export const TeX = memo(function TeX({ tex, display }) {
   return <Rich as="span" className={display ? 'kit-math kit-math-d' : 'kit-math'} html={texToMathML(tex, display)} />;

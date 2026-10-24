@@ -5,7 +5,7 @@
  *   p, h            paràgraf, subtítol                  { x }
  *   list            llista                              { items:[x], ordered? }
  *   table           taula                               { head:[x], rows:[[x]], caption? }
- *   def prop rule thm note tip warn summary  requadres  { title?, x | items }
+ *   def prop rule thm note tip warn summary  requadres  { title?, x | items, label?: false }
  *   example         exemple resolt                      { title?, q, steps:[x | {x, why}], result? }
  *   diagram         figura SVG pròpia                   { svg, caption?, wide? }
  *   lab             laboratori de l'assignatura          { id, props? }
@@ -15,6 +15,7 @@
  *   html            contingut importat en HTML           { h }
  *   cols            columnes                            { cols:[[bloc…]] }
  *   details, hr     desplegable, separador              { title, blocks }
+ *   steps           passos (vegeu Steps)                { steps, reveal? (un a un) }
  *   lang            blocs diferents per idioma          { ca:[…], es:[…], en:[…] }
  * Els requadres i els exemples poden portar blocs a dins: { blocks:[…] }.
  */
@@ -38,9 +39,11 @@ function Box({ b, mode }) {
   const { ui } = useLang();
   const S = K[ui];
   const tr = useTr();
+  // label: false amaga el nom del tipus («Teorema») quan el títol ja ho diu («Lema»)
+  const lab = b.label === false ? '' : S.box[b.t] || '';
   return (
     <div className={'kit-box kit-box-' + b.t}>
-      <p className="kit-box-t">{S.box[b.t] || ''}{b.title ? <>{S.box[b.t] ? ' · ' : ''}<span>{inline(tr(b.title))}</span></> : null}</p>
+      <p className="kit-box-t">{lab}{b.title ? <>{lab ? ' · ' : ''}<span>{inline(tr(b.title))}</span></> : null}</p>
       {b.x && <div className="kit-box-x"><Tx x={b.x} /></div>}
       {b.items && <ul>{b.items.map((it, i) => <li key={i}><Tx x={it} /></li>)}</ul>}
       {b.blocks && <div className="kit-box-x"><Blocks blocks={b.blocks} mode={mode} /></div>}
@@ -163,7 +166,7 @@ export function Block({ b, mode }) {
     // HTML que encara no s'ha passat a blocs: amb els estils de l'assignatura, com abans
     case 'html': return <Scope><Rich className="kit-html" html={tr(b.h)} /></Scope>;
     case 'hr': return <hr className="kit-hr" />;
-    case 'steps': return <Steps steps={b.steps} startOpen bare />;
+    case 'steps': return <Steps steps={b.steps} startOpen={!b.reveal} reveal={!!b.reveal} bare />;
     case 'details': return (
       <details className="kit-details"><summary><Tx x={b.title} /></summary><Blocks blocks={b.blocks} mode={mode} /></details>
     );

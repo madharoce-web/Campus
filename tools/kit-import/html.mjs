@@ -27,6 +27,7 @@ export function toMarkup(node) {
     else if (tag === 'em' || tag === 'i') { const x = inner(); if (x === null) return null; out += x.trim() ? '*' + x + '*' : x; }
     else if (tag === 'code') out += '`' + decode(n.text).replace(/`/g, "'") + '`';
     else if (tag === 'br') out += '\n';
+    else if (tag === 'kit-mk') out += decodeURIComponent(n.getAttribute('x') || ''); // marcatge ja convertit (mates)
     else if (tag === 'math') {
       const m = mathToTeX(n);
       if (!m) return null;
