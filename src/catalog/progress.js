@@ -2,7 +2,6 @@
  * Progrés de cada assignatura per al tauler, llegit de l'estat que ja desen els cursos.
  * Els totals són fixos per no carregar les dades dels cursos al tauler; la prova
  * tests/e2e/progress.spec.js comprova que coincideixen amb les dades.
- * Mates no desa el progrés entre visites (null: «sense seguiment»).
  * Les assignatures que ja fan servir la plantilla (src/courses/_kit) desen el progrés a kit-<k>-v1
  * amb els totals (apartats + exercicis); fins a la primera visita es compta l'estat antic.
  */
@@ -24,7 +23,7 @@ export const PROGRESS = {
     const pseudo = count(obj(lsJSON('uda-pseudo-v1', {})).done);
     return { done: pages + cpp + pseudo, total: TOTALS.progPages + TOTALS.cpp + TOTALS.pseudo };
   },
-  mates: () => null,
+  mates: () => kitProgress('mates'),
   comp: () => kitProgress('comp'),
 };
 

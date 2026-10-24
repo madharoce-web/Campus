@@ -16,6 +16,11 @@
 .kit-link:hover{color:var(--am-brand-dark); text-decoration:underline}
 .kit-kicker{font-size:var(--am-fs-sm); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--am-brand)}
 .kit-ic{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; font-size:.88em; background:var(--am-bg-3); padding:.08em .35em; border-radius:4px}
+/* fórmules (MathML de Temml): les fonts matemàtiques del sistema i, si no n'hi ha cap (Android,
+   Linux…), STIX Two Math empaquetada, que porta la taula MATH per allargar parèntesis, barres i arrels.
+   Té un nom propi perquè no tapi la STIX Two Math instal·lada (la de macOS i iOS és completa). */
+@font-face{font-family:'Kit Math'; src:url('@fontsource/stix-two-math/files/stix-two-math-latin-400-normal.woff2') format('woff2'); font-display:swap}
+math{font-family:"Cambria Math", 'STIXTwoMath-Regular', "STIX Two Math", 'NotoSansMath-Regular', 'Kit Math', math}
 .kit-math math{font-size:1.06em}
 .kit-math-d{display:block; margin:10px 0; overflow-x:auto; overflow-y:hidden; text-align:center}
 .kit-texerr{color:var(--am-danger)}
@@ -221,6 +226,8 @@
 .kit-why{margin-top:4px; font-size:.9rem}
 .kit-why summary{cursor:pointer; color:var(--am-teal); font-size:var(--am-fs-sm)}
 .kit-why > div{padding:4px 0 2px 12px; border-left:2px solid var(--am-teal-soft); color:var(--am-ink-2)}
+.kit-step-f{display:block; margin-top:4px; font-size:var(--am-fs-sm); text-align:left}
+.kit-step-nf{margin:4px 0 0; font-size:var(--am-fs-sm); color:var(--am-ink-2)}
 .kit-self{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:12px; font-size:var(--am-fs-sm)}
 .kit-self > span{color:var(--am-ink-3); margin-right:4px}
 .kit-self-b{border:1px solid var(--am-line-2); background:#fff; border-radius:999px; padding:3px 10px; font:inherit; font-size:var(--am-fs-sm); cursor:pointer}

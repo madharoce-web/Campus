@@ -6,17 +6,21 @@ import { K } from '../strings.js';
 import { typeOf } from './types.jsx';
 import { Blocks } from '../blocks.jsx';
 import { useMode } from '../Mode.jsx';
+import { openDock } from '../dockStore.js';
 
 /**
  * Solució pas a pas: cada pas es mostra quan es demana. Un pas pot ser text o
- * { x, why, table: { head, rows }, done } (why: per què es fa, desplegable; done: el resultat).
- * bare: sense el títol «Solució» (quan ja n'hi ha un a sobre).
+ * { x, why, table: { head, rows }, done, f, ft, nf } (why: per què es fa, desplegable; done: el resultat;
+ * f: fórmules del formulari que fa servir, amb els noms a ft; nf: el que fa servir i no és al formulari).
+ * bare: sense el títol «Solució» (quan ja n'hi ha un a sobre). reveal: comença pel primer pas.
  */
-export function Steps({ steps, startOpen = false, bare = false }) {
+export function Steps({ steps, startOpen = false, bare = false, reveal = false }) {
   const { ui } = useLang();
   const S = K[ui];
   const tr = useTr();
-  const [n, setN] = useState(startOpen && steps ? steps.length : 0);
+  const course = useCourse();
+  // reveal: es comença pel primer pas i es van mostrant un a un
+  const [n, setN] = useState(startOpen && steps ? steps.length : reveal ? 1 : 0);
   if (!steps || !steps.length) return null;
   if (n === 0) return <button type="button" className="kit-link kit-steps-open" onClick={() => setN(1)}>{S.showSteps}</button>;
   return (
@@ -37,6 +41,8 @@ export function Steps({ steps, startOpen = false, bare = false }) {
                 </div>
               )}
               {x.why && <details className="kit-why"><summary>{S.why}</summary><div>{inline(tr(x.why))}</div></details>}
+              {x.f && x.f.length > 0 && <button type="button" className="kit-link kit-step-f" onClick={() => openDock(course.k, x.f)}>{S.formulas}: {x.ft ? inline(tr(x.ft)) : x.f.join(', ')}</button>}
+              {x.nf && <p className="kit-step-nf"><b>{S.notInForm}</b> {inline(tr(x.nf))}</p>}
             </li>
           );
         })}
@@ -122,6 +128,7 @@ export default function Exercise({ ex, variant = 'practice', n, onResult, done }
   const [hint, setHint] = useState(false);
   const [self, setSelf] = useState(null);
   const [sol, setSol] = useState(false);
+  const [lab, setLab] = useState(false);
   const [mode] = useMode();
   const auto = T.check !== undefined && ex.type !== 'open';
   const report = (r) => {
@@ -144,10 +151,12 @@ export default function Exercise({ ex, variant = 'practice', n, onResult, done }
       <div className="kit-ex-acts">
         {auto && T.Input && !T.inline && <button type="button" className="am-btn am-btn-primary kit-check" onClick={verify} disabled={value === undefined || value === ''}>{S.checkBtn}</button>}
         {(ex.hint || ex.hintb) && <button type="button" className="kit-link" aria-expanded={hint} onClick={() => setHint(!hint)}>{S.hint}</button>}
+        {ex.lab && <button type="button" className="kit-link kit-labbtn" aria-expanded={lab} onClick={() => setLab(!lab)}>{S.lab}</button>}
       </div>
       {res !== null && !T.inline && <p className={'kit-fb ' + (full ? 'is-ok' : part ? 'is-mid' : 'is-ko')} role="status">{full ? S.ok : part ? S.part : ex.hint || ex.hintb ? S.ko : S.ko0}</p>}
       {hint && ex.hint && <p className="kit-hint">{inline(tr(ex.hint))}</p>}
       {hint && ex.hintb && <div className="kit-hint"><Blocks blocks={ex.hintb} mode={mode} /></div>}
+      {lab && ex.lab && <Blocks blocks={[...(ex.lab.note ? [{ t: 'p', x: ex.lab.note }] : []), { t: 'lab', id: ex.lab.id, props: ex.lab.props }]} mode={mode} />}
       <Steps steps={ex.steps} />
       {ex.sol && (sol
         ? <div className="kit-steps"><p className="kit-steps-h">{S.solution}</p><Blocks blocks={ex.sol} mode={mode} /></div>

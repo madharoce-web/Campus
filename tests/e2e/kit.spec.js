@@ -7,6 +7,7 @@ const KIT = [
   ['/economia', 'eco', 't1', 't1'],
   ['/computadors', 'comp', 't1', 't3'],
   ['/logica', 'logica', 'u0', 'u2'],
+  ['/mates', 'mates', 'conj', null],
 ];
 const kit = (page, k) => page.evaluate((key) => JSON.parse(localStorage.getItem(key) || 'null'), 'kit-' + k + '-v1');
 
@@ -44,6 +45,7 @@ for (const [path, k, u1, uc] of KIT) {
     });
 
     test('comprovació dins la lliçó i apartats llegits', async ({ page }) => {
+      test.skip(!uc, 'aquesta assignatura encara no té comprovacions dins les lliçons');
       const errors = watchErrors(page);
       await page.goto(path + '/temari/' + uc);
       const chk = page.locator('.kit-ex-check').first();

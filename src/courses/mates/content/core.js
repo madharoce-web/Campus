@@ -1,4 +1,5 @@
 import { Z, tx } from '../engine/z.js';
+import { htmlDisp } from '../kit/mtex.js';
 import { MARK, nextUid } from './marks.js';
 
 /**
@@ -15,7 +16,7 @@ export function makeCore($) {
 
   /* $…$ en línia, $$…$$ destacat; la resta és HTML escrit a mà */
   function md(s) {
-    return String(s).replace(/\$\$([\s\S]+?)\$\$|\$([^$]+?)\$/g, (m, d, i) => d != null ? '<span class="disp m">' + tx(d) + '</span>' : '<span class="m">' + tx(i) + '</span>');
+    return String(s).replace(/\$\$([\s\S]+?)\$\$|\$([^$]+?)\$/g, (m, d, i) => d != null ? '<span class="disp m">' + htmlDisp(d) + '</span>' : '<span class="m">' + tx(i) + '</span>');
   }
   const M = s => '<span class="m">' + tx(s) + '</span>';
   const P = s => '<p>' + md(s) + '</p>';

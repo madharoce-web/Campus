@@ -1,0 +1,22 @@
+/*
+ * Matemàtiques dins de la plantilla: fórmules en MathML i targetes dels generadors d'abans.
+ * Com tot el CSS de src/courses/mates, les regles només s'apliquen dins de [data-course="mates"]
+ * (laboratoris, HTML importat i el contingut dels tipus d'exercici de types.jsx i prac.jsx);
+ * les marcades amb «global» són les de l'estructura de la plantilla.
+ */
+.m, .disp { font-family: inherit; font-size: inherit; }
+.disp { margin: .5rem 0; }
+.m math, .disp math { font-size: 1.05em; }
+.mb-q p + p, .mx-qt p + p { margin-top: .4rem; }
+.mb-ans { margin-top: .6rem; }
+.mb-ans .bkin, .mp-in input[type="text"] { max-width: 26rem; font-family: var(--mono); }
+.steps { margin-top: .4rem; }
+.mx-l { margin-right: .35rem; }
+.mx-pts { float: right; margin-left: .5rem; color: var(--ink-3); font-size: .875em; }
+.bx.rub { margin-top: .6rem; }
+.pr-venn svg { max-width: 320px; cursor: pointer; }
+.mp-in > * + * { margin-top: .6rem; }
+/* global */
+.kit .mb, .kit .mprac, .kit .mx { display: flex; flex-direction: column; gap: .6rem; min-width: 0; }
+/* global */
+.kit .mx-part + .mx-part { border-top: 1px solid var(--am-line, #dee2e6); padding-top: .6rem; }
