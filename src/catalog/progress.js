@@ -17,12 +17,12 @@ const count = (o) => Object.values(obj(o)).filter(Boolean).length;
 export const PROGRESS = {
   logica: () => kitProgress('logica') || { done: count(lsJSON('lx-done', {})), total: TOTALS.logica },
   eco: () => kitProgress('eco') || { done: count(obj(lsJSON('eco-prac', {})).done), total: TOTALS.eco },
-  prog: () => {
+  prog: () => kitProgress('prog') || (() => {
     const pages = count(obj(lsJSON('ip-curs-v1', {})).done);
     const cpp = Object.values(obj(obj(lsJSON('cpp-contrarellotge-v1', {})).prog)).filter((p) => p && p.solved).length;
     const pseudo = count(obj(lsJSON('uda-pseudo-v1', {})).done);
     return { done: pages + cpp + pseudo, total: TOTALS.progPages + TOTALS.cpp + TOTALS.pseudo };
-  },
+  })(),
   mates: () => kitProgress('mates'),
   comp: () => kitProgress('comp'),
 };

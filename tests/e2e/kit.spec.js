@@ -8,6 +8,7 @@ const KIT = [
   ['/computadors', 'comp', 't1', 't3'],
   ['/logica', 'logica', 'u0', 'u2'],
   ['/mates', 'mates', 'conj', null],
+  ['/programacio', 'prog', 't1', 't1'],
 ];
 const kit = (page, k) => page.evaluate((key) => JSON.parse(localStorage.getItem(key) || 'null'), 'kit-' + k + '-v1');
 

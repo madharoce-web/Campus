@@ -2,7 +2,8 @@ import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 're
 import { Link } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
 import { lsSet } from '../../lib/storage.js';
-import { compile, getSnapshot, run as runBin, trapMsg } from '../../shared/cpp/engine.js';
+import { compile, getSnapshot, run as runBin, start, trapMsg } from '../../shared/cpp/engine.js';
+import { engPref } from './kit/eng.js';
 import { useCppEngine } from '../../shared/cpp/useCppEngine.js';
 import PS from './engine/ps.js';
 import { codeLines } from './engine/highlight.js';
@@ -133,6 +134,7 @@ export default function CodeBlock({ lang = 'txt', src, title, run, trace, nonum,
     setBusy(true);
     setCon({ s: getSnapshot().state === 'ready' ? 'compiling' : 'waiting' });
     try {
+      await start(engPref());
       const c = await compile(code);
       if (!alive.current) return;
       if (!c.ok) {
@@ -174,7 +176,7 @@ export default function CodeBlock({ lang = 'txt', src, title, run, trace, nonum,
           <button type="button" className="ip-btn pri sm" data-a="run" disabled={busy} onClick={onRun}>{I.play}{L('Executa', 'Ejecuta')}</button>
         ) : null}
         {lang === 'cpp' && canRun ? (
-          <Link className="ip-btn out sm" data-a="pati" to="/cpp/pati" title={L('Obre el codi al pati de proves del C++', 'Abre el código en el patio de pruebas del C++')}
+          <Link className="ip-btn out sm" data-a="pati" to="/programacio/temari/s2#pati" title={L('Obre el codi al pati de proves del C++', 'Abre el código en el patio de pruebas del C++')}
             onClick={() => { lsSet('ip-pati-code', getSrc()); lsSet('ip-pati-in', input); }}>
             {I.ext}{L('Pati', 'Patio')}
           </Link>
