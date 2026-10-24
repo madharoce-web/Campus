@@ -7,7 +7,7 @@ export const S = {
     kicker: 'Campus d’estudi universitari',
     h1: 'Prepara les assignatures de la carrera amb apunts, exercicis i simulacres d’examen',
     lead: 'Aula Mada reuneix, per a cada assignatura, la teoria ordenada per temes, exercicis resolts pas a pas i proves amb el format dels exàmens d’anys anteriors. Crea un compte gratuït i segueix el teu progrés des del tauler.',
-    heroCta: 'Crea un compte gratuït', heroNote: 'Gratuït · Sense anuncis · Català, castellà i anglès',
+    heroCta: 'Crea un compte gratuït', formH: 'Crea el teu compte gratuït', haveAccount: 'Ja tens compte?', heroNote: 'Gratuït · Sense anuncis · Català, castellà i anglès',
     preview: 'Els meus cursos',
     advH: 'Avantatges', advSub: 'Tot el que necessites per preparar una assignatura, en un sol lloc.',
     adv: [
@@ -46,7 +46,7 @@ export const S = {
     kicker: 'Campus de estudio universitario',
     h1: 'Prepara las asignaturas de la carrera con apuntes, ejercicios y simulacros de examen',
     lead: 'Aula Mada reúne, para cada asignatura, la teoría ordenada por temas, ejercicios resueltos paso a paso y pruebas con el formato de los exámenes de años anteriores. Crea una cuenta gratuita y sigue tu progreso desde el área personal.',
-    heroCta: 'Crear una cuenta gratuita', heroNote: 'Gratuito · Sin anuncios · Catalán, castellano e inglés',
+    heroCta: 'Crear una cuenta gratuita', formH: 'Crea tu cuenta gratuita', haveAccount: '¿Ya tienes cuenta?', heroNote: 'Gratuito · Sin anuncios · Catalán, castellano e inglés',
     preview: 'Mis cursos',
     advH: 'Ventajas', advSub: 'Todo lo que necesitas para preparar una asignatura, en un solo lugar.',
     adv: [
@@ -85,7 +85,7 @@ export const S = {
     kicker: 'University study campus',
     h1: 'Prepare your degree subjects with notes, exercises and mock exams',
     lead: 'For every subject, Aula Mada brings together the theory organised by unit, exercises solved step by step and tests in the format of past exams. Create a free account and follow your progress from the dashboard.',
-    heroCta: 'Create a free account', heroNote: 'Free · No ads · Catalan, Spanish and English',
+    heroCta: 'Create a free account', formH: 'Create your free account', haveAccount: 'Already have an account?', heroNote: 'Free · No ads · Catalan, Spanish and English',
     preview: 'My courses',
     advH: 'Benefits', advSub: 'Everything you need to prepare a subject, in one place.',
     adv: [
