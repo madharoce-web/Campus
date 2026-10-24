@@ -6,6 +6,7 @@ import { expectNoOverflow, watchErrors } from './helpers.js';
 const KIT = [
   ['/economia', 'eco', 't1', 't1'],
   ['/computadors', 'comp', 't1', 't3'],
+  ['/logica', 'logica', 'u0', 'u2'],
 ];
 const kit = (page, k) => page.evaluate((key) => JSON.parse(localStorage.getItem(key) || 'null'), 'kit-' + k + '-v1');
 

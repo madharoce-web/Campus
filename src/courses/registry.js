@@ -14,7 +14,7 @@ export const COURSES = [
   },
   {
     k: 'logica', path: '/logica', degree: 'informatica', term: 's1', tier: 'free',
-    load: () => import('./logica/index.jsx'),
+    load: () => import('./logica/index.jsx'), formulas: () => import('./logica/kit/formulas.js'),
     title: ['Lògica i grafs', 'Lógica y grafos', 'Logic and Graphs'],
     sub: ['Seminari Lògica i grafs', 'Seminario Lógica y grafos', 'Logic and Graphs Seminar'],
     color: '#0f7f80', bg: '#dcf7f7', icon: 'logica',

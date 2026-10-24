@@ -16,7 +16,7 @@ const count = (o) => Object.values(obj(o)).filter(Boolean).length;
 
 /** { done, total } de cada targeta del tauler; null si el curs no en desa. */
 export const PROGRESS = {
-  logica: () => ({ done: count(lsJSON('lx-done', {})), total: TOTALS.logica }),
+  logica: () => kitProgress('logica') || { done: count(lsJSON('lx-done', {})), total: TOTALS.logica },
   eco: () => kitProgress('eco') || { done: count(obj(lsJSON('eco-prac', {})).done), total: TOTALS.eco },
   prog: () => {
     const pages = count(obj(lsJSON('ip-curs-v1', {})).done);

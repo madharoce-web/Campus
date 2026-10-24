@@ -153,6 +153,7 @@
 .kit-code{background:#f6f8fa; border:1px solid var(--am-line); border-radius:var(--am-r); padding:12px 14px; overflow-x:auto; font:.88rem/1.5 SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
 .kit-lab{margin:16px 0; padding:12px; border:1px solid var(--am-line); border-radius:var(--am-r); background:#fff}
 .kit-html{line-height:1.65}
+.kit .kit-legacy{max-width:none; margin:0; padding:0}
 .kit-html p{margin:0 0 12px}
 .kit-fref{margin:-4px 0 12px; text-align:right; font-size:var(--am-fs-sm)}
 .kit-hr{border:0; border-top:1px solid var(--am-line); margin:16px 0}
