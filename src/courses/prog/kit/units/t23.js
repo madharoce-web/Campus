@@ -1,0 +1,905 @@
+// Generat per tools/kit-import/prog.mjs a partir del contingut anterior; a partir d'ara s'edita aquí.
+export default {
+ "intro": [
+  {
+   "t": "p",
+   "x": [
+    "El capçal, l'esquema de recorregut i l'esquema de cerca, i les seqüències d'entrada amb marca de fi.",
+    "El cabezal, el esquema de recorrido y el esquema de búsqueda, y las secuencias de entrada con marca de fin."
+   ]
+  },
+  {
+   "t": "list",
+   "items": [
+    [
+     "**Setmana:** 4 (28 de setembre–4 d'octubre) · Esquemes de recorregut i cerca",
+     "**Semana:** 4 (28 de septiembre–4 de octubre) · Esquemas de recorrido y búsqueda"
+    ],
+    [
+     "**Documentació:** Apunts del professorat: diapositives 80–92",
+     "**Documentación:** Apuntes del profesorado: diapositivas 80–92"
+    ],
+    [
+     "**Llibre de suport:** Fonaments de programació (Ed. UOC), pàg. 87–129",
+     "**Libro de apoyo:** Fonaments de programació (Ed. UOC), pág. 87–129"
+    ]
+   ]
+  },
+  {
+   "t": "p",
+   "x": [
+    "Molts problemes consisteixen a **passar per una sèrie d'elements**: els nombres d'un interval, les notes d'una classe, les edats dels assistents a un concert… Aquest tema dona dos **esquemes** (plantilles d'algorisme) que resolen gairebé tots aquests problemes: el **recorregut** i la **cerca**.",
+    "Muchos problemas consisten en **pasar por una serie de elementos**: los números de un intervalo, las notas de una clase, las edades de los asistentes a un concierto… Este tema presenta dos **esquemas** (plantillas de algoritmo) que resuelven casi todos estos problemas: el **recorrido** y la **búsqueda**."
+   ]
+  },
+  {
+   "t": "summary",
+   "title": [
+    "En acabar aquesta pàgina sabràs",
+    "Al terminar esta página sabrás"
+   ],
+   "blocks": [
+    {
+     "t": "list",
+     "items": [
+      [
+       "Identificar la **seqüència** d'un problema i el seu **capçal**.",
+       "Identificar la **secuencia** de un problema y su **cabezal**."
+      ],
+      [
+       "Adaptar l'**esquema de recorregut** (tractar tots els elements) a un problema concret.",
+       "Adaptar el **esquema de recorrido** (tratar todos los elementos) a un problema concreto."
+      ],
+      [
+       "Adaptar l'**esquema de cerca** (aturar-se en trobar l'element) i saber per què només s'avança a l'ALTRAMENT.",
+       "Adaptar el **esquema de búsqueda** (detenerse al encontrar el elemento) y saber por qué solo se avanza en el ALTRAMENT."
+      ],
+      [
+       "Aplicar els dos esquemes a **seqüències d'entrada** que acaben amb una **marca**.",
+       "Aplicar los dos esquemas a **secuencias de entrada** que terminan con una **marca**."
+      ]
+     ]
+    }
+   ]
+  }
+ ],
+ "sections": {
+  "t23-1": [
+   {
+    "t": "p",
+    "x": [
+     "Una **seqüència** és un conjunt d'elements **ordenats** d'una manera determinada. En qualsevol seqüència distingim:",
+     "Una **secuencia** es un conjunto de elementos **ordenados** de una manera determinada. En cualquier secuencia distinguimos:"
+    ]
+   },
+   {
+    "t": "html",
+    "h": [
+     "<figure class=\"ip-fig\" style=\"--fig-min:600px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 860 190\" role=\"img\" aria-label=\"Primer, últim, actual i següent. El capçal (o índex) marca l&#x27;element que estem tractant; tot el que queda a l&#x27;esquerra ja s&#x27;ha tractat.\">\n<rect class=\"bxg\" x=\"40\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"75\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">1</text>\n<rect class=\"bxg\" x=\"120\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"155\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">2</text>\n<rect class=\"bxg\" x=\"200\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"235\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">3</text>\n<rect class=\"bxa\" x=\"280\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\" style=\"stroke-width:2.4\"></rect><text class=\"dm db\" x=\"315\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">4</text>\n<rect class=\"bx\" x=\"360\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"395\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">5</text>\n<rect class=\"bx\" x=\"440\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"475\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">6</text>\n<text class=\"dt db\" x=\"545\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">…</text>\n<rect class=\"bx\" x=\"580\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"615\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">N</text>\n<path class=\"lna\" d=\"M315 150 V118\" marker-end=\"url(#aha)\"></path><text class=\"dt db ta\" x=\"315\" y=\"168\" text-anchor=\"middle\">capçal (element actual)</text>\n<text class=\"ds\" x=\"75\" y=\"44\" text-anchor=\"middle\">primer</text><text class=\"ds\" x=\"395\" y=\"44\" text-anchor=\"middle\">següent</text><text class=\"ds\" x=\"615\" y=\"44\" text-anchor=\"middle\">últim</text>\n<path class=\"lnd\" d=\"M40 128 H270\"></path><text class=\"ds\" x=\"155\" y=\"142\" text-anchor=\"middle\">part ja tractada</text>\n<path class=\"lnd\" d=\"M360 128 H650\"></path><text class=\"ds\" x=\"505\" y=\"142\" text-anchor=\"middle\">part per tractar</text>\n<rect class=\"bxg\" x=\"680\" y=\"45\" width=\"160\" height=\"80\" rx=\"6\"></rect><text class=\"dt db\" x=\"760\" y=\"67\" text-anchor=\"middle\">obtenir següent</text><text class=\"ds\" x=\"760\" y=\"88\" text-anchor=\"middle\">= moure el capçal</text><text class=\"ds\" x=\"760\" y=\"106\" text-anchor=\"middle\">una posició a la dreta</text>\n</svg></div>\n<figcaption>Primer, últim, actual i següent. El capçal (o índex) marca l'element que estem tractant; tot el que queda a l'esquerra ja s'ha tractat.</figcaption>\n</figure>",
+     "<figure class=\"ip-fig\" style=\"--fig-min:600px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 860 190\" role=\"img\" aria-label=\"Primero, último, actual y siguiente. El cabezal (o índice) marca el elemento que estamos tratando; todo lo que queda a la izquierda ya se ha tratado.\">\n<rect class=\"bxg\" x=\"40\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"75\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">1</text>\n<rect class=\"bxg\" x=\"120\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"155\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">2</text>\n<rect class=\"bxg\" x=\"200\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"235\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">3</text>\n<rect class=\"bxa\" x=\"280\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\" style=\"stroke-width:2.4\"></rect><text class=\"dm db\" x=\"315\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">4</text>\n<rect class=\"bx\" x=\"360\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"395\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">5</text>\n<rect class=\"bx\" x=\"440\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"475\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">6</text>\n<text class=\"dt db\" x=\"545\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">…</text>\n<rect class=\"bx\" x=\"580\" y=\"60\" width=\"70\" height=\"50\" rx=\"4\"></rect><text class=\"dm\" x=\"615\" y=\"85\" text-anchor=\"middle\" dominant-baseline=\"central\">N</text>\n<path class=\"lna\" d=\"M315 150 V118\" marker-end=\"url(#aha)\"></path><text class=\"dt db ta\" x=\"315\" y=\"168\" text-anchor=\"middle\">cabezal (elemento actual)</text>\n<text class=\"ds\" x=\"75\" y=\"44\" text-anchor=\"middle\">primero</text><text class=\"ds\" x=\"395\" y=\"44\" text-anchor=\"middle\">siguiente</text><text class=\"ds\" x=\"615\" y=\"44\" text-anchor=\"middle\">último</text>\n<path class=\"lnd\" d=\"M40 128 H270\"></path><text class=\"ds\" x=\"155\" y=\"142\" text-anchor=\"middle\">parte ya tratada</text>\n<path class=\"lnd\" d=\"M360 128 H650\"></path><text class=\"ds\" x=\"505\" y=\"142\" text-anchor=\"middle\">parte por tratar</text>\n<rect class=\"bxg\" x=\"680\" y=\"45\" width=\"160\" height=\"80\" rx=\"6\"></rect><text class=\"dt db\" x=\"760\" y=\"67\" text-anchor=\"middle\">obtener siguiente</text><text class=\"ds\" x=\"760\" y=\"88\" text-anchor=\"middle\">= mover el cabezal</text><text class=\"ds\" x=\"760\" y=\"106\" text-anchor=\"middle\">una posición a la derecha</text>\n</svg></div>\n<figcaption>Primero, último, actual y siguiente. El cabezal (o índice) marca el elemento que estamos tratando; todo lo que queda a la izquierda ya se ha tratado.</figcaption>\n</figure>"
+    ]
+   },
+   {
+    "t": "p",
+    "x": [
+     "Els elements es «visiten» del **primer a l'últim**, un rere l'altre: és un **tractament seqüencial**. Com que el tractament és el mateix per a tots, l'algorisme sempre té la mateixa forma: agafar el primer, tractar-lo, avançar al següent… fins a l'últim.",
+     "Los elementos se «visitan» del **primero al último**, uno tras otro: es un **tratamiento secuencial**. Como el tratamiento es el mismo para todos, el algoritmo siempre tiene la misma forma: tomar el primero, tratarlo, avanzar al siguiente… hasta el último."
+    ]
+   }
+  ],
+  "t23-2": [
+   {
+    "t": "p",
+    "x": [
+     "Un **esquema** és un algorisme genèric que ja sabem que funciona. Resoldre un problema és **adaptar l'esquema** al cas concret, fent servir el disseny per refinaments. En lloc de dependre de la inspiració, se segueixen tres passos:",
+     "Un **esquema** es un algoritmo genérico que ya sabemos que funciona. Resolver un problema es **adaptar el esquema** al caso concreto, utilizando el diseño por refinamientos. En lugar de depender de la inspiración, se siguen tres pasos:"
+    ]
+   },
+   {
+    "t": "list",
+    "items": [
+     [
+      "**Identificar la seqüència** que cal tractar: quins elements, quin és el primer, com s'obté el següent, com sabem que s'ha acabat.",
+      "**Identificar la secuencia** que hay que tratar: qué elementos, cuál es el primero, cómo se obtiene el siguiente, cómo sabemos que se ha terminado."
+     ],
+     [
+      "**Triar l'esquema**: cal tractar **tots** els elements (recorregut) o cal **trobar-ne un** i aturar-se (cerca)?",
+      "**Elegir el esquema**: ¿hay que tratar **todos** los elementos (recorrido) o hay que **encontrar uno** y detenerse (búsqueda)?"
+     ],
+     [
+      "**Refinar**: omplir cada part de l'esquema amb les accions concretes.",
+      "**Refinar**: rellenar cada parte del esquema con las acciones concretas."
+     ]
+    ],
+    "ordered": true
+   },
+   {
+    "t": "p",
+    "x": [
+     "L'avantatge és clar: **és molt més difícil equivocar-se**, perquè l'estructura ja és correcta i només cal omplir els forats.",
+     "La ventaja es clara: **es mucho más difícil equivocarse**, porque la estructura ya es correcta y solo hay que rellenar los huecos."
+    ]
+   }
+  ],
+  "t23-3": [
+   {
+    "t": "p",
+    "x": [
+     "**Exemple.** Trobeu la suma dels N primers nombres naturals (suposem N = 5). La seqüència és `1 2 3 4 … N` i el capçal és el nombre actual:",
+     "**Ejemplo.** Encontrad la suma de los N primeros números naturales (supongamos N = 5). La secuencia es `1 2 3 4 … N` y el cabezal es el número actual:"
+    ]
+   },
+   {
+    "t": "list",
+    "items": [
+     [
+      "El primer element és 1; l'últim és N (el 5).",
+      "El primer elemento es 1; el último es N (el 5)."
+     ],
+     [
+      "En començar, el capçal és a l'1; el següent de l'1 és el 2: avançar és sumar 1.",
+      "Al empezar, el cabezal está en el 1; el siguiente del 1 es el 2: avanzar es sumar 1."
+     ],
+     [
+      "Tractar un element és acumular-lo amb els que ja hem tractat (els de l'esquerra del capçal).",
+      "Tratar un elemento es acumularlo con los que ya hemos tratado (los de la izquierda del cabezal)."
+     ]
+    ]
+   },
+   {
+    "t": "p",
+    "x": [
+     "Es tracten **tots** els elements, del primer a l'últim: és un **recorregut**. Resultat = 1 + 2 + 3 + 4 + 5 = 15.",
+     "Se tratan **todos** los elementos, del primero al último: es un **recorrido**. Resultado = 1 + 2 + 3 + 4 + 5 = 15."
+    ]
+   },
+   {
+    "t": "cols",
+    "cols": [
+     [
+      {
+       "t": "code",
+       "lang": "ps",
+       "props": {
+        "title": "esquema general",
+        "nonum": true
+       },
+       "src": [
+        "INICI_SEQÜÈNCIA\n    obtenir primer element\n    inici tractament\n    MENTRE no fi seqüència FER\n        tractar element\n        obtenir següent element\n    FI_MENTRE\n    final tractament\nFI_SEQÜÈNCIA",
+        "INICI_SEQÜÈNCIA\n    obtener primer elemento\n    inicio tratamiento\n    MENTRE no fin secuencia FER\n        tratar elemento\n        obtener siguiente elemento\n    FI_MENTRE\n    final tratamiento\nFI_SEQÜÈNCIA"
+       ]
+      }
+     ],
+     [
+      {
+       "t": "code",
+       "lang": "ps",
+       "props": {
+        "title": [
+         "el nostre cas: suma 1..N",
+         "nuestro caso: suma 1..N"
+        ],
+        "nonum": true
+       },
+       "src": "INICI_SEQÜÈNCIA\n    i ← 1\n    resultat ← 0\n    MENTRE i ≤ N FER\n        resultat ← resultat + i\n        i ← i + 1\n    FI_MENTRE\n    Escriure resultat\nFI_SEQÜÈNCIA"
+      }
+     ]
+    ]
+   },
+   {
+    "t": "p",
+    "x": [
+     "Cada línia de l'esquema s'ha convertit en una acció concreta: «obtenir primer» és `i ← 1`; «inici tractament» és `resultat ← 0`; «no fi seqüència» és `i ≤ N`; «tractar» és acumular; «obtenir següent» és `i ← i + 1`. Traceu-lo i mireu com es mou el capçal per la seqüència:",
+     "Cada línea del esquema se ha convertido en una acción concreta: «obtener primer elemento» es `i ← 1`; «inicio tratamiento» es `resultat ← 0`; «no fin secuencia» es `i ≤ N`; «tratar» es acumular; «obtener siguiente elemento» es `i ← i + 1`. Trazadlo y mirad cómo se mueve el cabezal por la secuencia:"
+    ]
+   },
+   {
+    "t": "code",
+    "lang": "ps",
+    "props": {
+     "run": true,
+     "trace": true,
+     "in": "5",
+     "strip": "i,1,N"
+    },
+    "src": [
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      N             Natural   Quants nombres sumem\n   S      resultat      Natural   Suma 1 + 2 + … + N\n          i             Natural   Capçal: nombre actual\n\nINICI_SEQÜÈNCIA\n    Llegir N\n    i ← 1\n    resultat ← 0\n    MENTRE i ≤ N FER\n        resultat ← resultat + i\n        i ← i + 1\n    FI_MENTRE\n    Escriure resultat\nFI_SEQÜÈNCIA",
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      N             Natural   Cuántos números sumamos\n   S      resultat      Natural   Suma 1 + 2 + … + N\n          i             Natural   Cabezal: número actual\n\nINICI_SEQÜÈNCIA\n    Llegir N\n    i ← 1\n    resultat ← 0\n    MENTRE i ≤ N FER\n        resultat ← resultat + i\n        i ← i + 1\n    FI_MENTRE\n    Escriure resultat\nFI_SEQÜÈNCIA"
+    ]
+   },
+   {
+    "t": "html",
+    "h": [
+     "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>Estat a l'inici de cada volta (quan s'avalua <code>i ≤ N</code>) amb N = 5.</caption>\n<thead><tr><th>Volta</th><th class=\"c\">i (capçal)</th><th class=\"c\">resultat</th><th>Part tractada</th><th class=\"c\">i ≤ N?</th></tr></thead>\n<tbody>\n<tr><td>abans de començar</td><td class=\"c\">1</td><td class=\"c\">0</td><td>cap element</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>després de la 1a</td><td class=\"c\">2</td><td class=\"c\">1</td><td>1</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>després de la 2a</td><td class=\"c\">3</td><td class=\"c\">3</td><td>1 + 2</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>després de la 3a</td><td class=\"c\">4</td><td class=\"c\">6</td><td>1 + 2 + 3</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>després de la 4a</td><td class=\"c\">5</td><td class=\"c\">10</td><td>1 + 2 + 3 + 4</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>després de la 5a</td><td class=\"c\">6</td><td class=\"c hl\">15</td><td>1 + 2 + 3 + 4 + 5</td><td class=\"c ip-f\">F → surt</td></tr>\n</tbody>\n</table></div>",
+     "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>Estado al inicio de cada vuelta (cuando se evalúa <code>i ≤ N</code>) con N = 5.</caption>\n<thead><tr><th>Vuelta</th><th class=\"c\">i (cabezal)</th><th class=\"c\">resultat</th><th>Parte tratada</th><th class=\"c\">¿i ≤ N?</th></tr></thead>\n<tbody>\n<tr><td>antes de empezar</td><td class=\"c\">1</td><td class=\"c\">0</td><td>ningún elemento</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>después de la 1.ª</td><td class=\"c\">2</td><td class=\"c\">1</td><td>1</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>después de la 2.ª</td><td class=\"c\">3</td><td class=\"c\">3</td><td>1 + 2</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>después de la 3.ª</td><td class=\"c\">4</td><td class=\"c\">6</td><td>1 + 2 + 3</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>después de la 4.ª</td><td class=\"c\">5</td><td class=\"c\">10</td><td>1 + 2 + 3 + 4</td><td class=\"c ip-v\">V</td></tr>\n<tr><td>después de la 5.ª</td><td class=\"c\">6</td><td class=\"c hl\">15</td><td>1 + 2 + 3 + 4 + 5</td><td class=\"c ip-f\">F → sale</td></tr>\n</tbody>\n</table></div>"
+    ]
+   },
+   {
+    "t": "def",
+    "title": [
+     "Com s'interpreta",
+     "Cómo se interpreta"
+    ],
+    "blocks": [
+     {
+      "t": "p",
+      "x": [
+       "Al començament el capçal és al principi i no s'ha tractat cap element. A cada volta, **resultat conté el tractament de tota la part de la seqüència que queda a l'esquerra del capçal**. Quan el capçal surt de la seqüència (i = 6), tota la seqüència ha quedat a l'esquerra: resultat és la resposta.",
+       "Al principio el cabezal está al inicio y no se ha tratado ningún elemento. En cada vuelta, **resultat contiene el tratamiento de toda la parte de la secuencia que queda a la izquierda del cabezal**. Cuando el cabezal sale de la secuencia (i = 6), toda la secuencia ha quedado a la izquierda: resultat es la respuesta."
+      ]
+     }
+    ]
+   },
+   {
+    "t": "h",
+    "x": [
+     "El mateix esquema, problemes diferents",
+     "El mismo esquema, problemas diferentes"
+    ]
+   },
+   {
+    "t": "p",
+    "x": [
+     "Canviant només les tres parts del tractament, l'esquema resol molts problemes. Comproveu que l'estructura és sempre la mateixa:",
+     "Cambiando solo las tres partes del tratamiento, el esquema resuelve muchos problemas. Comprobad que la estructura es siempre la misma:"
+    ]
+   },
+   {
+    "t": "table",
+    "head": [
+     [
+      "Problema (seqüència 1..N)",
+      "Problema (secuencia 1..N)"
+     ],
+     [
+      "Inici tractament",
+      "Inicio tratamiento"
+     ],
+     [
+      "Tractar element i",
+      "Tratar elemento i"
+     ],
+     [
+      "Final tractament",
+      "Final tratamiento"
+     ]
+    ],
+    "rows": [
+     [
+      [
+       "Suma dels N primers",
+       "Suma de los N primeros"
+      ],
+      "`suma ← 0`",
+      "`suma ← suma + i`",
+      "`Escriure suma`"
+     ],
+     [
+      [
+       "Quants múltiples de 3 hi ha fins a N",
+       "Cuántos múltiplos de 3 hay hasta N"
+      ],
+      "`q ← 0`",
+      "`SI i |R 3 = 0 LLAVORS q ← q + 1 FI_SI`",
+      "`Escriure q`"
+     ],
+     [
+      "Factorial N! = 1 · 2 · … · N",
+      "`f ← 1`",
+      "`f ← f · i`",
+      "`Escriure f`"
+     ],
+     [
+      [
+       "Suma dels quadrats 1² + … + N²",
+       "Suma de los cuadrados 1² + … + N²"
+      ],
+      "`s ← 0`",
+      "`s ← s + i · i`",
+      "`Escriure s`"
+     ]
+    ]
+   },
+   {
+    "t": "warn",
+    "title": [
+     "L'inici del tractament depèn de l'operació",
+     "El inicio del tratamiento depende de la operación"
+    ],
+    "blocks": [
+     {
+      "t": "p",
+      "x": [
+       "Per sumar o comptar s'inicialitza a **0** (l'element neutre de la suma); per multiplicar, a **1**. Un factorial que comença amb `f ← 0` dona sempre 0.",
+       "Para sumar o contar se inicializa a **0** (el elemento neutro de la suma); para multiplicar, a **1**. Un factorial que empieza con `f ← 0` da siempre 0."
+      ]
+     }
+    ]
+   }
+  ],
+  "t23-4": [
+   {
+    "t": "p",
+    "x": [
+     "**Exemple.** Trobeu el nombre més petit entre els naturals N1 i N2 que acabi en 3. La seqüència és `N1, N1+1, N1+2, … N2`. El tractament de cada nombre és **comprovar si acaba en 3**: si és així, ja l'hem trobat i no cal continuar; si no, avancem.",
+     "**Ejemplo.** Encontrad el número más pequeño entre los naturales N1 y N2 que termine en 3. La secuencia es `N1, N1+1, N1+2, … N2`. El tratamiento de cada número es **comprobar si termina en 3**: si es así, ya lo hemos encontrado y no hace falta continuar; si no, avanzamos."
+    ]
+   },
+   {
+    "t": "p",
+    "x": [
+     "Aquest tractament **busca un element**: recorre la seqüència des del primer fins a l'element buscat (o fins al final, si no hi és). És una **cerca**, i pot acabar de dues maneres: **amb èxit** o **fallida**.",
+     "Este tratamiento **busca un elemento**: recorre la secuencia desde el primero hasta el elemento buscado (o hasta el final, si no está). Es una **búsqueda**, y puede terminar de dos maneras: **con éxito** o **fallida**."
+    ]
+   },
+   {
+    "t": "cols",
+    "cols": [
+     [
+      {
+       "t": "code",
+       "lang": "ps",
+       "props": {
+        "title": "esquema general",
+        "nonum": true
+       },
+       "src": [
+        "INICI_SEQÜÈNCIA\n    obtenir primer element\n    trobat ← fals\n    inici tractament\n    MENTRE no fi seqüència I NO trobat FER\n        SI condició de cerca LLAVORS\n            trobat ← cert\n        ALTRAMENT\n            obtenir següent element\n        FI_SI\n    FI_MENTRE\n    SI trobat LLAVORS\n        cerca amb èxit\n    ALTRAMENT\n        cerca fallida\n    FI_SI\n    final tractament\nFI_SEQÜÈNCIA",
+        "INICI_SEQÜÈNCIA\n    obtener primer elemento\n    trobat ← fals\n    inicio tratamiento\n    MENTRE no fin secuencia I NO trobat FER\n        SI condición de búsqueda LLAVORS\n            trobat ← cert\n        ALTRAMENT\n            obtener siguiente elemento\n        FI_SI\n    FI_MENTRE\n    SI trobat LLAVORS\n        búsqueda con éxito\n    ALTRAMENT\n        búsqueda fallida\n    FI_SI\n    final tratamiento\nFI_SEQÜÈNCIA"
+       ]
+      }
+     ],
+     [
+      {
+       "t": "code",
+       "lang": "ps",
+       "props": {
+        "title": [
+         "el nostre cas: acabat en 3",
+         "nuestro caso: terminado en 3"
+        ],
+        "nonum": true
+       },
+       "src": "INICI_SEQÜÈNCIA\n    i ← N1\n    trobat ← fals\n    MENTRE (i ≤ N2) I NO trobat FER\n        SI i |R 10 = 3 LLAVORS\n            trobat ← cert\n        ALTRAMENT\n            i ← i + 1\n        FI_SI\n    FI_MENTRE\n    SI trobat LLAVORS\n        resultat ← i\n    ALTRAMENT\n        resultat ← −1\n    FI_SI\n    Escriure resultat\nFI_SEQÜÈNCIA"
+      }
+     ]
+    ]
+   },
+   {
+    "t": "p",
+    "x": [
+     "La variable **lògica** `trobat` fa de bandera: comença a fals i passa a cert quan es compleix la condició de cerca. La condició del MENTRE té dues parts: **queden elements** i **encara no l'hem trobat**. Si no n'hi ha cap, el resultat és una **marca** (−1) que indica cerca fallida. Proveu 17 40 (troba el 23) i 30 32 (no en troba cap):",
+     "La variable **lógica** `trobat` hace de bandera: empieza en falso y pasa a cierto cuando se cumple la condición de búsqueda. La condición del MENTRE tiene dos partes: **quedan elementos** y **todavía no lo hemos encontrado**. Si no hay ninguno, el resultado es una **marca** (−1) que indica búsqueda fallida. Probad 17 40 (encuentra el 23) y 30 32 (no encuentra ninguno):"
+    ]
+   },
+   {
+    "t": "code",
+    "lang": "ps",
+    "props": {
+     "run": true,
+     "trace": true,
+     "in": "17 40",
+     "strip": "i,N1,N2"
+    },
+    "src": [
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      N1            Natural   Inici de l'interval\n   E      N2            Natural   Final de l'interval\n   S      resultat      Enter     Primer nombre acabat en 3 (−1 si no n'hi ha)\n          i             Natural   Capçal: nombre actual\n          trobat        Lògic     Ja l'hem trobat?\n\nINICI_SEQÜÈNCIA\n    Llegir N1, N2\n    i ← N1\n    trobat ← fals\n    MENTRE (i ≤ N2) I NO trobat FER\n        SI i |R 10 = 3 LLAVORS\n            trobat ← cert\n        ALTRAMENT\n            i ← i + 1\n        FI_SI\n    FI_MENTRE\n    SI trobat LLAVORS\n        resultat ← i\n    ALTRAMENT\n        resultat ← −1\n    FI_SI\n    Escriure resultat\nFI_SEQÜÈNCIA",
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      N1            Natural   Inicio del intervalo\n   E      N2            Natural   Final del intervalo\n   S      resultat      Enter     Primer número terminado en 3 (−1 si no hay ninguno)\n          i             Natural   Cabezal: número actual\n          trobat        Lògic     ¿Ya lo hemos encontrado?\n\nINICI_SEQÜÈNCIA\n    Llegir N1, N2\n    i ← N1\n    trobat ← fals\n    MENTRE (i ≤ N2) I NO trobat FER\n        SI i |R 10 = 3 LLAVORS\n            trobat ← cert\n        ALTRAMENT\n            i ← i + 1\n        FI_SI\n    FI_MENTRE\n    SI trobat LLAVORS\n        resultat ← i\n    ALTRAMENT\n        resultat ← −1\n    FI_SI\n    Escriure resultat\nFI_SEQÜÈNCIA"
+    ]
+   },
+   {
+    "t": "def",
+    "title": [
+     "Com s'interpreta",
+     "Cómo se interpreta"
+    ],
+    "blocks": [
+     {
+      "t": "p",
+      "x": [
+       "Si l'element sota el capçal compleix la condició, `trobat` passa a cert i **el capçal es queda a sobre de l'element buscat**. La cerca s'atura quan s'acaba la seqüència o quan es troba l'element, el que passi primer.",
+       "Si el elemento bajo el cabezal cumple la condición, `trobat` pasa a cierto y **el cabezal se queda encima del elemento buscado**. La búsqueda se detiene cuando se termina la secuencia o cuando se encuentra el elemento, lo que pase primero."
+      ]
+     }
+    ]
+   },
+   {
+    "t": "h",
+    "x": [
+     "Per què només s'avança a l'ALTRAMENT",
+     "Por qué solo se avanza en el ALTRAMENT"
+    ]
+   },
+   {
+    "t": "p",
+    "x": [
+     "És l'error més habitual en una cerca. Si avancem el capçal **sempre** (fora del SI), quan trobem l'element el capçal ja l'ha deixat enrere. Compareu la versió incorrecta amb 17 40: escriu 24 en lloc de 23.",
+     "Es el error más habitual en una búsqueda. Si avanzamos el cabezal **siempre** (fuera del SI), cuando encontramos el elemento el cabezal ya lo ha dejado atrás. Comparad la versión incorrecta con 17 40: escribe 24 en lugar de 23."
+    ]
+   },
+   {
+    "t": "code",
+    "lang": "ps",
+    "props": {
+     "title": [
+      "versió INCORRECTA",
+      "versión INCORRECTA"
+     ],
+     "in": "17 40",
+     "run": true,
+     "strip": "i,N1,N2",
+     "trace": true
+    },
+    "src": [
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      N1            Natural   Inici de l'interval\n   E      N2            Natural   Final de l'interval\n   S      resultat      Enter     Primer nombre acabat en 3\n          i             Natural   Capçal: nombre actual\n          trobat        Lògic     Ja l'hem trobat?\n\nINICI_SEQÜÈNCIA\n    Llegir N1, N2\n    i ← N1\n    trobat ← fals\n    MENTRE (i ≤ N2) I NO trobat FER\n        SI i |R 10 = 3 LLAVORS\n            trobat ← cert\n        FI_SI\n        i ← i + 1\n    FI_MENTRE\n    SI trobat LLAVORS\n        resultat ← i\n    ALTRAMENT\n        resultat ← −1\n    FI_SI\n    Escriure resultat\nFI_SEQÜÈNCIA",
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      N1            Natural   Inicio del intervalo\n   E      N2            Natural   Final del intervalo\n   S      resultat      Enter     Primer número terminado en 3\n          i             Natural   Cabezal: número actual\n          trobat        Lògic     ¿Ya lo hemos encontrado?\n\nINICI_SEQÜÈNCIA\n    Llegir N1, N2\n    i ← N1\n    trobat ← fals\n    MENTRE (i ≤ N2) I NO trobat FER\n        SI i |R 10 = 3 LLAVORS\n            trobat ← cert\n        FI_SI\n        i ← i + 1\n    FI_MENTRE\n    SI trobat LLAVORS\n        resultat ← i\n    ALTRAMENT\n        resultat ← −1\n    FI_SI\n    Escriure resultat\nFI_SEQÜÈNCIA"
+    ]
+   },
+   {
+    "t": "warn",
+    "title": [
+     "Parèntesis a la condició del MENTRE",
+     "Paréntesis en la condición del MENTRE"
+    ],
+    "blocks": [
+     {
+      "t": "p",
+      "x": [
+       "El material escriu `MENTRE i ≤ N2 I no trobat FER`. Seguint la taula de prioritats del curs (Tema 2.2) el I s'avaluaria abans que el ≤, així que és més segur escriure `(i ≤ N2) I NO trobat`.",
+       "El material escribe `MENTRE i ≤ N2 I no trobat FER`. Siguiendo la tabla de prioridades del curso (Tema 2.2), el I se evaluaría antes que el ≤, así que es más seguro escribir `(i ≤ N2) I NO trobat`."
+      ]
+     }
+    ]
+   },
+   {
+    "t": "h",
+    "x": [
+     "Recorregut o cerca?",
+     "¿Recorrido o búsqueda?"
+    ]
+   },
+   {
+    "t": "table",
+    "head": [
+     "",
+     [
+      "Recorregut",
+      "Recorrido"
+     ],
+     [
+      "Cerca",
+      "Búsqueda"
+     ]
+    ],
+    "rows": [
+     [
+      [
+       "**Quants elements tracta**",
+       "**Cuántos elementos trata**"
+      ],
+      [
+       "Tots, del primer a l'últim",
+       "Todos, del primero al último"
+      ],
+      [
+       "Del primer fins al que busquem (o tots, si no hi és)",
+       "Del primero hasta el que buscamos (o todos, si no está)"
+      ]
+     ],
+     [
+      [
+       "**Condició del MENTRE**",
+       "**Condición del MENTRE**"
+      ],
+      "`no fi seqüència`",
+      "`no fi seqüència I NO trobat`"
+     ],
+     [
+      [
+       "**Avançar el capçal**",
+       "**Avanzar el cabezal**"
+      ],
+      [
+       "Sempre, al final de cada volta",
+       "Siempre, al final de cada vuelta"
+      ],
+      [
+       "Només si l'element actual no és el buscat (ALTRAMENT)",
+       "Solo si el elemento actual no es el buscado (ALTRAMENT)"
+      ]
+     ],
+     [
+      [
+       "**Paraules de l'enunciat**",
+       "**Palabras del enunciado**"
+      ],
+      [
+       "«quants», «la suma», «la mitjana», «el màxim», «tots»",
+       "«cuántos», «la suma», «la media», «el máximo», «todos»"
+      ],
+      [
+       "«el primer que», «hi ha algun», «existeix», «trobeu»",
+       "«el primero que», «hay alguno», «existe», «encontrad»"
+      ]
+     ],
+     [
+      [
+       "**Resultat**",
+       "**Resultado**"
+      ],
+      [
+       "Un acumulat (suma, comptador, màxim…)",
+       "Un acumulado (suma, contador, máximo…)"
+      ],
+      [
+       "Èxit (on és) o fallida (marca)",
+       "Éxito (dónde está) o fallida (marca)"
+      ]
+     ]
+    ]
+   }
+  ],
+  "t23-5": [
+   {
+    "t": "p",
+    "x": [
+     "Quan els elements no es calculen sinó que els escriu l'usuari, l'esquema és el mateix, però **obtenir un element és llegir-lo**: es llegeix el primer abans del bucle i el següent com a última acció del bucle. Com que no sabem quantes dades vindran, la seqüència acaba amb una **marca**: un valor especial que **no és una dada** (per exemple −1 per a notes, o 0 per a edats).",
+     "Cuando los elementos no se calculan, sino que los escribe el usuario, el esquema es el mismo, pero **obtener un elemento es leerlo**: se lee el primero antes del bucle y el siguiente como última acción del bucle. Como no sabemos cuántos datos vendrán, la secuencia termina con una **marca**: un valor especial que **no es un dato** (por ejemplo, −1 para notas o 0 para edades)."
+    ]
+   },
+   {
+    "t": "cols",
+    "cols": [
+     [
+      {
+       "t": "code",
+       "lang": "ps",
+       "props": {
+        "title": [
+         "recorregut d'una seqüència d'entrada",
+         "recorrido de una secuencia de entrada"
+        ],
+        "nonum": true
+       },
+       "src": [
+        "INICI_SEQÜÈNCIA\n    Llegir A\n    inici tractament\n    MENTRE A ≠ marca FER\n        tractar A\n        Llegir A\n    FI_MENTRE\n    final tractament\nFI_SEQÜÈNCIA",
+        "INICI_SEQÜÈNCIA\n    Llegir A\n    inicio tratamiento\n    MENTRE A ≠ marca FER\n        tratar A\n        Llegir A\n    FI_MENTRE\n    final tratamiento\nFI_SEQÜÈNCIA"
+       ]
+      }
+     ],
+     [
+      {
+       "t": "html",
+       "h": [
+        "<figure class=\"ip-fig\" style=\"margin:0\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 420 230\" role=\"img\">\n<text class=\"dt db\" x=\"12\" y=\"20\">Entrada: 7  5.5  9  −1</text>\n<rect class=\"bxa\" x=\"12\" y=\"34\" width=\"70\" height=\"38\" rx=\"4\"></rect><text class=\"dm\" x=\"47\" y=\"53\" text-anchor=\"middle\" dominant-baseline=\"central\">7</text>\n<rect class=\"bx\" x=\"92\" y=\"34\" width=\"70\" height=\"38\" rx=\"4\"></rect><text class=\"dm\" x=\"127\" y=\"53\" text-anchor=\"middle\" dominant-baseline=\"central\">5.5</text>\n<rect class=\"bx\" x=\"172\" y=\"34\" width=\"70\" height=\"38\" rx=\"4\"></rect><text class=\"dm\" x=\"207\" y=\"53\" text-anchor=\"middle\" dominant-baseline=\"central\">9</text>\n<rect class=\"bxp\" x=\"252\" y=\"34\" width=\"70\" height=\"38\" rx=\"4\"></rect><text class=\"dm\" x=\"287\" y=\"53\" text-anchor=\"middle\" dominant-baseline=\"central\">−1</text>\n<text class=\"ds tq\" x=\"287\" y=\"88\" text-anchor=\"middle\">marca: no és una nota</text>\n<text class=\"dt\" x=\"12\" y=\"122\">1. <tspan font-weight=\"700\">Llegir</tspan> abans del bucle: A = 7</text>\n<text class=\"dt\" x=\"12\" y=\"146\">2. A ≠ −1 → tractar 7, <tspan font-weight=\"700\">Llegir</tspan>: A = 5.5</text>\n<text class=\"dt\" x=\"12\" y=\"170\">3. A ≠ −1 → tractar 5.5, <tspan font-weight=\"700\">Llegir</tspan>: A = 9</text>\n<text class=\"dt\" x=\"12\" y=\"194\">4. A ≠ −1 → tractar 9, <tspan font-weight=\"700\">Llegir</tspan>: A = −1</text>\n<text class=\"dt\" x=\"12\" y=\"218\">5. A = −1 → surt. La marca <tspan font-weight=\"700\">no</tspan> es tracta.</text>\n</svg></div>\n</figure>",
+        "<figure class=\"ip-fig\" style=\"margin:0\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 420 230\" role=\"img\">\n<text class=\"dt db\" x=\"12\" y=\"20\">Entrada: 7  5.5  9  −1</text>\n<rect class=\"bxa\" x=\"12\" y=\"34\" width=\"70\" height=\"38\" rx=\"4\"></rect><text class=\"dm\" x=\"47\" y=\"53\" text-anchor=\"middle\" dominant-baseline=\"central\">7</text>\n<rect class=\"bx\" x=\"92\" y=\"34\" width=\"70\" height=\"38\" rx=\"4\"></rect><text class=\"dm\" x=\"127\" y=\"53\" text-anchor=\"middle\" dominant-baseline=\"central\">5.5</text>\n<rect class=\"bx\" x=\"172\" y=\"34\" width=\"70\" height=\"38\" rx=\"4\"></rect><text class=\"dm\" x=\"207\" y=\"53\" text-anchor=\"middle\" dominant-baseline=\"central\">9</text>\n<rect class=\"bxp\" x=\"252\" y=\"34\" width=\"70\" height=\"38\" rx=\"4\"></rect><text class=\"dm\" x=\"287\" y=\"53\" text-anchor=\"middle\" dominant-baseline=\"central\">−1</text>\n<text class=\"ds tq\" x=\"287\" y=\"88\" text-anchor=\"middle\">marca: no es una nota</text>\n<text class=\"dt\" x=\"12\" y=\"122\">1. <tspan font-weight=\"700\">Llegir</tspan> antes del bucle: A = 7</text>\n<text class=\"dt\" x=\"12\" y=\"146\">2. A ≠ −1 → tratar 7, <tspan font-weight=\"700\">Llegir</tspan>: A = 5.5</text>\n<text class=\"dt\" x=\"12\" y=\"170\">3. A ≠ −1 → tratar 5.5, <tspan font-weight=\"700\">Llegir</tspan>: A = 9</text>\n<text class=\"dt\" x=\"12\" y=\"194\">4. A ≠ −1 → tratar 9, <tspan font-weight=\"700\">Llegir</tspan>: A = −1</text>\n<text class=\"dt\" x=\"12\" y=\"218\">5. A = −1 → sale. La marca <tspan font-weight=\"700\">no</tspan> se trata.</text>\n</svg></div>\n</figure>"
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "t": "p",
+    "x": [
+     "**Exemple de recorregut.** Mitjana d'unes notes que acaben amb −1. Traceu-lo i mireu com el capçal de l'entrada avança a cada `Llegir`:",
+     "**Ejemplo de recorrido.** Media de unas notas que terminan con −1. Trazadlo y mirad cómo el cabezal de la entrada avanza en cada `Llegir`:"
+    ]
+   },
+   {
+    "t": "code",
+    "lang": "ps",
+    "props": {
+     "run": true,
+     "trace": true,
+     "in": "7 5.5 9 -1"
+    },
+    "src": [
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      nota          Real      Nota llegida (−1 marca el final)\n   S      mitjana       Real      Mitjana de les notes\n          suma          Real      Suma de les notes llegides\n          n             Natural   Quantes notes s'han llegit\n\nINICI_SEQÜÈNCIA\n    Llegir nota\n    suma ← 0\n    n ← 0\n    MENTRE nota ≠ −1 FER\n        suma ← suma + nota\n        n ← n + 1\n        Llegir nota\n    FI_MENTRE\n    SI n > 0 LLAVORS\n        mitjana ← suma / n\n        Escriure \"Mitjana: \", mitjana\n    ALTRAMENT\n        Escriure \"No hi ha cap nota\"\n    FI_SI\nFI_SEQÜÈNCIA",
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      nota          Real      Nota leída (−1 marca el final)\n   S      mitjana       Real      Media de las notas\n          suma          Real      Suma de las notas leídas\n          n             Natural   Cuántas notas se han leído\n\nINICI_SEQÜÈNCIA\n    Llegir nota\n    suma ← 0\n    n ← 0\n    MENTRE nota ≠ −1 FER\n        suma ← suma + nota\n        n ← n + 1\n        Llegir nota\n    FI_MENTRE\n    SI n > 0 LLAVORS\n        mitjana ← suma / n\n        Escriure \"Mitjana: \", mitjana\n    ALTRAMENT\n        Escriure \"No hi ha cap nota\"\n    FI_SI\nFI_SEQÜÈNCIA"
+    ]
+   },
+   {
+    "t": "p",
+    "x": [
+     "**Exemple de cerca.** «Hi ha algun suspès?». En trobar el primer suspès ja no cal llegir la resta: les dades que queden **no es llegeixen**.",
+     "**Ejemplo de búsqueda.** «¿Hay algún suspenso?». Al encontrar el primer suspenso ya no hace falta leer el resto: los datos que quedan **no se leen**."
+    ]
+   },
+   {
+    "t": "code",
+    "lang": "ps",
+    "props": {
+     "run": true,
+     "trace": true,
+     "in": "7 8 4 9 -1"
+    },
+    "src": [
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      nota          Real      Nota llegida (−1 marca el final)\n          trobat        Lògic     Hem trobat un suspès?\n\nINICI_SEQÜÈNCIA\n    Llegir nota\n    trobat ← fals\n    MENTRE (nota ≠ −1) I NO trobat FER\n        SI nota < 5 LLAVORS\n            trobat ← cert\n        ALTRAMENT\n            Llegir nota\n        FI_SI\n    FI_MENTRE\n    SI trobat LLAVORS\n        Escriure \"Hi ha un suspès: \", nota\n    ALTRAMENT\n        Escriure \"Tothom ha aprovat\"\n    FI_SI\nFI_SEQÜÈNCIA",
+     "ENTORN\n  E/S   IDENTIFICADOR   TIPUS     DESCRIPCIÓ\n   E      nota          Real      Nota leída (−1 marca el final)\n          trobat        Lògic     ¿Hemos encontrado un suspenso?\n\nINICI_SEQÜÈNCIA\n    Llegir nota\n    trobat ← fals\n    MENTRE (nota ≠ −1) I NO trobat FER\n        SI nota < 5 LLAVORS\n            trobat ← cert\n        ALTRAMENT\n            Llegir nota\n        FI_SI\n    FI_MENTRE\n    SI trobat LLAVORS\n        Escriure \"Hi ha un suspès: \", nota\n    ALTRAMENT\n        Escriure \"Tothom ha aprovat\"\n    FI_SI\nFI_SEQÜÈNCIA"
+    ]
+   },
+   {
+    "t": "h",
+    "x": [
+     "Errors típics amb les seqüències",
+     "Errores típicos con las secuencias"
+    ]
+   },
+   {
+    "t": "table",
+    "head": [
+     "Error",
+     [
+      "Què passa",
+      "Qué pasa"
+     ],
+     [
+      "Com s'evita",
+      "Cómo se evita"
+     ]
+    ],
+    "rows": [
+     [
+      [
+       "Oblidar el `Llegir` (o l'`i ← i + 1`) dins el bucle",
+       "Olvidar el `Llegir` (o el `i ← i + 1`) dentro del bucle"
+      ],
+      [
+       "El capçal no es mou: **bucle infinit**",
+       "El cabezal no se mueve: **bucle infinito**"
+      ],
+      [
+       "L'última acció del bucle d'un recorregut és sempre «obtenir següent»",
+       "La última acción del bucle de un recorrido es siempre «obtener siguiente elemento»"
+      ]
+     ],
+     [
+      [
+       "Llegir només dins el bucle, al principi",
+       "Leer solo dentro del bucle, al principio"
+      ],
+      [
+       "Es tracta la **marca** com si fos una dada (es compta el −1)",
+       "Se trata la **marca** como si fuera un dato (se cuenta el −1)"
+      ],
+      [
+       "Un `Llegir` abans del bucle i un altre al final",
+       "Un `Llegir` antes del bucle y otro al final"
+      ]
+     ],
+     [
+      [
+       "Inicialitzar l'acumulador dins el bucle",
+       "Inicializar el acumulador dentro del bucle"
+      ],
+      [
+       "Es reinicia a cada volta: només queda l'últim element",
+       "Se reinicia en cada vuelta: solo queda el último elemento"
+      ],
+      [
+       "«Inici tractament» va abans del MENTRE",
+       "«Inicio tratamiento» va antes del MENTRE"
+      ]
+     ],
+     [
+      [
+       "A la cerca, avançar sempre",
+       "En la búsqueda, avanzar siempre"
+      ],
+      [
+       "El capçal deixa enrere l'element trobat",
+       "El cabezal deja atrás el elemento encontrado"
+      ],
+      [
+       "Avançar només a l'ALTRAMENT",
+       "Avanzar solo en el ALTRAMENT"
+      ]
+     ],
+     [
+      [
+       "Dividir per n sense comprovar-lo",
+       "Dividir por n sin comprobarlo"
+      ],
+      [
+       "Si la seqüència és buida (només la marca), divisió per zero",
+       "Si la secuencia está vacía (solo la marca), división por cero"
+      ],
+      [
+       "`SI n > 0 LLAVORS` abans de fer la mitjana",
+       "`SI n > 0 LLAVORS` antes de calcular la media"
+      ]
+     ]
+    ]
+   }
+  ],
+  "t23-6": [
+   {
+    "t": "check",
+    "ex": {
+     "id": "t23-6-q1",
+     "qb": [
+      {
+       "t": "p",
+       "x": [
+        "«Digues quantes persones del concert tenen més de 50 anys.» Quin esquema cal?",
+        "«Di cuántas personas del concierto tienen más de 50 años.» ¿Qué esquema hace falta?"
+       ]
+      }
+     ],
+     "type": "mcq",
+     "opts": [
+      [
+       "Cerca, perquè busquem persones de més de 50 anys",
+       "Búsqueda, porque buscamos personas de más de 50 años"
+      ],
+      [
+       "Recorregut, perquè cal mirar totes les edats per comptar-les",
+       "Recorrido, porque hay que mirar todas las edades para contarlas"
+      ],
+      [
+       "Cap: n'hi ha prou amb un SI",
+       "Ninguno: basta con un SI"
+      ],
+      [
+       "Cerca amb dues banderes",
+       "Búsqueda con dos banderas"
+      ]
+     ],
+     "answer": 1,
+     "sol": [
+      {
+       "t": "p",
+       "x": [
+        "Per comptar cal passar per tots els elements: és un recorregut amb un comptador. Seria una cerca si la pregunta fos «hi ha algú de més de 50?».",
+        "Para contar hay que pasar por todos los elementos: es un recorrido con un contador. Sería una búsqueda si la pregunta fuera «¿hay alguien de más de 50?»."
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "t": "check",
+    "ex": {
+     "id": "t23-6-q2",
+     "qb": [
+      {
+       "t": "p",
+       "x": [
+        "En un esquema de recorregut d'una seqüència d'entrada, on van els `Llegir`?",
+        "En un esquema de recorrido de una secuencia de entrada, ¿dónde van los `Llegir`?"
+       ]
+      }
+     ],
+     "type": "mcq",
+     "opts": [
+      [
+       "Un abans del bucle i un altre com a última acció del bucle",
+       "Uno antes del bucle y otro como última acción del bucle"
+      ],
+      [
+       "Només un, al principi del bucle",
+       "Solo uno, al principio del bucle"
+      ],
+      [
+       "Només un, abans del bucle",
+       "Solo uno, antes del bucle"
+      ],
+      [
+       "Un abans del bucle i un altre després del FI_MENTRE",
+       "Uno antes del bucle y otro después del FI_MENTRE"
+      ]
+     ],
+     "answer": 0,
+     "sol": [
+      {
+       "t": "p",
+       "x": [
+        "El primer obté el primer element; el de dins del bucle obté el següent. Així la marca mai no es tracta.",
+        "El primero obtiene el primer elemento; el de dentro del bucle obtiene el siguiente. Así la marca nunca se trata."
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "t": "check",
+    "ex": {
+     "id": "t23-6-q3",
+     "qb": [
+      {
+       "t": "p",
+       "x": [
+        "Amb N1 = 30 i N2 = 32, què escriu l'algorisme correcte de «acabat en 3»?",
+        "Con N1 = 30 y N2 = 32, ¿qué escribe el algoritmo correcto de «terminado en 3»?"
+       ]
+      }
+     ],
+     "type": "mcq",
+     "opts": [
+      "33",
+      "30",
+      "32",
+      "−1"
+     ],
+     "answer": 3,
+     "sol": [
+      {
+       "t": "p",
+       "x": [
+        "Cap dels nombres 30, 31 i 32 acaba en 3: la cerca és fallida i el resultat és la marca −1.",
+        "Ninguno de los números 30, 31 y 32 termina en 3: la búsqueda es fallida y el resultado es la marca −1."
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "t": "check",
+    "ex": {
+     "id": "t23-6-q4",
+     "qb": [
+      {
+       "t": "p",
+       "x": [
+        "Per calcular el producte 1 · 2 · … · N, quin ha de ser l'inici del tractament?",
+        "Para calcular el producto 1 · 2 · … · N, ¿cuál debe ser el inicio del tratamiento?"
+       ]
+      }
+     ],
+     "type": "mcq",
+     "opts": [
+      "`p ← 0`",
+      "`p ← N`",
+      "`p ← 1`",
+      [
+       "No cal inicialitzar-lo",
+       "No hace falta inicializarlo"
+      ]
+     ],
+     "answer": 2,
+     "sol": [
+      {
+       "t": "p",
+       "x": [
+        "L'element neutre del producte és 1. Amb 0, el resultat seria sempre 0.",
+        "El elemento neutro del producto es 1. Con 0, el resultado sería siempre 0."
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "t23-7": [
+   {
+    "t": "summary",
+    "blocks": [
+     {
+      "t": "list",
+      "items": [
+       [
+        "Una **seqüència** té primer, últim, actual i següent; el **capçal** marca l'element actual.",
+        "Una **secuencia** tiene primero, último, actual y siguiente; el **cabezal** marca el elemento actual."
+       ],
+       [
+        "Disseny sistemàtic: **identificar la seqüència → triar l'esquema → refinar**.",
+        "Diseño sistemático: **identificar la secuencia → elegir el esquema → refinar**."
+       ],
+       [
+        "**Recorregut**: es tracten tots els elements; a cada volta, el resultat recull la part que queda a l'esquerra del capçal.",
+        "**Recorrido**: se tratan todos los elementos; en cada vuelta, el resultado recoge la parte que queda a la izquierda del cabezal."
+       ],
+       [
+        "**Cerca**: s'atura quan es troba l'element (`trobat ← cert`) o quan s'acaba la seqüència; **només s'avança a l'ALTRAMENT**.",
+        "**Búsqueda**: se detiene cuando se encuentra el elemento (`trobat ← cert`) o cuando se termina la secuencia; **solo se avanza en el ALTRAMENT**."
+       ],
+       [
+        "A les seqüències d'entrada, «obtenir element» és **Llegir** (un abans del bucle i un al final) i la fi es detecta amb una **marca** que no es tracta.",
+        "En las secuencias de entrada, «obtener elemento» es **Llegir** (uno antes del bucle y otro al final) y el fin se detecta con una **marca** que no se trata."
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "examEnd": []
+};

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
 import { inline, useTr } from './text.jsx';
 import { useCourse } from './context.js';
@@ -41,7 +42,10 @@ export default function Practice() {
   const tr = useTr();
   const st = useKit(course.k);
   const bank = useModule(course.k + ':bank', course.bank);
-  const [unit, setUnit] = useState('all');
+  // enllaços directes: ?unit=<tema> (filtre) i ?ex=<exercici> (hi baixa)
+  const [params] = useSearchParams();
+  const goEx = params.get('ex');
+  const [unit, setUnit] = useState(() => (course.units.some((u) => u.id === params.get('unit')) ? params.get('unit') : 'all'));
   const [level, setLevel] = useState('all');
   const [origin, setOrigin] = useState('all');
   const [state, setState] = useState('all');
@@ -60,6 +64,25 @@ export default function Practice() {
       .sort((a, b) => course.units.findIndex((u) => u.id === a.ex.unit) - course.units.findIndex((u) => u.id === b.ex.unit)
         || LEVELS.indexOf(a.ex.level) - LEVELS.indexOf(b.ex.level));
   }, [bank, unit, level, origin, state, st.practice, course.units]);
+
+  // l'exercici de l'enllaç: es mostra (encara que sigui més avall del límit) i s'hi baixa
+  const goAt = goEx ? list.findIndex(({ ex }) => ex.id === goEx) : -1;
+  useEffect(() => { if (goAt >= limit) setLimit(goAt + 1); }, [goAt, limit]);
+  useEffect(() => {
+    if (goAt < 0 || goAt >= limit) return undefined;
+    // els exercicis de sobre encara es poden fer més alts (editors, figures): s'hi torna fins que
+    // la pàgina s'estabilitza o l'usuari es mou
+    let stop = false, n = 0, raf = 0;
+    const halt = () => { stop = true; };
+    const go = () => {
+      const el = document.querySelector(`article[data-ex="${CSS.escape(goEx)}"]`);
+      if (el && !stop) el.scrollIntoView({ block: 'start' });
+      if (!stop && n++ < 40) raf = setTimeout(go, 50);
+    };
+    go();
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach((e) => window.addEventListener(e, halt, { passive: true }));
+    return () => { stop = true; clearTimeout(raf); ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach((e) => window.removeEventListener(e, halt)); };
+  }, [goAt, goEx, limit]);
 
   return (
     <div className="kit-practice">
