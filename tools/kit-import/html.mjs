@@ -39,7 +39,11 @@ export function toMarkup(node) {
       const href = n.getAttribute('href') || '';
       const x = inner(); if (x === null) return null;
       out += href ? `[${x}](${href})` : x;
-    } else if (tag === 'span' && !n.getAttribute('class')) { const x = inner(); if (x === null) return null; out += x; }
+    } else if (tag === 'span' && /\bmono\b/.test(n.getAttribute('class') || '')) out += '`' + decode(n.text).replace(/`/g, "'") + '`';
+    else if (tag === 'span' && (!n.getAttribute('class') || /^(muted|small|res|yes|no|nw)(\s+(muted|small|res|yes|no|nw))*$/.test(n.getAttribute('class').trim()))) {
+      // spans només de presentació: es queda el text
+      const x = inner(); if (x === null) return null; out += x;
+    }
     else return null;
   }
   return out;
@@ -87,7 +91,7 @@ function listOf(n) {
 
 const CO = { abstract: 'summary', important: 'prop', info: 'note', note: 'note', tip: 'tip', warning: 'warn', example: 'example', question: 'question' };
 
-/** Converteix una llista de nodes en blocs. ctx.diagramClass: classes de figures (per conservar-les). */
+/** Converteix una llista de nodes en blocs. ctx.block(node, toBlocks): elements propis d'un curs. */
 export function toBlocks(nodes, ctx = {}) {
   const out = [];
   const push = (b) => out.push(b);
@@ -97,6 +101,11 @@ export function toBlocks(nodes, ctx = {}) {
     const tag = n.tagName.toLowerCase();
     const cls = n.getAttribute('class') || '';
     if (n.getAttribute && n.getAttribute('data-lab')) { push({ t: 'lab', id: n.getAttribute('data-lab') }); continue; }
+    // elements propis d'un curs (ctx.block): un bloc, una llista de blocs, null (s'omet) o undefined (normal)
+    if (ctx.block) {
+      const r = ctx.block(n, (nodes) => toBlocks(nodes, ctx));
+      if (r !== undefined) { if (Array.isArray(r)) out.push(...r); else if (r) push(r); continue; }
+    }
     if (tag === 'p') {
       const m = toMarkup(n);
       if (m === null) push({ t: 'html', h: n.outerHTML });

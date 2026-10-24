@@ -1,5 +1,6 @@
 /**
- * Text de la plantilla: un valor pot ser una cadena, una parella [ca, es] o { ca, es }.
+ * Text de la plantilla: un valor pot ser una cadena, un trio [ca, es, en] (o encara una parella
+ * [ca, es], mentre no hi hagi la traducció) o { ca, es, en }.
  * Dins del text hi ha un marcatge mínim, perquè el contingut s'escrigui de pressa i sense HTML:
  *   $x^2$  fórmula (TeX → MathML amb Temml)     $$…$$  fórmula destacada
  *   **negreta**   *cursiva*   `codi`   [enllaç](/ruta)   salt de línia: \n
@@ -58,10 +59,13 @@ export function inline(s, key = 'i') {
   return out;
 }
 
-/** Tria l'idioma del contingut (ca/es; en anglès es fa servir el castellà). */
+/**
+ * Tria l'idioma del text: [ca, es, en] (o { ca, es, en }). El contingut de la plantilla es
+ * tradueix sencer a l'anglès; on encara falti, pick() fa servir el castellà.
+ */
 export function useTr() {
-  const { lang } = useLang();
-  return (x) => pick(x, lang);
+  const { ui } = useLang();
+  return (x) => pick(x, ui);
 }
 
 /** Text amb marcatge en l'idioma actual. */

@@ -32,7 +32,8 @@ for (const [n, u] of UNITS.entries()) {
     blocks[id] = b;
   });
   const h1 = zipValue(stripNum(parse(CA.docs[u].h1.html).text), stripNum(parse(ES.docs[u].h1.html).text));
-  toc.push({ id: u, n: n + 1, t: h1, sections });
+  // langs: idiomes del tema (l'anglès s'afegeix en traduir-lo; vegeu tools/kit-i18n.mjs)
+  toc.push({ id: u, n: n + 1, t: h1, langs: ['ca', 'es'], sections });
   const { __intro, ...secs } = blocks;
   out('kit/units/' + u + '.js', clean({ intro: __intro, sections: secs, examEnd: [] }), HEAD);
 }

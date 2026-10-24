@@ -15,10 +15,10 @@
  *   html            contingut importat en HTML           { h }
  *   cols            columnes                            { cols:[[bloc…]] }
  *   details, hr     desplegable, separador              { title, blocks }
- *   lang            blocs diferents per idioma          { ca:[…], es:[…] }
+ *   lang            blocs diferents per idioma          { ca:[…], es:[…], en:[…] }
  * Els requadres i els exemples poden portar blocs a dins: { blocks:[…] }.
  */
-import { Fragment, Suspense } from 'react';
+import { Suspense } from 'react';
 import Rich from '../../lib/Rich.jsx';
 import Boundary from '../_doc/Boundary.jsx';
 import { useLang } from '../../lib/i18n.jsx';
@@ -29,7 +29,8 @@ import Exercise, { Steps } from './exercise/Exercise.jsx';
 import { recordCheck } from './state.js';
 import { openDock } from './dockStore.js';
 
-const BOX = ['def', 'prop', 'rule', 'thm', 'note', 'tip', 'warn', 'summary', 'method'];
+// box: caixa sense etiqueta de tipus (només el títol), p. ex. «Jerarquia de memòria»
+const BOX = ['def', 'prop', 'rule', 'thm', 'note', 'tip', 'warn', 'summary', 'method', 'box'];
 
 export const visible = (b, mode) => !b.mode || b.mode === mode;
 
@@ -39,7 +40,7 @@ function Box({ b, mode }) {
   const tr = useTr();
   return (
     <div className={'kit-box kit-box-' + b.t}>
-      <p className="kit-box-t">{S.box[b.t] || ''}{b.title ? <> · <span>{inline(tr(b.title))}</span></> : null}</p>
+      <p className="kit-box-t">{S.box[b.t] || ''}{b.title ? <>{S.box[b.t] ? ' · ' : ''}<span>{inline(tr(b.title))}</span></> : null}</p>
       {b.x && <div className="kit-box-x"><Tx x={b.x} /></div>}
       {b.items && <ul>{b.items.map((it, i) => <li key={i}><Tx x={it} /></li>)}</ul>}
       {b.blocks && <div className="kit-box-x"><Blocks blocks={b.blocks} mode={mode} /></div>}
@@ -88,19 +89,22 @@ function Table({ b }) {
   );
 }
 
+const Bare = ({ children }) => children;
+
 /** Laboratori de l'assignatura (course.labs[id]: un component, normalment amb React.lazy). */
 function Lab({ b }) {
   const course = useCourse();
   const { ui } = useLang();
   const L = course.labs && course.labs[b.id];
   if (!L) return null;
-  const Wrap = course.LabWrap || Fragment;
+  // LabWrap (opcional) rep el nom del laboratori i les seves propietats, per donar-li context
+  const Wrap = course.LabWrap || Bare;
   // dins de l'àmbit d'estils de l'assignatura (data-course), com abans
   return (
     <div className="kit-lab" data-course={course.k} data-lab={b.id}>
       <Boundary>
         <Suspense fallback={<p className="kit-loading">{K[ui].loading}</p>}>
-          <Wrap><L {...(b.props || {})} /></Wrap>
+          <Wrap lab={b.id} props={b.props}><L {...(b.props || {})} /></Wrap>
         </Suspense>
       </Boundary>
     </div>
@@ -127,7 +131,7 @@ function Code({ b }) {
 export function Block({ b, mode }) {
   const course = useCourse();
   const tr = useTr();
-  const { lang } = useLang();
+  const { ui } = useLang();
   if (!visible(b, mode)) return null;
   if (BOX.includes(b.t)) return <Box b={b} mode={mode} />;
   switch (b.t) {
@@ -149,10 +153,11 @@ export function Block({ b, mode }) {
     // HTML que encara no s'ha passat a blocs: amb els estils de l'assignatura, com abans
     case 'html': return <div data-course={course.k}><Rich className="kit-html" html={tr(b.h)} /></div>;
     case 'hr': return <hr className="kit-hr" />;
+    case 'steps': return <Steps steps={b.steps} startOpen bare />;
     case 'details': return (
       <details className="kit-details"><summary><Tx x={b.title} /></summary><Blocks blocks={b.blocks} mode={mode} /></details>
     );
-    case 'lang': return <Blocks blocks={b[lang] || b.es || b.ca} mode={mode} />;
+    case 'lang': return <Blocks blocks={b[ui] || b.es || b.ca} mode={mode} />;
     case 'cols': return <div className="kit-cols">{b.cols.map((c, i) => <div key={i}>{c.map((x, j) => <Block key={j} b={x} mode={mode} />)}</div>)}</div>;
     default: return null;
   }

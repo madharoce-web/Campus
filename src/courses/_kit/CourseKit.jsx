@@ -6,7 +6,6 @@ import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import CourseHeader from '../../app/CourseHeader.jsx';
 import SectionTabs from '../../app/SectionTabs.jsx';
 import { NavbarTools, useActiveCourse } from '../../app/NavbarSlots.jsx';
-import { T as SHELL } from '../../app/strings.js';
 import { KitContext, useCourse } from './context.js';
 import { K } from './strings.js';
 import { migrateOnce, setTotals } from './state.js';
@@ -43,7 +42,7 @@ function DockButton() {
  * course: la configuració de l'assignatura (src/courses/<k>/kit/course.js); vegeu docs/PLANTILLA.md.
  */
 export default function CourseKit({ course }) {
-  const { ui, lang } = useLang();
+  const { ui } = useLang();
   const S = K[ui];
   const { pathname, hash } = useLocation();
   const rest = pathname.slice(course.path.length).split('/').filter(Boolean);
@@ -58,7 +57,7 @@ export default function CourseKit({ course }) {
     const nsec = course.units.reduce((n, u) => n + u.sections.length, 0);
     setTotals(course.k, { sections: nsec, ex: (bank.items || []).length + (bank.families || []).length });
   }, [bank, course]);
-  const title = pick(course.title, lang);
+  const title = pick(course.title, ui);
   useDocumentTitle(tab === 'inici' ? title : S.tabs[tab] ? S.tabs[tab] + ' · ' + title : title);
 
   // adreces antigues (/mates/conj, /logica/u5…) → la secció corresponent de la plantilla
@@ -72,6 +71,10 @@ export default function CourseKit({ course }) {
     return <Navigate replace to={to || course.path} />;
   }
 
+  // en anglès: avís als temes (o a les pestanyes amb temes) que encara no tenen la traducció
+  const hasEn = (u) => !!(u && u.langs && u.langs.includes('en'));
+  const unitTab = tab === 'temari' || tab === 'metodes';
+  const enReady = unitTab ? hasEn(course.units.find((u) => u.id === arg) || course.units[0]) : course.units.every(hasEn);
   const items = TABS.map((k) => ({ k, label: S.tabs[k], to: course.path + (k === 'inici' ? '' : '/' + k) }));
   let body;
   if (tab === 'temari') body = <Lesson unitId={arg || course.units[0].id} />;
@@ -82,10 +85,10 @@ export default function CourseKit({ course }) {
 
   return (
     <KitContext.Provider value={course}>
-      {ui === 'en' && <p className="app-langnote" role="note">{SHELL.en.courseLang}</p>}
+      {ui === 'en' && !enReady && <p className="app-langnote" role="note">{unitTab ? S.noEnUnit : S.noEnCourse}</p>}
       <div className="am-site kit" data-kit={course.k} data-tab={tab}>
         <div className="kit-wrap">
-          <CourseHeader k={course.k} title={title} sub={course.sub !== undefined ? (course.sub ? <p className="m-sub">{pick(course.sub, lang)}</p> : null) : undefined} />
+          <CourseHeader k={course.k} title={title} sub={course.sub !== undefined ? (course.sub ? <p className="m-sub">{pick(course.sub, ui)}</p> : null) : undefined} />
           <SectionTabs items={items} current={tab} id="kit-tabs" />
           <div className="kit-body">{body}</div>
         </div>

@@ -43,7 +43,7 @@ export default function Methods({ unitId }) {
           )}
           {m.solved && m.solved.length > 0 && (
             <section className="kit-msec" id="kit-solved">
-              <h3 className="kit-h3">{S.solvedH}</h3>
+              <h3 className="kit-h3">{m.solvedH ? inline(tr(m.solvedH)) : S.solvedH}</h3>
               {m.solved.map((x) => (
                 <article key={x.id} className="kit-solved">
                   <p className="kit-solved-src">{inline(tr(x.srcName))}</p>

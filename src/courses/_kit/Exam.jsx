@@ -4,13 +4,13 @@ import { useLang } from '../../lib/i18n.jsx';
 import { lsDel } from '../../lib/storage.js';
 import { inline, useTr } from './text.jsx';
 import { useCourse } from './context.js';
-import { K } from './strings.js';
+import { K, num } from './strings.js';
 import { typeOf } from './exercise/types.jsx';
 import { ExTags, SelfGrade, Solution, Stem } from './exercise/Exercise.jsx';
 import { addExam, useKit } from './state.js';
 import { useModule } from './useAsync.js';
 import { newSeed } from './bank.js';
-import { buildExam, DURATIONS, examExercises, loadSim, saveSim, simKey } from './examBuild.js';
+import { buildExam, buildFormat, DURATIONS, examExercises, loadSim, saveSim, simKey } from './examBuild.js';
 
 const fmt = (ms) => {
   const neg = ms < 0, s = Math.floor(Math.abs(ms) / 1000);
@@ -25,13 +25,27 @@ function Config({ onStart }) {
   const S = K[ui];
   const tr = useTr();
   const st = useKit(course.k);
-  const [min, setMin] = useState(90);
+  const formats = course.formats || [];
+  // amb formats d'examen real, el primer és el que surt d'entrada; «custom»: per temes
+  const [fmt, setFmt] = useState(formats.length ? formats[0].id : 'custom');
+  const F = formats.find((f) => f.id === fmt);
+  const [min, setMin] = useState(F ? F.min : 90);
   const [units, setUnits] = useState(course.units.map((u) => u.id));
   const toggle = (id) => setUnits(units.includes(id) ? units.filter((x) => x !== id) : course.units.map((u) => u.id).filter((x) => x === id || units.includes(x)));
+  const pickFmt = (id) => { setFmt(id); const f = formats.find((x) => x.id === id); if (f) setMin(f.min); };
+  const ready = F || units.length > 0;
   return (
     <div className="kit-examcfg">
       <h2 className="kit-h2">{S.examH}</h2>
       <p className="kit-lead">{S.examP}</p>
+      {formats.length > 0 && (
+        <div className="kit-chips kit-fmt" id="kit-fmt" role="radiogroup" aria-label={S.examType}>
+          {formats.map((f) => (
+            <button key={f.id} type="button" role="radio" aria-checked={fmt === f.id} data-fmt={f.id} className={'kit-chip' + (fmt === f.id ? ' is-on' : '')} onClick={() => pickFmt(f.id)}>{tr(f.t)}</button>
+          ))}
+          <button type="button" role="radio" aria-checked={fmt === 'custom'} data-fmt="custom" className={'kit-chip' + (fmt === 'custom' ? ' is-on' : '')} onClick={() => pickFmt('custom')}>{S.examCustom}</button>
+        </div>
+      )}
       <div className="kit-cfg-grid">
         <fieldset className="kit-fs">
           <legend>{S.duration}</legend>
@@ -43,19 +57,27 @@ function Config({ onStart }) {
             ))}
           </div>
         </fieldset>
-        <fieldset className="kit-fs">
-          <legend>{S.unitsPick}</legend>
-          {course.units.map((u) => (
-            <label key={u.id} className="kit-cb">
-              <input type="checkbox" checked={units.includes(u.id)} onChange={() => toggle(u.id)} />
-              <span>{u.n}. {inline(tr(u.t))}</span>
-            </label>
-          ))}
-        </fieldset>
+        {F ? (
+          <fieldset className="kit-fs">
+            <legend>{tr(F.t)}</legend>
+            <p className="kit-fmt-d">{inline(tr(F.desc))}</p>
+            <p className="kit-muted">{S.unitsPick}: {F.units.map((id) => course.units.find((u) => u.id === id)?.n).join(', ')}</p>
+          </fieldset>
+        ) : (
+          <fieldset className="kit-fs">
+            <legend>{S.unitsPick}</legend>
+            {course.units.map((u) => (
+              <label key={u.id} className="kit-cb">
+                <input type="checkbox" checked={units.includes(u.id)} onChange={() => toggle(u.id)} />
+                <span>{u.n}. {inline(tr(u.t))}</span>
+              </label>
+            ))}
+          </fieldset>
+        )}
       </div>
       <div className="am-btn-row">
-        <button type="button" className="am-btn am-btn-primary" id="kit-start" disabled={!units.length} onClick={() => onStart({ min, units, print: false })}>{S.startExam}</button>
-        <button type="button" className="am-btn am-btn-secondary" id="kit-pdf" disabled={!units.length} onClick={() => onStart({ min, units, print: true })}>{S.pdf}</button>
+        <button type="button" className="am-btn am-btn-primary" id="kit-start" disabled={!ready} onClick={() => onStart({ min, units, print: false, format: F })}>{S.startExam}</button>
+        <button type="button" className="am-btn am-btn-secondary" id="kit-pdf" disabled={!ready} onClick={() => onStart({ min, units, print: true, format: F })}>{S.pdf}</button>
       </div>
       <section className="kit-hist">
         <h3 className="kit-h3">{S.history}</h3>
@@ -63,7 +85,7 @@ function Config({ onStart }) {
           <table className="kit-table kit-hist-t">
             <thead><tr><th>{S.printDate}</th><th>{S.duration}</th><th>{S.q}</th><th>{S.mark}</th></tr></thead>
             <tbody>{st.exams.slice().reverse().map((e) => (
-              <tr key={e.at}><td>{new Date(e.at).toLocaleDateString(ui)}</td><td>{e.min} {S.min}</td><td>{e.n}</td><td><b>{e.mark.toFixed(2)}</b></td></tr>
+              <tr key={e.at}><td>{new Date(e.at).toLocaleDateString(ui)}</td><td>{e.min} {S.min}</td><td>{e.n}</td><td><b>{num(e.mark, ui)}</b></td></tr>
             ))}</tbody>
           </table>
         )}
@@ -81,7 +103,7 @@ export default function Exam() {
   const [sim, setSimState] = useState(() => loadSim(course.k));
   const [now, setNow] = useState(Date.now());
   const setSim = (v) => { setSimState(v); if (v) saveSim(course.k, v); else lsDel(simKey(course.k)); };
-  const exs = useMemo(() => (bank && sim ? examExercises(bank, sim) : []), [bank, sim]);
+  const exs = useMemo(() => (bank && sim ? examExercises(bank, sim, course) : []), [bank, sim, course]);
 
   const running = sim && sim.t0 && !sim.delivered;
   useEffect(() => {
@@ -95,8 +117,9 @@ export default function Exam() {
 
   if (!bank) return <p className="kit-loading">{S.loading}</p>;
 
-  const start = ({ min, units, print }) => {
-    const built = buildExam(bank, { units, min, seed: newSeed() });
+  const start = ({ min, units, print, format }) => {
+    const seed = newSeed();
+    const built = format ? buildFormat(format, { min, seed }) : buildExam(bank, { units, min, seed });
     if (print) { setSim({ ...built, t0: null }); return; }
     setSim({ ...built, t0: Date.now(), answers: {}, self: {} });
     window.scrollTo(0, 0);
@@ -123,7 +146,8 @@ export default function Exam() {
   const graded = sim.delivered ? exs.map((ex) => {
     const T = typeOf(ex, course.types);
     const auto = ex.type !== 'open' ? T.check(ex, sim.answers?.[ex.id]) : null;
-    const frac = auto === null || auto === undefined ? (sim.self?.[ex.id] != null ? SELF[sim.self[ex.id]] : null) : (auto ? 1 : 0);
+    // true/false o una fracció (exercicis amb apartats); null: autoavaluació
+    const frac = auto === null || auto === undefined ? (sim.self?.[ex.id] != null ? SELF[sim.self[ex.id]] : null) : (typeof auto === 'number' ? auto : auto ? 1 : 0);
     return { ex, auto, frac };
   }) : [];
   const pending = graded.filter((g) => g.frac === null).length;
@@ -134,7 +158,7 @@ export default function Exam() {
       <div className={'kit-exam-bar' + (running && left < 5 * 60000 ? ' is-low' : '')}>
         <span>{S.examH} · {sim.min} {S.min}</span>
         {running ? <span className="kit-clock" id="kit-clock" role="timer" aria-label={S.timeLeft}>{fmt(left)}</span>
-          : <span className="kit-clock is-done">{sim.result != null ? S.mark + ': ' + sim.result.toFixed(2) : S.timeUp}</span>}
+          : <span className="kit-clock is-done">{sim.result != null ? S.mark + ': ' + num(sim.result, ui) : S.timeUp}</span>}
         <span className="kit-exam-acts">
           <Link className="am-btn am-btn-secondary" to={course.path + '/simulacre/pdf'}>{S.pdf}</Link>
           {running && <button type="button" className="am-btn am-btn-primary" id="kit-deliver" onClick={() => window.confirm(S.confirmDeliver) && setSim({ ...sim, delivered: Date.now() })}>{S.deliver}</button>}
@@ -148,12 +172,12 @@ export default function Exam() {
           <article key={ex.id + (ex.seed || '')} className="kit-ex kit-ex-exam" data-ex={ex.id}>
             <header className="kit-ex-h">
               <span className="kit-ex-t">{S.q} {i + 1}</span>
-              <span className="kit-pts">{ex.pts} {ex.pts === 1 ? S.pt : S.pts}</span>
+              <span className="kit-pts">{num(ex.pts, ui, 0)} {ex.pts === 1 ? S.pt : S.pts}</span>
               <ExTags ex={ex} />
-              {g && g.frac !== null && <span className={'kit-gr ' + (g.frac === 1 ? 'is-ok' : g.frac === 0 ? 'is-ko' : 'is-mid')}>{(g.frac * ex.pts).toFixed(2)} / {ex.pts}</span>}
+              {g && g.frac !== null && <span className={'kit-gr ' + (g.frac === 1 ? 'is-ok' : g.frac === 0 ? 'is-ko' : 'is-mid')}>{num(g.frac * ex.pts, ui)} / {num(ex.pts, ui, 0)}</span>}
             </header>
             <Stem ex={ex} />
-            {T.Input && <T.Input ex={ex} value={sim.answers?.[ex.id]} disabled={!!sim.delivered} onChange={(v) => answer(ex.id, v)} />}
+            {T.Input && <T.Input ex={ex} value={sim.answers?.[ex.id]} disabled={!!sim.delivered} onChange={(v) => answer(ex.id, v)} checked={!!sim.delivered} exam />}
             {sim.delivered && (
               <>
                 <Solution ex={ex} />
@@ -171,7 +195,7 @@ export default function Exam() {
             <button type="button" className="am-btn am-btn-primary" id="kit-finish" disabled={pending > 0}
               onClick={() => { addExam(course.k, { min: sim.min, mark, n: exs.length }); setSim({ ...sim, result: mark }); window.scrollTo(0, 0); }}>{S.finish}</button>
           ) : (
-            <p className="kit-mark" id="kit-mark">{S.mark}: <b>{sim.result.toFixed(2)}</b> / 10</p>
+            <p className="kit-mark" id="kit-mark">{S.mark}: <b>{num(sim.result, ui)}</b> / 10</p>
           )}
           <button type="button" className="am-btn am-btn-secondary" onClick={() => setSim(null)}>{S.again}</button>
         </div>

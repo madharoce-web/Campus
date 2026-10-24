@@ -42,11 +42,12 @@ function migrate({ lsJSON }) {
 export default {
   k: 'eco',
   path: '/economia',
-  title: ["Principis d'economia", 'Principios de economía'],
-  sub: ["Principis d'economia i empresa", 'Principios de economía y empresa'],
+  title: ["Principis d'economia", 'Principios de economía', 'Principles of Economics'],
+  sub: ["Principis d'economia i empresa", 'Principios de economía y empresa', 'Principles of Economics and Business'],
   summary: [
     "Conceptes bàsics, demanda, oferta i mercat, i magnituds agregades. Cada tema té la lliçó en dos modes (directe o explicat), preguntes de comprovació, pràctica per nivells i el formulari sempre a mà.",
     'Conceptos básicos, demanda, oferta y mercado, y magnitudes agregadas. Cada tema tiene la lección en dos modos (directo o explicado), preguntas de comprobación, práctica por niveles y el formulario siempre a mano.',
+    'Basic concepts, supply, demand and markets, and aggregate measures. Each unit has the lesson in two modes (concise or detailed), check questions, practice by level and the formula sheet always at hand.',
   ],
   units,
   bank: () => import('./bank.js'),

@@ -41,8 +41,17 @@ export function buildExam(bank, { units, min, seed }) {
   return { min, units, seed, items: pick.map((p, i) => ({ ...p.ref, pts: pts[i] })) };
 }
 
+/**
+ * Simulacre amb el format d'un examen real (course.formats): { id, t, desc, units, min, build(seed) → exercicis amb pts }.
+ */
+export function buildFormat(f, { min, seed }) {
+  return { format: f.id, min, units: f.units, seed, items: f.build(seed).map((e) => ({ id: e.id, pts: e.pts })) };
+}
+
 /** Exercicis concrets d'un simulacre desat. */
-export function examExercises(bank, sim) {
+export function examExercises(bank, sim, course) {
+  const f = sim.format && course && (course.formats || []).find((x) => x.id === sim.format);
+  if (f) return f.build(sim.seed);
   const byId = new Map((bank.items || []).map((x) => [x.id, x]));
   const fams = new Map((bank.families || []).map((f) => [f.id, f]));
   return sim.items.map((it) => {

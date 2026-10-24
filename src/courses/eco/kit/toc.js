@@ -7,6 +7,10 @@ export default [
    "Conceptes bàsics d'economia",
    "Conceptos básicos de economía"
   ],
+  "langs": [
+   "ca",
+   "es"
+  ],
   "sections": [
    {
     "id": "t1-1-que-es-l-economia",
@@ -105,6 +109,10 @@ export default [
    "Demanda, oferta i mercat",
    "Demanda, oferta y mercado"
   ],
+  "langs": [
+   "ca",
+   "es"
+  ],
   "sections": [
    {
     "id": "t2-1-la-demanda",
@@ -191,6 +199,10 @@ export default [
   "t": [
    "Magnituds agregades",
    "Magnitudes agregadas"
+  ],
+  "langs": [
+   "ca",
+   "es"
   ],
   "sections": [
    {
