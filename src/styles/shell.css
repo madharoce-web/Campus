@@ -1,7 +1,7 @@
 /* ==========================================================================
-   SEMESTRE 1 · closca comuna amb l'aspecte de l'aula virtual (Moodle Boost)
+   AULA MADA · closca comuna amb l'aspecte de l'aula virtual (Moodle Boost)
    Barra blanca de 60 px amb marca i paraula en majúscules, navegació primària
-   (Inici · Tauler · Els meus cursos) subratllada en oliva, menú d'usuari amb avatar,
+   (Inici · Graus · Tauler · Els meus cursos) subratllada en oliva, menú d'usuari amb avatar,
    capçalera de curs amb molles de pa i navegació secundària. Classes amb prefix m-.
    ========================================================================== */
 :root{
@@ -22,7 +22,7 @@
 .m-brand{display:flex; align-items:center; gap:9px; height:100%; padding:0 8px; color:var(--m-word); white-space:nowrap; text-decoration:none; flex:0 0 auto}
 .m-brand:hover{text-decoration:none; color:var(--m-word)}
 .m-brand:focus-visible{outline:none; box-shadow:inset 0 0 0 .2rem rgba(105,110,46,.45)}
-.m-mark{width:46px; height:46px; background:var(--m-olive-mark); color:#fff; display:grid; place-items:center; font-family:var(--m-serif); font-size:22px; letter-spacing:-.02em}
+.m-mark{width:46px; height:46px; background:var(--m-olive-mark); color:#fff; display:grid; place-items:center; font-family:var(--m-serif); font-size:20px; letter-spacing:-.02em}
 .m-wm{display:flex; flex-direction:column; font-family:var(--m-serif); text-transform:uppercase; font-size:19.5px; line-height:1.04; letter-spacing:.005em; color:var(--m-word)}
 
 /* navegació primària */
@@ -39,9 +39,16 @@
 .m-ubtn{display:flex; align-items:center; gap:9px; border:0; background:transparent; padding:6px 4px; cursor:pointer; color:var(--m-ink); font:inherit; border-radius:.5rem}
 .m-ubtn:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(105,110,46,.45)}
 .m-av{width:35px; height:35px; border-radius:50%; background:#e9ecef; display:grid; place-items:center; font-size:.9375rem; color:var(--m-ink); letter-spacing:.01em}
+.m-login{display:flex; align-items:center; height:100%; padding:0 10px; margin-right:6px; color:var(--m-ink); text-decoration:none; white-space:nowrap}
+.m-login:hover{background:#f5f5f5; color:var(--m-ink); text-decoration:none}
+.m-login:focus-visible{outline:none; box-shadow:inset 0 0 0 .2rem rgba(105,110,46,.45)}
+.m-umenu .m-uwho{display:flex; flex-direction:column; line-height:1.35; padding-bottom:.5rem}
+.m-umenu .m-uwho b{color:var(--m-ink); font-size:.9375rem; font-weight:600}
+.m-umenu .m-uwho span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.m-uico{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round}
 .m-ubtn:hover .m-av{background:#dee2e6}
 .m-chev{width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
-.m-umenu{position:absolute; right:0; top:calc(100% - 4px); width:236px; background:#fff; border:1px solid rgba(0,0,0,.15); border-radius:.5rem; box-shadow:0 .5rem 1rem rgba(0,0,0,.15); padding:.5rem 0; z-index:70}
+.m-umenu{position:absolute; right:0; top:calc(100% - 4px); width:256px; background:#fff; border:1px solid rgba(0,0,0,.15); border-radius:.5rem; box-shadow:0 .5rem 1rem rgba(0,0,0,.15); padding:.5rem 0; z-index:70}
 .m-umenu a,.m-umenu button{display:flex; align-items:center; gap:8px; width:100%; border:0; background:transparent; text-align:left; padding:.25rem 1.5rem; font:inherit; font-size:.9375rem; color:var(--m-ink); text-decoration:none; cursor:pointer; line-height:1.6}
 .m-umenu a:hover,.m-umenu button:hover,.m-umenu a:focus-visible,.m-umenu button:focus-visible{background:var(--m-olive); color:#fff; outline:none; text-decoration:none}
 .m-umenu .m-uhead{padding:.15rem 1.5rem .35rem; font-size:.8203rem; color:var(--m-ink-3)}
@@ -86,7 +93,7 @@
   .m-pnav{display:none}
   .m-ib.m-menubtn{display:inline-grid}
   .m-brand{padding:0 4px}
-  .m-mark{width:40px; height:40px; font-size:19px}
+  .m-mark{width:40px; height:40px; font-size:17px}
   .m-wm{font-size:16px}
   .m-ph h1{font-size:1.45rem}
 }
@@ -102,6 +109,9 @@
 .m-tools:empty{display:none}
 .m-below:empty{display:none}
 @media (max-width:767px){ .m-tools{gap:6px; margin-right:8px} }
+
+/* avís d'idioma dels cursos en anglès */
+.app-langnote{margin:0; padding:8px max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px)); background:var(--am-warning-bg); border-bottom:1px solid var(--am-warning-line); color:var(--am-warning-ink); font:.8203rem/1.4 var(--m-sans); text-align:center}
 
 /* pàgines senzilles de l'aplicació (càrrega, error, 404) */
 .app-page{max-width:830px; margin:0 auto; padding-block:44px 64px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); font-family:var(--m-sans); font-size:.9375rem; line-height:1.5; color:var(--m-ink)}

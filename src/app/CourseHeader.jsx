@@ -9,7 +9,7 @@ import { T } from './strings.js';
  * i subtítol. `before` es posa abans de la icona (per exemple, el botó del calaix).
  */
 export default function CourseHeader({ k, title, before, extra, sub, children }) {
-  const { lang } = useLang();
+  const { ui: lang } = useLang();
   const c = COURSE_BY_KEY[k];
   const parent = c.parent && COURSE_BY_KEY[c.parent];
   const t = title ?? pick(c.title, lang);

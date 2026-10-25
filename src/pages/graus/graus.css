@@ -1,0 +1,10 @@
+/* Aula Mada · catàleg de graus. Peces comunes a src/styles/site.css; aquí només el que és propi. */
+.gr-soon{max-width:720px}
+.gr-soon-h{font-size:var(--am-fs); font-weight:700; margin-bottom:4px}
+.gr-soon .am-btn-row{margin-top:12px}
+.gr-notify-block{max-width:720px}
+.gr-notify p{color:var(--am-ink-2)}
+.gr-notify-row{display:flex; gap:8px; margin-top:12px}
+.gr-notify-row .am-input{flex:1; min-width:0}
+.gr-notified{margin:0}
+@media (max-width:640px){ .gr-notify-row{flex-direction:column} }

@@ -1,0 +1,202 @@
+/* ==========================================================================
+   AULA MADA · el campus: maquetació amb calaix de blocs, capçaleres, targetes,
+   blocs, botons, avisos, formularis i les peces del tauler. Mateix aspecte que
+   l'aula virtual (Moodle Boost) en tot el campus. Classes amb prefix am-.
+   ========================================================================== */
+.am-site,.am-site *{box-sizing:border-box}
+.am-site{font-family:var(--am-sans); font-size:var(--am-fs); line-height:1.5; color:var(--am-ink); background:var(--am-bg)}
+.am-site :where(h1,h2,h3,h4){margin:0; line-height:1.2; text-wrap:balance}
+.am-site :where(p){margin:0}
+.am-site :where(a:not(.am-btn)){color:var(--am-brand); text-decoration:none}
+.am-site :where(a:not(.am-btn)):hover{color:var(--am-brand-dark); text-decoration:underline}
+.am-site a:focus-visible,.am-site button:focus-visible,.am-site summary:focus-visible{outline:none; box-shadow:var(--am-focus); border-radius:.25rem}
+.am-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+.am-muted{color:var(--am-ink-3)}
+
+/* ---------- maquetació: contingut + calaix de blocs a la dreta ---------- */
+.am-layout{position:relative; display:grid; grid-template-columns:minmax(0,1fr); min-height:calc(100vh - 60px)}
+.am-layout.am-dopen{grid-template-columns:minmax(0,1fr) 315px}
+.am-main{padding-block:44px 64px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); min-width:0}
+.am-main-in{max-width:830px; margin:0 auto}
+.am-layout:not(.am-dopen) .am-main-in{max-width:1140px}
+@media (min-width:1000px){ .am-main{padding-left:max(64px, env(safe-area-inset-left, 0px)); padding-right:max(64px, env(safe-area-inset-right, 0px))} }
+.am-drawer{display:none; background:var(--am-bg-2); border-left:1px solid var(--am-line); padding:6px 6px 24px; padding-right:max(6px, env(safe-area-inset-right, 0px))}
+.am-dopen .am-drawer{display:block}
+.am-dhead{display:flex; justify-content:flex-end; padding:8px 6px 6px; position:sticky; top:60px; z-index:2}
+.am-dclose{width:32px; height:32px; border:0; border-radius:var(--am-r); background:transparent; display:grid; place-items:center; cursor:pointer; color:var(--am-ink)}
+.am-dclose:hover{background:var(--am-bg-3)}
+.am-dclose svg{width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round}
+.am-dopenbtn{position:fixed; right:max(16px, env(safe-area-inset-right, 0px)); top:calc(76px + env(safe-area-inset-top, 0px)); z-index:20; width:38px; height:38px; border-radius:var(--am-r); border:1px solid var(--am-line-2); background:#fff; display:grid; place-items:center; cursor:pointer; color:var(--am-ink); box-shadow:0 2px 4px rgba(0,0,0,.08)}
+.am-dopenbtn:hover{background:#f5f5f5}
+.am-dopenbtn svg{width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+.am-dopen .am-dopenbtn{display:none}
+.am-dscrim{display:none}
+.am-drawer .am-block + .am-block{margin-top:12px}
+@media (max-width:999px){
+  .am-layout.am-dopen{grid-template-columns:minmax(0,1fr)}
+  .am-drawer{position:fixed; right:0; top:calc(60px + env(safe-area-inset-top, 0px)); bottom:0; width:min(315px, 88vw); z-index:40; overflow:auto; box-shadow:-4px 0 12px rgba(0,0,0,.12)}
+  .am-dhead{top:0}
+  .am-dopen .am-dscrim{display:block; position:fixed; inset:calc(60px + env(safe-area-inset-top, 0px)) 0 0; background:rgba(0,0,0,.3); z-index:39}
+  .am-main{padding-block:30px 56px}
+  .am-main-in{padding-right:46px}
+  .am-layout .am-main-in{max-width:830px}
+}
+@media (max-width:640px){
+  .am-main-in{padding-right:0}
+  .am-main{padding-top:64px}
+}
+
+/* ---------- capçaleres ---------- */
+.am-crumbs{display:flex; flex-wrap:wrap; gap:4px; align-items:center; font-size:var(--am-fs-sm); line-height:1.4; margin-bottom:10px}
+.am-site .am-crumbs a{color:var(--am-ink)}
+.am-site .am-crumbs a:hover{color:var(--am-brand-dark)}
+.am-crumbs .am-sep{color:var(--am-ink-3); padding:0 4px}
+.am-h1{font-size:2.05rem; font-weight:700; letter-spacing:-.005em; margin-bottom:26px}
+.am-ph{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:6px}
+.am-ph .am-h1{margin:0}
+.am-sub{color:var(--am-ink-2); margin-bottom:26px; max-width:72ch}
+.am-h2{font-size:1.17rem; font-weight:400}
+.am-h3{font-size:var(--am-fs); font-weight:700}
+.am-hr{border:0; border-top:1px solid var(--am-line); margin:14px 0 16px}
+.am-section + .am-section{margin-top:34px}
+.am-shead{display:flex; align-items:center; flex-wrap:wrap; gap:6px 10px}
+.am-ico{width:36px; height:36px; border-radius:var(--am-r); display:grid; place-items:center; flex:0 0 auto; background:var(--am-ci-bg, var(--am-teal-soft)); color:var(--am-ci, var(--am-teal))}
+.am-ico svg{width:21px; height:21px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+@media (max-width:640px){ .am-h1{font-size:1.6rem; margin-bottom:18px} }
+
+/* ---------- botons ---------- */
+.am-btn{display:inline-flex; align-items:center; justify-content:center; gap:7px; border:1px solid transparent; border-radius:var(--am-r); padding:.375rem .75rem; font:inherit; font-size:var(--am-fs); line-height:1.5; text-decoration:none; cursor:pointer; white-space:nowrap}
+.am-btn:hover{text-decoration:none}
+.am-btn:focus-visible{outline:none; box-shadow:var(--am-focus)}
+.am-btn:disabled{opacity:.65; cursor:default}
+.am-btn-primary{background:var(--am-primary); border-color:var(--am-primary); color:#fff}
+.am-btn-primary:hover:not(:disabled){background:var(--am-primary-dark); border-color:var(--am-primary-dark); color:#fff}
+.am-btn-primary:focus-visible{box-shadow:0 0 0 .2rem rgba(15,108,191,.4)}
+.am-btn-secondary{background:var(--am-line-2); border-color:var(--am-line-2); color:var(--am-ink)}
+.am-btn-secondary:hover:not(:disabled){background:#b8c1ca; border-color:#b2bcc5; color:var(--am-ink)}
+.am-btn-outline{background:#fff; border-color:var(--am-line-3); color:var(--am-ink)}
+.am-btn-outline:hover:not(:disabled){background:var(--am-bg-3); color:var(--am-ink)}
+.am-btn-danger{background:var(--am-danger); border-color:var(--am-danger); color:#fff}
+.am-btn-danger:hover:not(:disabled){background:var(--am-danger-dark); border-color:var(--am-danger-dark); color:#fff}
+.am-btn-outline-danger{background:#fff; border-color:var(--am-danger); color:var(--am-danger)}
+.am-btn-outline-danger:hover:not(:disabled){background:var(--am-danger); color:#fff}
+.am-btn-block{display:flex; width:100%}
+.am-btn-row{display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px}
+.am-spin{display:inline-block; width:14px; height:14px; flex:0 0 auto; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; animation:am-spin .8s linear infinite}
+@keyframes am-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){ .am-spin{animation:none} }
+
+/* ---------- insígnies i avisos ---------- */
+.am-badge{display:inline-block; padding:.25em .5em; border-radius:.25rem; font-size:.75em; font-weight:700; line-height:1; white-space:nowrap; vertical-align:middle; background:var(--am-line-2); color:var(--am-ink)}
+.am-badge-live{background:var(--am-success); color:#fff}
+.am-alert{padding:.75rem 1.25rem; border:1px solid transparent; border-radius:var(--am-r); margin-bottom:16px}
+.am-alert-info{background:var(--am-info-bg); border-color:var(--am-info-line); color:var(--am-info-ink)}
+.am-alert-warning{background:var(--am-warning-bg); border-color:var(--am-warning-line); color:var(--am-warning-ink)}
+.am-alert-success{background:var(--am-success-soft); border-color:#c6dac5; color:#1c401a}
+
+/* ---------- blocs (del calaix i del contingut) ---------- */
+.am-block{background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); padding:18px 16px 16px}
+.am-drawer .am-block{margin:0 6px}
+.am-bt{font-size:1.17rem; font-weight:400; margin-bottom:14px}
+.am-block p + p{margin-top:8px}
+.am-block .am-btn-row{margin-top:12px}
+.am-mblock{border:1px solid var(--am-line); border-radius:var(--am-r); padding:18px 18px 20px}
+.am-mblock > .am-bt{margin-bottom:16px}
+.am-mblock + .am-mblock{margin-top:18px}
+
+/* llista d'enllaços amb icona (com «Activitats addicionals») */
+.am-acts{list-style:none; margin:-4px 0 0; padding:0}
+.am-acts li + li{border-top:1px solid var(--am-line)}
+.am-acts a{display:flex; gap:14px; align-items:center; padding:13px 2px 13px 14px; color:var(--am-brand)}
+.am-acts a:hover{text-decoration:none; background:var(--am-bg-2)}
+.am-acts a:hover .am-atx > span{text-decoration:underline}
+.am-aico{width:26px; height:26px; flex:0 0 auto; display:grid; place-items:center; color:var(--am-teal)}
+.am-aico svg{width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+.am-atx{display:flex; flex-direction:column; min-width:0; line-height:1.3}
+.am-atx small{color:var(--am-ink-3); font-size:.78rem; margin-top:2px}
+
+/* ---------- targetes de curs ---------- */
+.am-cgrid{list-style:none; margin:0; padding:4px 0 0; display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap:10px}
+.am-card{border:1px solid rgba(0,0,0,.125); border-radius:var(--am-r); background:#fff; display:flex; flex-direction:column; min-width:0}
+.am-cimgw{display:block; line-height:0; border-radius:var(--am-r) var(--am-r) 0 0; overflow:hidden}
+.am-cimg{display:block; width:100%; height:112px}
+.am-cbody{padding:16px 13px 14px; display:flex; flex-direction:column; gap:3px; flex:1}
+.am-cname{font-size:var(--am-fs); font-weight:400; line-height:1.5}
+.am-ccat{color:var(--am-ink)}
+.am-cmeta{margin-top:auto; padding-top:10px; display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:var(--am-fs-sm); color:var(--am-ink-3)}
+
+/* ---------- tauler ---------- */
+.am-stats{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; margin:0 0 18px}
+.am-stat dd{margin:0}
+.am-stat{border:1px solid var(--am-line); border-radius:var(--am-r); padding:14px 16px}
+.am-stat b{display:block; font-size:1.6rem; font-weight:700; line-height:1.2; color:var(--am-ink)}
+.am-stat span{color:var(--am-ink-3); font-size:var(--am-fs-sm)}
+@media (max-width:640px){ .am-stats{grid-template-columns:repeat(2, minmax(0,1fr))} }
+.am-prog{list-style:none; margin:0; padding:0}
+.am-prog li{display:grid; grid-template-columns:minmax(0,1fr) minmax(120px,220px) 92px; gap:6px 16px; align-items:center; padding:12px 0; border-top:1px solid var(--am-line)}
+.am-prog li:first-child{border-top:0; padding-top:0}
+.am-prog-name{display:flex; flex-direction:column; min-width:0}
+.am-prog-name small{color:var(--am-ink-3); font-size:var(--am-fs-sm)}
+.am-bar{height:8px; border-radius:4px; background:var(--am-bg-3); overflow:hidden}
+.am-bar span{display:block; height:100%; background:var(--am-brand)}
+.am-prog-num{text-align:right; font-size:var(--am-fs-sm); color:var(--am-ink-2); white-space:nowrap}
+@media (max-width:640px){
+  .am-prog li{grid-template-columns:minmax(0,1fr) 80px}
+  .am-prog .am-bar{grid-column:1 / -1; grid-row:2}
+}
+
+/* calendari (bloc) */
+.am-cal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:8px}
+.am-cal-nav{width:28px; height:28px; border:0; border-radius:var(--am-r); background:transparent; display:grid; place-items:center; cursor:pointer; color:var(--am-ink)}
+.am-cal-nav:hover{background:var(--am-bg-3)}
+.am-cal-nav svg{width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+.am-cal{width:100%; border-collapse:collapse; table-layout:fixed; font-size:var(--am-fs-sm)}
+.am-cal th{font-weight:400; color:var(--am-ink-3); padding:4px 0; text-align:center}
+.am-cal td{text-align:center; padding:2px 0}
+.am-cal td span{display:inline-grid; place-items:center; width:28px; height:28px; border-radius:50%}
+.am-cal td.is-study span{background:var(--am-brand-soft); color:var(--am-brand-dark); font-weight:700}
+.am-cal td.is-today span{box-shadow:inset 0 0 0 2px var(--am-brand)}
+.am-cal-legend{display:flex; align-items:center; gap:6px; margin-top:8px; font-size:.78rem; color:var(--am-ink-3)}
+.am-cal-legend i{width:12px; height:12px; border-radius:50%; background:var(--am-brand-soft); border:1px solid var(--am-brand-line)}
+
+/* notícies del lloc (com les entrades d'un fòrum) */
+.am-posts{display:grid; gap:12px}
+.am-post{border:1px solid var(--am-line); border-radius:var(--am-r); padding:16px 18px}
+.am-post-head{display:flex; gap:12px; align-items:center; margin-bottom:10px}
+.am-post-av{width:36px; height:36px; flex:0 0 auto; display:grid; place-items:center; background:var(--am-brand-mark); color:#fff; font:15px/1 var(--am-serif)}
+.am-post-head h3{font-size:1.0625rem; font-weight:700}
+.am-post-head small{display:block; color:var(--am-ink-3); font-size:var(--am-fs-sm)}
+.am-post p + p,.am-post p + ul,.am-post ul + p{margin-top:8px}
+.am-post ul{margin:8px 0 0; padding-left:1.25rem}
+
+/* seccions plegables (com les d'un curs) */
+.am-fold{border-top:1px solid var(--am-line)}
+.am-fold:last-child{border-bottom:1px solid var(--am-line)}
+.am-fold summary{display:flex; align-items:center; gap:10px; padding:12px 4px; cursor:pointer; list-style:none; color:var(--am-ink)}
+.am-fold summary::-webkit-details-marker{display:none}
+.am-fold summary::before{content:""; width:7px; height:7px; border-right:2px solid var(--am-ink-2); border-bottom:2px solid var(--am-ink-2); transform:rotate(-45deg); transition:transform .15s; flex:0 0 auto; margin-right:2px}
+.am-fold[open] summary::before{transform:rotate(45deg)}
+.am-fold summary:hover{color:var(--am-brand-dark)}
+.am-fold > div{padding:0 4px 14px 23px; color:var(--am-ink-2)}
+
+/* ---------- llistes amb separadors ---------- */
+.am-rows{list-style:none; margin:0; padding:0; border-top:1px solid var(--am-line)}
+.am-row{display:flex; gap:16px; align-items:flex-start; padding:16px 4px; border-bottom:1px solid var(--am-line)}
+.am-row-body{flex:1; min-width:0}
+.am-row-body p{margin-top:4px; color:var(--am-ink-2)}
+
+/* ---------- formularis ---------- */
+.am-field + .am-field{margin-top:14px}
+.am-label{display:block; margin-bottom:.4rem}
+.am-input{display:block; width:100%; min-height:38px; padding:.375rem .75rem; border:1px solid var(--am-line-3); border-radius:var(--am-r); background:#fff; color:var(--am-ink); font:inherit; font-size:var(--am-fs); line-height:1.5}
+.am-input:focus{outline:none; border-color:#b8bb8a; box-shadow:0 0 0 .2rem rgba(105,110,46,.25)}
+.am-input[aria-invalid="true"]{border-color:var(--am-danger)}
+select.am-input{appearance:none; padding-right:2.25rem; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E") no-repeat right .75rem center / 16px 12px}
+.am-invalid{margin-top:.25rem; font-size:var(--am-fs-sm); color:var(--am-danger)}
+
+/* ---------- peu del campus ---------- */
+.am-foot{background:var(--am-bg-2); border-top:1px solid var(--am-line); color:var(--am-ink-3); font-family:var(--am-sans); font-size:var(--am-fs-sm)}
+.am-foot-in{max-width:var(--am-wrap); margin:0 auto; padding:14px max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 24px}
+.am-foot a{color:var(--am-brand); text-decoration:none}
+.am-foot a:hover{color:var(--am-brand-dark); text-decoration:underline}
+.am-foot nav{display:flex; flex-wrap:wrap; gap:4px 16px}

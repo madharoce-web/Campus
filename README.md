@@ -1,8 +1,22 @@
-# Campus · Semestre 1
+# Aula Mada
 
-Web de estudio del primer semestre del grado en Informática: apuntes, laboratorios interactivos,
-ejercicios resueltos paso a paso y simulacros de examen, en catalán y castellano, con el aspecto
-de un aula virtual.
+Web de estudio universitaria: apuntes, laboratorios interactivos, ejercicios resueltos paso a paso
+y simulacros de examen. Ahora mismo incluye el primer semestre de Ingeniería Informática; ADE,
+Enfermería y Magisterio aparecen como «próximamente». La interfaz está en catalán, castellano e
+inglés; el contenido de los cursos, en catalán y castellano. Con Supabase configurado hay cuentas
+(correo o Google) y el progreso se guarda en la nube; sin configurar, se guarda en el navegador
+(ver [docs/COMPTES.md](docs/COMPTES.md)).
+
+| Página | Ruta |
+|---|---|
+| Portada pública: ventajas, grados y «Crear cuenta» | `/` |
+| Entrar y crear cuenta | `/entrar`, `/registre` |
+| Catálogo de grados | `/graus`, `/graus/:grau` |
+| Campus: Inicio, Área personal (panel), Mis cursos, Mi cuenta | `/inici`, `/tauler`, `/cursos`, `/compte` |
+
+Con cuentas configuradas, el campus pide entrar; sin configurar, es abierto.
+
+Cursos del primer semestre de Informática:
 
 | Curso | Ruta | Contenido |
 |---|---|---|
@@ -40,6 +54,7 @@ npm run dev            # servidor de desarrollo en http://localhost:5173
 | `npm run preview` | Sirve `dist/` en http://localhost:4173 (con las mismas cabeceras de seguridad que producción) |
 | `npm run lint` | Revisa el código con ESLint |
 | `npm run test:e2e` | Pruebas de Playwright sobre `dist/` (la primera vez: `npx playwright install chromium`) |
+| `npm run test:db` | Prueba la migración de la base de datos en un Postgres con Docker |
 
 ## Publicarla
 
@@ -54,8 +69,13 @@ Cloudflare Pages y dominio propio, está en **[docs/DESPLIEGUE.md](docs/DESPLIEG
 
 ```
 src/
-  app/            barra superior, cabecera de curso, rutas
-  pages/home/     portada (Inicio, Área personal, Mis cursos)
+  app/            barra superior, pie, cabecera de curso, rutas
+  catalog/        grados y semestres (qué hay disponible y qué llegará)
+  pages/landing/  portada pública
+  pages/inici/    inicio del campus
+  pages/graus/    catálogo de grados
+  pages/compte/   entrar y Mi cuenta
+  pages/home/     Mis cursos y área personal
   courses/<curso> cada curso, cargado bajo demanda
   shared/cpp/     motor de C++ compartido
   lib/            idioma, almacenamiento, utilidades
@@ -63,6 +83,7 @@ public/
   clang/          compilador de C++ (WebAssembly)
   compiler/       workers del compilador, del ejecutor y del intérprete
 deploy/           nginx, AWS
+supabase/         base de datos de las cuentas (migraciones y pruebas)
 tests/e2e/        pruebas de Playwright
 ```
 

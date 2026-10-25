@@ -6,3 +6,8 @@ Thumbs.db
 test-results/
 playwright-report/
 .vite/
+dist-*/
+.env
+
+# material original (diapositives, PDF) per preparar contingut: no es publica
+inbox/

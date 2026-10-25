@@ -1,0 +1,33 @@
+/*
+ * Programació dins de la plantilla. Les regles van marcades com a globals (prefix pg-): els
+ * tipus d'exercici de C++ i de pseudocodi pinten a dins dels àmbits [data-course="cpp"] i
+ * [data-course="pseudo"], amb els estils de les webs d'abans (editor, consola, taules de proves).
+ */
+/* global */
+.pg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+/* global */
+.pg-cpp, .pg-ps, .pg-pati { display: flex; flex-direction: column; gap: .6rem; min-width: 0; margin-top: .4rem; }
+/* global */
+.pg-acts { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+/* global */
+.pg-clock { margin-left: auto; font-size: .85rem; color: var(--am-ink-3, #6a737b); font-variant-numeric: tabular-nums; }
+/* global */
+.pg-eng { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; font-size: .85rem; color: var(--am-ink-2, #495057); }
+/* global */
+.pg-eng select { width: auto; padding: .15rem .4rem; font-size: .85rem; }
+/* global */
+.pg-engst, .pg-busy, .pg-note { font-size: .85rem; color: var(--am-ink-3, #6a737b); margin: 0; }
+/* global */
+.pg-io summary { cursor: pointer; font-size: .9rem; color: var(--am-teal, #00434e); }
+/* global */
+.pg-io textarea { width: 100%; min-height: 4rem; margin: .4rem 0; }
+/* global */
+.pg-extab pre { margin: 0; white-space: pre-wrap; font-family: var(--am-mono, monospace); font-size: .875rem; }
+/* global */
+.pg-exh { margin: 0; }
+/* global */
+.pg-rev ul { margin: .2rem 0 0; padding-left: 1.2rem; }
+/* global */
+.pg-code { margin: .6rem 0; }
+/* global */
+.kit .pg-showhid { background: none; border: 0; padding: 0; color: var(--am-teal, #00434e); text-decoration: underline; cursor: pointer; font-size: .9rem; }

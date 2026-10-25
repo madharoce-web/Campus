@@ -4,7 +4,7 @@ import { useDocumentTitle } from '../lib/useDocumentTitle.js';
 import { T } from './strings.js';
 
 export default function NotFound() {
-  const { lang } = useLang();
+  const { ui: lang } = useLang();
   const S = T[lang];
   useDocumentTitle(S.notFound);
   return (

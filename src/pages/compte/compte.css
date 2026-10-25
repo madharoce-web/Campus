@@ -1,0 +1,50 @@
+/* Aula Mada · entrar i el meu compte. Peces comunes a src/styles/site.css; aquí només el que és propi. */
+
+/* ---------- entrar: com la pàgina d'accés de l'aula virtual ---------- */
+.ac-login{min-height:calc(100vh - 60px); background:var(--am-bg-2); padding:48px max(16px, env(safe-area-inset-right, 0px)) 64px max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction:column; align-items:center; gap:16px}
+.ac-card{width:100%; max-width:460px; background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); box-shadow:0 .125rem .25rem rgba(0,0,0,.075); padding:32px 32px 28px}
+.ac-logo{display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:24px; color:#555a5e}
+.ac-mark{width:46px; height:46px; background:var(--am-brand-mark); color:#fff; display:grid; place-items:center; font-family:var(--am-serif); font-size:20px; letter-spacing:-.02em}
+.ac-wm{display:flex; flex-direction:column; font-family:var(--am-serif); text-transform:uppercase; font-size:19.5px; line-height:1.04}
+.ac-h{display:flex; align-items:center; gap:8px; font-size:1.4rem; font-weight:700}
+.ac-mailico{width:22px; height:22px; flex:0 0 auto; fill:none; stroke:var(--am-ink-2); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.ac-sub{margin:8px 0 20px; color:var(--am-ink-2)}
+.ac-sub b{color:var(--am-ink); word-break:break-all}
+.ac-submit{margin-top:16px}
+.ac-code{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; font-size:1.25rem; letter-spacing:.3em}
+.ac-or{display:flex; align-items:center; gap:12px; margin:20px 0 14px; color:var(--am-ink-3); font-size:var(--am-fs-sm)}
+.ac-or::before,.ac-or::after{content:""; flex:1; height:1px; background:var(--am-line)}
+.ac-google{gap:10px}
+.ac-g{width:18px; height:18px; flex:0 0 auto}
+.ac-switch{margin-top:16px; text-align:center}
+.ac-fine{margin-top:16px; padding-top:14px; border-top:1px solid var(--am-line); font-size:var(--am-fs-sm); color:var(--am-ink-3)}
+.ac-links{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 16px; margin-top:16px}
+.ac-link{border:0; background:none; padding:0; font:inherit; color:var(--am-brand); cursor:pointer}
+.ac-link:hover{color:var(--am-brand-dark); text-decoration:underline}
+.ac-link:disabled{color:var(--am-ink-3); cursor:default; text-decoration:none}
+.ac-perks{width:100%; max-width:460px; font-size:var(--am-fs-sm); color:var(--am-ink-2)}
+.ac-perks h2{font-size:var(--am-fs-sm); font-weight:700; color:var(--am-ink); margin-bottom:4px}
+.ac-perks ul{margin:0; padding-left:1.2rem}
+.ac-wait{display:flex; align-items:center; justify-content:center; gap:10px; color:var(--am-ink-3); min-height:96px}
+
+/* ---------- el meu compte: com el perfil de l'aula virtual ---------- */
+.ac-head{gap:16px; margin-bottom:24px}
+.ac-avatar{flex:0 0 auto; display:grid; place-items:center; width:64px; height:64px; border-radius:50%; background:var(--am-bg-3); color:var(--am-ink); font-size:1.4rem}
+.ac-email{color:var(--am-ink-2); word-break:break-all}
+.ac-guest{max-width:560px}
+.ac-grid{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:12px; align-items:start}
+.ac-col{display:grid; gap:12px}
+.ac-p{color:var(--am-ink-2)}
+.ac-form{margin-top:4px}
+.ac-actions{display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-top:14px}
+.ac-ok{color:var(--am-success)}
+.ac-sync{display:flex; align-items:center; gap:8px; margin-top:12px}
+.ac-sync-dot{width:10px; height:10px; border-radius:50%; background:var(--am-line-2)}
+.ac-sync.is-ok .ac-sync-dot{background:var(--am-success)}
+.ac-sync.is-syncing .ac-sync-dot{background:#f0ad4e}
+.ac-sync.is-error{color:var(--am-danger)}
+.ac-sync.is-error .ac-sync-dot{background:var(--am-danger)}
+.ac-danger{border-color:#efcbc6}
+
+@media (max-width:860px){ .ac-grid{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:480px){ .ac-card{padding:24px 18px 20px} .ac-login{padding-top:24px} }

@@ -1,3 +1,5 @@
+import { html as mtexHTML } from '../kit/mtex.js';
+
 /* ============================================================
    MOTOR MATEMÀTIC
    ============================================================ */
@@ -8,67 +10,9 @@ export const Z = (() => {
   const shuffle = a => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = rnd(i + 1); [r[i], r[j]] = [r[j], r[i]]; } return r; };
   const range = (a, b) => { const r = []; for (let i = a; i <= b; i++) r.push(i); return r; };
 
-  /* ---------- tipografia: \ov{} \fr{}{} \sq{} \rt{}{} ^{} _{} ---------- */
+  /* ---------- tipografia: \ov{} \fr{}{} \sq{} \rt{}{} \mat{} ^{} _{} → MathML (kit/mtex.js) ---------- */
   const escH = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  function tx(src) {
-    src = String(src); let i = 0;
-    function group() {               // llegeix {…} després d'una ordre
-      if (src[i] !== '{') { const ch = src[i++]; return ch === undefined ? '' : escH(ch); }
-      i++; const h = seq(true); if (src[i] === '}') i++; return h;
-    }
-    function rawGroup() {            // {…} sense interpretar (per a \mat i \dt)
-      if (src[i] !== '{') return '';
-      let d = 0, j = i;
-      for (; j < src.length; j++) { if (src[j] === '\\') { j++; continue; } if (src[j] === '{') d++; else if (src[j] === '}' && --d === 0) break; }
-      const r = src.slice(i + 1, j); i = j + 1; return r;
-    }
-    function seq(inGroup) {
-      let out = '';
-      while (i < src.length) {
-        const c = src[i];
-        if (c === '}' && inGroup) return out;
-        if (c === '\\' && (src[i + 1] === '{' || src[i + 1] === '}')) { out += src[i + 1]; i += 2; continue; }
-        if (c === '\\') {
-          const m = /^\\(ov|fr|sq|rt|mat|dt|sis|b|it)/.exec(src.slice(i));
-          if (m) {
-            i += m[0].length;
-            if (m[1] === 'mat' || m[1] === 'dt' || m[1] === 'sis') { out += mxTx(rawGroup(), m[1] === 'mat' ? 'p' : m[1] === 'dt' ? 'd' : 's'); continue; }
-            if (m[1] === 'ov') out += '<span class="ov">' + group() + '</span>';
-            else if (m[1] === 'fr') { const a = group(), b = group(); out += '<span class="frac"><span>' + a + '</span><span>' + b + '</span></span>'; }
-            else if (m[1] === 'sq') out += '<span class="sqrt">√<span class="rad">' + group() + '</span></span>';
-            else if (m[1] === 'rt') { const n = group(), x = group(); out += '<span class="sqrt"><sup class="rti">' + n + '</sup>√<span class="rad">' + x + '</span></span>'; }
-            else if (m[1] === 'b') out += '<b>' + group() + '</b>';
-            else if (m[1] === 'it') out += '<i>' + group() + '</i>';
-            continue;
-          }
-          out += '∖'; i++; continue;    // una barra sola és la diferència de conjunts
-        }
-        if (c === '^' || c === '_') { i++; const g = group(); out += c === '^' ? '<sup>' + g + '</sup>' : '<sub>' + g + '</sub>'; continue; }
-        if (c === '{') { i++; out += '{' + seq(true) + '}'; if (src[i] === '}') i++; continue; }
-        if (src[i + 1] === '\u0338') { out += '<span class="nrel">' + escH(c) + '</span>'; i += 2; continue; }   // ℛ̸, ∉…: barra de negació
-        out += escH(c); i++;
-      }
-      return out;
-    }
-    return seq(false);
-  }
-  /* matrius: \mat{1 & 2; 3 & 4} amb parèntesis, \dt{…} amb barres de determinant */
-  function splitTop(s, ch) {
-    const out = []; let d = 0, cur = '';
-    for (let k = 0; k < s.length; k++) {
-      const c = s[k];
-      if (c === '\\' && k + 1 < s.length) { cur += c + s[k + 1]; k++; continue; }
-      if (c === '{') d++; else if (c === '}') d--;
-      if (c === ch && d === 0) { out.push(cur); cur = ''; } else cur += c;
-    }
-    out.push(cur); return out;
-  }
-  function mxTx(raw, kind) {
-    const rows = splitTop(raw, ';').map(r => splitTop(r, '&').map(x => x.trim()));
-    const n = Math.max(...rows.map(r => r.length));
-    return '<span class="mx ' + kind + '"><span class="mxg" style="grid-template-columns:repeat(' + n + ',auto)">' +
-      rows.map(r => r.concat(Array(n - r.length).fill('')).map(x => '<span>' + tx(x) + '</span>').join('')).join('') + '</span></span>';
-  }
+  const tx = src => mtexHTML(src);
 
   /* ---------- aritmètica entera i racional ---------- */
   const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; };

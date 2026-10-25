@@ -1,297 +1,205 @@
 import { test, expect } from '@playwright/test';
 import { expectNoOverflow, setLang, watchErrors } from './helpers.js';
+import toc from '../../src/courses/mates/kit/toc.js';
+import exercises from '../../src/courses/mates/kit/exercises.js';
+import formulas from '../../src/courses/mates/kit/formulas.js';
 
-// Teoria Mates CP1: pestanyes, teoria amb laboratoris i passos, exercicis, banc, pràctica, simulacre i estat desat.
-const TABS = [
-  ['', 'Inici', 'Inicio', 'Teoria per al CP1, explicada i per tocar'],
-  ['conj', 'T1 · Conjunts', 'T1 · Conjuntos', 'Conjunts i operacions'],
-  ['rel', 'T1 · Relacions', 'T1 · Relaciones', 'Relacions binàries'],
-  ['nomb', 'T2 · Nombres', 'T2 · Números', 'Nombres reals i inducció'],
-  ['cx', 'T2 · Complexos', 'T2 · Complejos', 'Nombres complexos'],
-  ['mat', 'T3 · Matrius', 'T3 · Matrices', 'Matrius i operacions'],
-  ['det', 'T3 · Determinants', 'T3 · Determinantes', 'Determinants, inversa i rang'],
-  ['exer', 'Exercicis', 'Ejercicios', 'Fulls, CP1-2025 i CP2-2025'],
-  ['banc', "Banc d'exercicis", 'Banco de ejercicios', 'Exercicis per tema i nivell'],
-  ['exam', "Simulacre d'examen", 'Simulacro de examen', 'Examen de prova'],
-  ['prac', 'Pràctica', 'Práctica', 'Exercicis generats'],
-];
+// Teoria Mates CP1 a la plantilla: sis temes importats (amb les fórmules en TeX), 30 laboratoris,
+// passos que es revelen un a un, el formulari de l'examen, els exercicis resolts, el banc per nivells
+// i la pràctica ràpida (generadors d'abans) i el simulacre amb el format del CP.
+async function openToc(page) {
+  await page.locator('.kit-toc').waitFor({ state: 'attached' });
+  const btn = page.locator('.kit-toc-btn');
+  if (await btn.isVisible()) await btn.click();
+}
+const flat = (s) => s.replace(/\s+/g, '');
 
-test('totes les pestanyes es carreguen en els dos idiomes', async ({ page }) => {
+test('temari: els sis temes en els dos idiomes, sense errors de fórmules', async ({ page }) => {
   const errors = watchErrors(page);
   for (const lang of ['ca', 'es']) {
-    if (lang === 'es') { await page.goto('/mates'); await setLang(page, 'es'); }
-    for (const [k, ca, es, h2] of TABS) {
-      await page.goto('/mates' + (k ? '/' + k : ''));
-      await expect(page.locator('#rail a[aria-current="page"]')).toHaveText(lang === 'ca' ? ca : es);
-      if (lang === 'ca') await expect(page.locator('#main .pagehead h2')).toHaveText(h2);
+    if (lang === 'es') await setLang(page, 'es');
+    for (const u of toc) {
+      await page.goto('/mates/temari/' + u.id);
+      await expect(page.locator('.kit-unit-h h2')).toHaveText(typeof u.t === 'string' ? u.t : u.t[lang === 'ca' ? 0 : 1]);
+      await expect(page.locator('section.kit-sec')).toHaveCount(u.sections.length);
+      await expect(page.locator('.kit-texerr')).toHaveCount(0);
       await expectNoOverflow(page);
     }
   }
-  await expect(page.locator('.m-ph h1')).toHaveText('Teoría Mates CP1');
-  await expect(page.locator('#brandsub')).toHaveText('Matemática Computacional');
-  await expect(page).toHaveTitle(/Teoría Mates CP1/);
-  // les pàgines de teoria tenen tots els laboratoris
-  await page.goto('/mates/cx');
-  await expect(page.locator('.lab[data-w]')).toHaveCount(6);
+  // en anglès, en castellà amb l'avís
+  await setLang(page, 'en');
+  await page.goto('/mates/temari/conj');
+  await expect(page.locator('.app-langnote')).toContainText('not yet available in English');
+  await expect(page.locator('.kit-unit-h h2')).toHaveText(toc[0].t[1]);
   expect(errors).toEqual([]);
 });
 
-test('enllaços directes, enllaços antics, índex i accés al banc des de la teoria', async ({ page }) => {
-  const errors = watchErrors(page);
-  await page.goto('/mates#exam');
-  await expect(page).toHaveURL(/\/mates\/exam$/);
-  await page.goto('/mates.html#c-buit');
-  await expect(page).toHaveURL(/\/mates\/c-buit$/);
-  await expect(page.locator('#rail a[aria-current="page"]')).toHaveText('T1 · Conjunts');
-  await expect(page.locator('#c-buit')).toBeInViewport();
-  await page.goto('/mates/no-existeix');
-  await expect(page).toHaveURL(/\/mates$/);
-  await page.goto('/mates/inici');
-  await expect(page).toHaveURL(/\/mates$/);
-  // des de l'inici: una secció i els botons de les activitats
-  await page.click('.tcard a[data-sec="r-hasse"]');
-  await expect(page).toHaveURL(/\/mates\/r-hasse$/);
-  await expect(page.locator('#r-hasse')).toBeInViewport();
-  await page.goto('/mates');
-  await page.click('.tcard button[data-go="prac"]');
-  await expect(page).toHaveURL(/\/mates\/prac$/);
-  // índex de la pàgina
-  await page.goto('/mates/cx');
-  await page.click('.toc a[data-sec="x-pol"]');
-  await expect(page).toHaveURL(/\/mates\/x-pol$/);
-  await expect(page.locator('#x-pol')).toBeInViewport();
-  // la teoria dels diagrames de Hasse obre el banc amb el tema i el nivell
-  await page.goto('/mates/r-hasse');
-  await page.click('[data-hzgo="2"]');
-  await expect(page).toHaveURL(/\/mates\/banc$/);
-  await expect(page.locator('#bk-t button[data-bkk="hasse"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('#bk-l button[data-bkl="2"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('#bk-list .exc')).toHaveCount(6);
-  await expect(page.locator('#bk-list .exc').first()).toContainText('Ordres i Hasse');
-  expect(errors).toEqual([]);
-});
-
-test('laboratoris i passos: recalculen, i l\'estat es conserva en canviar de pestanya i d\'idioma', async ({ page }) => {
-  const errors = watchErrors(page);
-  await page.goto('/mates/c-buit');
-  const caixes = page.locator('.lab[data-w="caixes"]');
-  await caixes.locator('[data-ex="3"]').click();
-  await expect(caixes.locator('.m.big')).toHaveText('({∅} ∪ {∅}) ∖ ∅ = {∅}');
-  await page.fill('#th-caixes-in', '{∅} ∪ {{∅}}');
-  await expect(caixes.locator('.m.big')).toHaveText('{∅} ∪ {{∅}} = {∅, {∅}}');
-  await caixes.locator('.keys [data-k="⌫"]').click();
-  await expect(page.locator('#th-caixes-in')).toHaveValue('{∅} ∪ {{∅}');
-  // passos que es revelen un a un
-  const dinc = page.locator('#stp-th-dinc');
-  await expect(dinc.locator('.st')).toHaveCount(1);
-  await dinc.locator('[data-stp="next"]').click();
-  await expect(dinc.locator('.st')).toHaveCount(2);
-  // Venn: preset, comparació i una regió
-  const venn = page.locator('.lab[data-id="th-venn2"]');
-  await venn.locator('[data-pre="9"]').click();
-  await expect(venn.locator('.fb.bad')).toContainText('No són iguals');
-  await venn.locator('svg.venn.hit').first().click({ position: { x: 150, y: 120 } });
-  await expect(venn).toContainText(/Regió \d/);
-  // canvi de pestanya i d'idioma: el mateix estat, en castellà
-  await page.click('#rail a[data-k="exer"]');
-  await page.click('#rail a[data-k="conj"]');
-  await expect(page.locator('#th-caixes-in')).toHaveValue('{∅} ∪ {{∅}');
-  await expect(page.locator('#stp-th-dinc .st')).toHaveCount(2);
-  await setLang(page, 'es');
-  await expect(caixes.locator('.lab-h .tt')).toHaveText('Cajas dentro de cajas: ∅, {∅}, {∅, {∅}}');
-  await expect(venn.locator('.fb.bad')).toContainText('No son iguales');
-  await expect(venn).toContainText(/Región \d/);
-  await expect(page.locator('#stp-th-dinc [data-stp="next"]')).toContainText('Siguiente paso');
-  await setLang(page, 'ca');
-  // relacions: la matriu i les propietats
-  await page.goto('/mates/r-props');
-  const rel = page.locator('.lab[data-id="th-rel2"]');
-  await rel.locator('[data-pre="le"]').click();
-  await expect(rel.locator('.fb.ok')).toContainText("Relació d'ordre");
-  await rel.locator('.mxb[data-a="1"][data-b="1"]').click();
-  await expect(rel.locator('[data-hl="refl"]')).toContainText('✗');
-  // pla complex: arrossegar el punt z
-  await page.goto('/mates/x-mod');
-  const cz = page.locator('.lab[data-id="th-cz"]');
-  await cz.locator('svg.cp').scrollIntoViewIfNeeded();
-  const h = await cz.locator('circle[data-h="z"]').boundingBox();
-  const svg = await cz.locator('svg.cp').boundingBox();
-  await page.mouse.move(h.x + h.width / 2, h.y + h.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(svg.x + svg.width * 0.2, svg.y + svg.height / 2, { steps: 5 });
-  await page.mouse.up();
-  await expect(page.locator('#th-cz-b')).toHaveValue('0');
-  await expect(page.locator('#th-cz-a')).not.toHaveValue('3');
-  // matrius: editar un element recalcula el rang
-  await page.goto('/mates/d-rang');
-  const rank = page.locator('.lab[data-id="th-mx-rank"]');
-  await rank.locator('[data-pre="r1"]').click();
-  await expect(rank.locator('.st.done')).toContainText('rang A = 1');
-  await rank.locator('input.mxin[data-ij="2,2"]').fill('1/2');
-  await expect(rank.locator('.st.done')).toContainText('rang A = 2');
-  await rank.locator('input.mxin[data-ij="2,2"]').fill('x');
-  await expect(rank.locator('input.mxin[data-ij="2,2"]')).toHaveClass(/\bbad\b/);
-  // dòmino: l'animació s'atura a la cinquena fitxa
-  await page.goto('/mates/n-ind');
-  const dom = page.locator('.lab[data-w="domino"]');
-  await dom.locator('[data-s="k5"]').click();
-  await dom.locator('[data-push]').click();
-  await expect(dom.locator('.dom.fall')).toHaveCount(5);
-  await expect(dom.locator('.dom.stuck')).toHaveCount(1);
-  expect(errors).toEqual([]);
-});
-
-test('exercicis resolts: pista, solució pas a pas i laboratori', async ({ page }) => {
-  const errors = watchErrors(page);
-  await page.goto('/mates/exer');
-  const card = page.locator('#exc-f1e3b');
-  await card.locator('[data-t="hint"]').click();
-  await expect(card.locator('.fb.info')).toBeVisible();
-  await card.locator('[data-t="sol"]').click();
-  await expect(card.locator('.bx.form')).toBeVisible();
-  await expect(card.locator('#stp-sol-f1e3b .st')).toHaveCount(1);
-  await card.locator('#stp-sol-f1e3b [data-stp="all"]').click();
-  await expect(card.locator('#stp-sol-f1e3b [data-stp="next"]')).toHaveCount(0);
-  await expect(card.locator('#stp-sol2-f1e3b [data-stp="next"]')).toHaveCount(0);
-  await card.locator('[data-t="lab"]').click();
-  await expect(card.locator('.lab[data-w]')).toBeVisible();
-  await expect(page.locator('#exc-cp1e3 .pill.out')).toHaveText('No entra');
-  await setLang(page, 'es');
-  await expect(card.locator('[data-t="sol"]')).toHaveText('Solución');
-  await expect(card.locator('.bx.form .bh')).toHaveText('Cómo usar el formulario');
-  expect(errors).toEqual([]);
-});
-
-test('pràctica: correcció, puntuació desada i el mateix exercici en l\'altre idioma', async ({ page }) => {
-  const errors = watchErrors(page);
-  await page.goto('/mates/prac');
-  await page.click('#prk button[data-k="mod"]');
-  const q = page.locator('#main .card p').first();
-  const nums = (await q.innerText()).match(/−?\d+/g).join(',');
-  await setLang(page, 'es');
-  await expect(q).toContainText('¿a qué clase');
-  expect((await q.innerText()).match(/−?\d+/g).join(',')).toBe(nums);
-  await setLang(page, 'ca');
-  const [, n, a] = (await q.innerText()).match(/mòdul (\d+).*pertany (−?\d+)/);
-  const r = (((+a.replace('−', '-')) % +n) + +n) % +n;
-  await page.fill('#pr-in', String(r));
-  await page.press('#pr-in', 'Enter');
-  await expect(page.locator('#main .card .fb.ok')).toContainText('Correcte');
-  await expect(page.locator('#score')).toHaveText('1/1');
-  // venn: tocar zones i comprovar
-  await page.click('#prk button[data-k="venn"]');
-  await page.locator('#pr-venn svg').click({ position: { x: 150, y: 120 } });
-  await page.click('#pr-check');
-  await expect(page.locator('#main .card .fb')).toBeVisible();
-  await expect(page.locator('#score')).toHaveText(/\/2$/);
-  // teclat de símbols
-  await page.click('#prk button[data-k="buit"]');
-  await page.locator('.keys [data-k="{"]').click();
-  await page.locator('.keys [data-k="∅"]').click();
-  await page.locator('.keys [data-k="}"]').click();
-  await expect(page.locator('#pr-in')).toHaveValue('{∅}');
-  await page.click('#pr-new');
-  await expect(page.locator('#pr-in')).toHaveValue('');
-  await page.reload();
-  await expect(page.locator('#score')).toHaveText(/\/2$/);
-  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('uda-teoria-mates-v1')));
-  expect(saved.n).toBe(2);
-  expect(saved.tab).toBe('prac');
-  expect(errors).toEqual([]);
-});
-
-test('banc d\'exercicis: tema, nivell, correcció, solució i el mateix exercici en l\'altre idioma', async ({ page }) => {
-  const errors = watchErrors(page);
-  await page.goto('/mates/banc');
-  await expect(page.locator('#bk-list .exc')).toHaveCount(6);
-  await page.click('#bk-t button[data-bkk="cx"]');
-  await page.click('#bk-l button[data-bkl="2"]');
-  await page.click('[data-bkn="4"]');
-  await expect(page.locator('#bk-list .exc')).toHaveCount(4);
-  const first = page.locator('#bk-list .exc').first();
-  await expect(first.locator('.exc-h')).toContainText('Complexos');
-  await expect(first.locator('.exc-h')).toContainText('Mitjà');
-  const nums = (await first.locator('.exc-b > div').first().innerText()).match(/\d+/g).join(',');
-  await setLang(page, 'es');
-  await expect(first.locator('.exc-h')).toContainText('Complejos');
-  expect((await first.locator('.exc-b > div').first().innerText()).match(/\d+/g).join(',')).toBe(nums);
-  await setLang(page, 'ca');
-  // sense resposta: avís; amb resposta: correcció i solució
-  const check = first.locator('[data-bka$="|check"]');
-  if (await check.count()) {
-    await check.click();
-    await expect(first.locator('.fb.warn')).toBeVisible();
-    for (const inp of await first.locator('input.bkin').all()) await inp.fill('1');
-    for (const g of await first.locator('.tog').all()) await g.locator('button').first().click();
-    await check.click();
-  } else {
-    await first.locator('.opt').first().click();
+test('enllaços antics: pestanyes, apartats i el simulacre', async ({ page }) => {
+  await page.goto('/mates/conj');
+  await expect(page).toHaveURL(/\/mates\/temari\/conj$/);
+  await page.goto('/mates/c-desc');
+  await expect(page).toHaveURL(/\/mates\/temari\/conj#c-desc$/);
+  await expect(page.locator('#c-desc')).toBeInViewport();
+  await page.goto('/mates/det');
+  await expect(page).toHaveURL(/\/mates\/temari\/det$/);
+  for (const t of ['banc', 'prac', 'exer']) {
+    await page.goto('/mates/' + t);
+    await expect(page).toHaveURL(/\/mates\/practica$/);
   }
-  await expect(first.locator('.fb.ok, .fb.bad').first()).toBeVisible();
-  await expect(page.locator('#score')).toHaveText(/^[01]\/1$/);
-  await first.locator('[data-bka$="|sol"]').click();
-  await expect(first.locator('[data-bka$="|sol"]')).toHaveText(/Amaga la solució|Solució pas a pas/);
-  // un altre del mateix tipus
-  const tipus = await first.locator('.exc-h .pill').first().innerText();
-  await first.locator('[data-bka$="|re"]').click();
-  await expect(page.locator('#bk-list .exc').first().locator('.exc-h .pill').first()).toHaveText(tipus);
-  await expect(page.locator('#bk-list .exc').first().locator('.fb')).toHaveCount(0);
-  // les matrius mostren la vista prèvia del que s'escriu
-  await page.click('#bk-t button[data-bkk="mat"]');
-  await page.click('#bk-l button[data-bkl="1"]');
-  await page.click('[data-bkn="10"]');
-  await expect(page.locator('#bk-list .exc')).toHaveCount(10);
-  const mat = page.locator('input.bkin[data-k="mat"]').first();
-  if (await mat.count()) {
-    await mat.fill('1 2; 3 4');
-    await expect(page.locator('.bkprev').first()).toContainText('2 × 2');
-  }
-  expect(errors).toEqual([]);
-});
-
-test('simulacre: rellotge, entrega, rúbrica, nota i estat desat', async ({ page }) => {
-  const errors = watchErrors(page);
-  await page.clock.install();
   await page.goto('/mates/exam');
-  // rellotge aturat: només avança amb runFor
-  await page.clock.pauseAt(await page.evaluate(() => Date.now() + 1000));
-  await page.click('#ex-modes button[data-exm="hard"]');
-  await expect(page.locator('#ex-time')).toHaveText('105:00');
-  await expect(page.locator('#ex-start')).toHaveText('Comença');
-  await page.click('#ex-start');
-  await expect(page.locator('#ex-start')).toHaveText('Pausa');
-  await page.clock.runFor('01:05');
-  await expect(page.locator('#ex-time')).toHaveText('103:55');
-  // el rellotge continua en una altra pestanya
-  await page.click('#rail a[data-k="conj"]');
-  await page.clock.runFor('01:00');
-  await page.click('#rail a[data-k="exam"]');
-  await expect(page.locator('#ex-time')).toHaveText('102:55');
-  await page.click('#ex-start');
-  await expect(page.locator('#ex-start')).toHaveText('Continua');
-  const statement = await page.locator('#exq-0 .ex-q').first().innerText();
-  await setLang(page, 'es');
-  await expect(page.locator('#exq-0 .exc-h .src')).toHaveText('Ejercicio 1');
-  await setLang(page, 'ca');
-  await expect(page.locator('#exq-0 .ex-q').first()).toHaveText(statement, { useInnerText: true });
-  await page.click('#ex-done');
-  await expect(page.locator('.exsum')).toBeVisible();
-  await expect(page.locator('.bx.rub').first()).toContainText('Com es puntua');
-  await page.locator('#exq-0 [data-exg="0-0|0.75"]').click();
-  await expect(page.locator('.exnote b')).toHaveText('0,75');
-  await page.clock.resume();
-  await page.reload();
-  await expect(page.locator('.exnote b')).toHaveText('0,75');
-  await expect(page.locator('#ex-time')).toHaveText('102:55');
-  await expect(page.locator('#exq-0 .ex-q').first()).toHaveText(statement, { useInnerText: true });
-  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('teoria-mates-exam-v2')));
-  expect(saved.mode).toBe('hard');
-  expect(saved.done).toBe(true);
-  expect(saved.sc['0-0']).toBe(0.75);
-  await page.click('#ex-hide');
-  await expect(page.locator('.exsum')).toHaveCount(0);
-  await page.click('#ex-new');
-  await expect(page.locator('#ex-time')).toHaveText('105:00');
-  await expect(page.locator('#ex-done')).toBeVisible();
+  await expect(page).toHaveURL(/\/mates\/simulacre$/);
+  await page.goto('/mates#exam');
+  await expect(page).toHaveURL(/\/mates\/simulacre$/);
+});
+
+test('teoria: «Per entendre-ho» només en mode explicat, passos un a un i laboratoris', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/mates/temari/conj#c-incl');
+  const sec = page.locator('#c-incl');
+  await expect(sec.locator('.kit-box-box').first()).toContainText('Per entendre-ho');
+  // passos de la doble inclusió: el primer i, després, un a un
+  const st = sec.locator('.kit-steps').first();
+  await expect(st.locator('li')).toHaveCount(1);
+  await st.locator('.kit-steps-more .am-btn').click();
+  await expect(st.locator('li')).toHaveCount(2);
+  await st.locator('.kit-steps-more .kit-link').click();
+  await expect(st.locator('.kit-steps-more')).toHaveCount(0);
+  // mode directe: sense «Per entendre-ho»
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.click('.kit-mode-sw [data-mode="direct"]');
+  await expect(page.locator('.kit-box-box')).toHaveCount(0);
+  await page.click('.kit-mode-sw [data-mode="explained"]');
+  // laboratori de comprensió: canviar l'univers recalcula el resultat
+  await openToc(page);
+  await page.click('.kit-toc-s a:has-text("extensió")');
+  const lab = page.locator('.lab[data-w="compr"]');
+  await lab.scrollIntoViewIfNeeded();
+  await expect(lab.locator('.disp').first()).toBeVisible();
+  const before = await lab.locator('.st.done').last().innerText();
+  await lab.locator('button:has-text("ℤ")').first().click();
+  await expect.poll(async () => lab.locator('.st.done').last().innerText()).not.toBe(before);
+  await expect(page.locator('.kit-texerr')).toHaveCount(0);
   expect(errors).toEqual([]);
+});
+
+test('formulari: les entrades del full del CP, amb el nom de cada fila', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/mates/temari/rel');
+  await page.click('#kit-dockbtn');
+  const dock = page.locator('.kit-dock');
+  await expect(dock.locator('.kit-f')).toHaveCount(formulas.groups.reduce((n, g) => n + g.items.length, 0));
+  await dock.locator('.kit-dock-q').fill('Complementari (7)');
+  await expect(dock.locator('.kit-f')).toHaveCount(1);
+  await expect(dock.locator('.kit-f math')).toHaveCount(1);
+  await expect(dock.locator('.kit-texerr')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test('exercicis resolts: origen, pista, solució amb les files del formulari i laboratori', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/mates/practica');
+  await page.click('#kit-f-origin [data-v="exam"]');
+  await expect(page.locator('#kit-count')).toHaveText(exercises.items.filter((x) => x.src === 'exam').length + ' exercicis');
+  const ex = page.locator('article[data-ex="m-cp1e2"]');
+  await expect(ex.locator('.kit-src')).toContainText('CP1-2025');
+  await ex.locator('.kit-link:has-text("Pista")').click();
+  await expect(ex.locator('.kit-hint')).toContainText('Doble inclusió');
+  await ex.locator('.kit-steps-open').click();
+  await expect(ex.locator('.kit-steps .kit-h3').first()).toContainText('Mètode 1');
+  // una referència al formulari obre el formulari flotant
+  await ex.locator('.kit-step-f').first().click();
+  await expect(page.locator('.kit-dock')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await ex.locator('.kit-labbtn').click();
+  await expect(ex.locator('.lab[data-w="venn"]')).toBeVisible();
+  await ex.locator('.kit-self-b').last().click();
+  await expect(ex).toHaveClass(/is-done/);
+  expect(errors).toEqual([]);
+});
+
+test('banc per nivells: correcció, resposta, solució i el mateix exercici en castellà', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/mates/practica');
+  await page.selectOption('#kit-f-unit', 'conj');
+  await page.click('#kit-f-level [data-v="easy"]');
+  const ex = page.locator('article[data-ex="mb-conj-1-0"]');
+  await ex.locator('.bkin').fill('{99}');
+  await ex.locator('.kit-check').click();
+  await expect(ex.locator('.kit-fb')).toHaveClass(/is-ko/);
+  // la solució s'obre sola després d'un error, amb la guia «Només amb el formulari»
+  await expect(ex.locator('.mb-sol')).toContainText('Només amb el formulari');
+  const ans = flat((await ex.locator('.kit-fb').innerText()).split(':').pop());
+  // el mateix exercici en castellà (mateixa llavor): els mateixos nombres
+  const nums = (t) => t.replace(/[^0-9{}]/g, '');
+  const q = nums(await ex.locator('.mb-q').innerText());
+  await setLang(page, 'es');
+  await expect(ex.locator('.mb-q')).toContainText('Sea');
+  expect(nums(await ex.locator('.mb-q').innerText())).toBe(q);
+  await ex.locator('.bkin').fill(ans);
+  await ex.locator('.kit-check').click();
+  await expect(ex.locator('.kit-fb')).toHaveClass(/is-ok/);
+  await expect(ex).toHaveClass(/is-done/);
+  // «Genera'n un altre»: dades noves
+  await page.locator('.kit-fam:has(article[data-ex="mb-conj-1-0"]) .kit-another').click();
+  await expect.poll(async () => nums(await ex.locator('.mb-q').innerText())).not.toBe(q);
+  expect(errors).toEqual([]);
+});
+
+test('pràctica ràpida: classes mòdul n, Venn i torna-hi', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/mates/practica');
+  await page.selectOption('#kit-f-unit', 'rel');
+  const m = page.locator('article[data-ex="mp-mod"]');
+  const txt = flat(await m.locator('.mp-in p').first().innerText());
+  const [, n, a] = txt.match(/mòdul(\d+).*pertany([−-]?\d+)/);
+  const r = ((+a.replace('−', '-') % +n) + +n) % +n;
+  await m.locator('input').fill(String(r));
+  await m.locator('.kit-check').click();
+  await expect(m.locator('.fb.ok')).toBeVisible();
+  await expect(m).toHaveClass(/is-done/);
+  await page.selectOption('#kit-f-unit', 'conj');
+  const v = page.locator('article[data-ex="mp-venn"]');
+  await v.locator('.kit-check').click();
+  await expect(v.locator('.fb.bad')).toBeVisible();
+  await v.locator('.mp-again').click();
+  await expect(v.locator('.fb')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test('simulacre amb el format del CP: sis exercicis, 10 punts, rúbrica, nota i PDF', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/mates/simulacre');
+  await expect(page.locator('#kit-fmt [data-fmt="cp"]')).toHaveAttribute('aria-checked', 'true');
+  await expect(page.locator('#kit-fmt [data-fmt]')).toHaveCount(4);
+  await page.click('#kit-start');
+  await expect(page.locator('.kit-ex-exam')).toHaveCount(6);
+  const pts = await page.locator('.kit-ex-exam .kit-ex-h .kit-pts').allTextContents();
+  expect(pts.reduce((s, t) => s + parseFloat(t.replace(',', '.')), 0)).toBeCloseTo(10, 5);
+  await expect(page.locator('.kit-ex-exam').first()).toContainText('Conjunts');
+  page.once('dialog', (d) => d.accept());
+  await page.click('#kit-deliver');
+  const first = page.locator('.kit-ex-exam').first();
+  await first.locator('.mb-solbtn').first().click();
+  await expect(first.locator('.bx.rub')).toContainText('Com es puntua');
+  for (const g of await page.locator('.kit-ex-exam .kit-self').all()) await g.locator('.kit-self-b').nth(4).click();
+  await page.click('#kit-finish');
+  await expect(page.locator('#kit-mark')).toContainText('10,00');
+  await page.click('text=Fes-ne un altre');
+  await page.click('#kit-fmt [data-fmt="hard"]');
+  await page.click('#kit-pdf');
+  await page.click('#kit-topdf');
+  await expect(page.locator('#kit-sheet .kp-q')).toHaveCount(7);
+  await expect(page.locator('#kit-sheet .kit-texerr')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test('el simulacre lliurat de la versió anterior passa a l\'historial', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (localStorage.getItem('prova-sembrada')) return;
+    localStorage.setItem('prova-sembrada', '1');
+    localStorage.setItem('teoria-mates-exam-v2', JSON.stringify({ mode: 'cp', seed: 5, el: 3000, done: true, sc: { '0-0': 1, '0-1': 0.5, '2-0': 1.25 } }));
+  });
+  await page.goto('/mates/simulacre');
+  await expect(page.locator('.kit-hist-t tbody tr')).toHaveCount(1);
+  await expect(page.locator('.kit-hist-t tbody tr')).toContainText('2,75');
 });
