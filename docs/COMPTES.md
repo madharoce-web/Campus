@@ -17,8 +17,11 @@ vuelve a la portada. Aparecen también **Mi cuenta** y el «Avísame» de los gr
 ## 1. Crear el proyecto
 
 1. Entra en [supabase.com](https://supabase.com) → **New project**.
-2. Nombre `aula-mada`, región **Central EU (Frankfurt)** (datos en la UE) y una contraseña de base
-   de datos larga (guárdala en tu gestor de contraseñas).
+2. Nombre `aula-mada`, región **West EU (Paris)** (`eu-west-3`: datos en la UE y la más cercana a
+   Andorra; en «Need a specific region?») y una contraseña de base de datos larga (guárdala en tu
+   gestor de contraseñas). Sin conectar GitHub de momento (las migraciones se aplican a mano, paso 2).
+   En *Security*: Data API activada, *Automatically expose new tables* desactivado (la migración da
+   los permisos tabla por tabla) y *Enable automatic RLS* activado.
 3. Plan **Free**. Ten en cuenta que un proyecto gratuito se pausa tras 7 días sin actividad; cuando
    haya alumnos de verdad, pasa a Pro (25 $/mes) para evitar pausas y tener copias de seguridad diarias.
 
