@@ -12,12 +12,12 @@ const base = process.env.BASE_PATH || '/';
 export const SECURITY_HEADERS = {
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self' 'wasm-unsafe-eval'",
+    "script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob:",
     "font-src 'self' data:",
     // comptes i progrés al núvol (Supabase); amb un domini propi per a Supabase, afegiu-lo aquí
-    "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
+    "connect-src 'self' https://cloudflareinsights.com https://*.supabase.co wss://*.supabase.co",
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",

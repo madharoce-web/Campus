@@ -30,6 +30,7 @@ export const DOCS = {
       ['Conservació', ['Mentre tinguis el compte actiu. Si l’esborres, les dades s’eliminen de seguida, excepte les que calgui conservar per obligació legal (per exemple, factures).']],
       ['Els teus drets', ['Pots accedir a les teves dades, rectificar-les, demanar-ne la supressió, la limitació o la portabilitat, i oposar-te al tractament. Des del teu compte pots descarregar totes les dades i esborrar el compte en qualsevol moment. Per a la resta, escriu a {email}.', 'També pots presentar una reclamació davant l’Agència Andorrana de Protecció de Dades (APDA).']],
       ['Emmagatzematge local', ['La web desa al teu navegador (localStorage) les preferències i el progrés, per funcionar també sense connexió. No utilitzem galetes publicitàries ni de seguiment de tercers.']],
+      ['Estadístiques de visites', ['Fem servir Cloudflare Web Analytics per saber quantes visites rep la web i quines pàgines es consulten. No fa servir galetes ni identificadors personals, no segueix ningú d’un lloc a un altre i només ens dona dades agregades.']],
       ['Normativa', ['Aquesta política segueix la Llei 29/2021, del 28 d’octubre, qualificada de protecció de dades personals, i, per als usuaris de la Unió Europea, el Reglament (UE) 2016/679 (RGPD).']],
     ] },
     condicions: { t: 'Condicions d’ús i de contractació', s: [
@@ -59,6 +60,7 @@ export const DOCS = {
       ['Conservación', ['Mientras tengas la cuenta activa. Si la borras, los datos se eliminan de inmediato, salvo los que deban conservarse por obligación legal (por ejemplo, facturas).']],
       ['Tus derechos', ['Puedes acceder a tus datos, rectificarlos, solicitar su supresión, la limitación o la portabilidad, y oponerte al tratamiento. Desde tu cuenta puedes descargar todos los datos y borrar la cuenta en cualquier momento. Para lo demás, escribe a {email}.', 'También puedes presentar una reclamación ante la Agencia Andorrana de Protección de Datos (APDA).']],
       ['Almacenamiento local', ['La web guarda en tu navegador (localStorage) las preferencias y el progreso, para funcionar también sin conexión. No utilizamos cookies publicitarias ni de seguimiento de terceros.']],
+      ['Estadísticas de visitas', ['Usamos Cloudflare Web Analytics para saber cuántas visitas recibe la web y qué páginas se consultan. No usa cookies ni identificadores personales, no sigue a nadie de un sitio a otro y solo nos da datos agregados.']],
       ['Normativa', ['Esta política sigue la Ley 29/2021, de 28 de octubre, cualificada de protección de datos personales, y, para los usuarios de la Unión Europea, el Reglamento (UE) 2016/679 (RGPD).']],
     ] },
     condicions: { t: 'Condiciones de uso y de contratación', s: [
@@ -88,6 +90,7 @@ export const DOCS = {
       ['Retention', ['While your account is active. If you delete it, your data is erased immediately, except what must be kept by law (for example, invoices).']],
       ['Your rights', ['You can access, rectify and erase your data, request restriction or portability, and object to processing. From your account you can download all your data and delete the account at any time. For anything else, write to {email}.', 'You may also lodge a complaint with the Andorran Data Protection Agency (APDA).']],
       ['Local storage', ['The website stores your preferences and progress in your browser (localStorage) so it also works offline. We do not use advertising or third-party tracking cookies.']],
+      ['Visitor statistics', ['We use Cloudflare Web Analytics to know how many visits the website receives and which pages are viewed. It uses no cookies or personal identifiers, does not track anyone across sites and only gives us aggregated data.']],
       ['Legislation', ['This policy follows Andorran Qualified Law 29/2021 of 28 October on personal data protection and, for users in the European Union, Regulation (EU) 2016/679 (GDPR).']],
     ] },
     condicions: { t: 'Terms of use and purchase', s: [
