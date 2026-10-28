@@ -66,7 +66,9 @@ Para probar la migración en local (necesita Docker): `npm run test:db`.
 **Authentication → Sign In / Providers → Email**: activado, *Confirm email* activado,
 *Email OTP Length* = 6.
 
-**Plantillas: Authentication → Emails → Templates.** El correo de acceso está en
+**Plantillas: Authentication → Emails → Templates.** En el plan Free, Supabase solo deja editarlas
+con un SMTP propio (ver «Envío de correos» más abajo): hasta entonces los correos salen con su plantilla
+por defecto, con marca de agua y solo el enlace (sin el código). El correo de acceso está en
 [`supabase/templates/acces.html`](../supabase/templates/acces.html): logotipo y colores de la web, el
 código de 6 cifras grande, el botón de entrar y los textos en catalán, castellano o inglés según el
 idioma de la web (si la cuenta no tiene idioma, en catalán). Pega el fichero entero en **dos** plantillas:
