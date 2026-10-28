@@ -17,6 +17,8 @@ export async function mockSupabase(context, seed = {}) {
     profiles: [],       // { id, display_name, degree, lang, role, plan, created_at }
     user_state: [],     // { user_id, key, value, updated_at }
     waitlist: [],       // { email, degree, lang }
+    settings: [],       // { key, value } (site_settings)
+    contact: [],        // missatges del formulari de contacte
     activity: [],       // { user_id, subject, item, kind, correct, score, duration_ms, created_at }
     otps: [],           // correus als quals s'ha «enviat» un codi
     calls: [],          // [mètode, camí] de cada petició
@@ -28,7 +30,9 @@ export async function mockSupabase(context, seed = {}) {
     if (!u) {
       u = { id: crypto.randomUUID(), email };
       db.users.push(u);
-      db.profiles.push({ id: u.id, display_name: null, degree: null, lang: 'ca', role: 'user', plan: 'free', created_at: new Date().toISOString() });
+      // seed.fresh: els comptes nous encara no han fet el registre guiat (/benvinguda)
+      db.profiles.push({ id: u.id, display_name: null, degree: null, lang: 'ca', role: 'user', plan: 'free', created_at: new Date().toISOString(),
+        study_year: null, degrees: [], subjects: [], onboarded_at: seed.fresh ? null : new Date().toISOString() });
     }
     return u;
   }
@@ -108,6 +112,20 @@ export async function mockSupabase(context, seed = {}) {
     // ---------- PostgREST
     const params = [...url.searchParams.entries()];
     const single = (req.headers().accept || '').includes('vnd.pgrst.object');
+    // ajustos de la web: tothom els llegeix; només els administradors els desen
+    if (path === '/rest/v1/site_settings') {
+      if (req.method() === 'GET') return json(200, db.settings);
+      if (db.profiles.find((p) => p.id === uid)?.role !== 'admin') return json(403, { code: '42501', message: 'new row violates row-level security policy' });
+      for (const r of Array.isArray(body) ? body : [body]) {
+        const old = db.settings.find((x) => x.key === r.key);
+        if (old) old.value = r.value; else db.settings.push({ key: r.key, value: r.value });
+      }
+      return route.fulfill({ status: 201, headers: cors });
+    }
+    if (path === '/rest/v1/rpc/send_contact') {
+      db.contact.push({ name: body.p_name, email: body.p_email, topic: body.p_topic, body: body.p_body, lang: body.p_lang, handled: false, id: db.contact.length + 1, created_at: new Date().toISOString() });
+      return route.fulfill({ status: 204, headers: cors });
+    }
     if (path === '/rest/v1/rpc/join_waitlist') {
       const email = String(body.p_email).trim().toLowerCase();
       if (!db.waitlist.some((w) => w.email === email && w.degree === body.p_degree)) db.waitlist.push({ email, degree: body.p_degree, lang: body.p_lang });
@@ -123,7 +141,7 @@ export async function mockSupabase(context, seed = {}) {
     if (path === '/rest/v1/profiles') {
       const mine = db.profiles.filter((p) => p.id === uid && matches(p, params));
       if (req.method() === 'PATCH') {
-        for (const p of mine) for (const k of ['display_name', 'degree', 'lang']) if (k in body) p[k] = body[k];
+        for (const p of mine) for (const k of ['display_name', 'degree', 'lang', 'study_year', 'degrees', 'subjects', 'onboarded_at']) if (k in body) p[k] = body[k];
       }
       return single ? json(200, mine[0]) : json(200, mine);
     }
@@ -143,6 +161,11 @@ export async function mockSupabase(context, seed = {}) {
         db.user_state = db.user_state.filter((r) => r.user_id !== uid || !matches(r, params));
         return route.fulfill({ status: 204, headers: cors });
       }
+    }
+    if (path === '/rest/v1/contact_messages') {
+      if (db.profiles.find((p) => p.id === uid)?.role !== 'admin') return json(200, []);
+      if (req.method() === 'PATCH') { for (const m of db.contact.filter((x) => matches(x, params))) Object.assign(m, body); return route.fulfill({ status: 204, headers: cors }); }
+      return json(200, db.contact);
     }
     if (path === '/rest/v1/activity') {
       if (req.method() === 'POST') {

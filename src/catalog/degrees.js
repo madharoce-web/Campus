@@ -58,6 +58,17 @@ export const DEGREES = [
     ],
     terms: [],
   },
+  {
+    k: 'historia', status: 'soon', icon: 'column', color: '#7a5a2e', bg: '#f5ecdf', img: '#d6b98c', pat: 'squares',
+    name: ['Història', 'Historia', 'History'],
+    short: ['Història', 'Historia', 'History'],
+    desc: [
+      'Història antiga, medieval, moderna i contemporània, amb cronologies, mapes, comentaris de text i preguntes d’examen.',
+      'Historia antigua, medieval, moderna y contemporánea, con cronologías, mapas, comentarios de texto y preguntas de examen.',
+      'Ancient, medieval, modern and contemporary history, with timelines, maps, text commentaries and exam questions.',
+    ],
+    terms: [],
+  },
 ];
 
 export const DEGREE_BY_KEY = Object.fromEntries(DEGREES.map((d) => [d.k, d]));

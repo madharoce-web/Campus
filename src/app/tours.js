@@ -1,0 +1,42 @@
+/** Passos dels tutorials de primera visita (app/Tour.jsx). Textos en [ca, es, en]. */
+
+export const TOUR_CURSOS = [
+  { sel: '#m-mine',
+    title: ['El teu campus', 'Tu campus', 'Your campus'],
+    body: ['Aquí tens els graus i les assignatures que has triat. Amb «Canvia les assignatures» en pots afegir o treure quan vulguis.',
+      'Aquí tienes los grados y las asignaturas que has elegido. Con «Cambiar las asignaturas» puedes añadir o quitar cuando quieras.',
+      'Here are the degrees and subjects you chose. Use “Change subjects” to add or remove them whenever you like.'] },
+  { sel: '#m-grid',
+    title: ['Les teves assignatures', 'Tus asignaturas', 'Your subjects'],
+    body: ['Cada targeta obre una assignatura. Amb el menú ⋮ pots destacar-la o amagar-la.',
+      'Cada tarjeta abre una asignatura. Con el menú ⋮ puedes destacarla u ocultarla.',
+      'Each card opens a subject. Use the ⋮ menu to star or hide it.'] },
+  { sel: '#m-ubtn',
+    title: ['El teu compte', 'Tu cuenta', 'Your account'],
+    body: ['Des d’aquí canvies l’idioma, entres al teu compte i pots tornar a veure aquest tutorial.',
+      'Desde aquí cambias el idioma, entras en tu cuenta y puedes volver a ver este tutorial.',
+      'From here you change the language, open your account and can watch this tour again.'] },
+];
+
+export const TOUR_COURSE = [
+  { sel: '#kit-tabs',
+    title: ['Les seccions de l’assignatura', 'Las secciones de la asignatura', 'The subject’s sections'],
+    body: ['Temari per estudiar, Mètodes d’examen amb els trucs de cada tema, Pràctica per nivells i Simulacre amb el format real.',
+      'Temario para estudiar, Métodos de examen con los trucos de cada tema, Práctica por niveles y Simulacro con el formato real.',
+      'Syllabus to study, Exam methods with each unit’s tips, Practice by level and a Mock exam in the real format.'] },
+  { sel: '#kit-continue',
+    title: ['Continua on ho vas deixar', 'Continúa donde lo dejaste', 'Pick up where you left off'],
+    body: ['Aquest botó et porta a l’últim apartat que vas llegir.',
+      'Este botón te lleva al último apartado que leíste.',
+      'This button takes you to the last section you read.'] },
+  { sel: '.kit-units',
+    title: ['Els temes', 'Los temas', 'The units'],
+    body: ['Cada tema mostra el teu progrés. Dins de les lliçons pots triar el mode Directe (al gra) o Explicat (pas a pas, amb laboratoris).',
+      'Cada tema muestra tu progreso. Dentro de las lecciones puedes elegir el modo Directo (al grano) o Explicado (paso a paso, con laboratorios).',
+      'Each unit shows your progress. Inside the lessons you can choose Concise mode or Detailed mode (step by step, with labs).'] },
+  { sel: '#kit-dockbtn',
+    title: ['El formulari', 'El formulario', 'The formula sheet'],
+    body: ['Totes les fórmules de l’assignatura, en una finestra que pots moure i deixar oberta mentre estudies.',
+      'Todas las fórmulas de la asignatura, en una ventana que puedes mover y dejar abierta mientras estudias.',
+      'All the subject’s formulas, in a window you can move and keep open while you study.'] },
+];

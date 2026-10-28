@@ -27,9 +27,12 @@ export default defineConfig({
   ],
   webServer: external ? undefined : [
     {
-      command: 'npm run preview -- --port 4173 --strictPort',
+      // sense comptes (mode local): es compila a part sense les variables de Supabase de .env.local
+      command: 'npx vite build --outDir dist-local --emptyOutDir && npx vite preview --outDir dist-local --port 4173 --strictPort',
+      env: { VITE_SUPABASE_URL: '', VITE_SUPABASE_PUBLISHABLE_KEY: '' },
       url: 'http://127.0.0.1:4173',
       reuseExistingServer: true,
+      timeout: 180_000,
     },
     {
       command: 'npx vite build --outDir dist-comptes --emptyOutDir && npx vite preview --outDir dist-comptes --port 4174 --strictPort',

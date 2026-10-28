@@ -12,3 +12,22 @@
 .ad-filter{display:inline-flex; align-items:center; gap:8px; margin:6px 0 10px}
 .ad-filter input{width:6em}
 @media (max-width:900px){ .ad-cols{grid-template-columns:minmax(0,1fr)} }
+.ad-tabs{display:flex; flex-wrap:wrap; gap:2px; border-bottom:1px solid var(--am-line); margin:4px 0 18px}
+.ad-tabs button{background:none; border:0; border-bottom:3px solid transparent; padding:8px 14px; font:inherit; color:var(--am-ink-2); cursor:pointer}
+.ad-tabs button[aria-selected="true"]{color:var(--am-ink); border-bottom-color:var(--am-brand); font-weight:600}
+.ad-grid{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; margin:8px 0}
+.ad-grid-2{grid-template-columns:repeat(2, minmax(0,1fr))}
+.ad-grid .am-field{margin:0}
+.ad-switch{display:inline-flex; align-items:center; gap:8px; font-weight:600}
+.ad-switch input{accent-color:var(--am-brand); width:18px; height:18px}
+.ad-save{display:flex; align-items:center; gap:14px; margin-top:12px}
+.ad-ok{color:var(--am-success)}
+.ad-c{text-align:center !important}
+.ad-c input{accent-color:var(--am-brand); width:17px; height:17px}
+.ad-msgs{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+.ad-msgs li{border:1px solid var(--am-line); border-left:4px solid var(--am-brand); border-radius:var(--am-r); padding:10px 14px}
+.ad-msgs li.is-done{border-left-color:var(--am-line-2); opacity:.7}
+.ad-msgs p{margin:6px 0 0; white-space:pre-wrap}
+.ad-msg-h{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px}
+.ad-msg-done{margin-left:auto; font-weight:400}
+@media (max-width:900px){ .ad-grid,.ad-grid-2{grid-template-columns:minmax(0,1fr)} }

@@ -5,6 +5,9 @@ import { useCourse } from './context.js';
 import { K } from './strings.js';
 import { useKit } from './state.js';
 import { openDock } from './dockStore.js';
+import Tour from '../../app/Tour.jsx';
+import { TOUR_COURSE } from '../../app/tours.js';
+import { useCampus } from '../../lib/campus.js';
 
 /** Inici de l'assignatura: resum, temes amb el progrés, «continua on ho vas deixar» i accessos. */
 export default function Home() {
@@ -17,8 +20,11 @@ export default function Home() {
   const last = st.last && course.units.find((u) => u.id === st.last.unit);
   const go = last ? course.path + '/temari/' + last.id + '#' + st.last.sec : course.path + '/temari/' + course.units[0].id;
   const done = Object.values(st.practice).filter((p) => p && p.ok).length;
+  const campus = useCampus();
   return (
     <div className="kit-home">
+      {/* tutorial de la primera assignatura que s'obre, un cop configurat el campus */}
+      <Tour id="course" steps={TOUR_COURSE} when={!!campus.done} />
       {course.summary && <div className="kit-lead"><Tx x={course.summary} /></div>}
       <dl className="am-stats kit-stats">
         <div className="am-stat"><dt className="am-sr">{S.homeStats.units}</dt><dd><b>{course.units.length}</b><span>{S.homeStats.units}</span></dd></div>

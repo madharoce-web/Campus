@@ -4,6 +4,7 @@ const DEGREE = {
   chart: <><path d="M4 20h16" /><path d="M7 16v-4M12 16V7M17 16v-7" /></>,
   heart: <><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" /><path d="M9 11h2l1-2 1.5 4 1-2h1.5" /></>,
   book: <><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z" /><path d="M13 4h5.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H13z" /></>,
+  column: <><path d="M4 20h16M5 7h14M12 3.5 4.5 7h15z" /><path d="M7 9.5v8M12 9.5v8M17 9.5v8" /></>,
 };
 const FEATURE = {
   notes: <><path d="M7 3.5h7l4 4v13H7z" /><path d="M14 3.5v4h4M10 12h5M10 15.5h5" /></>,

@@ -12,6 +12,9 @@ import Compte from '../pages/compte/Compte.jsx';
 import Inici from '../pages/inici/Inici.jsx';
 import Preus from '../pages/preus/Preus.jsx';
 import Admin from '../pages/admin/Admin.jsx';
+import Benvinguda from '../pages/benvinguda/Benvinguda.jsx';
+import OnboardingGate from './OnboardingGate.jsx';
+import Legal from '../pages/legal/Legal.jsx';
 import RequireAccount from './RequireAccount.jsx';
 import { COURSES } from '../courses/registry.js';
 
@@ -36,15 +39,17 @@ export default function App() {
         <Route path="registre" element={<Entrar signup />} />
         <Route path="login" element={<Navigate replace to="/entrar" />} />
         <Route path="auth/callback" element={<Callback />} />
-        {/* plans: només amb VITE_PRO_ENABLED=true (si no, «no s'ha trobat») */}
+        {/* plans: només amb els cobraments activats a /admin (si no, «no s'ha trobat») */}
         <Route path="preus" element={<Preus />} />
+        <Route path="legal/:doc" element={<Legal />} />
         <Route path="precios" element={<Navigate replace to="/preus" />} />
         <Route path="pricing" element={<Navigate replace to="/preus" />} />
         <Route path="admin" element={<RequireAccount><Admin /></RequireAccount>} />
         {/* el campus: amb comptes configurats, només per a qui ha entrat */}
-        <Route path="inici" element={<RequireAccount><Inici /></RequireAccount>} />
-        <Route path="tauler" element={<RequireAccount><Home view="tauler" /></RequireAccount>} />
-        <Route path="cursos" element={<RequireAccount><Home view="cursos" /></RequireAccount>} />
+        <Route path="benvinguda" element={<RequireAccount><Benvinguda /></RequireAccount>} />
+        <Route path="inici" element={<RequireAccount><OnboardingGate><Inici /></OnboardingGate></RequireAccount>} />
+        <Route path="tauler" element={<RequireAccount><OnboardingGate><Home view="tauler" /></OnboardingGate></RequireAccount>} />
+        <Route path="cursos" element={<RequireAccount><OnboardingGate><Home view="cursos" /></OnboardingGate></RequireAccount>} />
         <Route path="compte" element={<RequireAccount><Compte /></RequireAccount>} />
         <Route path="campus" element={<Navigate replace to="/tauler" />} />
         {COURSES.map((c) => (

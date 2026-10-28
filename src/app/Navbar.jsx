@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useLang } from '../lib/i18n.jsx';
 import { useAuth } from '../lib/auth.jsx';
 import { initials } from '../lib/initials.js';
+import { resetTour, useCampus } from '../lib/campus.js';
 import { useNavbarSlots } from './NavbarSlots.jsx';
 import { BRAND, T } from './strings.js';
 import { Chevron, ChevronLeft, ChevronRight, MenuIcon, UserIcon } from './icons.jsx';
@@ -21,6 +22,8 @@ export default function Navbar({ active }) {
   const slots = useNavbarSlots();
   const auth = useAuth();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const campus = useCampus();
   const signedIn = auth.status === 'user';
   const [menu, setMenu] = useState(null); // null | 'user' | 'nav'
   const [panel, setPanel] = useState('main'); // 'main' | 'lang'
@@ -96,6 +99,7 @@ export default function Navbar({ active }) {
               {auth.status === 'guest' && <Link to={loginTo} role="menuitem" onClick={() => setMenu(null)}>{S.signInLong}</Link>}
               <Link to="/tauler" role="menuitem" onClick={() => setMenu(null)}>{S.dash}</Link>
               <Link to="/cursos" role="menuitem" onClick={() => setMenu(null)}>{S.mycourses}</Link>
+              {campus.done && <button type="button" id="m-utour" role="menuitem" onClick={() => { setMenu(null); resetTour(); navigate('/cursos'); }}>{S.tour}</button>}
               <div className="m-udiv" />
               <button type="button" id="m-ulang" role="menuitem" onClick={(e) => { e.stopPropagation(); setPanel('lang'); }}>
                 <span>{S.lang}</span><ChevronRight />

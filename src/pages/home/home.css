@@ -87,3 +87,10 @@ h1,h2,h3,h4,h5{margin:0; line-height:1.2; text-wrap:balance}
   .m-sum .m-crow{flex-wrap:wrap}
   .m-sum .m-timg{width:100px; height:70px}
 }
+
+/* el campus triat al registre guiat */
+.m-mine{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:-4px 0 14px}
+.m-setup{display:flex; align-items:center; justify-content:space-between; gap:16px; border:1px solid var(--am-brand-line); border-left:4px solid var(--am-brand); background:var(--am-brand-soft); border-radius:var(--am-r); padding:14px 18px; margin:0 0 18px}
+.m-setup p{margin:4px 0 0; color:var(--am-ink-2)}
+@media (max-width:640px){ .m-setup{flex-direction:column; align-items:flex-start} }
+.m-setup .am-btn-primary, .m-setup .am-btn-primary:hover{color:#fff; text-decoration:none}

@@ -8,6 +8,10 @@ import { fold } from '../../lib/html.js';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import { ACTIVITIES, CARDS, CARD_BY_KEY } from '../../courses/registry.js';
 import { progressOf } from '../../catalog/progress.js';
+import { DEGREE_BY_KEY } from '../../catalog/degrees.js';
+import { mySubjects, useCampus } from '../../lib/campus.js';
+import Tour from '../../app/Tour.jsx';
+import { TOUR_CURSOS } from '../../app/tours.js';
 import Page from '../../app/Page.jsx';
 import { CalendarBlock, LinksBlock } from '../../app/blocks.jsx';
 import Dropdown from './Dropdown.jsx';
@@ -31,6 +35,9 @@ export default function Home({ view }) {
   const [stars, setStars] = useStoredState('sem1-stars', [], (v) => (Array.isArray(v) ? v : []));
   const [hid, setHid] = useStoredState('sem1-hidden', [], (v) => (Array.isArray(v) ? v : []));
   useDocumentTitle(view === 'tauler' ? Lx.dash : Lx.mycourses);
+  // només les assignatures triades al registre guiat (totes, si encara no se n'ha triat cap)
+  const campus = useCampus();
+  const MINE = mySubjects(campus, CARDS);
 
   const cname = (c) => t(c.name);
   const NameLink = ({ c }) => (
@@ -55,7 +62,7 @@ export default function Home({ view }) {
 
   const list = useMemo(() => {
     const qq = fold(q.trim());
-    const out = CARDS.filter((c) => {
+    const out = MINE.filter((c) => {
       const h = hid.includes(c.k);
       if (filter === 'all' && h) return false;
       if (filter === 'hid' && !h) return false;
@@ -66,7 +73,7 @@ export default function Home({ view }) {
     if (sort === 'last') out.sort((a, b) => visit(b.k) - visit(a.k) || t(a.name).localeCompare(t(b.name)));
     else out.sort((a, b) => t(a.name).localeCompare(t(b.name)));
     return out;
-  }, [q, filter, sort, stars, hid, t]);
+  }, [q, filter, sort, stars, hid, t, MINE]);
 
   const grid = () => {
     if (!list.length) return (
@@ -109,6 +116,19 @@ export default function Home({ view }) {
   const viewCursos = (
     <>
       <h1 className="m-h1">{Lx.mycourses}</h1>
+      <Tour id="cursos" steps={TOUR_CURSOS} when={!!campus.done} />
+      {campus.done ? (
+        <p className="m-mine" id="m-mine">
+          {campus.degrees.map((k) => DEGREE_BY_KEY[k] && <span key={k} className="m-badge">{t(DEGREE_BY_KEY[k].short)}</span>)}
+          <span className="m-muted">{Lx.mineN.replace('%d', MINE.length)}</span>
+          <Link to="/benvinguda?edit=1" id="m-edit">{Lx.mineEdit}</Link>
+        </p>
+      ) : (
+        <div className="m-setup" id="m-setup">
+          <div><b>{Lx.setupH}</b><p>{Lx.setupP}</p></div>
+          <Link className="am-btn am-btn-primary" to="/benvinguda">{Lx.setupBtn}</Link>
+        </div>
+      )}
       <section className="m-ovw" aria-labelledby="m-ovh">
         <h2 className="m-h5" id="m-ovh">{Lx.overview}</h2><hr className="m-hr" />
         <div id="m-bar">
@@ -127,17 +147,17 @@ export default function Home({ view }) {
     </>
   );
 
-  const recent = CARDS.filter((c) => visit(c.k)).sort((a, b) => visit(b.k) - visit(a.k));
+  const recent = MINE.filter((c) => visit(c.k)).sort((a, b) => visit(b.k) - visit(a.k));
   const days = studyDays();
   const now = new Date();
   const month = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
-  const progress = CARDS.map((c) => [c, progressOf(c.k)]);
+  const progress = MINE.map((c) => [c, progressOf(c.k)]);
   const doneAll = progress.reduce((n, [, p]) => n + (p ? p.done : 0), 0);
   const viewTauler = (
     <>
       <h1 className="m-h1">{Lx.dash}</h1>
       <dl className="am-stats" id="m-stats">
-        <div className="am-stat"><dt className="am-sr">{Lx.stStarted}</dt><dd><b>{recent.length}/{CARDS.length}</b><span>{Lx.stStarted}</span></dd></div>
+        <div className="am-stat"><dt className="am-sr">{Lx.stStarted}</dt><dd><b>{recent.length}/{MINE.length}</b><span>{Lx.stStarted}</span></dd></div>
         <div className="am-stat"><dt className="am-sr">{Lx.stDone}</dt><dd><b>{doneAll}</b><span>{Lx.stDone}</span></dd></div>
         <div className="am-stat"><dt className="am-sr">{Lx.stDays}</dt><dd><b>{days.filter((d) => d.startsWith(month)).length}</b><span>{Lx.stDays}</span></dd></div>
         <div className="am-stat"><dt className="am-sr">{Lx.stStreak}</dt><dd><b>{streakOf(days)}</b><span>{Lx.stStreak}</span></dd></div>
@@ -171,7 +191,7 @@ export default function Home({ view }) {
       <section className="am-mblock">
         <h2 className="am-bt">{Lx.secsT}</h2>
         <ul className="m-seclist">
-          {CARDS.map((c) => (
+          {MINE.map((c) => (
             <li key={c.k}>
               <div className="m-sech"><span className="m-sdot" style={{ background: c.color }} /><NameLink c={c} /></div>
               <div className="m-csecs">

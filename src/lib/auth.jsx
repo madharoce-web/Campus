@@ -23,7 +23,12 @@ export function safeNext(next) {
 }
 const callbackUrl = (next) => window.location.origin + BASE + '/auth/callback?next=' + encodeURIComponent(safeNext(next));
 
-const PROFILE_COLS = 'id,display_name,degree,lang,role,plan,created_at';
+// les columnes del campus (curs, graus, assignatures, registre guiat) vénen de la migració del campus
+const BASE_COLS = 'id,display_name,degree,lang,role,plan,created_at';
+const PROFILE_COLS = BASE_COLS + ',study_year,degrees,subjects,onboarded_at';
+/** El perfil; si la base de dades encara no té les columnes del campus, sense elles. */
+const loadProfile = (sb, uid) => sb.from('profiles').select(PROFILE_COLS).eq('id', uid).maybeSingle()
+  .then((r) => (r.error ? sb.from('profiles').select(BASE_COLS).eq('id', uid).maybeSingle() : r));
 
 export function AuthProvider({ children }) {
   const { ui } = useLang();
@@ -47,7 +52,7 @@ export function AuthProvider({ children }) {
       setFarewell(false);
       setState({ status: 'user', user, profile: null });
       setActivityUser(sb, uid);
-      sb.from('profiles').select(PROFILE_COLS).eq('id', uid).maybeSingle()
+      loadProfile(sb, uid)
         .then(({ data }) => { if (uidRef.current === uid) setState((s) => ({ ...s, profile: data })); });
       await startSync(sb, uid, () => setRev((r) => r + 1));
       return;
@@ -126,15 +131,16 @@ export function AuthProvider({ children }) {
       async updateProfile(patch) {
         const sb = await need();
         const uid = uidRef.current;
-        const { data, error } = await sb.from('profiles').update(patch).eq('id', uid).select(PROFILE_COLS).single();
+        const { error } = await sb.from('profiles').update(patch).eq('id', uid);
         if (error) throw error;
-        setState((s) => ({ ...s, profile: data }));
+        const { data } = await loadProfile(sb, uid);
+        if (data) setState((s) => ({ ...s, profile: data }));
       },
       /** Totes les dades del compte, per descarregar-les (dret d'accés). */
       async exportData() {
         const sb = await need();
         const [p, st, act] = await Promise.all([
-          sb.from('profiles').select(PROFILE_COLS).eq('id', uidRef.current).maybeSingle(),
+          loadProfile(sb, uidRef.current),
           sb.from('user_state').select('key,value,updated_at'),
           sb.from('activity').select('subject,item,kind,correct,score,duration_ms,created_at').order('created_at'),
         ]);

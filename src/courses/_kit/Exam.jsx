@@ -34,10 +34,10 @@ function Config({ onStart }) {
   const [units, setUnits] = useState(course.units.map((u) => u.id));
   const toggle = (id) => setUnits(units.includes(id) ? units.filter((x) => x !== id) : course.units.map((u) => u.id).filter((x) => x === id || units.includes(x)));
   const pickFmt = (id) => { setFmt(id); const f = formats.find((x) => x.id === id); if (f) setMin(f.min); };
-  // amb el pla Pro activat, el pla gratuït té un límit de simulacres per setmana (lib/plan.js); ara no n'hi ha
+  // amb els cobraments activats, el pla gratuït pot tenir un límit de simulacres per setmana (/admin; 0 = sense límit)
   const { limit } = useEntitlement('exam-unlimited');
   const weekAgo = Date.now() - 7 * 864e5;
-  const capped = !!(limit && st.exams.filter((e) => e.at > weekAgo).length >= limit.perWeek);
+  const capped = !!(limit && limit.examsPerWeek > 0 && st.exams.filter((e) => e.at > weekAgo).length >= limit.examsPerWeek);
   const ready = (F || units.length > 0) && !capped;
   return (
     <div className="kit-examcfg">

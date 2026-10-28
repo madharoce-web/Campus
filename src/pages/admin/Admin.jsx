@@ -6,7 +6,14 @@ import { DEGREE_BY_KEY } from '../../catalog/degrees.js';
 import { COURSES } from '../../courses/registry.js';
 import Page from '../../app/Page.jsx';
 import NotFound from '../../app/NotFound.jsx';
+import { CompanySettings, FeaturesSettings, Messages, PlansSettings } from './AdminSettings.jsx';
 import './admin.css';
+
+const TABS = {
+  ca: [['resum', 'Resum'], ['plans', 'Plans i preus'], ['funcions', 'Funcions'], ['empresa', 'Empresa i textos'], ['missatges', 'Missatges']],
+  es: [['resum', 'Resumen'], ['plans', 'Planes y precios'], ['funcions', 'Funciones'], ['empresa', 'Empresa y textos'], ['missatges', 'Mensajes']],
+  en: [['resum', 'Overview'], ['plans', 'Plans and pricing'], ['funcions', 'Features'], ['empresa', 'Company and texts'], ['missatges', 'Messages']],
+};
 
 const S = {
   ca: {
@@ -93,6 +100,8 @@ export default function Admin() {
   const isAdmin = profile?.role === 'admin';
   const [data, setData] = useState(null); // null | { signups, items, wait } | 'error'
   const [minAtt, setMinAtt] = useState(5);
+  const [tab, setTab] = useState(() => (TABS.ca.some(([k]) => '#' + k === window.location.hash) ? window.location.hash.slice(1) : 'resum'));
+  const pick = (k) => { setTab(k); window.history.replaceState(null, '', '#' + k); };
   const catalog = useCatalog();
 
   useEffect(() => {
@@ -127,6 +136,14 @@ export default function Admin() {
   return (
     <Page name="admin">
       <h1 className="am-h1">{L.title}</h1>
+      <div className="ad-tabs" role="tablist" id="ad-tabs">
+        {TABS[ui].map(([k, label]) => <button key={k} type="button" role="tab" aria-selected={tab === k} data-tab={k} onClick={() => pick(k)}>{label}</button>)}
+      </div>
+      {tab === 'plans' && <PlansSettings />}
+      {tab === 'funcions' && <FeaturesSettings />}
+      {tab === 'empresa' && <CompanySettings />}
+      {tab === 'missatges' && <Messages />}
+      {tab === 'resum' && <>
       <p className="ad-muted">{L.lead}</p>
       {data === null && <p className="ad-muted">{L.loading}</p>}
       {data === 'error' && <p className="ad-err" role="alert">{L.err}</p>}
@@ -159,6 +176,7 @@ export default function Admin() {
             rows={catalog.map((r) => [t(r.c.title), r.units, r.en + ' / ' + r.units, r.ex, r.fam, r.methods + ' / ' + r.units])} />
         )}
       </section>
+      </>}
     </Page>
   );
 }

@@ -1,0 +1,6 @@
+.lg-tabs{display:flex; flex-wrap:wrap; gap:4px 18px; border-bottom:1px solid var(--am-line); margin:0 0 20px; padding-bottom:8px}
+.lg-tabs a[aria-current="page"]{font-weight:700; color:var(--am-ink)}
+.lg-doc{max-width:72ch}
+.lg-date{color:var(--am-ink-3); margin:-6px 0 18px}
+.lg-doc h2{font-size:1.05rem; font-weight:700; margin:22px 0 6px}
+.lg-doc p{color:var(--am-ink-2); margin:0 0 8px}

@@ -85,7 +85,7 @@
 
 /* peu */
 .lp-foot{background:var(--am-bg-2); border-top:1px solid var(--am-line); font-size:var(--am-fs-sm); color:var(--am-ink-2)}
-.lp-foot-in{display:grid; grid-template-columns:minmax(0,2fr) repeat(2, minmax(0,1fr)); gap:24px; padding-top:28px; padding-bottom:20px}
+.lp-foot-in{display:grid; grid-template-columns:minmax(0,2fr) repeat(3, minmax(0,1fr)); gap:24px; padding-top:28px; padding-bottom:20px}
 .lp-foot-brand{display:flex; gap:12px; align-items:flex-start}
 .lp-foot-brand b{color:var(--am-ink)}
 .lp-foot-mark{width:36px; height:36px; font-size:15px; flex:0 0 auto}
@@ -111,3 +111,22 @@
   .lp-foot-in{grid-template-columns:repeat(2, minmax(0,1fr))}
   .lp-foot-brand{grid-column:1 / -1}
 }
+
+/* sobre nosaltres i contacte */
+.lp-about{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:48px; align-items:start}
+.lp-about .lp-sub + .lp-sub{margin-top:12px}
+.lp-values{list-style:none; margin:0; padding:0; display:grid; gap:14px}
+.lp-values li{display:grid; gap:2px; border-left:3px solid var(--am-brand); padding:4px 0 4px 14px}
+.lp-values span{color:var(--am-ink-2)}
+.lp-contact{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); gap:48px; align-items:start}
+.lp-muted{color:var(--am-ink-3)}
+.lp-form{background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); padding:20px 22px; display:grid; gap:12px}
+.lp-form .am-field{margin:0}
+.lp-form textarea{resize:vertical; min-height:110px}
+.lp-form-2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.lp-consent{display:flex; gap:8px; align-items:flex-start; font-size:.9rem; color:var(--am-ink-2)}
+.lp-consent input{margin-top:3px; accent-color:var(--am-brand)}
+.lp-form-end{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.lp-ok{color:var(--am-success); margin:0}
+.lp-err{color:var(--am-danger); margin:0}
+@media (max-width:900px){ .lp-about,.lp-contact{grid-template-columns:minmax(0,1fr); gap:24px} .lp-form-2{grid-template-columns:minmax(0,1fr)} }

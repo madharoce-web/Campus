@@ -204,3 +204,16 @@ select.am-input{appearance:none; padding-right:2.25rem; background:#fff url("dat
 /* avís «funció del pla Pro» (lib/plan.js) */
 .am-pro-gate{border:1px solid var(--am-line); border-left:4px solid var(--am-brand); border-radius:var(--am-r); background:var(--am-bg-3); padding:12px 16px; margin:12px 0}
 .am-pro-gate p{margin:0 0 8px}
+
+/* tutorial de primera visita (app/Tour.jsx) */
+.am-tour{position:fixed; inset:0; z-index:1000; font-family:var(--am-sans); font-size:var(--am-fs); line-height:1.5}
+.am-tour-dim{position:fixed; inset:0; background:rgba(29,33,37,.55); animation:am-tour-in .25s both}
+.am-tour-hole{position:fixed; border-radius:var(--am-r); box-shadow:0 0 0 2px var(--am-brand), 0 0 0 9999px rgba(29,33,37,.55); transition:all .3s cubic-bezier(.2,.7,.2,1); pointer-events:none}
+.am-tour-box{position:fixed; background:#fff; color:var(--am-ink); border-radius:var(--am-r); border-top:4px solid var(--am-brand); box-shadow:0 10px 30px rgba(0,0,0,.18); padding:16px 18px 14px; animation:am-tour-in .3s both; outline:none}
+.am-tour-box h2{font-family:var(--am-serif); font-weight:400; font-size:1.2rem; margin:0 0 6px}
+.am-tour-box p{margin:0 0 10px; color:var(--am-ink-2)}
+.am-tour-n{font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--am-brand) !important; font-weight:600; margin:0 0 4px !important}
+.am-tour-acts{display:flex; align-items:center; gap:8px; justify-content:flex-end}
+.am-tour-skip{margin-right:auto; background:none; border:0; padding:0; font:inherit; font-size:.85rem; color:var(--am-ink-3); cursor:pointer; text-decoration:underline}
+@keyframes am-tour-in{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){ .am-tour *, .am-tour-dim, .am-tour-box, .am-tour-hole{animation:none !important; transition:none !important} }

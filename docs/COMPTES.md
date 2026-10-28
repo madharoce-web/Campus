@@ -28,7 +28,7 @@ vuelve a la portada. Aparecen también **Mi cuenta** y el «Avísame» de los gr
 ## 2. Crear las tablas
 
 Opción sencilla: **SQL Editor** → pega el contenido de cada fichero de `supabase/migrations/`, por orden
-(`20261023120000_comptes.sql` y después `20261028120000_admin.sql`) → **Run**.
+(`20261023120000_comptes.sql`, `20261028120000_admin.sql` y `20261029120000_campus.sql`) → **Run**.
 
 Opción con la terminal (recomendada a la larga, guarda el historial de migraciones):
 
@@ -129,20 +129,24 @@ Con sesión, cada ejercicio comprobado (práctica, comprobaciones de las leccion
 en `activity` (`src/lib/intents.js`, en lotes cada pocos segundos). Sin cuenta no se guarda nada. Sirve
 para el panel `/admin` y, más adelante, para el repaso a medida.
 
-## 9. Plan Pro (preparado, sin activar)
+## 9. Planes, precios y textos (panel `/admin`)
 
-Mientras `VITE_PRO_ENABLED` no sea `true`, todo es gratuito: `/preus` no existe y la portada no muestra el
-bloque Pro. Para activarlo:
+Todo se configura en **`/admin`**, sin tocar código (tabla `site_settings`):
 
-1. Elige el proveedor de pagos: **Paddle** o **Lemon Squeezy** (gestionan el IVA europeo); alternativa,
-   Stripe Billing con Stripe Tax si ya estás dado de alta como autónomo.
-2. Despliega el webhook `supabase/functions/billing-webhook/` (las instrucciones están al principio del
-   fichero). Es lo único que cambia `subscriptions` y `profiles.plan`.
-3. En Cloudflare Pages: `VITE_PRO_ENABLED=true` y `VITE_PRO_PRICE` (por ejemplo `4,99 €`).
-4. Revisa los límites del plan gratuito en `src/lib/plan.js` (ahora: 3 simulacros por semana) y el texto
-   «Simulacres d’examen sense límit» del plan gratuito de la portada (`src/pages/landing/strings.js`).
+- **Planes y precios**: interruptor *Cobros activados*, tarifa básica (5 € por 2 asignaturas),
+  asignatura adicional (+2 €), multiplicador por grado adicional (×2), plan Pro (30 €), días de prueba,
+  descuentos semestral y anual, y límites del plan gratuito (grados, asignaturas, simulacros por semana).
+- **Funciones**: qué funciones tiene cada plan (gratuito, básico, pro).
+- **Empresa y textos**: razón social, NRT, dirección, correo… (salen en el aviso legal, la privacidad y
+  el contacto) y el texto de «Sobre nosotros» en tres idiomas.
+- **Mensajes**: lo que llega por el formulario de contacto de la portada.
 
-Ojo: el contenido que va en el *bundle* es público. Si alguna vez hay contenido solo para Pro, tiene que
+Mientras *Cobros activados* esté desactivado, todo es gratuito: `/preus` no existe y la portada no
+muestra precios. **Actívalo solo cuando la pasarela de pago esté integrada** (TPV virtual Redsys del
+banco; pendiente). Revisa entonces el texto «Simulacres d’examen sense límit» del plan gratuito de la
+portada (`src/pages/landing/strings.js`) y que un asesor revise los textos legales (`src/pages/legal/docs.js`).
+
+Ojo: el contenido que va en el *bundle* es público. Si alguna vez hay contenido solo de pago, tiene que
 servirse desde Supabase (Storage o una tabla con RLS por `plan`) o desde una Edge Function.
 
 ## Cómo se prueba

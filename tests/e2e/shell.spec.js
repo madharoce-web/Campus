@@ -10,9 +10,9 @@ test('portada pública: presentació, graus i crida a començar', async ({ page 
   await expect(page.locator('.m-navbar')).toHaveCount(0);
   await expect(page.locator('#avantatges li')).toHaveCount(6);
   await expect(page).toHaveTitle(/Aula Mada/);
-  await expect(page.locator('#graus [data-degree]')).toHaveCount(4);
+  await expect(page.locator('#graus [data-degree]')).toHaveCount(5);
   await expect(page.locator('#graus [data-degree="informatica"] h3')).toHaveText('Enginyeria Informàtica');
-  await expect(page.locator('#graus [data-degree]:not([data-degree="informatica"]) .am-badge')).toHaveText(['Properament', 'Properament', 'Properament']);
+  await expect(page.locator('#graus [data-degree]:not([data-degree="informatica"]) .am-badge')).toHaveText(['Properament', 'Properament', 'Properament', 'Properament']);
   await expectNoOverflow(page);
 
   await page.locator('.lp-faq summary').first().click();
@@ -55,7 +55,7 @@ test('els meus cursos: vistes, idiomes i enllaços antics', async ({ page }) => 
   await page.goto('/index.html#inici');
   await expect(page).toHaveURL(/\/inici$/);
   await expect(page.locator('h1')).toHaveText('Aula Mada');
-  await expect(page.locator('#in-graus [data-degree]')).toHaveCount(4);
+  await expect(page.locator('#in-graus [data-degree]')).toHaveCount(5);
   await expect(page.locator('#in-news .am-post')).toHaveCount(3);
   await page.goto('/no-existeix/de/cap/manera');
   await expect(page.locator('h1')).toContainText("No s'ha trobat");
@@ -80,7 +80,7 @@ test('catàleg de graus: disponibles, properament i adreces alternatives', async
   const errors = watchErrors(page);
   await page.goto('/graus');
   await expect(page.locator('h1')).toHaveText('Graus');
-  await expect(page.locator('[data-degree]')).toHaveCount(4);
+  await expect(page.locator('[data-degree]')).toHaveCount(5);
   await expectNoOverflow(page);
 
   await page.click('[data-degree="informatica"] h3 a');
@@ -156,4 +156,63 @@ test('plans i administració, sense activar: /preus no existeix i /admin avisa q
   await page.goto('/admin');
   await expect(page.locator('h1')).toHaveText('Administració');
   await expect(page.locator('.ad-muted').first()).toBeVisible();
+});
+
+test('registre guiat: graus i assignatures; «Els meus cursos» només mostra les triades, amb tutorial', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/cursos');
+  await expect(page.locator('#m-setup')).toBeVisible();
+  await page.click('#m-setup a');
+  await expect(page).toHaveURL(/\/benvinguda$/);
+  await expect(page.locator('.m-navbar')).toHaveCount(0);
+  await page.click('#bv-start');
+  await page.fill('#bv-name', 'Laia Puig');
+  await page.click('#bv-next');
+  // cal triar com a mínim un grau
+  await expect(page.locator('#bv-next')).toBeDisabled();
+  await page.click('[data-degree="informatica"]');
+  await page.click('[data-degree="historia"]');
+  await expect(page.locator('.bv-note')).toBeVisible();
+  await page.click('#bv-next');
+  await expectNoOverflow(page);
+  await page.click('[data-subject="mates"]');
+  await page.click('[data-subject="logica"]');
+  await page.click('#bv-finish');
+  await expect(page.locator('#bv-h4')).toHaveText('Tot a punt, Laia');
+  await page.click('#bv-go');
+  await expect(page).toHaveURL(/\/cursos$/);
+  // tutorial de la primera visita: es pot tancar amb Escape i no torna a sortir
+  await expect(page.locator('.am-tour-box')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.am-tour-box')).toHaveCount(0);
+  await expect(page.locator('#m-grid .m-card')).toHaveCount(2);
+  await expect(page.locator('#m-mine')).toContainText('Història');
+  // canviar les assignatures
+  await page.click('#m-edit');
+  await expect(page.locator('#bv-h2')).toBeVisible();
+  await page.click('#bv-next');
+  await page.click('[data-subject="prog"]');
+  await page.click('#bv-finish');
+  await page.click('#bv-go');
+  await expect(page.locator('#m-grid .m-card')).toHaveCount(3);
+  await page.reload();
+  await expect(page.locator('.am-tour-box')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test('portada: sobre nosaltres, contacte i pàgines legals', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/');
+  await expect(page.locator('#nosaltres h2')).toHaveText('Sobre nosaltres');
+  await expect(page.locator('#contacte form')).toBeVisible();
+  await expect(page.locator('.lp-consent a')).toHaveText('política de privacitat');
+  for (const d of ['avis-legal', 'privacitat', 'condicions']) {
+    await page.goto('/legal/' + d);
+    await expect(page.locator('.lg-doc h1')).toBeVisible();
+    await expect(page.locator('.lg-tabs [aria-current="page"]')).toHaveCount(1);
+    await expectNoOverflow(page);
+  }
+  await page.goto('/legal/no-existeix');
+  await expect(page.locator('h1')).toContainText("No s'ha trobat");
+  expect(errors).toEqual([]);
 });

@@ -151,4 +151,43 @@ do $$ begin
 end $$;
 reset role;
 
+-- ---- ajustos de la web i contacte (migració del campus)
+set role anon;
+reset request.jwt.claim.sub;
+select public.send_contact('Visitant', 'Visit@Example.com', 'Hola', 'general', 'es');
+do $$ begin
+  perform count(*) from public.site_settings;
+  begin
+    insert into public.site_settings (key, value) values ('billing', '{}');
+    raise exception 'el visitant escriu ajustos';
+  exception when insufficient_privilege then null;
+  end;
+  begin
+    perform count(*) from public.contact_messages;
+    raise exception 'el visitant llegeix el contacte';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+set role authenticated;
+set request.jwt.claim.sub = '00000000-0000-0000-0000-00000000000b';
+do $$ begin
+  assert (select count(*) from public.contact_messages) = 0, 'una persona normal no veu el contacte';
+  begin
+    insert into public.site_settings (key, value) values ('billing', '{"enabled": true}');
+    raise exception 'una persona normal canvia els preus';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+update public.profiles set study_year = 2, degrees = '{informatica}', subjects = '{mates,logica}', onboarded_at = now();
+do $$ begin
+  assert (select study_year from public.profiles) = 2, 'desa el curs del registre guiat';
+end $$;
+set request.jwt.claim.sub = '00000000-0000-0000-0000-0000000000ad';
+insert into public.site_settings (key, value) values ('billing', '{"enabled": false, "basePrice": 5}');
+do $$ begin
+  assert (select count(*) from public.contact_messages) = 1, 'l''administradora veu el contacte';
+  assert (select email from public.contact_messages) = 'visit@example.com', 'correu normalitzat';
+end $$;
+reset role;
+
 \echo 'rls.sql: totes les comprovacions han passat'

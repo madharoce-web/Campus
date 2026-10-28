@@ -220,3 +220,70 @@ test('tauler d’administració: només per a administradors', async ({ page, co
   await expectNoOverflow(p2);
   expect(errors).toEqual([]);
 });
+
+test('compte nou: registre guiat obligatori, desat al perfil i llista d’espera dels graus que no hi són', async ({ page, context }) => {
+  const errors = watchErrors(page);
+  const sb = await mockSupabase(context, { fresh: true });
+  await page.goto('/cursos');
+  await enterCode(page, 'nora@example.com');
+  await expect(page).toHaveURL(/\/benvinguda\?next=%2Fcursos$/);
+  await page.click('#bv-start');
+  await page.fill('#bv-name', 'Nora Vila');
+  await page.click('.bv-chip >> nth=1');
+  await page.click('#bv-next');
+  await page.click('[data-degree="informatica"]');
+  await page.click('[data-degree="ade"]');
+  await page.click('#bv-next');
+  await page.click('[data-subject="eco"]');
+  await page.click('#bv-finish');
+  await page.click('#bv-go');
+  await expect(page).toHaveURL(/\/cursos$/);
+  await expect.poll(() => sb.profile('nora@example.com').onboarded_at).toBeTruthy();
+  expect(sb.profile('nora@example.com')).toMatchObject({ display_name: 'Nora Vila', study_year: 2, degrees: ['informatica', 'ade'], subjects: ['eco'] });
+  await expect.poll(() => sb.db.waitlist.map((w) => w.degree)).toContain('ade');
+  // un cop fet, ja no torna a demanar-lo
+  await page.goto('/tauler');
+  await expect(page).toHaveURL(/\/tauler$/);
+  expect(errors).toEqual([]);
+});
+
+test('administració: preus, plans i textos editables; /preus i la portada els fan servir', async ({ page, context }) => {
+  const errors = watchErrors(page);
+  const sb = await mockSupabase(context, { users: [{ email: 'admin@example.com', profile: { role: 'admin' } }] });
+  await page.goto('/admin');
+  await enterCode(page, 'admin@example.com');
+  await page.click('[data-tab="plans"]');
+  await page.check('#ad-enabled');
+  await page.fill('#ad-base', '6');
+  await page.locator('.ad-sec').first().locator('.ad-save .am-btn-primary').click();
+  await expect.poll(() => sb.db.settings.find((s) => s.key === 'billing')?.value.basePrice).toBe(6);
+  await page.click('[data-tab="empresa"]');
+  await page.fill('#ad-c-name', 'Aula Mada SL');
+  await page.locator('.ad-sec').first().locator('.ad-save .am-btn-primary').click();
+  await expect.poll(() => sb.db.settings.find((s) => s.key === 'company')?.value.name).toBe('Aula Mada SL');
+  await expectNoOverflow(page);
+  // amb els cobraments activats: /preus existeix i la portada mostra els plans
+  await page.goto('/preus');
+  await expect(page.locator('#pr-basic')).toBeVisible();
+  await expect(page.locator('.pr-plan').nth(1)).toContainText('6');
+  await page.goto('/legal/avis-legal');
+  await expect(page.locator('.lg-doc')).toContainText('Aula Mada SL');
+  await page.goto('/');
+  await expect(page.locator('.lp-plan-pro')).toHaveCount(2);
+  expect(errors).toEqual([]);
+});
+
+test('formulari de contacte de la portada', async ({ page, context }) => {
+  const errors = watchErrors(page);
+  const sb = await mockSupabase(context);
+  await page.goto('/#contacte');
+  await page.fill('#lp-cname', 'Pau Serra');
+  await page.fill('#lp-cmail', 'pau@example.com');
+  await page.selectOption('#lp-ctopic', 'content');
+  await page.fill('#lp-cmsg', 'Hi ha una errada al tema 2.');
+  await page.check('.lp-consent input');
+  await page.click('#contacte button[type="submit"]');
+  await expect(page.locator('.lp-ok')).toBeVisible();
+  expect(sb.db.contact[0]).toMatchObject({ name: 'Pau Serra', email: 'pau@example.com', topic: 'content' });
+  expect(errors).toEqual([]);
+});

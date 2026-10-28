@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLang } from '../lib/i18n.jsx';
 import { BRAND, T } from './strings.js';
+import { LEGAL_LINKS } from '../pages/legal/docs.js';
 
 /** Peu de les pàgines del campus: una línia, com a l'aula virtual. */
 export default function SiteFooter() {
@@ -14,6 +15,7 @@ export default function SiteFooter() {
           <Link to="/">{S.fSite}</Link>
           <Link to="/graus">{S.degrees}</Link>
           <Link to="/#preguntes">{S.fFaq}</Link>
+          {LEGAL_LINKS[ui].map(([k, l]) => <Link key={k} to={'/legal/' + k}>{l}</Link>)}
         </nav>
       </div>
     </footer>

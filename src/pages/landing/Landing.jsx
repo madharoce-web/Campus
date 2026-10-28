@@ -11,28 +11,41 @@ import DegreeCard from '../graus/DegreeCard.jsx';
 import AuthForm from '../compte/AuthForm.jsx';
 import '../compte/compte.css';
 import Pattern from '../home/Pattern.jsx';
-import { FEATURES, PRO_ENABLED, PRO_PRICE } from '../../lib/plan.js';
+import { money } from '../../lib/plan.js';
+import { FEATURE_NAMES, useSettings } from '../../lib/settings.js';
+import { About, Contact, aboutNav } from './AboutContact.jsx';
+import { LEGAL_LINKS } from '../legal/docs.js';
 import { S } from './strings.js';
 import './landing.css';
 
 const CHECK = <svg className="lp-check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" /></svg>;
 
 const PRO = {
-  ca: { name: 'Pla Pro', soon: 'Aviat', cta: 'Mira els plans' },
-  es: { name: 'Plan Pro', soon: 'Pronto', cta: 'Ver los planes' },
-  en: { name: 'Pro plan', soon: 'Soon', cta: 'See the plans' },
+  ca: { name: 'Pla Pro', basic: 'Pla Bàsic', from: 'des de', month: '/ mes', basicP: (n) => n + ' assignatures a triar, amb tot el contingut', cta: 'Mira els plans', h: 'Plans', sub: 'Comença gratis i paga només per les assignatures que estudies.', legal: 'Legal' },
+  es: { name: 'Plan Pro', basic: 'Plan Básico', from: 'desde', month: '/ mes', basicP: (n) => n + ' asignaturas a elegir, con todo el contenido', cta: 'Ver los planes', h: 'Planes', sub: 'Empieza gratis y paga solo por las asignaturas que estudias.', legal: 'Legal' },
+  en: { name: 'Pro plan', basic: 'Basic plan', from: 'from', month: '/ month', basicP: (n) => n + ' subjects of your choice, with all the content', cta: 'See the plans', h: 'Plans', sub: 'Start for free and pay only for the subjects you study.', legal: 'Legal' },
 };
 
-/** Bloc del pla Pro (només amb VITE_PRO_ENABLED=true; vegeu lib/plan.js). */
-function ProBox() {
+/** Plans de pagament (només amb els cobraments activats a /admin; vegeu lib/settings.js). */
+function PaidBoxes() {
   const { ui, t } = useLang();
   const P = PRO[ui] || PRO.es;
+  const { values: V } = useSettings();
+  const B = V.billing;
+  const pro = Object.entries(V.features).filter(([, f]) => f.pro && !f.basic).map(([id]) => t(FEATURE_NAMES[id]));
   return (
-    <div className="lp-plan-box lp-plan-pro">
-      <div className="lp-plan-head"><h3>{P.name}</h3><b>{PRO_PRICE || P.soon}</b></div>
-      <ul>{Object.entries(FEATURES).map(([id, f]) => <li key={id}>{CHECK}{t(f.t)}</li>)}</ul>
-      <Link className="am-btn am-btn-outline am-btn-block" to="/preus">{P.cta}</Link>
-    </div>
+    <>
+      <div className="lp-plan-box lp-plan-pro">
+        <div className="lp-plan-head"><h3>{P.basic}</h3><b><small>{P.from}</small> {money(B.basePrice, ui)}<small>{P.month}</small></b></div>
+        <ul><li>{CHECK}{P.basicP(B.baseSubjects)}</li></ul>
+        <Link className="am-btn am-btn-outline am-btn-block" to="/preus">{P.cta}</Link>
+      </div>
+      <div className="lp-plan-box lp-plan-pro">
+        <div className="lp-plan-head"><h3>{P.name}</h3><b>{money(B.proPrice, ui)}<small>{P.month}</small></b></div>
+        <ul>{pro.map((x) => <li key={x}>{CHECK}{x}</li>)}</ul>
+        <Link className="am-btn am-btn-outline am-btn-block" to="/preus">{P.cta}</Link>
+      </div>
+    </>
   );
 }
 
@@ -52,6 +65,9 @@ export default function Landing() {
   const { ui, setLang, t } = useLang();
   const L = S[ui];
   const cta = useCtas(L);
+  const { values: V } = useSettings();
+  const paid = V.billing.enabled;
+  const P = PRO[ui] || PRO.es;
   const { hash } = useLocation();
   const { farewell, clearFarewell, status } = useAuth();
   const navigate = useNavigate();
@@ -82,7 +98,9 @@ export default function Landing() {
             <a href="#avantatges">{L.navAdv}</a>
             <a href="#com-funciona">{L.navHow}</a>
             <a href="#graus">{L.navDeg}</a>
+            {aboutNav(ui).slice(0, 1).map(([h, l]) => <a key={h} href={h}>{l}</a>)}
             <a href="#preguntes">{L.navFaq}</a>
+            {aboutNav(ui).slice(1).map(([h, l]) => <a key={h} href={h}>{l}</a>)}
           </nav>
           <div className="lp-langs" role="group" aria-label="Idioma · Language">
             {UI_LANGS.map((l) => (
@@ -169,17 +187,19 @@ export default function Landing() {
         <section className="lp-sec lp-sec-gray" id="acces" aria-labelledby="lp-plan">
           <div className="lp-wrap lp-plan">
             <div>
-              <h2 className="lp-h2" id="lp-plan">{L.planH}</h2>
-              <p className="lp-sub">{L.planSub}</p>
+              <h2 className="lp-h2" id="lp-plan">{paid ? P.h : L.planH}</h2>
+              <p className="lp-sub">{paid ? P.sub : L.planSub}</p>
             </div>
             <div className="lp-plan-box">
               <div className="lp-plan-head"><h3>{L.planName}</h3><b>{L.planPrice}</b></div>
               <ul>{L.planList.map((x) => <li key={x}>{CHECK}{x}</li>)}</ul>
               <Link className="am-btn am-btn-primary am-btn-block" to={cta.primary[0]}>{cta.primary[1]}</Link>
             </div>
-            {PRO_ENABLED && <ProBox />}
+            {paid && <PaidBoxes />}
           </div>
         </section>
+
+        <About />
 
         <section className="lp-sec" id="preguntes" aria-labelledby="lp-faq">
           <div className="lp-wrap lp-faq-wrap">
@@ -189,6 +209,8 @@ export default function Landing() {
             </div>
           </div>
         </section>
+
+        <Contact />
 
         <section className="lp-end" aria-labelledby="lp-endh">
           <div className="lp-wrap lp-end-in">
@@ -218,6 +240,12 @@ export default function Landing() {
             <a href="#avantatges">{L.navAdv}</a>
             <a href="#com-funciona">{L.navHow}</a>
             <a href="#preguntes">{L.navFaq}</a>
+            {aboutNav(ui).map(([h, l]) => <a key={h} href={h}>{l}</a>)}
+          </nav>
+          <nav aria-label={P.legal}>
+            <h2>{P.legal}</h2>
+            {LEGAL_LINKS[ui].map(([k, l]) => <Link key={k} to={'/legal/' + k}>{l}</Link>)}
+            {paid && <Link to="/preus">{P.h}</Link>}
           </nav>
         </div>
         <div className="lp-wrap lp-copy">© {new Date().getFullYear()} {BRAND}</div>
