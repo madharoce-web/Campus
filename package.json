@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint . && node tools/validate-courses.mjs",
     "test:e2e": "playwright test",
     "test:db": "bash tools/test-db.sh"
   },

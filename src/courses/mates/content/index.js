@@ -4,11 +4,7 @@ import { makeLabsRel } from './labs-rel.js';
 import { makeLabsNomb } from './labs-nomb.js';
 import { makeLabsCx } from './labs-cx.js';
 import { makeLabsMat } from './labs-mat.js';
-import { makeTheoryT1 } from './theory-t1.js';
-import { makeTheoryT2 } from './theory-t2.js';
-import { makeTheoryT3 } from './theory-t3.js';
 import { makeFormulari } from './formulari.js';
-import { makeExercises } from './exercises.js';
 import { makePractice } from './practice.js';
 import { makeBank } from './bank.js';
 import { makeBankConj } from './bank-conj.js';
@@ -20,16 +16,15 @@ import { makeBankArr } from './bank-arr.js';
 import { makeBankHasse } from './bank-hasse.js';
 import { makeBankMat } from './bank-mat.js';
 import { makeExam } from './exam.js';
-import { makePages } from './pages.js';
 
 /* en l'ordre de l'script original: cada part fa servir el que han definit les anteriors */
 const PARTS = [makeCore, makeLabsConj, makeLabsRel, makeLabsNomb, makeLabsCx, makeLabsMat,
-  makeTheoryT1, makeTheoryT2, makeTheoryT3, makeFormulari, makeExercises, makePractice,
+  makeFormulari, makePractice,
   makeBank, makeBankConj, makeBankRel, makeBankReals, makeBankInd, makeBankCx, makeBankArr, makeBankHasse, makeBankMat,
-  makeExam, makePages];
+  makeExam];
 
 /**
- * Tot el contingut en un idioma, en un sol contenidor $ (teoria, formulari, exercicis, generadors…).
+ * Tot el contingut en un idioma, en un sol contenidor $ (formulari, laboratoris, banc, simulacre i generadors).
  * Es construeix una sola vegada per idioma.
  */
 const cache = {};

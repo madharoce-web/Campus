@@ -99,15 +99,17 @@ test('catàleg de graus: disponibles, properament i adreces alternatives', async
   expect(errors).toEqual([]);
 });
 
-test('en anglès, els cursos avisen que el contingut és en castellà', async ({ page }) => {
+// totes les assignatures ja tenen el contingut en anglès: cap avís de «contingut en castellà»
+test('en anglès, els cursos es mostren en anglès i sense avís', async ({ page }) => {
   await page.goto('/graus/informatica');
   await setLang(page, 'en');
   await expect(page.locator('h1')).toHaveText('Computer Engineering');
-  await page.goto('/mates');
-  await expect(page.locator('.app-langnote')).toBeVisible();
+  for (const p of ['/mates', '/logica', '/economia', '/computadors', '/programacio']) {
+    await page.goto(p);
+    await expect(page.locator('.kit')).toBeVisible();
+    await expect(page.locator('.app-langnote')).toHaveCount(0);
+  }
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await setLang(page, 'es');
-  await expect(page.locator('.app-langnote')).toHaveCount(0);
 });
 
 test('tauler: resum, progrés de cada assignatura, calendari i calaix de blocs', async ({ page }) => {
