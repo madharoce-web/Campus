@@ -8,7 +8,7 @@
   --body:#ffffff; --drawer:#f8f9fa; --card:#ffffff;
   --ink:#1d2125; --ink-2:#495057; --ink-3:#6a737b;
   --line:#dee2e6; --line-2:#ced4da; --line-3:#8f959e;
-  --primary:#0f6cbf; --primary-dark:#0c589c; --primary-soft:#cfe2f2;
+  --primary:#696e2e; --primary-dark:#55591f; --primary-soft:#d5d7b8;
   --btn2:#ced4da; --btn2-hover:#b8c1ca;
   --que-bg:#e7f3f5; --que-line:#b8dce2; --que-ink:#001a1e;
   --info-bg:#f8f9fa;
@@ -31,7 +31,7 @@ button,select,input,textarea{font:inherit; color:inherit}
 a{color:var(--primary); text-decoration:none} a:hover{text-decoration:underline; color:var(--primary-dark)}
 code{font-family:var(--mono); font-size:87.5%; color:var(--code-pink); word-wrap:break-word}
 pre{font-family:var(--mono)}
-:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(15,108,191,.5); border-radius:.25rem}
+:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(105,110,46,.5); border-radius:.25rem}
 .hidden{display:none!important}
 .muted{color:var(--ink-3)} .small{font-size:.8203rem} .tiny{font-size:.75rem}
 h1,h2,h3,h4,h5{margin:0; font-weight:700; line-height:1.2; text-wrap:balance}

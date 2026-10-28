@@ -10,7 +10,7 @@
  *   diagram         figura SVG pròpia                   { svg, caption?, wide? }
  *   lab             laboratori de l'assignatura          { id, props? }
  *   code            codi (executable si l'assignatura té executor) { lang, src }
- *   check           exercici de comprovació             { ex }
+ *   check           exercici de comprovació             { ex } (ex pot ser { ref, seed? }: vegeu refs.js)
  *   formula         fórmules del formulari              { ids:[…] }
  *   html            contingut importat en HTML           { h }
  *   cols            columnes                            { cols:[[bloc…]] }
@@ -29,6 +29,7 @@ import { K } from './strings.js';
 import Exercise, { Steps } from './exercise/Exercise.jsx';
 import { recordCheck } from './state.js';
 import { openDock } from './dockStore.js';
+import { useEx } from './refs.js';
 
 // box: caixa sense etiqueta de tipus (només el títol), p. ex. «Jerarquia de memòria»
 const BOX = ['def', 'prop', 'rule', 'thm', 'note', 'tip', 'warn', 'summary', 'method', 'box'];
@@ -124,6 +125,14 @@ function Lab({ b }) {
   );
 }
 
+/** Comprovació dins la lliçó (l'exercici pot venir del banc). */
+function Check({ b }) {
+  const course = useCourse();
+  const ex = useEx(b.ex);
+  if (!ex) return null;
+  return <Exercise ex={ex} variant="check" onResult={(r) => recordCheck(course.k, ex.id, r.ok)} />;
+}
+
 function Formula({ b }) {
   const course = useCourse();
   const { ui } = useLang();
@@ -142,7 +151,6 @@ function Code({ b }) {
 }
 
 export function Block({ b, mode }) {
-  const course = useCourse();
   const tr = useTr();
   const { ui } = useLang();
   if (!visible(b, mode)) return null;
@@ -161,7 +169,7 @@ export function Block({ b, mode }) {
     );
     case 'lab': return <Lab b={b} />;
     case 'code': return <Code b={b} />;
-    case 'check': return <Exercise ex={b.ex} variant="check" onResult={(r) => recordCheck(course.k, b.ex.id, r.ok)} />;
+    case 'check': return <Check b={b} />;
     case 'formula': return <Formula b={b} />;
     // HTML que encara no s'ha passat a blocs: amb els estils de l'assignatura, com abans
     case 'html': return <Scope><Rich className="kit-html" html={tr(b.h)} /></Scope>;

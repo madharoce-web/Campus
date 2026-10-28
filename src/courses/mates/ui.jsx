@@ -24,9 +24,9 @@ export function Html({ html, as }) {
   return html ? <Rich as={as} className="rc" html={html} /> : null;
 }
 
-/** Contingut del laboratori en un idioma (getContent(lang)). */
+/** Contingut del laboratori en l'idioma de la pàgina (getContent: ca, es o en). */
 export function useContent() {
-  return getContent(useLang().lang);
+  return getContent(useLang().ui);
 }
 
 /**

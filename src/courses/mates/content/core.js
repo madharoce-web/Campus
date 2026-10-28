@@ -9,7 +9,7 @@ import { MARK, nextUid } from './marks.js';
 export function makeCore($) {
   const { lang } = $;
   const uid = nextUid;
-  const L = (ca, es) => lang === 'ca' ? ca : es;
+  const L = (ca, es, en) => lang === 'ca' ? ca : lang === 'en' && en != null ? en : es;
   const esc = Z.escH;
 
   const fmt = (x, d) => Z.fmtNum(x, d == null ? 4 : d);

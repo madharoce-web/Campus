@@ -14,11 +14,11 @@ const UNIT = { conj: 'conj', rel: 'rel', hasse: 'rel', nomb: 'nomb', ind: 'nomb'
 const LEVEL = { 1: 'easy', 2: 'exam', 3: 'hard' };
 const MIN = { 1: 6, 2: 12, 3: 18 };
 
-const C = { ca: getContent('ca'), es: getContent('es') };
+const C = { ca: getContent('ca'), es: getContent('es'), en: getContent('en') };
 
 /** Banc per nivells: una família per plantilla. */
 export const bankFamilies = () => C.ca.BKORD.flatMap((t) => Object.keys(C.ca.BKT[t].lv).flatMap((lv) => C.ca.BKT[t].lv[lv].map((tp, i) => {
-  const title = [C.ca.BKT[t].n() + ' · ' + tp.n(), C.es.BKT[t].n() + ' · ' + C.es.BKT[t].lv[lv][i].n()];
+  const title = ['ca', 'es', 'en'].map((l) => C[l].BKT[t].n() + ' · ' + C[l].BKT[t].lv[lv][i].n());
   return { id: `mb-${t}-${lv}-${i}`, unit: UNIT[t], level: LEVEL[lv], gen: () => ({ type: 'mbank', t, lv: +lv, i, title, min: MIN[lv] }) };
 })));
 
@@ -26,23 +26,23 @@ export const bankFamilies = () => C.ca.BKORD.flatMap((t) => Object.keys(C.ca.BKT
 const PRAC_UNIT = { comp: 'conj', buit: 'conj', venn: 'conj', ident: 'conj', rel: 'rel', mod: 'rel', hasse: 'rel', num: 'nomb', cx: 'cx', ind: 'nomb' };
 export const pracFamilies = () => C.ca.PRK().map(([k, n], j) => ({
   id: 'mp-' + k, unit: PRAC_UNIT[k], level: 'easy',
-  gen: () => ({ type: 'mprac', k, title: [n, C.es.PRK()[j][1]], examOk: false, min: 3 }),
+  gen: () => ({ type: 'mprac', k, title: [n, C.es.PRK()[j][1], C.en.PRK()[j][1]], examOk: false, min: 3 }),
 }));
 
 /** Models d'examen: { id, t, desc, units, min, build(seed) → exercicis amb punts }. */
 const UNITS_OF = { 0: 'conj', 1: 'conj', 2: 'rel', 3: 'rel', 4: 'cx', 5: 'nomb', 6: 'nomb' };
-const EXM = { ca: C.ca.EXM(), es: C.es.EXM() };
+const EXM = { ca: C.ca.EXM(), es: C.es.EXM(), en: C.en.EXM() };
 export const formats = ['cp', 'hard', 'ext'].map((mode) => ({
   id: mode,
-  t: mode === 'cp' ? L3('Com el CP', 'Como el CP', 'Like the CP') : [EXM.ca[mode].n, EXM.es[mode].n],
-  desc: [mdToMk(EXM.ca[mode].d), mdToMk(EXM.es[mode].d)],
+  t: mode === 'cp' ? L3('Com el CP', 'Como el CP', 'Like the CP') : [EXM.ca[mode].n, EXM.es[mode].n, EXM.en[mode].n],
+  desc: [mdToMk(EXM.ca[mode].d), mdToMk(EXM.es[mode].d), mdToMk(EXM.en[mode].d)],
   units: ['conj', 'rel', 'nomb', 'cx'],
   min: EXM.ca[mode].min,
   build: (seed) => {
-    const es = C.es.bkSeeded(seed, () => C.es.exBuild(mode));
+    const es = C.es.bkSeeded(seed, () => C.es.exBuild(mode)), en = C.en.bkSeeded(seed, () => C.en.exBuild(mode));
     return C.ca.bkSeeded(seed, () => C.ca.exBuild(mode)).map((e, i) => ({
       id: 'mx-' + mode + '-' + i, type: 'mexam', mode, i, seed, unit: UNITS_OF[i] || 'conj', level: 'exam',
-      title: [e.t(), es[i].t()], pts: e.parts.reduce((a, p) => a + p.pts, 0),
+      title: [e.t(), es[i].t(), en[i].t()], pts: e.parts.reduce((a, p) => a + p.pts, 0),
     }));
   },
 }));

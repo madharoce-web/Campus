@@ -26,11 +26,11 @@ test('temari: els sis temes en els dos idiomes, sense errors de fórmules', asyn
       await expectNoOverflow(page);
     }
   }
-  // en anglès, en castellà amb l'avís
+  // en anglès: els temes ja estan traduïts, sense avís
   await setLang(page, 'en');
   await page.goto('/mates/temari/conj');
-  await expect(page.locator('.app-langnote')).toContainText('not yet available in English');
-  await expect(page.locator('.kit-unit-h h2')).toHaveText(toc[0].t[1]);
+  await expect(page.locator('.app-langnote')).toHaveCount(0);
+  await expect(page.locator('.kit-unit-h h2')).toHaveText(toc[0].t[2]);
   expect(errors).toEqual([]);
 });
 

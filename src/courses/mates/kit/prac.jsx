@@ -12,7 +12,7 @@ import { Z, tx } from '../engine/z.js';
 import { getContent } from '../content/index.js';
 import { Html, KeyInput } from '../ui.jsx';
 
-const genLang = (ui) => (ui === 'ca' ? 'ca' : 'es');
+const genLang = (ui) => (ui === 'ca' || ui === 'en' ? ui : 'es');
 const qOf = (C, ex) => C.bkSeeded(ex.seed, () => C.prGen(ex.k));
 const ordOf = (ex) => rngOf(ex.seed).shuffle([0, 1, 2]);
 const empty = (k) => ({ a: null, sel: k === 'comp' ? [] : k === 'venn' ? 0 : null, ans: {} });
