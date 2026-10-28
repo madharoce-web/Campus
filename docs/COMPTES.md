@@ -66,26 +66,16 @@ Para probar la migración en local (necesita Docker): `npm run test:db`.
 **Authentication → Sign In / Providers → Email**: activado, *Confirm email* activado,
 *Email OTP Length* = 6.
 
-**Authentication → Emails → Templates → Magic Link** (el mismo correo sirve para entrar y para
-crear la cuenta). Asunto: `Tu acceso a Aula Mada · El teu accés · Your sign-in`. Cuerpo:
+**Plantillas: Authentication → Emails → Templates.** El correo de acceso está en
+[`supabase/templates/acces.html`](../supabase/templates/acces.html): logotipo y colores de la web, el
+código de 6 cifras grande, el botón de entrar y los textos en catalán, castellano o inglés según el
+idioma de la web (si la cuenta no tiene idioma, en catalán). Pega el fichero entero en **dos** plantillas:
 
-```html
-{{ if eq .Data.lang "en" }}
-<h2>Sign in to Aula Mada</h2>
-<p><a href="{{ .ConfirmationURL }}">Sign in</a> or enter this code: <strong>{{ .Token }}</strong></p>
-<p>If you didn't ask for it, you can ignore this email.</p>
-{{ else if eq .Data.lang "es" }}
-<h2>Entra en Aula Mada</h2>
-<p><a href="{{ .ConfirmationURL }}">Entrar</a> o escribe este código: <strong>{{ .Token }}</strong></p>
-<p>Si no lo has pedido tú, puedes ignorar este correo.</p>
-{{ else }}
-<h2>Entra a Aula Mada</h2>
-<p><a href="{{ .ConfirmationURL }}">Entra</a> o escriu aquest codi: <strong>{{ .Token }}</strong></p>
-<p>Si no ho has demanat tu, pots ignorar aquest correu.</p>
-{{ end }}
-```
+- **Confirm signup** (el primer correo de una cuenta nueva).
+- **Magic Link** (los accesos siguientes).
 
-Copia el mismo cuerpo en **Confirm signup** (el primer correo de una cuenta nueva).
+Asunto de las dos: `Aula Mada · Codi d'accés · Código de acceso · Sign-in code`. Deja la caducidad del
+código en una hora (*Email OTP Expiration* = 3600), que es lo que dice el correo.
 
 **Envío de correos.** El servidor de correo que trae Supabase solo envía unos pocos correos por
 hora y solo sirve para probar. Antes de abrir la web a otros alumnos configura un SMTP propio en

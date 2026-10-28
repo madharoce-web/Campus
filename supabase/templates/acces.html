@@ -1,0 +1,84 @@
+<!--
+  Aula Mada · correu d'accés (Supabase → Authentication → Emails → Templates).
+  La mateixa plantilla serveix per a «Magic Link» (entrar) i «Confirm signup» (primer accés d'un compte nou).
+  Idioma: el de la web en demanar l'accés (user_metadata.lang: ca, es o en; per defecte, català).
+  Correu en HTML per a clients de correu: taules, estils en línia i cap imatge ni tipografia externa.
+-->
+{{ $l := "ca" }}{{ with .Data.lang }}{{ $l = . }}{{ end }}
+<!doctype html>
+<html lang="{{ if eq $l "en" }}en{{ else if eq $l "es" }}es{{ else }}ca{{ end }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Aula Mada</title>
+</head>
+<body style="margin:0; padding:0; background:#f1f2e6; -webkit-text-size-adjust:100%;">
+<!-- text de previsualització (la línia que es veu a la safata d'entrada) -->
+<div style="display:none; max-height:0; overflow:hidden; opacity:0;">
+  {{ if eq $l "en" }}Your sign-in code: {{ .Token }}{{ else if eq $l "es" }}Tu código de acceso: {{ .Token }}{{ else }}El teu codi d'accés: {{ .Token }}{{ end }}
+</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f1f2e6;">
+  <tr>
+    <td align="center" style="padding:32px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px; background:#ffffff; border:1px solid #d5d7b8; border-top:4px solid #696e2e; border-radius:8px;">
+        <!-- capçalera: el logotip de la web (AM + Aula Mada) -->
+        <tr>
+          <td style="padding:24px 32px 8px 32px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td width="44" height="44" align="center" valign="middle" style="width:44px; height:44px; background:#6d7637; color:#ffffff; font-family:'Times New Roman',Times,Georgia,serif; font-size:19px; line-height:44px;">AM</td>
+                <td style="padding-left:10px; font-family:'Times New Roman',Times,Georgia,serif; font-size:15px; line-height:17px; letter-spacing:.06em; color:#1d2125; text-transform:uppercase;">Aula<br>Mada</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 32px 8px 32px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; color:#1d2125;">
+            <h1 style="margin:0 0 12px 0; font-size:22px; line-height:1.3; font-weight:600; color:#1d2125;">
+              {{ if eq $l "en" }}Sign in to Aula Mada{{ else if eq $l "es" }}Entra en Aula Mada{{ else }}Entra a Aula Mada{{ end }}
+            </h1>
+            <p style="margin:0 0 20px 0; font-size:15px; line-height:1.55; color:#495057;">
+              {{ if eq $l "en" }}Enter this code on the page where you asked to sign in:{{ else if eq $l "es" }}Escribe este código en la página donde has pedido entrar:{{ else }}Escriu aquest codi a la pàgina on has demanat entrar:{{ end }}
+            </p>
+          </td>
+        </tr>
+        <!-- el codi de 6 xifres -->
+        <tr>
+          <td align="center" style="padding:0 32px;">
+            <div style="display:inline-block; padding:14px 24px; background:#f1f2e6; border:1px solid #d5d7b8; border-radius:8px; font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace; font-size:30px; line-height:1; letter-spacing:.3em; font-weight:700; color:#1d2125;">{{ .Token }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 32px 8px 32px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+            <p style="margin:0 0 16px 0; font-size:15px; line-height:1.55; color:#495057;">
+              {{ if eq $l "en" }}Or sign in directly with this button:{{ else if eq $l "es" }}O entra directamente con este botón:{{ else }}O entra directament amb aquest botó:{{ end }}
+            </p>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="background:#696e2e; border-radius:8px;">
+                  <a href="{{ .ConfirmationURL }}" style="display:inline-block; padding:11px 22px; font-size:15px; line-height:1.2; color:#ffffff; text-decoration:none; font-weight:600;">
+                    {{ if eq $l "en" }}Sign in{{ else if eq $l "es" }}Entrar{{ else }}Entra{{ end }}
+                  </a>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:20px 0 0 0; font-size:13px; line-height:1.5; color:#6a737b;">
+              {{ if eq $l "en" }}The code and the button work once and expire in one hour.{{ else if eq $l "es" }}El código y el botón sirven una sola vez y caducan en una hora.{{ else }}El codi i el botó serveixen una sola vegada i caduquen en una hora.{{ end }}
+            </p>
+          </td>
+        </tr>
+        <!-- peu -->
+        <tr>
+          <td style="padding:20px 32px 24px 32px; border-top:1px solid #dee2e6; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; font-size:12px; line-height:1.5; color:#6a737b;">
+            {{ if eq $l "en" }}If you didn't ask to sign in, you can ignore this email: nobody can get in without this code.{{ else if eq $l "es" }}Si no has pedido entrar, puedes ignorar este correo: nadie puede acceder sin este código.{{ else }}Si no has demanat entrar, pots ignorar aquest correu: ningú no pot accedir sense aquest codi.{{ end }}
+            <br><br>
+            <span style="color:#696e2e; font-weight:600;">Aula Mada</span> · {{ if eq $l "en" }}University study campus{{ else if eq $l "es" }}Campus de estudio universitario{{ else }}Campus d'estudi universitari{{ end }}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
