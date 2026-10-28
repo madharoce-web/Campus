@@ -5,11 +5,13 @@ export default [
   "n": 1,
   "t": [
    "Conceptes bàsics d'economia",
-   "Conceptos básicos de economía"
+   "Conceptos básicos de economía",
+   "Basic concepts of economics"
   ],
   "langs": [
    "ca",
-   "es"
+   "es",
+   "en"
   ],
   "sections": [
    {
@@ -17,7 +19,8 @@ export default [
     "orig": "1-que-es-l-economia",
     "t": [
      "Què és l'economia",
-     "Qué es la economía"
+     "Qué es la economía",
+     "What economics is"
     ]
    },
    {
@@ -25,7 +28,8 @@ export default [
     "orig": "2-economia-positiva-i-normativa",
     "t": [
      "Economia positiva i normativa",
-     "Economía positiva y normativa"
+     "Economía positiva y normativa",
+     "Positive and normative economics"
     ]
    },
    {
@@ -33,7 +37,8 @@ export default [
     "orig": "3-microeconomia-i-macroeconomia",
     "t": [
      "Microeconomia i macroeconomia",
-     "Microeconomía y macroeconomía"
+     "Microeconomía y macroeconomía",
+     "Microeconomics and macroeconomics"
     ]
    },
    {
@@ -41,7 +46,8 @@ export default [
     "orig": "4-el-cost-d-oportunitat",
     "t": [
      "El cost d'oportunitat",
-     "El coste de oportunidad"
+     "El coste de oportunidad",
+     "Opportunity cost"
     ]
    },
    {
@@ -49,7 +55,8 @@ export default [
     "orig": "5-l-activitat-de-produccio",
     "t": [
      "L'activitat de producció",
-     "La actividad de producción"
+     "La actividad de producción",
+     "Production"
     ]
    },
    {
@@ -57,7 +64,8 @@ export default [
     "orig": "6-classificacio-de-recursos-i-bens",
     "t": [
      "Classificació de recursos i béns",
-     "Clasificación de recursos y bienes"
+     "Clasificación de recursos y bienes",
+     "Classification of resources and goods"
     ]
    },
    {
@@ -65,7 +73,8 @@ export default [
     "orig": "7-els-sistemes-economics",
     "t": [
      "Els sistemes econòmics",
-     "Los sistemas económicos"
+     "Los sistemas económicos",
+     "Economic systems"
     ]
    },
    {
@@ -73,7 +82,8 @@ export default [
     "orig": "8-utilitat-i-valor",
     "t": [
      "Utilitat i valor",
-     "Utilidad y valor"
+     "Utilidad y valor",
+     "Utility and value"
     ]
    },
    {
@@ -81,7 +91,8 @@ export default [
     "orig": "9-questions-de-repas",
     "t": [
      "Qüestions de repàs",
-     "Cuestiones de repaso"
+     "Cuestiones de repaso",
+     "Review questions"
     ]
    },
    {
@@ -89,7 +100,8 @@ export default [
     "orig": "notes-sobre-el-document-original",
     "t": [
      "Notes sobre el document original",
-     "Notas sobre el documento original"
+     "Notas sobre el documento original",
+     "Notes on the original document"
     ]
    },
    {
@@ -97,7 +109,8 @@ export default [
     "orig": "font",
     "t": [
      "Font",
-     "Fuente"
+     "Fuente",
+     "Source"
     ]
    }
   ]
@@ -107,24 +120,27 @@ export default [
   "n": 2,
   "t": [
    "Demanda, oferta i mercat",
-   "Demanda, oferta y mercado"
+   "Demanda, oferta y mercado",
+   "Demand, supply and the market"
   ],
-  "langs": [
-   "ca",
-   "es"
-  ],
+  "langs": [ "ca", "es", "en" ],
   "sections": [
    {
     "id": "t2-1-la-demanda",
     "orig": "1-la-demanda",
-    "t": "La demanda"
+    "t": [
+     "La demanda",
+     "La demanda",
+     "Demand"
+    ]
    },
    {
     "id": "t2-2-l-oferta",
     "orig": "2-l-oferta",
     "t": [
      "L'oferta",
-     "La oferta"
+     "La oferta",
+     "Supply"
     ]
    },
    {
@@ -132,7 +148,8 @@ export default [
     "orig": "3-l-equilibri-de-mercat",
     "t": [
      "L'equilibri de mercat",
-     "El equilibrio de mercado"
+     "El equilibrio de mercado",
+     "Market equilibrium"
     ]
    },
    {
@@ -140,7 +157,8 @@ export default [
     "orig": "4-excedents-i-benestar-social",
     "t": [
      "Excedents i benestar social",
-     "Excedentes y bienestar social"
+     "Excedentes y bienestar social",
+     "Surpluses and social welfare"
     ]
    },
    {
@@ -148,7 +166,8 @@ export default [
     "orig": "5-determinants-de-la-demanda",
     "t": [
      "Determinants de la demanda",
-     "Determinantes de la demanda"
+     "Determinantes de la demanda",
+     "Determinants of demand"
     ]
    },
    {
@@ -156,7 +175,8 @@ export default [
     "orig": "6-determinants-de-l-oferta",
     "t": [
      "Determinants de l'oferta",
-     "Determinantes de la oferta"
+     "Determinantes de la oferta",
+     "Determinants of supply"
     ]
    },
    {
@@ -164,7 +184,8 @@ export default [
     "orig": "7-desplacament-o-moviment-la-confusio-clau",
     "t": [
      "Desplaçament o moviment: la confusió clau",
-     "Desplazamiento o movimiento: la confusión clave"
+     "Desplazamiento o movimiento: la confusión clave",
+     "Shift or movement: the key confusion"
     ]
    },
    {
@@ -172,7 +193,8 @@ export default [
     "orig": "8-errates-i-matisos-del-material",
     "t": [
      "Errates i matisos del material",
-     "Erratas y matices del material"
+     "Erratas y matices del material",
+     "Errata and nuances in the material"
     ]
    },
    {
@@ -180,7 +202,8 @@ export default [
     "orig": "9-questions-de-repas",
     "t": [
      "Qüestions de repàs",
-     "Cuestiones de repaso"
+     "Cuestiones de repaso",
+     "Review questions"
     ]
    },
    {
@@ -188,7 +211,8 @@ export default [
     "orig": "font",
     "t": [
      "Font",
-     "Fuente"
+     "Fuente",
+     "Source"
     ]
    }
   ]
@@ -198,19 +222,18 @@ export default [
   "n": 3,
   "t": [
    "Magnituds agregades",
-   "Magnitudes agregadas"
+   "Magnitudes agregadas",
+   "Aggregate magnitudes"
   ],
-  "langs": [
-   "ca",
-   "es"
-  ],
+  "langs": [ "ca", "es", "en" ],
   "sections": [
    {
     "id": "t3-1-introduccio-a-la-macroeconomia",
     "orig": "1-introduccio-a-la-macroeconomia",
     "t": [
      "Introducció a la macroeconomia",
-     "Introducción a la macroeconomía"
+     "Introducción a la macroeconomía",
+     "Introduction to macroeconomics"
     ]
    },
    {
@@ -218,7 +241,8 @@ export default [
     "orig": "2-nivell-general-de-preus-i-inflacio",
     "t": [
      "Nivell general de preus i inflació",
-     "Nivel general de precios e inflación"
+     "Nivel general de precios e inflación",
+     "General price level and inflation"
     ]
    },
    {
@@ -226,7 +250,8 @@ export default [
     "orig": "3-indicadors-d-activitat-economica-les-macromagnituds",
     "t": [
      "Indicadors d'activitat econòmica (les macromagnituds)",
-     "Indicadores de actividad económica (las macromagnitudes)"
+     "Indicadores de actividad económica (las macromagnitudes)",
+     "Indicators of economic activity (macroeconomic aggregates)"
     ]
    },
    {
@@ -234,7 +259,8 @@ export default [
     "orig": "4-el-mercat-de-treball",
     "t": [
      "El mercat de treball",
-     "El mercado de trabajo"
+     "El mercado de trabajo",
+     "The labour market"
     ]
    },
    {
@@ -242,7 +268,8 @@ export default [
     "orig": "5-questions-de-repas",
     "t": [
      "Qüestions de repàs",
-     "Cuestiones de repaso"
+     "Cuestiones de repaso",
+     "Review questions"
     ]
    },
    {
@@ -250,7 +277,8 @@ export default [
     "orig": "6-notes-sobre-el-document-original",
     "t": [
      "Notes sobre el document original",
-     "Notas sobre el documento original"
+     "Notas sobre el documento original",
+     "Notes on the original document"
     ]
    }
   ]

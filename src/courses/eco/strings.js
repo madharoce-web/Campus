@@ -29,6 +29,11 @@ export const TX = {
     per: 'por unidad de X', eff: 'eficiente: está sobre la frontera', ine: 'ineficiente: está dentro de la frontera; se podría producir más de los dos bienes', ina: 'inalcanzable: está fuera de la frontera; hacen falta más recursos o más tecnología',
     out: 'fuera del rango de la tabla (X mayor que el máximo de la frontera)', conc: 'El coste de oportunidad crece en cada tramo: la FPP es cóncava.', lin: 'El coste de oportunidad es constante: la FPP es una recta.', noconc: 'El coste de oportunidad no crece en cada tramo: con estos datos la FPP no es cóncava.',
     reset: 'Ejemplo del material', bad: 'Ordena los puntos con X creciente e Y decreciente para que sea una frontera.', newf: 'FPP nueva' },
+  en: { k: 'Lab', t: 'The PPF, live', h: 'Edit the table of efficient combinations, see how the opportunity cost changes and classify any point. The technological improvement control shifts the frontier only for good X.',
+    X: 'Wheat (X)', Y: 'Tractors (Y)', pt: 'Point to classify', tech: 'Technological improvement in X', co: 'Opportunity cost of each segment',
+    per: 'per unit of X', eff: 'efficient: it is on the frontier', ine: 'inefficient: it is inside the frontier; more of both goods could be produced', ina: 'unattainable: it is outside the frontier; more resources or more technology are needed',
+    out: 'outside the range of the table (X greater than the maximum of the frontier)', conc: 'The opportunity cost grows in each segment: the PPF is concave.', lin: 'The opportunity cost is constant: the PPF is a straight line.', noconc: 'The opportunity cost does not grow in each segment: with these data the PPF is not concave.',
+    reset: 'Example from the material', bad: 'Order the points with increasing X and decreasing Y so that it is a frontier.', newf: 'New PPF' },
 };
 
 /* laboratori del mercat */
@@ -49,6 +54,14 @@ export const TM = {
     bad: 'Con estos coeficientes no hay un equilibrio con precio y cantidad positivos: hace falta b > 0, c > 0 y que el precio máximo sea mayor que el mínimo.',
     at: 'A P = ', xd: 'exceso de demanda', xo: 'exceso de oferta', eqm: 'El mercado está en equilibrio: Qd = Qo.',
     trade: 'solo se intercambian', up: 'el precio tiende a subir', down: 'el precio tiende a bajar', u: 'unidades', and: 'y' },
+  en: { k: 'Lab', t: 'Live market: equilibrium and surpluses', h: 'Change the coefficients of the linear functions, shift the curves and move the market price. Everything is recalculated with the unit\'s formulas.',
+    fd: 'Demand: Qd = a − b·P', fo: 'Supply: Qs = c·P + e', price: 'Market price', eqp: 'Price = P*',
+    sh: 'Shifts', dp: 'Demand +', dm: 'Demand −', op: 'Supply +', om: 'Supply −',
+    pre: 'Examples', p1: 'Smoothies (material)', p2: 'Extra exercise', pe: 'P*', qe: 'Q*', pmax: 'Maximum price (Qd = 0)', pmin: 'Minimum price (Qs = 0)',
+    ec: 'Consumer surplus', ep: 'Producer surplus', bs: 'Social welfare',
+    bad: 'With these coefficients there is no equilibrium with positive price and quantity: you need b > 0, c > 0 and the maximum price to be higher than the minimum.',
+    at: 'At P = ', xd: 'excess demand', xo: 'excess supply', eqm: 'The market is in equilibrium: Qd = Qs.',
+    trade: 'only', up: 'the price tends to rise', down: 'the price tends to fall', u: 'units are traded', and: 'and' },
 };
 
 /* calculadora de la cadena */
@@ -59,6 +72,9 @@ export const TC = {
   es: { k: 'Laboratorio', t: 'Calculadora de la cadena', h: 'Introduce los datos (en millones de euros, excepto los habitantes) y sigue cada paso con su fórmula. Los valores iniciales son los del ejemplo de la sección 3.7.',
     f: { sal: 'Salarios (remuneración de asalariados)', llo: 'Alquileres', int: 'Intereses', ben: 'Beneficios', ti: 'Impuestos indirectos', sub: 'Subvenciones', rfne: 'rfne', rfen: 'rfen', am: 'Amortizaciones', td: 'Impuestos directos', ss: 'Seguridad Social', tr: 'Transferencias', c: 'Consumo de las familias (C)', d: 'Gasto público (D)', hab: 'Habitantes' },
     g1: 'Producción y renta', g2: 'Sector público y familias', reset: 'Ejemplo de la sección 3.7', pc: '€ por habitante', sup: 'superávit', def: 'déficit', eqb: 'equilibrio' },
+  en: { k: 'Lab', t: 'Chain calculator', h: 'Enter the data (in millions of euros, except the inhabitants) and follow each step with its formula. The initial values are those of the example in section 3.7.',
+    f: { sal: 'Wages (compensation of employees)', llo: 'Rents', int: 'Interest', ben: 'Profits', ti: 'Indirect taxes', sub: 'Subsidies', rfne: 'rfne', rfen: 'rfen', am: 'Depreciation', td: 'Direct taxes', ss: 'Social Security', tr: 'Transfers', c: 'Household consumption (C)', d: 'Government spending (D)', hab: 'Inhabitants' },
+    g1: 'Output and income', g2: 'Public sector and households', reset: 'Example from section 3.7', pc: '€ per inhabitant', sup: 'surplus', def: 'deficit', eqb: 'balance' },
 };
 
 /* pràctica */

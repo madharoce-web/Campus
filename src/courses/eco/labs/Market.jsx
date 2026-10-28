@@ -15,8 +15,8 @@ function withDisp(n, prev) {
 
 /** Laboratori «Mercat en viu»: equilibri, excedents, desplaçaments i preu fora d'equilibri. */
 export default function Market() {
-  const { lang } = useLang();
-  const T = TM[lang];
+  const { ui } = useLang();
+  const T = TM[ui] || TM.es;
   const [mk, setMk0] = useSlot('lab-mercat', () => withDisp(withRaw(MK0)));
   const setMk = (f) => setMk0((o) => withDisp(typeof f === 'function' ? f(o) : f, o));
 

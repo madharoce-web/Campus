@@ -22,7 +22,8 @@ test('temari: els tres temes en els dos idiomes, amb l\'índex complet', async (
       await page.goto('/economia/temari/' + u.id);
       await expect(page.locator('.kit-unit-h h2')).toHaveText(u.t[lang === 'ca' ? 0 : 1]);
       await expect(page.locator('section.kit-sec')).toHaveCount(u.sections.length);
-      await expect(page.locator('.kit-toc-s li')).toHaveCount(u.sections.length);
+      // l'índex afegeix l'entrada dels exercicis tipus examen del final del tema
+      await expect(page.locator('.kit-toc-s li')).toHaveCount(u.sections.length + 1);
       await expect(page.locator('.kit-toc-u[aria-current="page"]')).toContainText(u.t[lang === 'ca' ? 0 : 1]);
       await expectNoOverflow(page);
     }

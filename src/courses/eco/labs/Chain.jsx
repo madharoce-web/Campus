@@ -19,8 +19,8 @@ const init = () => ({ v: { ...CH0 }, raw: Object.fromEntries(KEYS.map((k) => [k,
 
 /** Calculadora de la cadena de macromagnituds (PIB, PNB, RN, RPD, estalvi i saldo públic). */
 export default function Chain() {
-  const { lang } = useLang();
-  const T = TC[lang], Lc = lang === 'ca';
+  const { ui, L } = useLang();
+  const T = TC[ui] || TC.es;
   const [s, setS] = useSlot('lab-cadena', init);
   const onInput = (k, val) => setS((o) => {
     const raw = { ...o.raw, [k]: val }, v = { ...o.v };
@@ -32,16 +32,16 @@ export default function Chain() {
   // cada fila: [magnitud, fórmula, valor]; { s } és un subíndex
   const cf = { s: 'cf' }, pm = { s: 'pm' }, d = { s: 'd' };
   const rows = [
-    [['EBE'], [(Lc ? 'lloguers + interessos + beneficis' : 'alquileres + intereses + beneficios') + ' = ' + fmt(v.llo) + ' + ' + fmt(v.int) + ' + ' + fmt(v.ben)], fmt(c.EBE)],
-    [['PIB', cf], [(Lc ? 'salaris' : 'salarios') + ' + EBE = ' + fmt(v.sal) + ' + ' + fmt(c.EBE)], fmt(c.PIBcf)],
-    [['PIB', pm], ['PIB', cf, ' + ' + (Lc ? 'imp. indirectes − subvencions' : 'imp. indirectos − subvenciones') + ' = ' + fmt(c.PIBcf) + ' + ' + fmt(v.ti) + ' − ' + fmt(v.sub)], fmt(c.PIBpm)],
+    [['EBE'], [L('lloguers + interessos + beneficis', 'alquileres + intereses + beneficios', 'rents + interest + profits') + ' = ' + fmt(v.llo) + ' + ' + fmt(v.int) + ' + ' + fmt(v.ben)], fmt(c.EBE)],
+    [['PIB', cf], [L('salaris', 'salarios', 'wages') + ' + EBE = ' + fmt(v.sal) + ' + ' + fmt(c.EBE)], fmt(c.PIBcf)],
+    [['PIB', pm], ['PIB', cf, ' + ' + L('imp. indirectes − subvencions', 'imp. indirectos − subvenciones', 'indirect taxes − subsidies') + ' = ' + fmt(c.PIBcf) + ' + ' + fmt(v.ti) + ' − ' + fmt(v.sub)], fmt(c.PIBpm)],
     [['PNB', cf], ['PIB', cf, ' + rfne − rfen = ' + fmt(c.PIBcf) + ' + ' + fmt(v.rfne) + ' − ' + fmt(v.rfen)], fmt(c.PNBcf)],
     [['PNB', pm], ['PIB', pm, ' + rfne − rfen = ' + fmt(c.PIBpm) + ' + ' + fmt(v.rfne) + ' − ' + fmt(v.rfen)], fmt(c.PNBpm)],
-    [['RN = PNN', cf], ['PNB', cf, ' − ' + (Lc ? 'amortitzacions' : 'amortizaciones') + ' = ' + fmt(c.PNBcf) + ' − ' + fmt(v.am)], fmt(c.RN)],
-    [[Lc ? 'Renda per càpita' : 'Renta per cápita'], ['RN / ' + (Lc ? 'habitants' : 'habitantes') + ' = ' + fmt(c.RN * 1e6, 0) + ' / ' + fmt(v.hab, 0)], fmt(c.pc, 2) + ' ' + T.pc],
+    [['RN = PNN', cf], ['PNB', cf, ' − ' + L('amortitzacions', 'amortizaciones', 'depreciation') + ' = ' + fmt(c.PNBcf) + ' − ' + fmt(v.am)], fmt(c.RN)],
+    [[L('Renda per càpita', 'Renta per cápita', 'Income per capita')], ['RN / ' + L('habitants', 'habitantes', 'inhabitants') + ' = ' + fmt(c.RN * 1e6, 0) + ' / ' + fmt(v.hab, 0)], fmt(c.pc, 2) + ' ' + T.pc],
     [['RPD'], ['RN − T', d, ' − SS + Tr = ' + fmt(c.RN) + ' − ' + fmt(v.td) + ' − ' + fmt(v.ss) + ' + ' + fmt(v.tr)], fmt(c.RPD)],
     [['S'], ['RPD − C = ' + fmt(c.RPD) + ' − ' + fmt(v.c)], fmt(c.S)],
-    [['T'], [(Lc ? 'imp. directes + imp. indirectes' : 'imp. directos + imp. indirectos') + ' = ' + fmt(v.td) + ' + ' + fmt(v.ti)], fmt(c.Tt)],
+    [['T'], [L('imp. directes + imp. indirectes', 'imp. directos + imp. indirectos', 'direct taxes + indirect taxes') + ' = ' + fmt(v.td) + ' + ' + fmt(v.ti)], fmt(c.Tt)],
     [['SP'], ['T − D − Tr − Subv = ' + fmt(c.Tt) + ' − ' + fmt(v.d) + ' − ' + fmt(v.tr) + ' − ' + fmt(v.sub)], fmt(c.SP) + ' (' + (c.SP > 0 ? T.sup : c.SP < 0 ? T.def : T.eqb) + ')'],
   ];
   const field = (k) => (

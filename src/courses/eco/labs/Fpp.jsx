@@ -13,8 +13,8 @@ const raw0 = () => ({
 
 /** Laboratori «La FPP, en viu»: taula editable, cost d'oportunitat i classificació d'un punt. */
 export default function Fpp() {
-  const { lang } = useLang();
-  const T = TX[lang];
+  const { ui } = useLang();
+  const T = TX[ui] || TX.es;
   const [s, setS] = useSlot('lab-fpp', raw0);
   const set = (patch) => setS((o) => ({ ...o, ...patch }));
   const setXY = (k, i, v) => setS((o) => ({ ...o, [k]: o[k].map((x, j) => (j === i ? v : x)) }));
