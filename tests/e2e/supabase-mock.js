@@ -2,8 +2,8 @@
  * Supabase simulat per a les proves de comptes (tests/e2e/comptes.spec.js).
  * Intercepta les peticions del navegador a SUPABASE_TEST_URL i imita les parts
  * de l'API que fa servir la web: Auth (codi per correu, Google amb PKCE, sortir)
- * i PostgREST (profiles, user_state, activity i les funcions join_waitlist i
- * delete_my_account). Les dades viuen en memòria i les proves les poden mirar.
+ * i PostgREST (profiles, user_state, activity i les funcions join_waitlist,
+ * delete_my_account i les del tauler d'administració). Les dades viuen en memòria i les proves les poden mirar.
  */
 export const SUPABASE_TEST_URL = 'https://proves.supabase.co';
 export const TEST_CODE = '123456';
@@ -17,6 +17,7 @@ export async function mockSupabase(context, seed = {}) {
     profiles: [],       // { id, display_name, degree, lang, role, plan, created_at }
     user_state: [],     // { user_id, key, value, updated_at }
     waitlist: [],       // { email, degree, lang }
+    activity: [],       // { user_id, subject, item, kind, correct, score, duration_ms, created_at }
     otps: [],           // correus als quals s'ha «enviat» un codi
     calls: [],          // [mètode, camí] de cada petició
   };
@@ -143,7 +144,38 @@ export async function mockSupabase(context, seed = {}) {
         return route.fulfill({ status: 204, headers: cors });
       }
     }
-    if (path === '/rest/v1/activity') return json(200, []);
+    if (path === '/rest/v1/activity') {
+      if (req.method() === 'POST') {
+        for (const r of Array.isArray(body) ? body : [body]) {
+          if (r.user_id !== uid) return json(403, { code: '42501', message: 'new row violates row-level security policy' });
+          db.activity.push({ ...r, created_at: new Date().toISOString() });
+        }
+        return route.fulfill({ status: 201, headers: cors });
+      }
+      return json(200, db.activity.filter((r) => r.user_id === uid));
+    }
+    if (path.startsWith('/rest/v1/rpc/admin_')) {
+      // com les funcions del servidor: només per a administradors
+      if (db.profiles.find((p) => p.id === uid)?.role !== 'admin') return json(403, { code: '42501', message: 'només administradors' });
+      if (path.endsWith('admin_signups')) return json(200, db.profiles.map((p) => ({ day: p.created_at.slice(0, 10), degree: p.degree || '', plan: p.plan, n: 1 })));
+      if (path.endsWith('admin_waitlist')) {
+        const degs = [...new Set(db.waitlist.map((w) => w.degree))];
+        return json(200, degs.map((d) => ({ degree: d, n: db.waitlist.filter((w) => w.degree === d).length, last_at: new Date().toISOString() })));
+      }
+      if (path.endsWith('admin_item_stats')) {
+        const m = new Map();
+        for (const a of db.activity) {
+          const k = a.subject + '|' + a.item + '|' + a.kind;
+          const o = m.get(k) || { subject: a.subject, item: a.item, kind: a.kind, attempts: 0, graded: 0, correct: 0, users: new Set(), last_at: a.created_at };
+          o.attempts++;
+          if (a.correct != null) o.graded++;
+          if (a.correct) o.correct++;
+          o.users.add(a.user_id);
+          m.set(k, o);
+        }
+        return json(200, [...m.values()].map((o) => ({ ...o, users: o.users.size })));
+      }
+    }
     return json(404, { message: 'no simulat: ' + req.method() + ' ' + path });
   });
 

@@ -175,3 +175,48 @@ test('un enllaç de tornada caducat mostra com tornar-ho a provar', async ({ pag
   await page.click('[data-state="error"] .am-btn');
   await expect(page).toHaveURL(/\/entrar\?next=%2Fcursos$/);
 });
+
+test('els intents dels exercicis es registren al compte (activity)', async ({ page, context }) => {
+  const errors = watchErrors(page);
+  const sb = await mockSupabase(context);
+  await page.goto('/economia/temari/t1');
+  await expect(page).toHaveURL(/\/entrar\?next=/);
+  await enterCode(page, 'dani@example.com');
+  await expect(page).toHaveURL(/\/economia\/temari\/t1$/);
+  // una comprovació autoavaluada de la lliçó
+  const chk = page.locator('.kit-ex-check').first();
+  await chk.scrollIntoViewIfNeeded();
+  const id = await chk.getAttribute('data-ex');
+  await chk.locator('.kit-steps-open').first().click();
+  await chk.locator('.kit-self-b').last().click();
+  // s'envien en lots al cap d'uns segons
+  await expect.poll(() => sb.db.activity.length, { timeout: 15_000 }).toBeGreaterThan(0);
+  expect(sb.db.activity[0]).toMatchObject({ subject: 'eco', item: id, kind: 'quiz', correct: true });
+  expect(errors).toEqual([]);
+});
+
+test('tauler d’administració: només per a administradors', async ({ page, context }) => {
+  const errors = watchErrors(page);
+  const sb = await mockSupabase(context, { users: [{ email: 'admin@example.com', profile: { role: 'admin', degree: 'informatica' } }, { email: 'eva@example.com' }] });
+  sb.db.activity.push({ user_id: sb.db.users[1].id, subject: 'logica', item: 'xr-1', kind: 'exercise', correct: false, created_at: new Date().toISOString() });
+  // una persona qualsevol no el veu
+  await page.goto('/admin');
+  await enterCode(page, 'eva@example.com');
+  await expect(page).toHaveURL(/\/admin$/);
+  await expect(page.locator('h1')).toContainText("No s'ha trobat");
+  await page.evaluate(() => localStorage.clear());
+  await context.clearCookies();
+
+  const p2 = await context.newPage();
+  await p2.goto('/admin');
+  await enterCode(p2, 'admin@example.com');
+  await expect(p2.locator('h1')).toHaveText('Administració');
+  await expect(p2.locator('#ad-users')).toBeVisible();
+  await expect(p2.locator('.ad-big b')).toHaveText('2');
+  await p2.fill('.ad-filter input', '1');
+  await expect(p2.locator('#ad-items ~ .ad-tw tbody tr')).toHaveCount(1);
+  await expect(p2.locator('#ad-items ~ .ad-tw tbody tr')).toContainText('xr-1');
+  await expect(p2.locator('#ad-cat ~ .ad-tw tbody tr')).toHaveCount(5);
+  await expectNoOverflow(p2);
+  expect(errors).toEqual([]);
+});

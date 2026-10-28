@@ -1,0 +1,14 @@
+.ad-muted{color:var(--am-ink-2)}
+.ad-err{color:var(--am-danger)}
+.ad-sec{margin:24px 0}
+.ad-sec h2 small{font-size:.85rem; font-weight:400; color:var(--am-ink-2)}
+.ad-sec h3{font-size:1rem; margin:12px 0 6px}
+.ad-big{font-size:1.1rem}
+.ad-cols{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:20px}
+.ad-tw{overflow-x:auto}
+.ad-table{border-collapse:collapse; width:100%; font-size:.92rem}
+.ad-table th,.ad-table td{border-bottom:1px solid var(--am-line); padding:6px 8px; text-align:left; vertical-align:top}
+.ad-table th{font-weight:600; background:var(--am-bg-3)}
+.ad-filter{display:inline-flex; align-items:center; gap:8px; margin:6px 0 10px}
+.ad-filter input{width:6em}
+@media (max-width:900px){ .ad-cols{grid-template-columns:minmax(0,1fr)} }

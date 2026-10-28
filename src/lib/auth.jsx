@@ -2,6 +2,7 @@ import { createContext, Fragment, useCallback, useContext, useEffect, useMemo, u
 import { useLang } from './i18n.jsx';
 import { AUTH_ENABLED, getSupabase, sessionHint } from './supabase.js';
 import { installTracking, startSync, stopSync } from './sync.js';
+import { setActivityUser } from './intents.js';
 
 /**
  * Comptes (correu o Google) amb Supabase. `status`:
@@ -45,6 +46,7 @@ export function AuthProvider({ children }) {
       uidRef.current = uid;
       setFarewell(false);
       setState({ status: 'user', user, profile: null });
+      setActivityUser(sb, uid);
       sb.from('profiles').select(PROFILE_COLS).eq('id', uid).maybeSingle()
         .then(({ data }) => { if (uidRef.current === uid) setState((s) => ({ ...s, profile: data })); });
       await startSync(sb, uid, () => setRev((r) => r + 1));
@@ -53,6 +55,7 @@ export function AuthProvider({ children }) {
     if (uidRef.current) {
       // s'ha tancat la sessió (aquí o en una altra pestanya): fora el progrés d'aquest navegador
       uidRef.current = null;
+      setActivityUser(null);
       await stopSync({ clear: true });
       setRev((r) => r + 1);
     }

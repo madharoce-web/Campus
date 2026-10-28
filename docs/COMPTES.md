@@ -24,8 +24,8 @@ vuelve a la portada. Aparecen también **Mi cuenta** y el «Avísame» de los gr
 
 ## 2. Crear las tablas
 
-Opción sencilla: **SQL Editor** → pega el contenido de
-`supabase/migrations/20261023120000_comptes.sql` → **Run**.
+Opción sencilla: **SQL Editor** → pega el contenido de cada fichero de `supabase/migrations/`, por orden
+(`20261023120000_comptes.sql` y después `20261028120000_admin.sql`) → **Run**.
 
 Opción con la terminal (recomendada a la larga, guarda el historial de migraciones):
 
@@ -38,7 +38,8 @@ npx supabase db push
 
 Qué crea: `profiles` (nombre, grado, idioma, rol, plan), `user_state` (progreso), `activity`
 (intentos, para estadísticas), `subscriptions` (preparada para el plan Pro), `waitlist` (avísame) y
-las funciones `join_waitlist` y `delete_my_account`. Todas las tablas tienen RLS: cada persona solo
+las funciones `join_waitlist` y `delete_my_account`; la segunda migración añade las funciones del panel
+`/admin` (`admin_signups`, `admin_item_stats` y `admin_waitlist`), que solo responden a administradores. Todas las tablas tienen RLS: cada persona solo
 ve sus filas; el rol y el plan solo los cambia el servidor.
 
 Para probar la migración en local (necesita Docker): `npm run test:db`.
@@ -123,12 +124,39 @@ update public.profiles set role = 'admin'
 where id = (select id from auth.users where email = 'tu-correo@ejemplo.com');
 ```
 
+Después, vuelve a entrar: en `/admin` verás las altas, los intentos y aciertos por ejercicio (ordenados
+de menos a más aciertos, para encontrar ejercicios mal planteados), la lista de espera y el estado del
+catálogo. Es de solo lectura; la seguridad está en las funciones del servidor, no en la página.
+
+## 8. Registro de actividad
+
+Con sesión, cada ejercicio comprobado (práctica, comprobaciones de las lecciones y simulacros) se guarda
+en `activity` (`src/lib/intents.js`, en lotes cada pocos segundos). Sin cuenta no se guarda nada. Sirve
+para el panel `/admin` y, más adelante, para el repaso a medida.
+
+## 9. Plan Pro (preparado, sin activar)
+
+Mientras `VITE_PRO_ENABLED` no sea `true`, todo es gratuito: `/preus` no existe y la portada no muestra el
+bloque Pro. Para activarlo:
+
+1. Elige el proveedor de pagos: **Paddle** o **Lemon Squeezy** (gestionan el IVA europeo); alternativa,
+   Stripe Billing con Stripe Tax si ya estás dado de alta como autónomo.
+2. Despliega el webhook `supabase/functions/billing-webhook/` (las instrucciones están al principio del
+   fichero). Es lo único que cambia `subscriptions` y `profiles.plan`.
+3. En Cloudflare Pages: `VITE_PRO_ENABLED=true` y `VITE_PRO_PRICE` (por ejemplo `4,99 €`).
+4. Revisa los límites del plan gratuito en `src/lib/plan.js` (ahora: 3 simulacros por semana) y el texto
+   «Simulacres d’examen sense límit» del plan gratuito de la portada (`src/pages/landing/strings.js`).
+
+Ojo: el contenido que va en el *bundle* es público. Si alguna vez hay contenido solo para Pro, tiene que
+servirse desde Supabase (Storage o una tabla con RLS por `plan`) o desde una Edge Function.
+
 ## Cómo se prueba
 
 - `npm run test:db`: la migración en un Postgres con Docker (RLS, privilegios, funciones).
 - `npx playwright test --project=comptes`: compila una copia de la web con Supabase configurado
   (`dist-comptes`) y prueba entrar con código y con Google, la sincronización entre navegadores,
-  cerrar sesión, Mi cuenta (perfil, descarga y borrado) y la lista de espera contra un Supabase
+  cerrar sesión, Mi cuenta (perfil, descarga y borrado), la lista de espera, el registro de actividad
+  y el panel `/admin` contra un Supabase
   simulado (`tests/e2e/supabase-mock.js`).
 - Antes de abrir la web a otros alumnos, prueba el flujo real en un proyecto de pruebas: entrar con
   el correo (enlace y código), con Google, y abrir la misma cuenta en el móvil.
@@ -141,5 +169,10 @@ where id = (select id from auth.users where email = 'tu-correo@ejemplo.com');
 | `src/lib/auth.jsx` | `AuthProvider` y `useAuth()`: sesión, perfil, entrar, salir, exportar y borrar |
 | `src/lib/sync.js` | Sincronización de `localStorage` con `user_state` |
 | `src/lib/syncplan.js` | Regla de fusión (pura, con pruebas en `tests/e2e/syncplan.spec.js`) |
+| `src/lib/intents.js` | Registro de intentos en `activity` (`logAttempt`) |
+| `src/lib/plan.js` | Plan Gratuito / Pro: `PRO_ENABLED`, `useEntitlement`, `<ProGate>` |
+| `src/pages/admin/` | Panel `/admin` (solo lectura) |
+| `src/pages/preus/` | Página de planes `/preus` (solo con Pro activado) |
+| `supabase/functions/billing-webhook/` | Webhook de pagos (esqueleto) |
 | `src/pages/compte/` | Páginas `/entrar`, `/auth/callback` y `/compte` |
 | `supabase/migrations/` | Esquema de la base de datos |

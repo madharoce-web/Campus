@@ -43,6 +43,25 @@ do $$ begin
   end;
 end $$;
 
+-- no pot fer servir les funcions del tauler d'administració
+do $$ begin
+  begin
+    perform * from public.admin_item_stats(1);
+    raise exception 'una usuària normal agrega l''activitat';
+  exception when insufficient_privilege then null;
+  end;
+  begin
+    perform * from public.admin_signups(30);
+    raise exception 'una usuària normal veu les altes';
+  exception when insufficient_privilege then null;
+  end;
+  begin
+    perform * from public.admin_waitlist();
+    raise exception 'una usuària normal veu la llista d''espera';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+
 -- no pot escriure progrés d'una altra persona
 do $$ begin
   begin
@@ -100,6 +119,12 @@ do $$ begin
   assert (select count(*) from public.waitlist) = 1, 'veu la llista d''espera (sense duplicats)';
   assert (select email from public.waitlist) = 'nou@example.com', 'correu normalitzat';
   assert (select count(*) from public.user_state) = 0, 'no veu el progrés en brut';
+  -- tauler d'administració
+  assert (select attempts from public.admin_item_stats(1) where item = 'xr-1') = 1, 'intents per exercici';
+  assert (select correct from public.admin_item_stats(1) where item = 'xr-1') = 1, 'encerts per exercici';
+  assert (select count(*) from public.admin_item_stats(5)) = 0, 'mínim d''intents';
+  assert (select sum(n) from public.admin_signups(30)) = 3, 'altes';
+  assert (select n from public.admin_waitlist() where degree = 'ade') = 1, 'llista d''espera per grau';
 end $$;
 
 -- ---- l'Ana esborra el compte: desapareix tot

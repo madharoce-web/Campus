@@ -200,3 +200,7 @@ select.am-input{appearance:none; padding-right:2.25rem; background:#fff url("dat
 .am-foot a{color:var(--am-brand); text-decoration:none}
 .am-foot a:hover{color:var(--am-brand-dark); text-decoration:underline}
 .am-foot nav{display:flex; flex-wrap:wrap; gap:4px 16px}
+
+/* avís «funció del pla Pro» (lib/plan.js) */
+.am-pro-gate{border:1px solid var(--am-line); border-left:4px solid var(--am-brand); border-radius:var(--am-r); background:var(--am-bg-3); padding:12px 16px; margin:12px 0}
+.am-pro-gate p{margin:0 0 8px}

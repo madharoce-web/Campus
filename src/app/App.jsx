@@ -10,6 +10,8 @@ import Entrar from '../pages/compte/Entrar.jsx';
 import Callback from '../pages/compte/Callback.jsx';
 import Compte from '../pages/compte/Compte.jsx';
 import Inici from '../pages/inici/Inici.jsx';
+import Preus from '../pages/preus/Preus.jsx';
+import Admin from '../pages/admin/Admin.jsx';
 import RequireAccount from './RequireAccount.jsx';
 import { COURSES } from '../courses/registry.js';
 
@@ -34,6 +36,11 @@ export default function App() {
         <Route path="registre" element={<Entrar signup />} />
         <Route path="login" element={<Navigate replace to="/entrar" />} />
         <Route path="auth/callback" element={<Callback />} />
+        {/* plans: només amb VITE_PRO_ENABLED=true (si no, «no s'ha trobat») */}
+        <Route path="preus" element={<Preus />} />
+        <Route path="precios" element={<Navigate replace to="/preus" />} />
+        <Route path="pricing" element={<Navigate replace to="/preus" />} />
+        <Route path="admin" element={<RequireAccount><Admin /></RequireAccount>} />
         {/* el campus: amb comptes configurats, només per a qui ha entrat */}
         <Route path="inici" element={<RequireAccount><Inici /></RequireAccount>} />
         <Route path="tauler" element={<RequireAccount><Home view="tauler" /></RequireAccount>} />

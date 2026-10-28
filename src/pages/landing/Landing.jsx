@@ -11,10 +11,30 @@ import DegreeCard from '../graus/DegreeCard.jsx';
 import AuthForm from '../compte/AuthForm.jsx';
 import '../compte/compte.css';
 import Pattern from '../home/Pattern.jsx';
+import { FEATURES, PRO_ENABLED, PRO_PRICE } from '../../lib/plan.js';
 import { S } from './strings.js';
 import './landing.css';
 
 const CHECK = <svg className="lp-check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" /></svg>;
+
+const PRO = {
+  ca: { name: 'Pla Pro', soon: 'Aviat', cta: 'Mira els plans' },
+  es: { name: 'Plan Pro', soon: 'Pronto', cta: 'Ver los planes' },
+  en: { name: 'Pro plan', soon: 'Soon', cta: 'See the plans' },
+};
+
+/** Bloc del pla Pro (només amb VITE_PRO_ENABLED=true; vegeu lib/plan.js). */
+function ProBox() {
+  const { ui, t } = useLang();
+  const P = PRO[ui] || PRO.es;
+  return (
+    <div className="lp-plan-box lp-plan-pro">
+      <div className="lp-plan-head"><h3>{P.name}</h3><b>{PRO_PRICE || P.soon}</b></div>
+      <ul>{Object.entries(FEATURES).map(([id, f]) => <li key={id}>{CHECK}{t(f.t)}</li>)}</ul>
+      <Link className="am-btn am-btn-outline am-btn-block" to="/preus">{P.cta}</Link>
+    </div>
+  );
+}
 
 /** Botons d'accés segons l'estat: sense comptes, convidat o amb sessió. */
 function useCtas(L) {
@@ -157,6 +177,7 @@ export default function Landing() {
               <ul>{L.planList.map((x) => <li key={x}>{CHECK}{x}</li>)}</ul>
               <Link className="am-btn am-btn-primary am-btn-block" to={cta.primary[0]}>{cta.primary[1]}</Link>
             </div>
+            {PRO_ENABLED && <ProBox />}
           </div>
         </section>
 

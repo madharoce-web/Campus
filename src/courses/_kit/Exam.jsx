@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
 import { lsDel } from '../../lib/storage.js';
+import { ProNote, useEntitlement } from '../../lib/plan.js';
 import { inline, useTr } from './text.jsx';
 import { useCourse } from './context.js';
 import { K, num } from './strings.js';
@@ -33,7 +34,11 @@ function Config({ onStart }) {
   const [units, setUnits] = useState(course.units.map((u) => u.id));
   const toggle = (id) => setUnits(units.includes(id) ? units.filter((x) => x !== id) : course.units.map((u) => u.id).filter((x) => x === id || units.includes(x)));
   const pickFmt = (id) => { setFmt(id); const f = formats.find((x) => x.id === id); if (f) setMin(f.min); };
-  const ready = F || units.length > 0;
+  // amb el pla Pro activat, el pla gratuït té un límit de simulacres per setmana (lib/plan.js); ara no n'hi ha
+  const { limit } = useEntitlement('exam-unlimited');
+  const weekAgo = Date.now() - 7 * 864e5;
+  const capped = !!(limit && st.exams.filter((e) => e.at > weekAgo).length >= limit.perWeek);
+  const ready = (F || units.length > 0) && !capped;
   return (
     <div className="kit-examcfg">
       <h2 className="kit-h2">{S.examH}</h2>
@@ -75,6 +80,7 @@ function Config({ onStart }) {
           </fieldset>
         )}
       </div>
+      {capped && <ProNote feature="exam-unlimited" />}
       <div className="am-btn-row">
         <button type="button" className="am-btn am-btn-primary" id="kit-start" disabled={!ready} onClick={() => onStart({ min, units, print: false, format: F })}>{S.startExam}</button>
         <button type="button" className="am-btn am-btn-secondary" id="kit-pdf" disabled={!ready} onClick={() => onStart({ min, units, print: true, format: F })}>{S.pdf}</button>
@@ -193,7 +199,7 @@ export default function Exam() {
         <div className="kit-exam-end">
           {sim.result == null ? (
             <button type="button" className="am-btn am-btn-primary" id="kit-finish" disabled={pending > 0}
-              onClick={() => { addExam(course.k, { min: sim.min, mark, n: exs.length }); setSim({ ...sim, result: mark }); window.scrollTo(0, 0); }}>{S.finish}</button>
+              onClick={() => { addExam(course.k, { min: sim.min, mark, n: exs.length, ms: sim.delivered - sim.t0 }, graded.map((g) => ({ id: g.ex.ref || g.ex.id, frac: g.frac }))); setSim({ ...sim, result: mark }); window.scrollTo(0, 0); }}>{S.finish}</button>
           ) : (
             <p className="kit-mark" id="kit-mark">{S.mark}: <b>{num(sim.result, ui)}</b> / 10</p>
           )}

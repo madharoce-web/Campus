@@ -145,3 +145,15 @@ test('tauler: resum, progrés de cada assignatura, calendari i calaix de blocs',
   await expect(page.locator('#am-cal')).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test('plans i administració, sense activar: /preus no existeix i /admin avisa que no hi ha comptes', async ({ page }) => {
+  await page.goto('/preus');
+  await expect(page.locator('h1')).toContainText("No s'ha trobat");
+  await page.goto('/precios');
+  await expect(page).toHaveURL(/\/preus$/);
+  await page.goto('/');
+  await expect(page.locator('.lp-plan-pro')).toHaveCount(0);
+  await page.goto('/admin');
+  await expect(page.locator('h1')).toHaveText('Administració');
+  await expect(page.locator('.ad-muted').first()).toBeVisible();
+});
