@@ -50,6 +50,7 @@ export default {
   units,
   bank: () => import('./bank.js'),
   formulas: () => import('./formulas.js'),
+  methods: () => import('./methods.js'),
   legacy,
   migrate,
 };

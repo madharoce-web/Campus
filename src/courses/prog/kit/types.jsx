@@ -48,7 +48,18 @@ const PS = {
     psExample: 'Ejemplo: entrada', psMust: 'debe salir',
   },
 };
-PS.en = { ...PS.es, run: 'Run', examples: 'Try the examples', check: 'Check', input: 'Program input', output: 'Output', allOk: 'All tests passed.', cerr: 'Compilation error.', forExample: 'For example:' };
+PS.en = {
+  run: 'Run', examples: 'Try the examples', check: 'Check', input: 'Program input', output: 'Output', reset: 'Empty template',
+  allOk: 'All tests passed.', exOk: 'The examples come out right. Now press “Check” to run the hidden tests too.', exKo: (a, b) => a + '/' + b + ' examples correct.',
+  allKo: (a, b) => a + '/' + b + ' tests passed. It must pass them all to score.', cerr: 'Compilation error.', hidden: 'Hidden test', example: 'Example',
+  showHidden: 'Show the hidden tests', expected: 'Expected', got: 'Obtained', test: 'Test', forExample: 'For example:', result: 'Result',
+  hidOk: 'passed', hidKo: 'not passed', running: 'Running the tests…', compiling: 'Compiling…', review: 'Review of the statement',
+  target: (m) => 'target ' + m + ' min', engine: 'Engine', clang: 'Clang 22 (real, 29 MB the first time)', interp: 'Lightweight interpreter',
+  examNote: 'Press “Check” before handing in: as in CodeRunner, the question only scores if it passes all the tests.',
+  psOk: 'All correct: it passes all the test sets and the notation is the course one.', psSyn: 'Syntax error', psNot: (n) => n + ' notation errors',
+  psPass: (a, b) => a + '/' + b + ' tests passed', ownIn: 'Try your own input:', left: (n) => n + ' input data items were left unread.',
+  psExample: 'Example: input', psMust: 'must output',
+};
 
 /* esborranys: el codi de cada exercici es desa en aquest dispositiu */
 const DRAFTS = 'kit-prog-drafts';
@@ -70,7 +81,7 @@ function EngLine() {
         <option value="interp">{P.interp}</option>
       </select>
       {state && <span className="pg-engst">{state}</span>}
-      {e.mode === 'interp' && e.why ? <span className="pg-engst">{L("(Clang no s'ha pogut carregar)", '(Clang no se ha podido cargar)')}</span> : null}
+      {e.mode === 'interp' && e.why ? <span className="pg-engst">{L("(Clang no s'ha pogut carregar)", '(Clang no se ha podido cargar)', '(Clang could not be loaded)')}</span> : null}
     </label>
   );
 }
@@ -121,7 +132,7 @@ function Results({ R, exam }) {
   const e = useCppEngine();
   const [showHid, setShowHid] = useState(false);
   if (R.compileErr) return <pre className="console pg-console"><span className="err">{P.cerr + '\n' + (R.diags || []).join('\n')}</span></pre>;
-  const errMsg = (x) => (x.trap ? trapMsg(x.trap, L, e.mode) : L('El programa ha acabat amb el codi ', 'El programa ha terminado con el código ') + x.exit);
+  const errMsg = (x) => (x.trap ? trapMsg(x.trap, L, e.mode) : L('El programa ha acabat amb el codi ', 'El programa ha terminado con el código ', 'The program ended with code ') + x.exit);
   const hidOpen = showHid && !exam;
   return (
     <>

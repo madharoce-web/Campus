@@ -19,7 +19,7 @@ export function xpTokens(s, L) {
       i += w.length; continue;
     }
     const op = OPS.find((o) => s.startsWith(o, i));
-    if (!op) throw new Error(L('Símbol no reconegut: «', 'Símbolo no reconocido: «') + c + '»');
+    if (!op) throw new Error(L('Símbol no reconegut: «', 'Símbolo no reconocido: «', 'Unrecognised symbol: «') + c + '»');
     const map = { '*': '·', '−': '-', '<=': '≤', '>=': '≥', '<>': '≠', '!=': '≠', '==': '=' };
     out.push({ k: 'op', v: map[op] || op }); i += op.length;
   }
@@ -36,13 +36,13 @@ export function xpParse(toks, L) {
     if (isOp('NO')) { p++; return { o: 'NO', a: un() }; }
     if (isOp('-')) { p++; return { o: 'neg', a: un() }; }
     const t = toks[p++];
-    if (!t) throw new Error(L("L'expressió està incompleta", 'La expresión está incompleta'));
+    if (!t) throw new Error(L("L'expressió està incompleta", 'La expresión está incompleta', 'The expression is incomplete'));
     if (t.k === 'num' || t.k === 'bool') return { lit: t.v };
     if (t.k === 'id') return { id: t.v };
-    if (t.k === 'op' && t.v === '(') { const e = rel(); if (!isOp(')')) throw new Error(L('Falta un parèntesi de tancament', 'Falta un paréntesis de cierre')); p++; return { par: e }; }
-    throw new Error(L("No s'esperava «", 'No se esperaba «') + t.v + '»');
+    if (t.k === 'op' && t.v === '(') { const e = rel(); if (!isOp(')')) throw new Error(L('Falta un parèntesi de tancament', 'Falta un paréntesis de cierre', 'A closing parenthesis is missing')); p++; return { par: e }; }
+    throw new Error(L("No s'esperava «", 'No se esperaba «', 'Unexpected «') + t.v + '»');
   }
-  const e = rel(); if (p < toks.length) throw new Error(L('Sobra «', 'Sobra «') + toks[p].v + '»'); return e;
+  const e = rel(); if (p < toks.length) throw new Error(L('Sobra «', 'Sobra «', 'Extra «') + toks[p].v + '»'); return e;
 }
 
 export function xpShow(v) { return typeof v === 'boolean' ? (v ? 'V' : 'F') : Number.isInteger(v) ? String(v) : String(+v.toFixed(4)).replace('.', ','); }
@@ -50,18 +50,18 @@ export function xpShow(v) { return typeof v === 'boolean' ? (v ? 'V' : 'F') : Nu
 export function xpEval(e, vars, steps, L) {
   if (e.par) return xpEval(e.par, vars, steps, L);
   if ('lit' in e) return e.lit;
-  if (e.id) { if (!(e.id in vars)) throw new Error(L('La variable «', 'La variable «') + e.id + L('» no té valor', '» no tiene valor')); return vars[e.id]; }
-  if (e.o === 'NO') { const a = xpEval(e.a, vars, steps, L); if (typeof a !== 'boolean') throw new Error(L('NO necessita un valor lògic i ha rebut ', 'NO necesita un valor lógico y ha recibido ') + xpShow(a)); steps.push('NO ' + xpShow(a) + ' = ' + xpShow(!a)); return !a; }
-  if (e.o === 'neg') { const a = xpEval(e.a, vars, steps, L); if (typeof a !== 'number') throw new Error(L('El signe − necessita un nombre', 'El signo − necesita un número')); return -a; }
+  if (e.id) { if (!(e.id in vars)) throw new Error(L('La variable «', 'La variable «', 'The variable «') + e.id + L('» no té valor', '» no tiene valor', '» has no value')); return vars[e.id]; }
+  if (e.o === 'NO') { const a = xpEval(e.a, vars, steps, L); if (typeof a !== 'boolean') throw new Error(L('NO necessita un valor lògic i ha rebut ', 'NO necesita un valor lógico y ha recibido ', 'NO needs a logical value and has received ') + xpShow(a)); steps.push('NO ' + xpShow(a) + ' = ' + xpShow(!a)); return !a; }
+  if (e.o === 'neg') { const a = xpEval(e.a, vars, steps, L); if (typeof a !== 'number') throw new Error(L('El signe − necessita un nombre', 'El signo − necesita un número', 'The − sign needs a number')); return -a; }
   const a = xpEval(e.a, vars, steps, L), b = xpEval(e.b, vars, steps, L), o = e.o;
-  const num = (x) => { if (typeof x !== 'number') throw new Error(L("L'operador ", 'El operador ') + o + L(' necessita nombres i ha rebut ', ' necesita números y ha recibido ') + xpShow(x) + L(' (un valor lògic). Amb les prioritats del curs, cal posar parèntesis.', ' (un valor lógico). Con las prioridades del curso, hay que poner paréntesis.')); return x; };
-  const bool = (x) => { if (typeof x !== 'boolean') throw new Error(L("L'operador ", 'El operador ') + o + L(' necessita valors lògics i ha rebut ', ' necesita valores lógicos y ha recibido ') + xpShow(x) + L('. Amb les prioritats del curs, cal posar parèntesis a les comparacions.', '. Con las prioridades del curso, hay que poner paréntesis en las comparaciones.')); return x; };
+  const num = (x) => { if (typeof x !== 'number') throw new Error(L("L'operador ", 'El operador ', 'The operator ') + o + L(' necessita nombres i ha rebut ', ' necesita números y ha recibido ', ' needs numbers and has received ') + xpShow(x) + L(' (un valor lògic). Amb les prioritats del curs, cal posar parèntesis.', ' (un valor lógico). Con las prioridades del curso, hay que poner paréntesis.', ' (a logical value). With the course precedence, you need parentheses.')); return x; };
+  const bool = (x) => { if (typeof x !== 'boolean') throw new Error(L("L'operador ", 'El operador ', 'The operator ') + o + L(' necessita valors lògics i ha rebut ', ' necesita valores lógicos y ha recibido ', ' needs logical values and has received ') + xpShow(x) + L('. Amb les prioritats del curs, cal posar parèntesis a les comparacions.', '. Con las prioridades del curso, hay que poner paréntesis en las comparaciones.', '. With the course precedence, comparisons need parentheses.')); return x; };
   let r;
   switch (o) {
     case '+': r = num(a) + num(b); break; case '-': r = num(a) - num(b); break; case '·': r = num(a) * num(b); break;
-    case '/': if (num(b) === 0) throw new Error(L('Divisió per zero', 'División por cero')); r = num(a) / b; break;
-    case '‖': if (!Number.isInteger(num(a)) || !Number.isInteger(num(b))) throw new Error(L('‖ necessita enters', '‖ necesita enteros')); if (b === 0) throw new Error(L('Divisió per zero', 'División por cero')); r = Math.trunc(a / b); break;
-    case '|R': if (!Number.isInteger(num(a)) || !Number.isInteger(num(b))) throw new Error(L('|R necessita enters', '|R necesita enteros')); if (b === 0) throw new Error(L('Divisió per zero', 'División por cero')); r = a % b; break;
+    case '/': if (num(b) === 0) throw new Error(L('Divisió per zero', 'División por cero', 'Division by zero')); r = num(a) / b; break;
+    case '‖': if (!Number.isInteger(num(a)) || !Number.isInteger(num(b))) throw new Error(L('‖ necessita enters', '‖ necesita enteros', '‖ needs integers')); if (b === 0) throw new Error(L('Divisió per zero', 'División por cero', 'Division by zero')); r = Math.trunc(a / b); break;
+    case '|R': if (!Number.isInteger(num(a)) || !Number.isInteger(num(b))) throw new Error(L('|R necessita enters', '|R necesita enteros', '|R needs integers')); if (b === 0) throw new Error(L('Divisió per zero', 'División por cero', 'Division by zero')); r = a % b; break;
     case 'I': r = bool(a) && bool(b); break; case 'O': r = bool(a) || bool(b); break;
     case '=': r = a === b; break; case '≠': r = a !== b; break;
     case '<': r = num(a) < num(b); break; case '>': r = num(a) > num(b); break; case '≤': r = num(a) <= num(b); break; case '≥': r = num(a) >= num(b); break;

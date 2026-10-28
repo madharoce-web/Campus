@@ -43,15 +43,15 @@ export function diffText(a, b, tokens, L) {
   const A = map(a.frames), B = map(b.frames);
   Object.keys(B).forEach((key) => {
     const v = B[key], o = A[key];
-    if (!o) { if (v.v !== '?') out.push(v.n + ' = ' + v.v); else out.push(L('es crea ', 'se crea ') + v.n + L(' (sense valor)', ' (sin valor)')); }
+    if (!o) { if (v.v !== '?') out.push(v.n + ' = ' + v.v); else out.push(L('es crea ', 'se crea ', 'created ') + v.n + L(' (sense valor)', ' (sin valor)', ' (no value)')); }
     else if (o.v !== v.v) out.push(v.n + ': ' + o.v + ' → ' + v.v);
   });
   const fa = a.frames.map((f) => f.fn), fb = b.frames.map((f) => f.fn);
-  if (fb.length > fa.length) out.unshift(L('crida a ', 'llamada a ') + fb[fb.length - 1] + '()');
-  if (fb.length < fa.length) out.unshift(L('torna de ', 'vuelve de ') + fa[fa.length - 1] + '()');
-  if (b.out.length > a.out.length) out.push(L('escriu «', 'escribe «') + b.out.slice(a.out.length).replace(/\n/g, '↵') + '»');
-  if (b.used > a.used) out.push(L('llegeix ', 'lee ') + tokens.slice(a.used, b.used).join(' '));
-  return out.length ? out.join(' · ') : L("cap canvi visible (s'ha avaluat una condició o s'ha saltat)", 'ningún cambio visible (se ha evaluado una condición o se ha saltado)');
+  if (fb.length > fa.length) out.unshift(L('crida a ', 'llamada a ', 'call to ') + fb[fb.length - 1] + '()');
+  if (fb.length < fa.length) out.unshift(L('torna de ', 'vuelve de ', 'returns from ') + fa[fa.length - 1] + '()');
+  if (b.out.length > a.out.length) out.push(L('escriu «', 'escribe «', 'writes «') + b.out.slice(a.out.length).replace(/\n/g, '↵') + '»');
+  if (b.used > a.used) out.push(L('llegeix ', 'lee ', 'reads ') + tokens.slice(a.used, b.used).join(' '));
+  return out.length ? out.join(' · ') : L("cap canvi visible (s'ha avaluat una condició o s'ha saltat)", 'ningún cambio visible (se ha evaluado una condición o se ha saltado)', 'no visible change (a condition was evaluated or skipped)');
 }
 
 /** Tira de la seqüència amb el capçal (data-strip="var,inici,final"). null si no s'ha de mostrar. */

@@ -19,38 +19,38 @@ function EngStatus() {
   if (e.state === 'loading') return (
     <div className="ip-eng">
       <span className="ip-spin" />
-      <span>{L('Carregant el compilador Clang', 'Cargando el compilador Clang')} · {pct}% {L('(uns 29 MB, només el primer cop)', '(unos 29 MB, solo la primera vez)')}</span>
+      <span>{L('Carregant el compilador Clang', 'Cargando el compilador Clang', 'Loading the Clang compiler')} · {pct}% {L('(uns 29 MB, només el primer cop)', '(unos 29 MB, solo la primera vez)', '(about 29 MB, only the first time)')}</span>
       <span className="bar"><i style={{ width: pct + '%' }} /></span>
     </div>
   );
-  if (e.state === 'warming') return <div className="ip-eng"><span className="ip-spin" /><span>{L('Preparant el compilador…', 'Preparando el compilador…')}</span></div>;
-  if (e.mode === 'interp') return <div className="ip-eng"><span>{L("Clang no s'ha pogut carregar: s'usa l'intèrpret lleuger.", 'Clang no se ha podido cargar: se usa el intérprete ligero.')}</span></div>;
-  if (e.state === 'ready') return <div className="ip-eng"><span>{L('Clang 22 · C++17 · compilat al navegador', 'Clang 22 · C++17 · compilado en el navegador')}</span></div>;
-  return <div className="ip-eng"><span>{L('El compilador es carrega quan premeu «Executa».', 'El compilador se carga cuando pulsáis «Ejecuta».')}</span></div>;
+  if (e.state === 'warming') return <div className="ip-eng"><span className="ip-spin" /><span>{L('Preparant el compilador…', 'Preparando el compilador…', 'Preparing the compiler…')}</span></div>;
+  if (e.mode === 'interp') return <div className="ip-eng"><span>{L("Clang no s'ha pogut carregar: s'usa l'intèrpret lleuger.", 'Clang no se ha podido cargar: se usa el intérprete ligero.', 'Clang could not be loaded: the lightweight interpreter is used.')}</span></div>;
+  if (e.state === 'ready') return <div className="ip-eng"><span>{L('Clang 22 · C++17 · compilat al navegador', 'Clang 22 · C++17 · compilado en el navegador', 'Clang 22 · C++17 · compiled in the browser')}</span></div>;
+  return <div className="ip-eng"><span>{L('El compilador es carrega quan premeu «Executa».', 'El compilador se carga cuando pulsáis «Ejecuta».', 'The compiler loads when you press “Run”.')}</span></div>;
 }
 
 /** Contingut de la consola a partir de l'estat de l'execució (es repinta en canviar d'idioma). */
 function Console({ con }) {
   const { L } = useLang();
-  const none = <span className="sys">{L('(el programa no ha escrit res)', '(el programa no ha escrito nada)')}</span>;
+  const none = <span className="sys">{L('(el programa no ha escrit res)', '(el programa no ha escrito nada)', '(the program did not write anything)')}</span>;
   if (!con) return null;
   switch (con.s) {
-    case 'compiling': return <span className="sys">{L('Compilant…', 'Compilando…')}</span>;
-    case 'waiting': return <span className="sys">{L('Esperant el compilador…', 'Esperando el compilador…')}</span>;
-    case 'running': return <span className="sys">{L('Executant…', 'Ejecutando…')}</span>;
-    case 'cerr': return <span className="err">{L('Error de compilació:', 'Error de compilación:') + '\n' + (con.diags || []).join('\n')}</span>;
+    case 'compiling': return <span className="sys">{L('Compilant…', 'Compilando…', 'Compiling…')}</span>;
+    case 'waiting': return <span className="sys">{L('Esperant el compilador…', 'Esperando el compilador…', 'Waiting for the compiler…')}</span>;
+    case 'running': return <span className="sys">{L('Executant…', 'Ejecutando…', 'Running…')}</span>;
+    case 'cerr': return <span className="err">{L('Error de compilació:', 'Error de compilación:', 'Compilation error:') + '\n' + (con.diags || []).join('\n')}</span>;
     case 'ps': {
       const r = con.r;
-      const lines = r.out.length > 400 ? r.out.slice(0, 400).concat([L('… (', '… (') + (r.out.length - 400) + L(' línies més)', ' líneas más)')]) : r.out;
+      const lines = r.out.length > 400 ? r.out.slice(0, 400).concat([L('… (', '… (', '… (') + (r.out.length - 400) + L(' línies més)', ' líneas más)', ' more lines)')]) : r.out;
       const txt = lines.join('\n');
-      if (!r.ok) return <>{txt}{txt ? '\n' : ''}<span className="err">{L('Error', 'Error') + (r.line ? ' (' + L('línia', 'línea') + ' ' + r.line + ')' : '') + ': ' + r.err}</span></>;
+      if (!r.ok) return <>{txt}{txt ? '\n' : ''}<span className="err">{L('Error', 'Error', 'Error') + (r.line ? ' (' + L('línia', 'línea', 'line') + ' ' + r.line + ')' : '') + ': ' + r.err}</span></>;
       if (!txt && !r.left) return none;
-      return <>{txt}{r.left ? <>{'\n'}<span className="sys">{L('(han sobrat ' + r.left + " dades d'entrada sense llegir)", '(han sobrado ' + r.left + ' datos de entrada sin leer)')}</span></> : null}</>;
+      return <>{txt}{r.left ? <>{'\n'}<span className="sys">{L(`(han sobrat ${r.left} dades d'entrada sense llegir)`, `(han sobrado ${r.left} datos de entrada sin leer)`, `(${r.left} input data items were left unread)`)}</span></> : null}</>;
     }
     case 'out': {
       const r = con.r, txt = r.stdout || '';
       let tail;
-      if (r.kind === 'ok') tail = r.exitCode && r.exitCode !== 0 ? <>{'\n'}<span className="sys">{L('(el programa ha acabat amb codi ', '(el programa ha terminado con código ') + r.exitCode + ')'}</span></> : null;
+      if (r.kind === 'ok') tail = r.exitCode && r.exitCode !== 0 ? <>{'\n'}<span className="sys">{L('(el programa ha acabat amb codi ', '(el programa ha terminado con código ', '(the program ended with code ') + r.exitCode + ')'}</span></> : null;
       else if (r.kind === 'compile') tail = <span className="err">{r.error || ''}</span>;
       else tail = <>{txt ? '\n' : ''}<span className="err">{con.trap}</span></>;
       if (!txt && !tail) return none;
@@ -68,7 +68,7 @@ export default function CodeBlock({ lang = 'txt', src, title, run, trace, nonum,
   const { L } = useLang();
   const uid = useId();
   const canRun = !!run && lang !== 'txt', canTrace = !!trace && lang !== 'txt';
-  const name = { cpp: 'C++', ps: L('Pseudocodi', 'Pseudocódigo'), txt: L('Text', 'Texto') }[lang] || lang;
+  const name = { cpp: 'C++', ps: L('Pseudocodi', 'Pseudocódigo', 'Pseudocode'), txt: L('Text', 'Texto', 'Text') }[lang] || lang;
   const [edited, setEdited] = useState(null); // codi confirmat amb «Fet»
   const [draft, setDraft] = useState(null); // text de l'editor (null: no s'edita)
   const [input, setInput] = useState(input0);
@@ -159,33 +159,33 @@ export default function CodeBlock({ lang = 'txt', src, title, run, trace, nonum,
         <span className="ip-cbl">{name}</span>
         {title ? <span className="ip-cbt">{title}</span> : null}
         <span className="ip-cbsp" />
-        <button type="button" className="ip-btn out sm" data-a="copy" title={L('Copia el codi', 'Copia el código')} onClick={copy}>
-          {copied ? <>{I.check}{L('Copiat', 'Copiado')}</> : <>{I.copy}{L('Copia', 'Copia')}</>}
+        <button type="button" className="ip-btn out sm" data-a="copy" title={L('Copia el codi', 'Copia el código', 'Copy the code')} onClick={copy}>
+          {copied ? <>{I.check}{L('Copiat', 'Copiado', 'Copied')}</> : <>{I.copy}{L('Copia', 'Copia', 'Copy')}</>}
         </button>
         {canRun || canTrace ? (
           <button type="button" className="ip-btn out sm" data-a="edit" onClick={toggleEdit}>
-            {editing ? <>{I.check}{L('Fet', 'Hecho')}</> : <>{I.edit}{L('Edita', 'Edita')}</>}
+            {editing ? <>{I.check}{L('Fet', 'Hecho', 'Done')}</> : <>{I.edit}{L('Edita', 'Edita', 'Edit')}</>}
           </button>
         ) : null}
         {canTrace ? (
           <button type="button" className="ip-btn out sm" data-a="trace" onClick={() => { if (editing) toggleEdit(); setTracing((t) => !t); }}>
-            {tracing ? <>{I.x}{L('Tanca la traça', 'Cierra la traza')}</> : <>{I.step}{L('Traça pas a pas', 'Traza paso a paso')}</>}
+            {tracing ? <>{I.x}{L('Tanca la traça', 'Cierra la traza', 'Close the trace')}</> : <>{I.step}{L('Traça pas a pas', 'Traza paso a paso', 'Step-by-step trace')}</>}
           </button>
         ) : null}
         {canRun ? (
-          <button type="button" className="ip-btn pri sm" data-a="run" disabled={busy} onClick={onRun}>{I.play}{L('Executa', 'Ejecuta')}</button>
+          <button type="button" className="ip-btn pri sm" data-a="run" disabled={busy} onClick={onRun}>{I.play}{L('Executa', 'Ejecuta', 'Run')}</button>
         ) : null}
         {lang === 'cpp' && canRun ? (
-          <Link className="ip-btn out sm" data-a="pati" to="/programacio/temari/s2#pati" title={L('Obre el codi al pati de proves del C++', 'Abre el código en el patio de pruebas del C++')}
+          <Link className="ip-btn out sm" data-a="pati" to="/programacio/temari/s2#pati" title={L('Obre el codi al pati de proves del C++', 'Abre el código en el patio de pruebas del C++', 'Open the code in the C++ playground')}
             onClick={() => { lsSet('ip-pati-code', getSrc()); lsSet('ip-pati-in', input); }}>
-            {I.ext}{L('Pati', 'Patio')}
+            {I.ext}{L('Pati', 'Patio', 'Playground')}
           </Link>
         ) : null}
       </div>
       <div className="ip-cbb" style={tracing ? { display: 'none' } : undefined}>
         {editing ? (
           <textarea ref={taRef} className="ip-ed" spellCheck={false} rows={Math.min(30, cur.split('\n').length + 1)}
-            aria-label={L('Codi editable', 'Código editable')} value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={onTab} />
+            aria-label={L('Codi editable', 'Código editable', 'Editable code')} value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={onTab} />
         ) : (
           <pre ref={codeRef} className={'ip-code' + (nonum ? ' nonum' : '')}><CodeLines lines={lines} err={errLine} /></pre>
         )}
@@ -195,14 +195,14 @@ export default function CodeBlock({ lang = 'txt', src, title, run, trace, nonum,
         <div className="ip-run">
           <div className="ip-runrow">
             <div className="ip-runin">
-              <label htmlFor={uid + 'in'}>{L('Entrada (stdin)', 'Entrada (stdin)')}</label>
+              <label htmlFor={uid + 'in'}>{L('Entrada (stdin)', 'Entrada (stdin)', 'Input (stdin)')}</label>
               <textarea id={uid + 'in'} className="ip-stdin" spellCheck={false} value={input} onChange={(e) => setInput(e.target.value)} />
             </div>
-            <button type="button" className="ip-btn pri" data-a="go" disabled={busy} onClick={doRun}>{I.play}{L('Executa', 'Ejecuta')}</button>
+            <button type="button" className="ip-btn pri" data-a="go" disabled={busy} onClick={doRun}>{I.play}{L('Executa', 'Ejecuta', 'Run')}</button>
           </div>
           {lang === 'cpp' ? <EngStatus /> : null}
           <div>
-            <label className="ip-trlab">{L('Consola', 'Consola')}</label>
+            <label className="ip-trlab">{L('Consola', 'Consola', 'Console')}</label>
             <pre className="ip-con" aria-live="polite"><Console con={con} /></pre>
           </div>
         </div>
