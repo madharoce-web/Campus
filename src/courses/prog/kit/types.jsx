@@ -33,7 +33,7 @@ const PS = {
     examNote: 'Prem «Comprova» abans de lliurar: com al CodeRunner, la pregunta només puntua si passa totes les proves.',
     psOk: 'Tot correcte: passa tots els jocs de proves i la notació és la del curs.', psSyn: 'Error de sintaxi', psNot: (n) => n + ' errors de notació',
     psPass: (a, b) => a + '/' + b + ' proves superades', ownIn: 'Prova amb una entrada pròpia:', left: (n) => 'Han sobrat ' + n + ' dades d\'entrada sense llegir.',
-    psExample: 'Exemple: entrada', psMust: 'ha de sortir',
+    psExample: 'Exemple: entrada', psMust: 'ha de sortir', psLabel: 'Pseudocodi',
   },
   es: {
     run: 'Ejecuta', examples: 'Prueba los ejemplos', check: 'Comprueba', input: 'Entrada del programa', output: 'Salida', reset: 'Plantilla vacía',
@@ -45,7 +45,7 @@ const PS = {
     examNote: 'Pulsa «Comprueba» antes de entregar: como en el CodeRunner, la pregunta solo puntúa si pasa todas las pruebas.',
     psOk: 'Todo correcto: pasa todos los juegos de pruebas y la notación es la del curso.', psSyn: 'Error de sintaxis', psNot: (n) => n + ' errores de notación',
     psPass: (a, b) => a + '/' + b + ' pruebas superadas', ownIn: 'Prueba con una entrada propia:', left: (n) => 'Han sobrado ' + n + ' datos de entrada sin leer.',
-    psExample: 'Ejemplo: entrada', psMust: 'debe salir',
+    psExample: 'Ejemplo: entrada', psMust: 'debe salir', psLabel: 'Pseudocódigo',
   },
 };
 PS.en = {
@@ -58,7 +58,7 @@ PS.en = {
   examNote: 'Press “Check” before handing in: as in CodeRunner, the question only scores if it passes all the tests.',
   psOk: 'All correct: it passes all the test sets and the notation is the course one.', psSyn: 'Syntax error', psNot: (n) => n + ' notation errors',
   psPass: (a, b) => a + '/' + b + ' tests passed', ownIn: 'Try your own input:', left: (n) => n + ' input data items were left unread.',
-  psExample: 'Example: input', psMust: 'must output',
+  psExample: 'Example: input', psMust: 'must output', psLabel: 'Pseudocode',
 };
 
 /* esborranys: el codi de cada exercici es desa en aquest dispositiu */
@@ -302,7 +302,7 @@ function Pseudo({ ex, value, onChange, disabled, checked, onCheck, exam }) {
   return (
     <div className="pg-ps" data-course="pseudo">
       <div className="tiny muted">{P.psExample} <span className="f">{ex.tests[0].in.join(' ')}</span> → {P.psMust} <span className="f">{ex.tests[0].out.join(' … ')}</span></div>
-      <PsEditor id={'ed-' + ex.id} value={code} onChange={edit} readOnly={disabled} label="Pseudocodi" />
+      <PsEditor id={'ed-' + ex.id} value={code} onChange={edit} readOnly={disabled} label={P.psLabel} />
       {!disabled && (
         <div className="row">
           <button type="button" className="btn primary pg-chk" onClick={doCheck}>{P.check}</button>
@@ -341,6 +341,24 @@ function PrintPseudo({ ex }) {
   );
 }
 
+/** Clau del full de solucions: tots els jocs de proves (exemples i ocults) amb la sortida esperada. */
+function KeyTests({ ex }) {
+  const { ui } = useLang();
+  const P = PS[ui];
+  const ps = ex.type === 'pseudo';
+  const rows = ps
+    ? ex.tests.map((t) => [t.in.join(' '), t.out.join(' ')])
+    : ex.examples.concat(ex.tests || []).map((t) => [t.in.replace(/\n$/, ''), t.out.replace(/\n$/, '')]);
+  return (
+    <div className="kit-tw">
+      <table className="kit-table pg-extab">
+        <thead><tr><th>{P.test}</th><th>{P.input}</th><th>{P.expected}</th></tr></thead>
+        <tbody>{rows.map(([i, o], n) => <tr key={n}><td>{n + 1}</td><td><pre>{i}</pre></td><td><pre>{o}</pre></td></tr>)}</tbody>
+      </table>
+    </div>
+  );
+}
+
 export const PROG_TYPES = {
   cpp: {
     inline: true,
@@ -349,7 +367,7 @@ export const PROG_TYPES = {
     check: (ex, v) => (v && v.res && v.res.all ? v.res.ok : false),
     space: 'none',
     Print: PrintCpp,
-    key: () => '—',
+    Key: KeyTests,
   },
   pseudo: {
     inline: true,
@@ -357,6 +375,6 @@ export const PROG_TYPES = {
     check: (ex, v) => { const g = psGrade(ex, v && v.code); return g.ok ? true : g.score; },
     space: 'none',
     Print: PrintPseudo,
-    key: () => '—',
+    Key: KeyTests,
   },
 };

@@ -1,7 +1,7 @@
 /**
  * Tipus d'exercici propis de Matemàtiques (course.types de la plantilla). Tots fan servir els
  * generadors d'abans (content/), que es tornen a executar amb la llavor en l'idioma de la pàgina
- * (català o castellà; en anglès, en castellà fins que els generadors tinguin la traducció).
+ * (català, castellà o anglès).
  *   mbank  una plantilla del banc per nivells { t, lv, i, seed }: resposta numèrica, conjunt, complex,
  *          matriu, cert/fals, opcions o demostració (autoavaluada), amb pista i solució pas a pas.
  *   mprac  pràctica ràpida { k, seed }: Venn, ∅ i {∅}, classes mòdul n, Hasse… (vegeu prac.jsx).
@@ -24,6 +24,8 @@ const MS = {
   en: { warn: 'Write an answer (or choose the options) before checking it.', answer: 'Answer', fail: 'This exercise could not be generated.', yes: 'Yes', no: 'No', t: 'True', f: 'False', okSelf: 'Did you get it right?', partly: 'Not quite', model: 'Show the model solution', rub: 'How it is marked', pts: 'points', pt: 'point' },
 };
 const strip = (h) => String(h || '').replace(/<annotation[^>]*>[\s\S]*?<\/annotation>/g, '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+/** Solució d'una instància (pas a pas, amb el requadre de fórmules si n'hi ha) en HTML. */
+const solHtml = (C, I) => { const S_ = I.sol(); return (I.fx ? C.bkFormBox(I.fx()) : '') + (Array.isArray(S_) ? '<div class="steps">' + S_.map(C.stepRow).join('') + '</div>' : S_); };
 
 /* ---------- banc per nivells ---------- */
 /** Instància d'una plantilla (si una llavor no en genera cap, es prova amb les següents). */
@@ -139,7 +141,7 @@ function MBank({ ex, value, onChange, disabled, checked, onCheck, exam }) {
     );
   }
   const showAns = a.show ? a.show() : '';
-  const sol = () => { const S_ = I.sol(); return (I.fx ? C.bkFormBox(I.fx()) : '') + (Array.isArray(S_) ? '<div class="steps">' + S_.map(C.stepRow).join('') + '</div>' : S_); };
+  const sol = () => solHtml(C, I);
   const canSol = exam ? checked : true;
   return (
     <div className="mb" data-k={a.k}>
@@ -252,6 +254,51 @@ function PrintExam({ ex }) {
   );
 }
 
+/** Clau del full de solucions per al banc: la resposta curta i la solució pas a pas. */
+function KeyBank({ ex }) {
+  const { ui } = useLang();
+  const C = getContent(genLang(ui));
+  const I = bankInst(C, ex);
+  if (!I) return null;
+  const k = bankKey(C, ex, I, ui);
+  return (
+    <div className="kp-gen" data-course="mates">
+      {k && <p className="kp-key">{k}</p>}
+      <Rich html={solHtml(C, I)} />
+    </div>
+  );
+}
+
+/** Clau del full de solucions per al simulacre: la solució i la rúbrica de cada apartat. */
+function KeyExam({ ex }) {
+  const { ui } = useLang();
+  const M = MS[ui];
+  const lang = genLang(ui);
+  const C = getContent(lang);
+  const e = examData(lang, ex);
+  if (!e) return null;
+  return (
+    <div className="kp-gen" data-course="mates">
+      {e.parts.map((p, j) => (
+        <div key={j}>
+          {e.parts.length > 1 && <p className="kp-key">{'abcd'[j]})</p>}
+          <Rich html={solHtml(C, p)} />
+          <p className="kp-key">{M.rub} ({num(p.pts, ui, 0)} {M.pts})</p>
+          <ul>{p.rub.map(([f, t], k) => <li key={k}><b>{Math.round(f * 100)} %</b> · <Rich as="span" html={C.md(t)} /></li>)}</ul>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Resposta curta d'una instància del banc ('' si no en té, com les demostracions). */
+function bankKey(C, ex, I, ui) {
+  const a = I.a, M = MS[ui];
+  if (a.k === 'mc') return 'abcdef'[orderOf(ex, I).indexOf(a.c)] + ')';
+  if (a.k === 'tf') return a.items.map((x, j) => (j + 1) + ') ' + (x.v ? M.t : M.f)).join(' · ');
+  return a.show ? strip(a.show()) : '';
+}
+
 export const MATES_TYPES = {
   mbank: {
     inline: true,
@@ -260,14 +307,12 @@ export const MATES_TYPES = {
     space: 'none',
     Print: PrintBank,
     key: (ex, tr) => {
-      const C = getContent(tr(['ca', 'es', 'en']));
+      const ui = tr(['ca', 'es', 'en']);
+      const C = getContent(genLang(ui));
       const I = bankInst(C, ex);
-      if (!I) return '';
-      const a = I.a;
-      if (a.k === 'mc') return 'abcdef'[orderOf(ex, I).indexOf(a.c)] + ')';
-      if (a.k === 'tf') return a.items.map((x, j) => (j + 1) + ') ' + (x.v ? 'C' : 'F')).join(' · ');
-      return a.show ? strip(a.show()) : '—';
+      return I ? bankKey(C, ex, I, ui) : '';
     },
+    Key: KeyBank,
   },
   mprac: MPRAC,
   mexam: {
@@ -276,6 +321,6 @@ export const MATES_TYPES = {
     check: () => null,
     space: 'none',
     Print: PrintExam,
-    key: () => '—',
+    Key: KeyExam,
   },
 };

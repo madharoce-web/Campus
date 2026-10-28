@@ -79,7 +79,8 @@ export default function PrintExam() {
               return (
                 <div key={ex.id + (ex.seed || '')} className="kp-sol">
                   <h3>{S.q} {i + 1}</h3>
-                  {T.key && <p className="kp-key">{inline(T.key(ex, tr))}</p>}
+                  {/* T.Key (component) per als tipus amb una clau rica: solució per apartats, jocs de proves… */}
+                  {T.Key ? <T.Key ex={ex} /> : T.key && <p className="kp-key">{inline(T.key(ex, tr))}</p>}
                   {ex.steps && <ol>{ex.steps.map((st, j) => <li key={j}>{inline(tr(st && st.x !== undefined ? st.x : st))}</li>)}</ol>}
                   {ex.sol && <Blocks blocks={ex.sol} mode={mode} />}
                 </div>

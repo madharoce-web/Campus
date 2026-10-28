@@ -5,6 +5,8 @@
  *   space                                       espai de resposta per defecte al PDF
  *   Print({ ex })                               (opcional) la resposta al PDF: opcions per marcar…
  *   key(ex, tr) → text                          (opcional) la resposta correcta, per al full de solucions
+ *   Key({ ex })                                 (opcional) el mateix com a component, quan la clau no cap
+ *                                               en una línia (solució per apartats, jocs de proves…); té prioritat
  * Una assignatura pot afegir-ne de propis (course.types), p. ex. «set», «bits» o «cpp».
  */
 import { useId } from 'react';

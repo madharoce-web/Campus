@@ -109,6 +109,9 @@ for (const [path, k, u1, uc] of KIT) {
       }
       await page.locator('.kp-tools input[type="checkbox"]').check();
       await expect(page.locator('.kp-sol')).toHaveCount(await qs.count());
+      // cada solució té una clau de veritat (no «—»), també als tipus propis (mexam, cpp, pseudo)
+      await expect(page.locator('.kp-key', { hasText: /^\s*—\s*$/ })).toHaveCount(0);
+      for (const s of await page.locator('.kp-sol').all()) expect((await s.innerText()).split('\n').length).toBeGreaterThan(1);
       // impressió: només el full
       await page.emulateMedia({ media: 'print' });
       await expect(page.locator('#kit-tabs')).toBeHidden();
