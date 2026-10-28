@@ -127,6 +127,7 @@ y obtén el certificado con certbot. Es la opción que más mantenimiento pide.
 
 | Servicio | Configuración |
 |---|---|
+| **Cloudflare Workers** (el que se usa) | **Workers y Pages → Crear → Importar un repositorio** → `madharoce-web/Campus`. Comando de compilación `npm run build`, comando de implementación `npx wrangler deploy` (lee `wrangler.jsonc`: sirve `dist/`, las rutas de la aplicación devuelven `index.html` y aplica `public/_headers`). En **Configuración → Compilación → Variables y secretos** (de compilación, no de tiempo de ejecución): `NODE_VERSION=22`, `VITE_SUPABASE_URL` y `VITE_SUPABASE_PUBLISHABLE_KEY`. Dominio: **Configuración → Dominios y rutas → Agregar → Dominio personalizado**. Cada push a `main` publica la web. Para probarlo en local: `npm run build && npx wrangler dev`. |
 | **Cloudflare Pages** | Conecta el repositorio. Build command `npm run build`, output `dist`. Las rutas de la aplicación funcionan sin configurar nada y aplica `public/_headers`. Dominio: Pages → Custom domains. |
 | **Netlify** | Build `npm run build`, publish `dist`. Añade un archivo `public/_redirects` con la línea `/* /index.html 200`. Aplica `public/_headers`. |
 | **Vercel** | Framework Vite. Añade un `vercel.json` con `{"rewrites":[{"source":"/(.*)","destination":"/index.html"}]}`. |

@@ -1,0 +1,13 @@
+// Cloudflare Workers (només fitxers estàtics): serveix la web compilada (dist/) sense cap codi de servidor.
+//   - not_found_handling: les rutes de l'aplicació (/mates/temari/conj…) tornen index.html, com al servidor de Vite.
+//   - Les capçaleres de seguretat i de memòria cau són a public/_headers (es copia a dist/ en compilar).
+// Cloudflare compila amb `npm run build` i publica amb `npx wrangler deploy` (vegeu docs/DESPLIEGUE.md).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aula-mada",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
