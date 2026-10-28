@@ -9,6 +9,7 @@ import Exercise from './exercise/Exercise.jsx';
 import { markRead, recordPractice, setLast, useKit } from './state.js';
 import { useModule } from './useAsync.js';
 import { Adapting, ModeSwitch, useMode } from './Mode.jsx';
+import { useEx } from './refs.js';
 
 const ADAPT_MS = 650;
 const reduced = () => typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -52,6 +53,16 @@ export function Toc({ unitId, current, onPick, onJump, hasEnd }) {
       </ol>
     </nav>
   );
+}
+
+/** Exercici tipus examen del final del tema (pot venir del banc: { ref, seed? }). */
+function EndEx({ ex: raw, n }) {
+  const course = useCourse();
+  const st = useKit(course.k);
+  const ex = useEx(raw);
+  if (!ex) return null;
+  const pid = ex.ref || ex.id;
+  return <Exercise ex={ex} variant="end" n={n} done={st.practice[pid]?.ok} onResult={(r) => recordPractice(course.k, pid, r)} />;
 }
 
 /** Temari: índex a l'esquerra i la lliçó (un tema) amb el selector de mode. */
@@ -176,10 +187,7 @@ export default function Lesson({ unitId }) {
               <section id="kit-end" className="kit-end">
                 <h3 className="kit-sec-h">{S.examEndH}</h3>
                 <p className="kit-muted">{S.examEndP}</p>
-                {data.examEnd.map((ex, i) => (
-                  <Exercise key={ex.id} ex={ex} variant="end" n={i + 1} done={st.practice[ex.id]?.ok}
-                    onResult={(r) => recordPractice(course.k, ex.id, r)} />
-                ))}
+                {data.examEnd.map((ex, i) => <EndEx key={ex.id || ex.ref + '@' + (ex.seed ?? '')} ex={ex} n={i + 1} />)}
               </section>
             )}
             <nav className="kit-pn">

@@ -28,7 +28,7 @@ export function SvgDefs() {
   );
   return (
     <svg className="ip-defs" width="0" height="0" aria-hidden="true">
-      <defs>{m('ah', '#495057')}{m('aha', '#0f6cbf')}{m('aho', '#357a32')}{m('ahb', '#ca3120')}{m('ahq', '#c4307b')}</defs>
+      <defs>{m('ah', '#495057')}{m('aha', '#696e2e')}{m('aho', '#357a32')}{m('ahb', '#ca3120')}{m('ahq', '#c4307b')}</defs>
     </svg>
   );
 }

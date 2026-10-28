@@ -6,13 +6,13 @@
   color-scheme:light;
   --paper:#ffffff; --card:#ffffff; --sunk:#f8f9fa; --ink:#1d2125; --ink-2:#495057; --ink-3:#6a737b;
   --rule:#dee2e6; --rule-2:#e9ecef;
-  --accent:#0f6cbf; --accent-soft:#e7f1fa; --accent-line:#9ec5e8;
+  --accent:#696e2e; --accent-soft:#f1f2e6; --accent-line:#d5d7b8;
   --info:#00434e; --info-bg:#e7f3f5;
   --tip:#1c411a; --tip-bg:#e2f0e1;
   --warn:#7d5a29; --warn-bg:#fcefdc;
   --danger:#6a1a11; --danger-bg:#f4d6d2;
   --quiz:#001a1e; --quiz-bg:#e7f3f5;
-  --sel:#cfe2f2;
+  --sel:#d5d7b8;
   --bar-h:60px;
   --shadow:none;
   --ok:#357a32; --ok-bg:#d7e4d6;
@@ -22,7 +22,7 @@ html{scroll-behavior:auto}
 body{background:#fff; color:var(--ink); font-family:var(--m-sans); font-size:.9375rem; line-height:1.55}
 body::before{z-index:61; background:#fff}
 ::selection{background:var(--sel)}
-:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(15,108,191,.5); border-radius:.25rem}
+:focus-visible{outline:none; box-shadow:0 0 0 .2rem rgba(105,110,46,.5); border-radius:.25rem}
 .prog{background:var(--accent); height:3px; bottom:-1px}
 
 /* ---------- calaix esquerre: índex del curs ---------- */
@@ -47,7 +47,7 @@ body::before{z-index:61; background:#fff}
 #burger svg{stroke:var(--ink)}
 .searchwrap{width:260px; flex:0 1 260px; justify-self:auto}
 #q{height:36px; border:1px solid #8f959e; border-radius:.5rem; background:#fff; font-size:.875rem; padding:0 12px 0 32px}
-#q:focus{outline:none; border-color:#87b6df; box-shadow:0 0 0 .2rem rgba(15,108,191,.25)}
+#q:focus{outline:none; border-color:#b9bd8a; box-shadow:0 0 0 .2rem rgba(105,110,46,.25)}
 .searchwrap .ic{top:10.5px; stroke:var(--ink-2)}
 .kbd{display:none}
 .res{top:42px; left:auto; right:0; width:min(460px, calc(100vw - 32px)); border:1px solid rgba(0,0,0,.15); border-radius:.5rem; box-shadow:0 .5rem 1rem rgba(0,0,0,.15)}
@@ -73,7 +73,7 @@ body::before{z-index:61; background:#fff}
 .doc h4{font-family:var(--m-sans); scroll-margin-top:76px}
 .doc h5{letter-spacing:.06em; scroll-margin-top:76px}
 .doc a{color:var(--accent); text-decoration:none}
-.doc a:hover{text-decoration:underline; color:#0c589c}
+.doc a:hover{text-decoration:underline; color:#55591f}
 .doc blockquote{border-left:3px solid var(--rule); color:var(--ink-2)}
 .doc code{font-family:var(--m-mono); background:transparent; color:var(--code-pink); padding:0; font-size:87.5%}
 .doc pre{background:#f8f9fa; border:1px solid var(--rule); border-left:1px solid var(--rule); border-radius:.5rem}
@@ -92,7 +92,7 @@ body::before{z-index:61; background:#fff}
 .co-i{display:none}
 .co-note{--c:#495057; --b:#f8f9fa}
 .co-info{--c:#00434e; --b:#e7f3f5}
-.co-abstract,.co-important{--c:#08385e; --b:#e7f1fa}
+.co-abstract,.co-important{--c:#08385e; --b:#f1f2e6}
 .co-tip{--c:#1c411a; --b:#e2f0e1}
 .co-warning{--c:#7d5a29; --b:#fcefdc}
 .co-danger{--c:#6a1a11; --b:#f4d6d2}
@@ -132,7 +132,7 @@ details.co > summary.co-t{cursor:pointer}
 .btn{border-radius:.5rem; padding:.375rem .75rem; font-size:.875rem; background:#ced4da; border:1px solid #ced4da; color:var(--ink)}
 .btn:hover{background:#b8c1ca; border-color:#b8c1ca; color:var(--ink)}
 .btn.pri{background:var(--accent); border-color:var(--accent); color:#fff; font-weight:400}
-.btn.pri:hover{background:#0c589c; border-color:#0c589c; color:#fff; filter:none}
+.btn.pri:hover{background:#55591f; border-color:#55591f; color:#fff; filter:none}
 
 /* ---------- pràctica (aspecte de pregunta de qüestionari) ---------- */
 .px-bar{border-radius:.5rem; border-color:var(--rule); background:#fff; box-shadow:0 2px 4px rgba(0,0,0,.06); backdrop-filter:none}
