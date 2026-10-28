@@ -17,11 +17,11 @@
  */
 import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { moduleSource } from './kit-import/zip.mjs';
 import { join as joinSeg, split as splitSeg } from './kit-seg.mjs';
 
-const ROOT = resolve(dirname(new URL(import.meta.url).pathname), '..');
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const TEXT = new Set(['x', 't', 'title', 'q', 'hint', 'note', 'caption', 'label', 'srcName', 'basedOn', 'why', 'svg', 'h', 'result', 'summary', 'sub', 'desc', 'tex', 'day', 'suffix', 'nf', 'ft']);
 const LIST = new Set(['items', 'head', 'opts', 'o', 'steps']);
 const SKIP = new Set(['answer', 'id', 'type', 'unit', 'level', 'src', 'ids', 'code', 'orig', 'n', 'tol', 'rel', 'langs', 'mode', 'lang', 'cls', 'props']);

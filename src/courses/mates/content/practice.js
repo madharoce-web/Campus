@@ -6,7 +6,7 @@ import { Z } from '../engine/z.js';
  */
 export function makePractice($) {
   const { IND, IND_ORDER, L, NUMPRE, eqCands, hAst, hEval, sParse } = $;
-  const PRK = () => [['comp', L('Comprensió', 'Comprensión')], ['buit', '∅ · {∅}'], ['venn', L('Pinta el Venn', 'Pinta el Venn')], ['ident', L('Identitat?', '¿Identidad?')], ['rel', L('Propietats', 'Propiedades')], ['mod', L('Classes mòdul n', 'Clases módulo n')], ['hasse', 'Hasse'], ['num', L('Nombres', 'Números')], ['cx', L('Complexos', 'Complejos')], ['ind', L('Inducció', 'Inducción')]];
+  const PRK = () => [['comp', L('Comprensió', 'Comprensión', 'Set-builder notation')], ['buit', '∅ · {∅}'], ['venn', L('Pinta el Venn', 'Pinta el Venn', 'Shade the Venn diagram')], ['ident', L('Identitat?', '¿Identidad?', 'Identity?')], ['rel', L('Propietats', 'Propiedades', 'Properties')], ['mod', L('Classes mòdul n', 'Clases módulo n', 'Classes modulo n')], ['hasse', 'Hasse'], ['num', L('Nombres', 'Números', 'Numbers')], ['cx', L('Complexos', 'Complejos', 'Complex numbers')], ['ind', L('Inducció', 'Inducción', 'Induction')]];
   const VPOOL = ['A∩(B∪C)', '(A∪B)∖C', 'A∖(B∩C)', '(A∩B)ᶜ∩C', 'Aᶜ∩Bᶜ', '(A∖B)∪(B∖A)', 'A∪(Bᶜ∩C)', '(A∪B)ᶜ', 'A∩Bᶜ∩Cᶜ', '(A∩B)∪(Bᶜ∩C)', 'C∖(A∪B)', '(A∪C)∩(B∪C)', '(A∖C)∪(C∖B)', 'B∩(A∪C)ᶜ'];
   const IPOOL = [['A∖(B∪C)', '(A∖B)∖C'], ['A∩(B∖C)', '(A∩B)∖C'], ['(A∪B)∖C', '(A∖C)∪(B∖C)'], ['A∖(B∩C)', '(A∖B)∪(A∖C)'], ['(Aᶜ∪B)ᶜ', 'A∖B'], ['A∪(Aᶜ∩B)', 'A∪B'], ['(A∩B)∪(A∩Bᶜ)', 'A'], ['(A∩B)ᶜ', 'Aᶜ∪Bᶜ'],
     ['A∖(B∖C)', '(A∖B)∖C'], ['A∪(B∩C)', '(A∪B)∩C'], ['(A∪B)∖C', 'A∪(B∖C)'], ['A∖(B∪C)', '(A∖B)∪(A∖C)'], ['(A∩B)ᶜ', 'Aᶜ∩Bᶜ'], ['A∖B', 'B∖A'], ['A∪(B∖A)', 'B'], ['(A∖B)∪B', 'A'], ['A∩(B∪C)', '(A∩B)∪C'], ['(A∖B)∩C', 'A∩(C∖B)']];
