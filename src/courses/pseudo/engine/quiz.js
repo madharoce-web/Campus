@@ -9,7 +9,7 @@ import { EXS } from '../data/exercises.js';
 import { ESQ, NOTA, TEO } from '../data/quiz.js';
 import { TEMPLATE } from '../data/editor.js';
 
-const B2 = (ca, es) => ({ ca, es });
+const B2 = (ca, es, en) => ({ ca, es, en });
 
 /* ---------- preguntes de tria ---------- */
 export function newNota() { return { it: pick(NOTA), r: shuffled(0, [1, 2, 3]), ans: null, done: false }; }
@@ -58,11 +58,11 @@ export function newExam(now) {
   const ex = [byK(['seq', 'cond']), byK(['rec']), byK(['cerca'])];
   const mc = [];
   shuffle(TEO).slice(0, 3).forEach((it) => { const r = shuffled(0, [1, 2, 3]); mc.push({ q: it.q, opts: r.opts.map((i) => it.o[i]), gi: r.gi, w: it.o[0], src: 'teo' }); });
-  shuffle(NOTA).slice(0, 2).forEach((it) => { const r = shuffled(0, [1, 2, 3]); mc.push({ q: B2('Com s\'escriu al pseudocodi del curs?', '¿Cómo se escribe en el pseudocódigo del curso?'), code: it.c, opts: r.opts.map((i) => it.o[i]), gi: r.gi, w: it.o[0], mono: true }); });
+  shuffle(NOTA).slice(0, 2).forEach((it) => { const r = shuffled(0, [1, 2, 3]); mc.push({ q: B2('Com s\'escriu al pseudocodi del curs?', '¿Cómo se escribe en el pseudocódigo del curso?', 'How is it written in the course pseudocode?'), code: it.c, opts: r.opts.map((i) => it.o[i]), gi: r.gi, w: it.o[0], mono: true }); });
   shuffle(ESQ).slice(0, 2).forEach((it) => { const idx = shuffle([...Array(it.o.length).keys()]); mc.push({ q: it.q, opts: idx.map((i) => it.o[i]), gi: idx.indexOf(it.g), w: it.w }); });
   let g; do g = genPrio(); while (g.bool);
   const alts = [ltr(g.e), String(+g.v + 1), String(+g.v - 1), String(+g.v + 2)].filter((x, i, a) => x != null && x !== g.v && a.indexOf(x) === i).slice(0, 3);
-  const r = shuffled(g.v, alts); mc.push({ q: B2('Quant val aquesta expressió?', '¿Cuánto vale esta expresión?'), code: g.e, opts: r.opts, gi: r.gi, w: g.par + ' = ' + g.v, mono: true });
+  const r = shuffled(g.v, alts); mc.push({ q: B2('Quant val aquesta expressió?', '¿Cuánto vale esta expresión?', 'What is the value of this expression?'), code: g.e, opts: r.opts, gi: r.gi, w: g.par + ' = ' + g.v, mono: true });
   return { id: ++seq, ex, mc, ans: {}, code: {}, done: false, res: null, end: now + EXAM_MIN * 60000 };
 }
 /** Correcció: cada algorisme val 2,5 (0,7 proves + 0,3 notació) i les preguntes, 2,5 en total. */

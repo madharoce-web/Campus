@@ -4,7 +4,8 @@ export default {
   {
    "t": [
     "Tipus i accions · Tipus",
-    "Tipos y acciones · Tipo"
+    "Tipos y acciones · Tipo",
+    "Types and actions · Type"
    ],
    "unit": "xu",
    "items": [
@@ -41,12 +42,14 @@ export default {
     {
      "t": [
       "Subrang, Enumeratiu",
-      "Subrango, Enumerado"
+      "Subrango, Enumerado",
+      "Subrange, Enumerated"
      ],
      "id": "xu2-0-6",
      "x": [
       "definits pel programador",
-      "definidos por el programador"
+      "definidos por el programador",
+      "defined by the programmer"
      ]
     }
    ]
@@ -54,7 +57,8 @@ export default {
   {
    "t": [
     "Tipus i accions · Acció",
-    "Tipos y acciones · Acción"
+    "Tipos y acciones · Acción",
+    "Types and actions · Action"
    ],
    "unit": "xu",
    "items": [
@@ -66,7 +70,8 @@ export default {
     {
      "t": [
       "Assignació",
-      "Asignación"
+      "Asignación",
+      "Assignment"
      ],
      "id": "xu2-1-1",
      "x": "`A ← expressió`"
@@ -74,7 +79,8 @@ export default {
     {
      "t": [
       "Sortida",
-      "Salida"
+      "Salida",
+      "Output"
      ],
      "id": "xu2-1-2",
      "x": "`Escriure \"text \", A`"
@@ -84,7 +90,8 @@ export default {
   {
    "t": [
     "Operadors i prioritats · Operació",
-    "Operadores y prioridades · Operación"
+    "Operadores y prioridades · Operación",
+    "Operators and precedence · Operation"
    ],
    "unit": "xu",
    "items": [
@@ -97,7 +104,8 @@ export default {
     {
      "t": [
       "Producte",
-      "Producto"
+      "Producto",
+      "Product"
      ],
      "id": "xu3-0-1",
      "x": "`·`",
@@ -106,7 +114,8 @@ export default {
     {
      "t": [
       "Divisió",
-      "División"
+      "División",
+      "Division"
      ],
      "id": "xu3-0-2",
      "x": "`/`",
@@ -115,7 +124,8 @@ export default {
     {
      "t": [
       "Quocient enter",
-      "Cociente entero"
+      "Cociente entero",
+      "Integer quotient"
      ],
      "id": "xu3-0-3",
      "x": "`‖  (div)`",
@@ -124,7 +134,8 @@ export default {
     {
      "t": [
       "Residu",
-      "Resto"
+      "Resto",
+      "Remainder"
      ],
      "id": "xu3-0-4",
      "x": "`|R  (mod)`",
@@ -133,7 +144,8 @@ export default {
     {
      "t": [
       "Lògics",
-      "Lógicos"
+      "Lógicos",
+      "Logical"
      ],
      "id": "xu3-0-5",
      "x": "`I   O   NO`",
@@ -142,7 +154,8 @@ export default {
     {
      "t": [
       "Relacionals",
-      "Relacionales"
+      "Relacionales",
+      "Relational"
      ],
      "id": "xu3-0-6",
      "x": "`=  ≠  <  >  ≤  ≥`",
@@ -153,7 +166,8 @@ export default {
   {
    "t": [
     "Operadors i prioritats · Prioritat",
-    "Operadores y prioridades · Prioridad"
+    "Operadores y prioridades · Prioridad",
+    "Operators and precedence · Precedence"
    ],
    "unit": "xu",
    "items": [
@@ -175,7 +189,8 @@ export default {
     {
      "t": [
       "4a (la més baixa)",
-      "4a (la más baja)"
+      "4a (la más baja)",
+      "4th (the lowest)"
      ],
      "id": "xu3-1-3",
      "x": "`=  <  >  ≤  ≥  ≠`"
@@ -185,7 +200,8 @@ export default {
   {
    "t": [
     "De C++ i Python al pseudocodi · undefined",
-    "De C++ y Python al pseudocódigo · undefined"
+    "De C++ y Python al pseudocódigo · undefined",
+    "From C++ and Python to pseudocode · undefined"
    ],
    "unit": "xu",
    "items": [
@@ -261,7 +277,8 @@ export default {
      "x": "`break`",
      "note": [
       "trobat ← cert i NO trobat al MENTRE",
-      "trobat ← cert y NO trobat en el MENTRE"
+      "trobat ← cert y NO trobat en el MENTRE",
+      "trobat ← cert and NO trobat in the MENTRE"
      ]
     },
     {
@@ -270,7 +287,8 @@ export default {
      "x": "`—`",
      "note": [
       "fila a l'ENTORN: x  Enter",
-      "fila en el ENTORN: x  Enter"
+      "fila en el ENTORN: x  Enter",
+      "row in the ENTORN: x  Enter"
      ]
     }
    ]
