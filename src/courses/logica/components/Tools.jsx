@@ -34,14 +34,14 @@ export function TruthTool({ id, f }) {
   return (
     <div className="lx-tool" data-tool="tt">
       <div className="lt-h">
-        <b>{L('Calculadora de taules de veritat', 'Calculadora de tablas de verdad')}</b>
-        <span className="lt-s">{L('Una fórmula, o premisses separades per ; i ⇒ (o =>) abans de la conclusió', 'Una fórmula, o premisas separadas por ; y ⇒ (o =>) antes de la conclusión')}</span>
+        <b>{L('Calculadora de taules de veritat', 'Calculadora de tablas de verdad', 'Truth table calculator')}</b>
+        <span className="lt-s">{L('Una fórmula, o premisses separades per ; i ⇒ (o =>) abans de la conclusió', 'Una fórmula, o premisas separadas por ; y ⇒ (o =>) antes de la conclusión', 'A formula, or premises separated by ; and ⇒ (or =>) before the conclusion')}</span>
       </div>
       <div className="lt-row">
-        <input ref={inp} className="lt-in" type="text" spellCheck="false" autoComplete="off" aria-label={L('Fórmula', 'Fórmula')}
+        <input ref={inp} className="lt-in" type="text" spellCheck="false" autoComplete="off" aria-label={L('Fórmula', 'Fórmula', 'Formula')}
           value={st.val} onChange={(e) => setSt((o) => ({ ...o, val: e.target.value }))}
           onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); run(); } }} />
-        <button type="button" className="lt-go" onClick={run}>{L('Calcula', 'Calcula')}</button>
+        <button type="button" className="lt-go" onClick={run}>{L('Calcula', 'Calcula', 'Compute')}</button>
       </div>
       <div className="lt-kb">{KB.map((k) => <button key={k} type="button" data-k={k} onClick={() => insert(k)}>{k}</button>)}</div>
       <div className="lt-out" aria-live="polite">
@@ -89,14 +89,14 @@ export function UnifyTool({ id, a, b }) {
         <p className="lt-v">
           {r.ok ? (
             <>
-              <b>{L('Unifiquen.', 'Unifican.')}</b> UMG = <span className="lf">{phiStr(r.steps.length ? last.phi : [])}</span>
-              {r.steps.length ? <> → <span className="lf">{last.a}</span></> : L(' (ja eren iguals)', ' (ya eran iguales)')}
+              <b>{L('Unifiquen.', 'Unifican.', 'They unify.')}</b> UMG = <span className="lf">{phiStr(r.steps.length ? last.phi : [])}</span>
+              {r.steps.length ? <> → <span className="lf">{last.a}</span></> : L(' (ja eren iguals)', ' (ya eran iguales)', ' (they were already equal)')}
             </>
-          ) : <><b>{L('No unifiquen', 'No unifican')}</b>{': ' + r.why}</>}
+          ) : <><b>{L('No unifiquen', 'No unifican', 'They do not unify')}</b>{': ' + r.why}</>}
         </p>
         <div className="tw">
           <table className="lx-un">
-            <thead><tr><th>i</th><th>D<sub>i</sub></th><th>{L('substitució', 'sustitución')}</th><th>φ</th></tr></thead>
+            <thead><tr><th>i</th><th>D<sub>i</sub></th><th>{L('substitució', 'sustitución', 'substitution')}</th><th>φ</th></tr></thead>
             <tbody>
               <tr><td>0</td><td colSpan="2">{'E₀ = { ' + ts(res.a) + ' , ' + ts(res.b) + ' }'}</td><td>ε</td></tr>
               {r.steps.map((s, i) => (s.fail
@@ -112,15 +112,15 @@ export function UnifyTool({ id, a, b }) {
   return (
     <div className="lx-tool" data-tool="unif">
       <div className="lt-h">
-        <b>{L("Calculadora d'unificació", 'Calculadora de unificación')}</b>
-        <span className="lt-s">{L('Variables: x, y, z, u, v, w (i amb números). La resta són constants.', 'Variables: x, y, z, u, v, w (y con números). El resto son constantes.')}</span>
+        <b>{L("Calculadora d'unificació", 'Calculadora de unificación', 'Unification calculator')}</b>
+        <span className="lt-s">{L('Variables: x, y, z, u, v, w (i amb números). La resta són constants.', 'Variables: x, y, z, u, v, w (y con números). El resto son constantes.', 'Variables: x, y, z, u, v, w (also with numbers). Everything else is a constant.')}</span>
       </div>
       <div className="lt-row">
-        <input className="lt-in" data-i="a" type="text" spellCheck="false" autoComplete="off" aria-label={L('Primer àtom', 'Primer átomo')}
+        <input className="lt-in" data-i="a" type="text" spellCheck="false" autoComplete="off" aria-label={L('Primer àtom', 'Primer átomo', 'First atom')}
           value={st.a} onChange={(e) => setSt((o) => ({ ...o, a: e.target.value }))} onKeyDown={onKey} />
-        <input className="lt-in" data-i="b" type="text" spellCheck="false" autoComplete="off" aria-label={L('Segon àtom', 'Segundo átomo')}
+        <input className="lt-in" data-i="b" type="text" spellCheck="false" autoComplete="off" aria-label={L('Segon àtom', 'Segundo átomo', 'Second atom')}
           value={st.b} onChange={(e) => setSt((o) => ({ ...o, b: e.target.value }))} onKeyDown={onKey} />
-        <button type="button" className="lt-go" onClick={run}>{L('Unifica', 'Unifica')}</button>
+        <button type="button" className="lt-go" onClick={run}>{L('Unifica', 'Unifica', 'Unify')}</button>
       </div>
       <div className="lt-out" aria-live="polite">{out}</div>
     </div>

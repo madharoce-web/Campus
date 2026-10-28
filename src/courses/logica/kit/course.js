@@ -73,6 +73,7 @@ export default {
   units,
   bank: () => import('./bank.js'),
   formulas: () => import('./formulas.js'),
+  methods: () => import('./methods.js'),
   formats,
   // les taules, els arbres i les calculadores d'abans tenen els estils dins de .doc
   legacyClass: 'doc',

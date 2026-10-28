@@ -44,7 +44,7 @@ export default function Sim() {
     return (
       <div className="lx-sim" ref={box}>
         <div className="lx-simh">
-          <h2>{L('Tria el control', 'Escoge el control')}</h2>
+          <h2>{L('Tria el control', 'Escoge el control', 'Choose the test')}</h2>
           <div className="lx-models">
             {Object.keys(MODELS).map((k) => {
               const M = MODELS[k];
@@ -52,20 +52,20 @@ export default function Sim() {
                 <button key={k} type="button" className="lx-model" data-m={k} onClick={() => { pending.current = 'box'; setS(newSim(bank, k)); }}>
                   <b>{M.t(L)}</b>
                   <span>{M.slots.map((s, i) => (
-                    <Fragment key={i}>{i > 0 && <br />}{L('Ex. ', 'Ej. ') + (i + 1) + ': ' + kindName(s[0], L) + (s[2] === 'b' ? L(' (mètode alternatiu)', ' (método alternativo)') : '') + ' · ' + s[1] + '%'}</Fragment>
+                    <Fragment key={i}>{i > 0 && <br />}{L('Ex. ', 'Ej. ', 'Ex. ') + (i + 1) + ': ' + kindName(s[0], L) + (s[2] === 'b' ? L(' (mètode alternatiu)', ' (método alternativo)', ' (alternative method)') : '') + ' · ' + s[1] + '%'}</Fragment>
                   ))}</span>
                   <span className="lx-dur">1:30:00</span>
                 </button>
               );
             })}
           </div>
-          <p className="lx-why">{L("Els exercicis surten a l'atzar del banc. Feu-los en paper, com a l'examen, i quan acabeu compareu-los amb la solució.", 'Los ejercicios salen al azar del banco. Hacedlos en papel, como en el examen, y cuando acabéis comparadlos con la solución.')}</p>
+          <p className="lx-why">{L("Els exercicis surten a l'atzar del banc. Feu-los en paper, com a l'examen, i quan acabeu compareu-los amb la solució.", 'Los ejercicios salen al azar del banco. Hacedlos en papel, como en el examen, y cuando acabéis comparadlos con la solución.', 'The exercises are drawn at random from the bank. Do them on paper, as in the exam, and when you finish compare them with the solution.')}</p>
           {hist.length > 0 && (
             <>
-              <h3>{L('Intents anteriors', 'Intentos anteriores')}</h3>
+              <h3>{L('Intents anteriors', 'Intentos anteriores', 'Previous attempts')}</h3>
               <div className="tw">
                 <table>
-                  <thead><tr><th>{L('Data', 'Fecha')}</th><th>{L('Control', 'Control')}</th><th>{L('Temps', 'Tiempo')}</th><th>{L('Nota', 'Nota')}</th></tr></thead>
+                  <thead><tr><th>{L('Data', 'Fecha', 'Date')}</th><th>{L('Control', 'Control', 'Test')}</th><th>{L('Temps', 'Tiempo', 'Time')}</th><th>{L('Nota', 'Nota', 'Mark')}</th></tr></thead>
                   <tbody>
                     {hist.slice(-8).reverse().map((r, i) => (
                       <tr key={i}>
@@ -101,12 +101,12 @@ export default function Sim() {
       <div className="lx-simbar">
         <Clock S={S} />
         <span>{M.t(L)}</span>
-        <button type="button" className="lx-b lx-end" onClick={end}>{S.fin ? L('Nou simulacre', 'Nuevo simulacro') : L('Acaba i corregeix', 'Termina y corrige')}</button>
-        {!S.fin && <button type="button" className="lx-b lx-quit" onClick={() => setS(null)}>{L('Abandona', 'Abandona')}</button>}
+        <button type="button" className="lx-b lx-end" onClick={end}>{S.fin ? L('Nou simulacre', 'Nuevo simulacro', 'New mock exam') : L('Acaba i corregeix', 'Termina y corrige', 'Finish and mark')}</button>
+        {!S.fin && <button type="button" className="lx-b lx-quit" onClick={() => setS(null)}>{L('Abandona', 'Abandona', 'Give up')}</button>}
       </div>
       {S.fin && (
         <div className="lx-grade">
-          <b>{fmtGrade(grade(S))}</b> / 10<span>{L('Autoavaluació: marqueu a cada exercici quina part teníeu bé.', 'Autoevaluación: marcad en cada ejercicio qué parte teníais bien.')}</span>
+          <b>{fmtGrade(grade(S))}</b> / 10<span>{L('Autoavaluació: marqueu a cada exercici quina part teníeu bé.', 'Autoevaluación: marcad en cada ejercicio qué parte teníais bien.', 'Self-assessment: mark in each exercise which part you had right.')}</span>
         </div>
       )}
       {M.slots.map((s, i) => {
@@ -114,11 +114,11 @@ export default function Sim() {
         if (!x) return null;
         return (
           <section key={i} className="lx-simex">
-            <h2>{L('Exercici ', 'Ejercicio ') + (i + 1) + ' '}<span className="lx-w">{s[1] + '%'}</span></h2>
+            <h2>{L('Exercici ', 'Ejercicio ', 'Exercise ') + (i + 1) + ' '}<span className="lx-w">{s[1] + '%'}</span></h2>
             <ExCard x={x} sim st2={s[2] === 'b'} parts={s[2] === 'b' ? ['b'] : null} shownAll={!!S.fin} />
             {S.fin && (
               <div className="lx-self" data-i={i} ref={(el) => { selfs.current[i] = el; }}>
-                <span>{L('Quina part teníeu bé?', '¿Qué parte teníais bien?')}</span>
+                <span>{L('Quina part teníeu bé?', '¿Qué parte teníais bien?', 'Which part did you have right?')}</span>
                 {[0, 25, 50, 75, 100].map((v) => (
                   <button key={v} type="button" data-v={v} aria-pressed={S.self[i] === v} onClick={() => assess(i, v)}>{v + '%'}</button>
                 ))}

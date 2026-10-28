@@ -15,8 +15,8 @@ const asObj = (v, d) => (v && typeof v === 'object' && !Array.isArray(v) ? v : d
 function Badge({ x }) {
   const { L } = useLang();
   return x.src === 'exam'
-    ? <span className="lx-badge ex">{x.srcname || L('Examen', 'Examen')}</span>
-    : <span className="lx-badge nw">{L('Exercici nou', 'Ejercicio nuevo')}</span>;
+    ? <span className="lx-badge ex">{x.srcname || L('Examen', 'Examen', 'Exam')}</span>
+    : <span className="lx-badge nw">{L('Exercici nou', 'Ejercicio nuevo', 'New exercise')}</span>;
 }
 
 /**
@@ -45,7 +45,7 @@ export function ExCard({ x, sim, st2, parts, shownAll, done, onDone, ref }) {
       <header className="lx-hd">
         <span className="lx-n">{x.kind + x.n}</span>
         <div className="lx-ht"><h3>{x.title || kindName(x.kind, L)}</h3><Badge x={x} /></div>
-        {!sim && <label className="lx-done"><input type="checkbox" checked={!!done} onChange={(e) => onDone(x.id, e.target.checked)} />{' ' + L('Fet', 'Hecho')}</label>}
+        {!sim && <label className="lx-done"><input type="checkbox" checked={!!done} onChange={(e) => onDone(x.id, e.target.checked)} />{' ' + L('Fet', 'Hecho', 'Done')}</label>}
       </header>
       <Rich className="lx-st" html={st} />
       <div className="lx-sol" data-n={sol.length}>
@@ -59,10 +59,10 @@ export function ExCard({ x, sim, st2, parts, shownAll, done, onDone, ref }) {
       {!sim && (
         <div className="lx-bar">
           <button type="button" className="lx-b lx-next" disabled={n === sol.length} onClick={() => { pending.current = n; setShown(n + 1); }}>
-            {L('Mostra el pas següent', 'Muestra el paso siguiente') + ' '}<span className="lx-c">{n + '/' + sol.length}</span>
+            {L('Mostra el pas següent', 'Muestra el paso siguiente', 'Show the next step') + ' '}<span className="lx-c">{n + '/' + sol.length}</span>
           </button>
-          <button type="button" className="lx-b lx-all" disabled={n === sol.length} onClick={() => setShown(sol.length)}>{L('Tota la solució', 'Toda la solución')}</button>
-          <button type="button" className="lx-b lx-hide" hidden={n === 0} onClick={() => { pending.current = 'card'; setShown(0); }}>{L('Amaga', 'Oculta')}</button>
+          <button type="button" className="lx-b lx-all" disabled={n === sol.length} onClick={() => setShown(sol.length)}>{L('Tota la solució', 'Toda la solución', 'The whole solution')}</button>
+          <button type="button" className="lx-b lx-hide" hidden={n === 0} onClick={() => { pending.current = 'card'; setShown(0); }}>{L('Amaga', 'Oculta', 'Hide')}</button>
         </div>
       )}
     </article>
@@ -83,15 +83,15 @@ export default function Bank({ kind }) {
   const nd = items.filter((x) => done[x.id]).length;
   const nEx = items.filter((x) => x.src === 'exam').length;
   const onDone = (id, on) => setDone((d) => { const o = { ...d }; if (on) o[id] = Date.now(); else delete o[id]; return o; });
-  const chips = [['all', L('Tots', 'Todos') + ' ' + items.length], ['exam', L("D'examen", 'De examen') + ' ' + nEx], ['nou', L('Nous', 'Nuevos') + ' ' + (items.length - nEx)]];
+  const chips = [['all', L('Tots', 'Todos', 'All') + ' ' + items.length], ['exam', L("D'examen", 'De examen', 'Exam-style') + ' ' + nEx], ['nou', L('Nous', 'Nuevos', 'New') + ' ' + (items.length - nEx)]];
 
   return (
     <div className="lx-bank" data-kind={kind}>
       <div className="lx-filt">
-        <div className="lx-chips" role="group" aria-label={L('Filtre', 'Filtro')}>
+        <div className="lx-chips" role="group" aria-label={L('Filtre', 'Filtro', 'Filter')}>
           {chips.map(([k, t]) => <button key={k} type="button" data-f={k} aria-pressed={filt === k} onClick={() => setFilt(k)}>{t}</button>)}
         </div>
-        <span className="lx-prog">{nd + ' / ' + items.length + L(' fets', ' hechos')}</span>
+        <span className="lx-prog">{nd + ' / ' + items.length + L(' fets', ' hechos', ' done')}</span>
       </div>
       <nav className="lx-jump">
         {list.map((x) => (

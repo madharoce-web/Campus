@@ -5,7 +5,8 @@ export default {
    "t": "p",
    "x": [
     "La semàntica respon a la pregunta «quan és certa una fórmula?». En CP0 la resposta és una taula de veritat: s'hi proven totes les combinacions possibles de valors.",
-    "La semántica responde a la pregunta «¿cuándo es cierta una fórmula?». En CP0 la respuesta es una tabla de verdad: en ella se prueban todas las combinaciones posibles de valores."
+    "La semántica responde a la pregunta «¿cuándo es cierta una fórmula?». En CP0 la respuesta es una tabla de verdad: en ella se prueban todas las combinaciones posibles de valores.",
+    "Semantics answers the question “when is a formula true?”. In CP0 the answer is a truth table: in it all possible combinations of values are tried."
    ]
   }
  ],
@@ -15,12 +16,14 @@ export default {
     "t": "p",
     "x": [
      "Una **interpretació** I dona un valor, cert (T) o fals (F), a cada proposició atòmica. Amb n proposicions hi ha 2$^{\\text{n}}$ interpretacions: cada fila de la taula de veritat és una interpretació. Les files s'escriuen comptant en binari, de `F…F` a `T…T`.",
-     "Una **interpretación** I da un valor, cierto (T) o falso (F), a cada proposición atómica. Con n proposiciones hay 2$^{\\text{n}}$ interpretaciones: cada fila de la tabla de verdad es una interpretación. Las filas se escriben contando en binario, de `F…F` a `T…T`."
+     "Una **interpretación** I da un valor, cierto (T) o falso (F), a cada proposición atómica. Con n proposiciones hay 2$^{\\text{n}}$ interpretaciones: cada fila de la tabla de verdad es una interpretación. Las filas se escriben contando en binario, de `F…F` a `T…T`.",
+     "An **interpretation** I gives a value, true (T) or false (F), to each atomic proposition. With n propositions there are 2$^{\\text{n}}$ interpretations: each row of the truth table is an interpretation. The rows are written by counting in binary, from `F…F` to `T…T`."
     ]
    },
    {
     "t": "html",
-    "h": "<div class=\"tw\"><table class=\"lx-tt\">\n<thead><tr><th>A</th><th>B</th><th>¬A</th><th>A ∧ B</th><th>A ∨ B</th><th>A → B</th><th>A ↔ B</th></tr></thead>\n<tbody>\n<tr><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td></tr>\n<tr><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td></tr>\n<tr><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td></tr>\n<tr><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td></tr>\n</tbody></table></div>"
+    "h": "<div class=\"tw\"><table class=\"lx-tt\">\n<thead><tr><th>A</th><th>B</th><th>¬A</th><th>A ∧ B</th><th>A ∨ B</th><th>A → B</th><th>A ↔ B</th></tr></thead>\n<tbody>\n<tr><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td></tr>\n<tr><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td></tr>\n<tr><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td></tr>\n<tr><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td></tr>\n</tbody></table></div>",
+    "mode": "explained"
    },
    {
     "blocks": [
@@ -28,15 +31,18 @@ export default {
       "t": "p",
       "x": [
        "`A → B` és una promesa: «si A, et dono B». Només es trenca en un cas, quan passa A i no compleixo B (fila T, F). Si A no passa, la promesa no s'ha trencat, i per això `A → B` és certa a les dues primeres files.",
-       "`A → B` es una promesa: «si A, te doy B». Solo se rompe en un caso, cuando ocurre A y no cumplo B (fila T, F). Si A no ocurre, la promesa no se ha roto, y por eso `A → B` es cierta en las dos primeras filas."
+       "`A → B` es una promesa: «si A, te doy B». Solo se rompe en un caso, cuando ocurre A y no cumplo B (fila T, F). Si A no ocurre, la promesa no se ha roto, y por eso `A → B` es cierta en las dos primeras filas.",
+       "`A → B` is a promise: “if A, I give you B”. It is only broken in one case, when A happens and I do not deliver B (row T, F). If A does not happen, the promise has not been broken, and that is why `A → B` is true in the first two rows."
       ]
      }
     ],
     "t": "tip",
     "title": [
      "La implicació, com una promesa",
-     "La implicación, como una promesa"
-    ]
+     "La implicación, como una promesa",
+     "Implication, as a promise"
+    ],
+    "mode": "explained"
    }
   ],
   "u2-calcular-el-valor-d-una-formula": [
@@ -44,21 +50,24 @@ export default {
     "t": "p",
     "x": [
      "Es calcula de dins cap a fora, igual que una expressió aritmètica: primer les subfórmules més petites. Una columna per a cada subfórmula evita errors.",
-     "Se calcula de dentro hacia fuera, igual que una expresión aritmética: primero las subfórmulas más pequeñas. Una columna para cada subfórmula evita errores."
+     "Se calcula de dentro hacia fuera, igual que una expresión aritmética: primero las subfórmulas más pequeñas. Una columna para cada subfórmula evita errores.",
+     "It is computed from the inside out, just like an arithmetic expression: first the smallest subformulas. One column for each subformula avoids mistakes."
     ]
    },
    {
     "t": "p",
     "x": [
      "Exemple: `(P → Q) ∧ ¬Q` amb `P = T`, `Q = F`: `P → Q` = T → F = **F**; `¬Q` = **T**; la conjunció F ∧ T = **F**.",
-     "Ejemplo: `(P → Q) ∧ ¬Q` con `P = T`, `Q = F`: `P → Q` = T → F = **F**; `¬Q` = **T**; la conjunción F ∧ T = **F**."
+     "Ejemplo: `(P → Q) ∧ ¬Q` con `P = T`, `Q = F`: `P → Q` = T → F = **F**; `¬Q` = **T**; la conjunción F ∧ T = **F**.",
+     "Example: `(P → Q) ∧ ¬Q` with `P = T`, `Q = F`: `P → Q` = T → F = **F**; `¬Q` = **T**; the conjunction F ∧ T = **F**."
     ]
    },
    {
     "t": "p",
     "x": [
      "Proveu-ho amb qualsevol fórmula. Podeu escriure `->`, `&`, `|`, `~` i `<->` si no teniu els símbols:",
-     "Probadlo con cualquier fórmula. Podéis escribir `->`, `&`, `|`, `~` y `<->` si no tenéis los símbolos:"
+     "Probadlo con cualquier fórmula. Podéis escribir `->`, `&`, `|`, `~` y `<->` si no tenéis los símbolos:",
+     "Try it with any formula. You can type `->`, `&`, `|`, `~` and `<->` if you do not have the symbols:"
     ]
    },
    {
@@ -67,7 +76,8 @@ export default {
     "props": {
      "id": "u2-tt",
      "f": "(P → Q) ∧ ¬Q"
-    }
+    },
+    "mode": "explained"
    }
   ],
   "u2-tipus-d-enunciats": [
@@ -75,52 +85,61 @@ export default {
     "t": "p",
     "x": [
      "Mirant només l'última columna de la taula es classifica qualsevol fórmula:",
-     "Mirando solo la última columna de la tabla se clasifica cualquier fórmula:"
+     "Mirando solo la última columna de la tabla se clasifica cualquier fórmula:",
+     "Looking only at the last column of the table you can classify any formula:"
     ]
    },
    {
     "head": [
      [
       "Tipus",
-      "Tipo"
+      "Tipo",
+      "Type"
      ],
      "Última columna",
      [
       "Exemple",
-      "Ejemplo"
+      "Ejemplo",
+      "Example"
      ]
     ],
     "rows": [
      [
       [
        "**Tautologia** (vàlida)",
-       "**Tautología** (válida)"
+       "**Tautología** (válida)",
+       "**Tautology** (valid)"
       ],
       [
        "tot T",
-       "todo T"
+       "todo T",
+       "all T"
       ],
       "`P ∨ ¬P`"
      ],
      [
       [
        "**Satisfactible no vàlida** (contingent)",
-       "**Satisfacible no válida** (contingente)"
+       "**Satisfacible no válida** (contingente)",
+       "**Satisfiable, not valid** (contingent)"
       ],
       [
        "hi ha T i F",
-       "hay T y F"
+       "hay T y F",
+       "there are T and F"
       ],
       "`P → Q`"
      ],
      [
       [
        "**Insatisfactible** (contradicció)",
-       "**Insatisfacible** (contradicción)"
+       "**Insatisfacible** (contradicción)",
+       "**Unsatisfiable** (contradiction)"
       ],
       [
        "tot F",
-       "todo F"
+       "todo F",
+       "all F"
       ],
       "`P ∧ ¬P`"
      ]
@@ -130,14 +149,17 @@ export default {
    {
     "caption": [
      "Tota fórmula vàlida és satisfactible. Una fórmula A és vàlida si i només si ¬A és insatisfactible: aquesta idea és la base de la resolució.",
-     "Toda fórmula válida es satisfacible. Una fórmula A es válida si y solo si ¬A es insatisfacible: esta idea es la base de la resolución."
+     "Toda fórmula válida es satisfacible. Una fórmula A es válida si y solo si ¬A es insatisfacible: esta idea es la base de la resolución.",
+     "Every valid formula is satisfiable. A formula A is valid if and only if ¬A is unsatisfiable: this idea is the basis of resolution."
     ],
     "cls": "vz",
     "svg": [
      "<div class=\"vz-scroll\"><svg viewBox=\"0 0 640 210\" role=\"img\" aria-label=\"Les fórmules vàlides són dins de les satisfactibles; les insatisfactibles en són fora\">\n<rect class=\"vz-dom\" x=\"20\" y=\"16\" width=\"600\" height=\"180\" rx=\"14\"></rect>\n<text class=\"vz-cap\" x=\"36\" y=\"38\">TOTES LES FÓRMULES</text>\n<ellipse class=\"vz-setI\" cx=\"230\" cy=\"114\" rx=\"190\" ry=\"72\"></ellipse>\n<text class=\"vz-lab vz-tI\" x=\"110\" y=\"80\">satisfactibles</text><text class=\"vz-sm\" x=\"110\" y=\"96\">alguna fila T</text>\n<ellipse class=\"vz-setT\" cx=\"290\" cy=\"122\" rx=\"92\" ry=\"44\"></ellipse>\n<text class=\"vz-lab vz-tT\" x=\"290\" y=\"118\" text-anchor=\"middle\">vàlides</text><text class=\"vz-sm\" x=\"290\" y=\"134\" text-anchor=\"middle\">totes les files T</text>\n<text class=\"vz-lab vz-tD\" x=\"530\" y=\"104\" text-anchor=\"middle\">insatisfactibles</text><text class=\"vz-sm\" x=\"530\" y=\"120\" text-anchor=\"middle\">cap fila T</text>\n</svg></div>",
-     "<div class=\"vz-scroll\"><svg viewBox=\"0 0 640 210\" role=\"img\" aria-label=\"Las fórmulas válidas están dentro de las satisfacibles; las insatisfacibles quedan fuera\">\n<rect class=\"vz-dom\" x=\"20\" y=\"16\" width=\"600\" height=\"180\" rx=\"14\"></rect>\n<text class=\"vz-cap\" x=\"36\" y=\"38\">TODAS LAS FÓRMULAS</text>\n<ellipse class=\"vz-setI\" cx=\"230\" cy=\"114\" rx=\"190\" ry=\"72\"></ellipse>\n<text class=\"vz-lab vz-tI\" x=\"110\" y=\"80\">satisfacibles</text><text class=\"vz-sm\" x=\"110\" y=\"96\">alguna fila T</text>\n<ellipse class=\"vz-setT\" cx=\"290\" cy=\"122\" rx=\"92\" ry=\"44\"></ellipse>\n<text class=\"vz-lab vz-tT\" x=\"290\" y=\"118\" text-anchor=\"middle\">válidas</text><text class=\"vz-sm\" x=\"290\" y=\"134\" text-anchor=\"middle\">todas las filas T</text>\n<text class=\"vz-lab vz-tD\" x=\"530\" y=\"104\" text-anchor=\"middle\">insatisfacibles</text><text class=\"vz-sm\" x=\"530\" y=\"120\" text-anchor=\"middle\">ninguna fila T</text>\n</svg></div>"
+     "<div class=\"vz-scroll\"><svg viewBox=\"0 0 640 210\" role=\"img\" aria-label=\"Las fórmulas válidas están dentro de las satisfacibles; las insatisfacibles quedan fuera\">\n<rect class=\"vz-dom\" x=\"20\" y=\"16\" width=\"600\" height=\"180\" rx=\"14\"></rect>\n<text class=\"vz-cap\" x=\"36\" y=\"38\">TODAS LAS FÓRMULAS</text>\n<ellipse class=\"vz-setI\" cx=\"230\" cy=\"114\" rx=\"190\" ry=\"72\"></ellipse>\n<text class=\"vz-lab vz-tI\" x=\"110\" y=\"80\">satisfacibles</text><text class=\"vz-sm\" x=\"110\" y=\"96\">alguna fila T</text>\n<ellipse class=\"vz-setT\" cx=\"290\" cy=\"122\" rx=\"92\" ry=\"44\"></ellipse>\n<text class=\"vz-lab vz-tT\" x=\"290\" y=\"118\" text-anchor=\"middle\">válidas</text><text class=\"vz-sm\" x=\"290\" y=\"134\" text-anchor=\"middle\">todas las filas T</text>\n<text class=\"vz-lab vz-tD\" x=\"530\" y=\"104\" text-anchor=\"middle\">insatisfacibles</text><text class=\"vz-sm\" x=\"530\" y=\"120\" text-anchor=\"middle\">ninguna fila T</text>\n</svg></div>",
+     "<div class=\"vz-scroll\"><svg viewBox=\"0 0 640 210\" role=\"img\" aria-label=\"Valid formulas are inside the satisfiable ones; the unsatisfiable ones are outside\">\n<rect class=\"vz-dom\" x=\"20\" y=\"16\" width=\"600\" height=\"180\" rx=\"14\"></rect>\n<text class=\"vz-cap\" x=\"36\" y=\"38\">ALL FORMULAS</text>\n<ellipse class=\"vz-setI\" cx=\"230\" cy=\"114\" rx=\"190\" ry=\"72\"></ellipse>\n<text class=\"vz-lab vz-tI\" x=\"110\" y=\"80\">satisfiable</text><text class=\"vz-sm\" x=\"110\" y=\"96\">alguna fila T</text>\n<ellipse class=\"vz-setT\" cx=\"290\" cy=\"122\" rx=\"92\" ry=\"44\"></ellipse>\n<text class=\"vz-lab vz-tT\" x=\"290\" y=\"118\" text-anchor=\"middle\">valid</text><text class=\"vz-sm\" x=\"290\" y=\"134\" text-anchor=\"middle\">all rows T</text>\n<text class=\"vz-lab vz-tD\" x=\"530\" y=\"104\" text-anchor=\"middle\">unsatisfiable</text><text class=\"vz-sm\" x=\"530\" y=\"120\" text-anchor=\"middle\">no row T</text>\n</svg></div>"
     ],
-    "t": "diagram"
+    "t": "diagram",
+    "mode": "explained"
    }
   ],
   "u2-consequencia-logica": [
@@ -145,18 +167,21 @@ export default {
     "t": "p",
     "x": [
      "B és **conseqüència lògica** de les premisses A₁, …, Aₙ (s'escriu `A₁, …, Aₙ ⇒ B`) si en totes les interpretacions on les premisses són certes, B també ho és. Dues maneres equivalents de dir-ho:",
-     "B es **consecuencia lógica** de las premisas A₁, …, Aₙ (se escribe `A₁, …, Aₙ ⇒ B`) si en todas las interpretaciones donde las premisas son ciertas, B también lo es. Dos maneras equivalentes de decirlo:"
+     "B es **consecuencia lógica** de las premisas A₁, …, Aₙ (se escribe `A₁, …, Aₙ ⇒ B`) si en todas las interpretaciones donde las premisas son ciertas, B también lo es. Dos maneras equivalentes de decirlo:",
+     "B is a **logical consequence** of the premises A₁, …, Aₙ (written `A₁, …, Aₙ ⇒ B`) if in every interpretation where the premises are true, B is also true. Two equivalent ways of saying it:"
     ]
    },
    {
     "items": [
      [
       "`(A₁ ∧ … ∧ Aₙ) → B` és una **tautologia**.",
-      "`(A₁ ∧ … ∧ Aₙ) → B` es una **tautología**."
+      "`(A₁ ∧ … ∧ Aₙ) → B` es una **tautología**.",
+      "`(A₁ ∧ … ∧ Aₙ) → B` is a **tautology**."
      ],
      [
       "`A₁ ∧ … ∧ Aₙ ∧ ¬B` és **insatisfactible** (és el que fa la resolució).",
-      "`A₁ ∧ … ∧ Aₙ ∧ ¬B` es **insatisfacible** (es lo que hace la resolución)."
+      "`A₁ ∧ … ∧ Aₙ ∧ ¬B` es **insatisfacible** (es lo que hace la resolución).",
+      "`A₁ ∧ … ∧ Aₙ ∧ ¬B` is **unsatisfiable** (it is what resolution does)."
      ]
     ],
     "t": "list"
@@ -166,13 +191,15 @@ export default {
     "t": "h",
     "x": [
      "El mètode de la taula, pas a pas",
-     "El método de la tabla, paso a paso"
+     "El método de la tabla, paso a paso",
+     "The table method, step by step"
     ]
    },
    {
     "h": [
      "<ol class=\"steps\">\n<li>Feu una columna per a cada proposició i una per a cada subfórmula de les premisses i de la conclusió.</li>\n<li>Marqueu les files on <b>totes</b> les premisses són certes. Les altres files no importen.</li>\n<li>Si en alguna fila marcada la conclusió és F, és un <b>contraexemple</b>: el raonament no és vàlid. Si no n'hi ha cap, és vàlid.</li>\n<li>Per dir el tipus d'enunciat, mireu la columna de <code>(premisses) → (conclusió)</code>: tautologia si el raonament és vàlid.</li>\n</ol>",
-     "<ol class=\"steps\">\n<li>Haced una columna para cada proposición y una para cada subfórmula de las premisas y de la conclusión.</li>\n<li>Marcad las filas donde <b>todas</b> las premisas son ciertas. Las demás filas no importan.</li>\n<li>Si en alguna fila marcada la conclusión es F, es un <b>contraejemplo</b>: el razonamiento no es válido. Si no hay ninguna, es válido.</li>\n<li>Para decir el tipo de enunciado, mirad la columna de <code>(premisas) → (conclusión)</code>: tautología si el razonamiento es válido.</li>\n</ol>"
+     "<ol class=\"steps\">\n<li>Haced una columna para cada proposición y una para cada subfórmula de las premisas y de la conclusión.</li>\n<li>Marcad las filas donde <b>todas</b> las premisas son ciertas. Las demás filas no importan.</li>\n<li>Si en alguna fila marcada la conclusión es F, es un <b>contraejemplo</b>: el razonamiento no es válido. Si no hay ninguna, es válido.</li>\n<li>Para decir el tipo de enunciado, mirad la columna de <code>(premisas) → (conclusión)</code>: tautología si el razonamiento es válido.</li>\n</ol>",
+     "<ol class=\"steps\">\n<li>Make one column for each proposition and one for each subformula of the premises and of the conclusion.</li>\n<li>Mark the rows where <b>all</b> the premises are true. The other rows do not matter.</li>\n<li>If in some marked row the conclusion is F, it is a <b>counterexample</b>: the argument is not valid. If there is none, it is valid.</li>\n<li>To give the type of statement, look at the column of <code>(premises) → (conclusion)</code>: a tautology if the argument is valid.</li>\n</ol>"
     ],
     "t": "html"
    },
@@ -181,37 +208,43 @@ export default {
     "t": "h",
     "x": [
      "Exemple resolt: l'exercici 3 del CP1",
-     "Ejemplo resuelto: el ejercicio 3 del CP1"
+     "Ejemplo resuelto: el ejercicio 3 del CP1",
+     "Worked example: exercise 3 of Test 1"
     ]
    },
    {
     "t": "p",
     "x": [
      "`(¬B → ¬A) ∧ (¬B ∨ C) ⇒ A → C`. Hi ha 3 proposicions, per tant 8 files. A les files marcades (premisses certes), la conclusió sempre és certa:",
-     "`(¬B → ¬A) ∧ (¬B ∨ C) ⇒ A → C`. Hay 3 proposiciones, por tanto 8 filas. En las filas marcadas (premisas ciertas), la conclusión siempre es cierta:"
+     "`(¬B → ¬A) ∧ (¬B ∨ C) ⇒ A → C`. Hay 3 proposiciones, por tanto 8 filas. En las filas marcadas (premisas ciertas), la conclusión siempre es cierta:",
+     "`(¬B → ¬A) ∧ (¬B ∨ C) ⇒ A → C`. There are 3 propositions, so 8 rows. In the marked rows (premises true), the conclusion is always true:"
     ]
    },
    {
     "t": "html",
-    "h": "<div class=\"tw\"><table class=\"lx-tt\"><thead><tr><th>A</th><th>B</th><th>C</th><th class=\"\">¬B</th><th class=\"\">¬A</th><th class=\"\">¬B → ¬A</th><th class=\"\">¬B ∨ C</th><th class=\"pc\">(¬B → ¬A) ∧ (¬B ∨ C)</th><th class=\"cc\">A → C</th><th class=\"wc\">((¬B → ¬A) ∧ (¬B ∨ C)) → (A → C)</th></tr></thead><tbody><tr class=\"ok\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"ok\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"ok\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv f\">F</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv f\">F</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"ok\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr></tbody></table></div>"
+    "h": "<div class=\"tw\"><table class=\"lx-tt\"><thead><tr><th>A</th><th>B</th><th>C</th><th class=\"\">¬B</th><th class=\"\">¬A</th><th class=\"\">¬B → ¬A</th><th class=\"\">¬B ∨ C</th><th class=\"pc\">(¬B → ¬A) ∧ (¬B ∨ C)</th><th class=\"cc\">A → C</th><th class=\"wc\">((¬B → ¬A) ∧ (¬B ∨ C)) → (A → C)</th></tr></thead><tbody><tr class=\"ok\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"ok\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"ok\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv f\">F</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv f\">F</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"ok\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr></tbody></table></div>",
+    "mode": "explained"
    },
    {
     "t": "p",
     "x": [
      "(a) El raonament és **vàlid**. (b) L'enunciat `((¬B → ¬A) ∧ (¬B ∨ C)) → (A → C)` és una **tautologia**: la seva columna és tota T.",
-     "(a) El razonamiento es **válido**. (b) El enunciado `((¬B → ¬A) ∧ (¬B ∨ C)) → (A → C)` es una **tautología**: su columna es toda T."
+     "(a) El razonamiento es **válido**. (b) El enunciado `((¬B → ¬A) ∧ (¬B ∨ C)) → (A → C)` es una **tautología**: su columna es toda T.",
+     "(a) The argument is **valid**. (b) The statement `((¬B → ¬A) ∧ (¬B ∨ C)) → (A → C)` is a **tautology**: its column is all T."
     ]
    },
    {
     "t": "p",
     "x": [
      "I un que no ho és, «negar l'antecedent», `(P → Q) ∧ ¬P ⇒ ¬Q`: la fila `P = F, Q = T` fa certes les premisses i falsa la conclusió.",
-     "Y uno que no lo es, «negar el antecedente», `(P → Q) ∧ ¬P ⇒ ¬Q`: la fila `P = F, Q = T` hace ciertas las premisas y falsa la conclusión."
+     "Y uno que no lo es, «negar el antecedente», `(P → Q) ∧ ¬P ⇒ ¬Q`: la fila `P = F, Q = T` hace ciertas las premisas y falsa la conclusión.",
+     "And one that is not, “denying the antecedent”, `(P → Q) ∧ ¬P ⇒ ¬Q`: the row `P = F, Q = T` makes the premises true and the conclusion false."
     ]
    },
    {
     "t": "html",
-    "h": "<div class=\"tw\"><table class=\"lx-tt\"><thead><tr><th>P</th><th>Q</th><th class=\"\">P → Q</th><th class=\"\">¬P</th><th class=\"pc\">(P → Q) ∧ ¬P</th><th class=\"cc\">¬Q</th><th class=\"wc\">((P → Q) ∧ ¬P) → ¬Q</th></tr></thead><tbody><tr class=\"ok\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"bad\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv f\">F</span></td><td class=\"wc\"><span class=\"tv f\">F</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv f\">F</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr></tbody></table></div>"
+    "h": "<div class=\"tw\"><table class=\"lx-tt\"><thead><tr><th>P</th><th>Q</th><th class=\"\">P → Q</th><th class=\"\">¬P</th><th class=\"pc\">(P → Q) ∧ ¬P</th><th class=\"cc\">¬Q</th><th class=\"wc\">((P → Q) ∧ ¬P) → ¬Q</th></tr></thead><tbody><tr class=\"ok\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"bad\"><td><span class=\"tv f\">F</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"pc\"><span class=\"tv t\">T</span></td><td class=\"cc\"><span class=\"tv f\">F</span></td><td class=\"wc\"><span class=\"tv f\">F</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv t\">T</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr><tr class=\"\"><td><span class=\"tv t\">T</span></td><td><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv t\">T</span></td><td class=\"\"><span class=\"tv f\">F</span></td><td class=\"pc\"><span class=\"tv f\">F</span></td><td class=\"cc\"><span class=\"tv f\">F</span></td><td class=\"wc\"><span class=\"tv t\">T</span></td></tr></tbody></table></div>",
+    "mode": "explained"
    }
   ],
   "u2-equivalencia-logica": [
@@ -219,32 +252,37 @@ export default {
     "t": "p",
     "x": [
      "A i B són **equivalents** (`A ⇔ B`, també `A ≡ B`) si tenen la mateixa columna a la taula: diuen el mateix amb paraules diferents. Les equivalències permeten reescriure fórmules sense canviar-ne el significat. Les imprescindibles:",
-     "A y B son **equivalentes** (`A ⇔ B`, también `A ≡ B`) si tienen la misma columna en la tabla: dicen lo mismo con palabras diferentes. Las equivalencias permiten reescribir fórmulas sin cambiar su significado. Las imprescindibles:"
+     "A y B son **equivalentes** (`A ⇔ B`, también `A ≡ B`) si tienen la misma columna en la tabla: dicen lo mismo con palabras diferentes. Las equivalencias permiten reescribir fórmulas sin cambiar su significado. Las imprescindibles:",
+     "A and B are **equivalent** (`A ⇔ B`, also `A ≡ B`) if they have the same column in the table: they say the same in different words. Equivalences allow formulas to be rewritten without changing their meaning. The essential ones:"
     ]
    },
    {
     "head": [
      [
       "Nom",
-      "Nombre"
+      "Nombre",
+      "Name"
      ],
      [
       "Equivalència",
-      "Equivalencia"
+      "Equivalencia",
+      "Equivalence"
      ]
     ],
     "rows": [
      [
       [
        "Doble negació",
-       "Doble negación"
+       "Doble negación",
+       "Double negation"
       ],
       "`¬¬A ⇔ A`"
      ],
      [
       [
        "Implicació",
-       "Implicación"
+       "Implicación",
+       "Implication"
       ],
       "`A → B ⇔ ¬A ∨ B`"
      ],
@@ -259,7 +297,8 @@ export default {
      [
       [
        "Exportació",
-       "Exportación"
+       "Exportación",
+       "Exportation"
       ],
       "`(A ∧ B) → C ⇔ A → (B → C)`"
      ],
@@ -274,7 +313,8 @@ export default {
     "t": "p",
     "x": [
      "La resta són al [formulari](/logica/fs). Compte: `A → B` **no** equival a `B → A` (la recíproca) ni a `¬A → ¬B` (la inversa).",
-     "Las demás están en el [formulario](/logica/fs). Cuidado: `A → B` **no** equivale a `B → A` (la recíproca) ni a `¬A → ¬B` (la inversa)."
+     "Las demás están en el [formulario](/logica/fs). Cuidado: `A → B` **no** equivale a `B → A` (la recíproca) ni a `¬A → ¬B` (la inversa).",
+     "The rest are on the [formula sheet](/logica/fs). Careful: `A → B` is **not** equivalent to `B → A` (the converse) nor to `¬A → ¬B` (the inverse)."
     ]
    }
   ],
@@ -283,7 +323,8 @@ export default {
     "t": "p",
     "x": [
      "Per comprovar un raonament sense fer tota la taula, suposeu que les premisses són certes i la conclusió falsa, i deduïu valors fins a trobar una contradicció. Si la trobeu, el raonament és vàlid; si arribeu a una assignació coherent, aquesta és un contraexemple.",
-     "Para comprobar un razonamiento sin hacer toda la tabla, suponed que las premisas son ciertas y la conclusión falsa, y deducid valores hasta encontrar una contradicción. Si la encontráis, el razonamiento es válido; si llegáis a una asignación coherente, esta es un contraejemplo."
+     "Para comprobar un razonamiento sin hacer toda la tabla, suponed que las premisas son ciertas y la conclusión falsa, y deducid valores hasta encontrar una contradicción. Si la encontráis, el razonamiento es válido; si llegáis a una asignación coherente, esta es un contraejemplo.",
+     "To check an argument without doing the whole table, assume that the premises are true and the conclusion false, and deduce values until you find a contradiction. If you find one, the argument is valid; if you reach a consistent assignment, that is a counterexample."
     ]
    },
    {
@@ -292,15 +333,18 @@ export default {
       "t": "p",
       "x": [
        "Conclusió falsa: `P → R` = F obliga `P = T` i `R = F`. Premissa 1: `P → Q` = T amb P = T obliga `Q = T`. Premissa 2: `Q → R` = T → F = **F**. Contradicció: el raonament és vàlid.",
-       "Conclusión falsa: `P → R` = F obliga a `P = T` y `R = F`. Premisa 1: `P → Q` = T con P = T obliga a `Q = T`. Premisa 2: `Q → R` = T → F = **F**. Contradicción: el razonamiento es válido."
+       "Conclusión falsa: `P → R` = F obliga a `P = T` y `R = F`. Premisa 1: `P → Q` = T con P = T obliga a `Q = T`. Premisa 2: `Q → R` = T → F = **F**. Contradicción: el razonamiento es válido.",
+       "False conclusion: `P → R` = F forces `P = T` and `R = F`. Premise 1: `P → Q` = T with P = T forces `Q = T`. Premise 2: `Q → R` = T → F = **F**. Contradiction: the argument is valid."
       ]
      }
     ],
     "t": "example",
     "title": [
      "Exemple: P → Q, Q → R ⇒ P → R",
-     "Ejemplo: P → Q, Q → R ⇒ P → R"
-    ]
+     "Ejemplo: P → Q, Q → R ⇒ P → R",
+     "Example: P → Q, Q → R ⇒ P → R"
+    ],
+    "mode": "explained"
    }
   ],
   "u2-comprova-que-has-entes": [
@@ -311,7 +355,8 @@ export default {
      "type": "mcq",
      "q": [
       "Una fórmula amb 4 proposicions diferents, quantes files té a la taula?",
-      "Una fórmula con 4 proposiciones diferentes, ¿cuántas filas tiene en la tabla?"
+      "Una fórmula con 4 proposiciones diferentes, ¿cuántas filas tiene en la tabla?",
+      "A formula with 4 different propositions: how many rows does its table have?"
      ],
      "opts": [
       "8",
@@ -335,24 +380,29 @@ export default {
      "type": "mcq",
      "q": [
       "Si `(A₁ ∧ A₂) → B` és una tautologia, què podem dir?",
-      "Si `(A₁ ∧ A₂) → B` es una tautología, ¿qué podemos decir?"
+      "Si `(A₁ ∧ A₂) → B` es una tautología, ¿qué podemos decir?",
+      "If `(A₁ ∧ A₂) → B` is a tautology, what can we say?"
      ],
      "opts": [
       [
        "B és conseqüència lògica de A₁ i A₂",
-       "B es consecuencia lógica de A₁ y A₂"
+       "B es consecuencia lógica de A₁ y A₂",
+       "B is a logical consequence of A₁ and A₂"
       ],
       [
        "A₁ i A₂ són equivalents",
-       "A₁ y A₂ son equivalentes"
+       "A₁ y A₂ son equivalentes",
+       "A₁ and A₂ are equivalent"
       ],
       [
        "B és una tautologia",
-       "B es una tautología"
+       "B es una tautología",
+       "B is a tautology"
       ],
       [
        "Res: cal mirar la taula de B",
-       "Nada: hay que mirar la tabla de B"
+       "Nada: hay que mirar la tabla de B",
+       "Nothing: we must look at the table of B"
       ]
      ],
      "answer": 0,
@@ -361,7 +411,8 @@ export default {
        "t": "p",
        "x": [
         "És exactament la definició de conseqüència lògica.",
-        "Es exactamente la definición de consecuencia lógica."
+        "Es exactamente la definición de consecuencia lógica.",
+        "It is exactly the definition of logical consequence."
        ]
       }
      ]
@@ -374,7 +425,8 @@ export default {
      "type": "mcq",
      "q": [
       "Quina fila és un contraexemple de `P ∨ Q, P ⇒ ¬Q`?",
-      "¿Qué fila es un contraejemplo de `P ∨ Q, P ⇒ ¬Q`?"
+      "¿Qué fila es un contraejemplo de `P ∨ Q, P ⇒ ¬Q`?",
+      "Which row is a counterexample to `P ∨ Q, P ⇒ ¬Q`?"
      ],
      "opts": [
       "P = F, Q = F",
@@ -388,7 +440,8 @@ export default {
        "t": "p",
        "x": [
         "Amb P = T i Q = T les dues premisses són certes i `¬Q` és fals. (El «o» del CP0 és inclusiu.)",
-        "Con P = T y Q = T las dos premisas son ciertas y `¬Q` es falso. (La «o» del CP0 es inclusiva.)"
+        "Con P = T y Q = T las dos premisas son ciertas y `¬Q` es falso. (La «o» del CP0 es inclusiva.)",
+        "With P = T and Q = T both premises are true and `¬Q` is false. (The “or” of CP0 is inclusive.)"
        ]
       }
      ]
@@ -396,5 +449,18 @@ export default {
    }
   ]
  },
- "examEnd": []
+ "examEnd": [
+  {
+   "ref": "lg-b1"
+  },
+  {
+   "ref": "lg-b2"
+  },
+  {
+   "ref": "lg-b3"
+  },
+  {
+   "ref": "lg-b4"
+  }
+ ]
 };
