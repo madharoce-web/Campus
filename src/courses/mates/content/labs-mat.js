@@ -92,16 +92,16 @@ export function makeLabsMat($) {
   const INVPRE = { t2: [[3, 1], [4, 2]], t3: [[1, 2, 3], [0, 1, 4], [5, 6, 0]], s2: [[2, -3], [4, -6]], s3: [[1, 2, 3], [2, 4, 6], [1, 0, 1]], f3: [[2, 0, 1], [1, 1, 0], [0, 3, 1]] };
   function invSteps(A) {
     const n = A.length, d = mDet(A), out = [];
-    out.push({ h: L('1. Determinant', '1. Determinante'), m: '|A| = ' + mTx(A, 'd') + ' = ' + qtx(d), w: n === 2 ? L('ad − bc', 'ad − bc') : L('Sarrus o desenvolupament per una fila o columna', 'Sarrus o desarrollo por una fila o columna'), c: qz(d) ? 'bad' : '' });
-    if (qz(d)) { out.push({ h: L('Conclusió', 'Conclusión'), t: L('$|A| = 0$: la matriu <b>no és invertible</b>. Aquí s\'acaba.', '$|A| = 0$: la matriz <b>no es invertible</b>. Aquí se acaba.'), c: 'done' }); return out; }
+    out.push({ h: L('1. Determinant', '1. Determinante', '1. Determinant'), m: '|A| = ' + mTx(A, 'd') + ' = ' + qtx(d), w: n === 2 ? L('ad − bc', 'ad − bc', 'ad − bc') : L('Sarrus o desenvolupament per una fila o columna', 'Sarrus o desarrollo por una fila o columna', 'Sarrus or expansion along a row or column'), c: qz(d) ? 'bad' : '' });
+    if (qz(d)) { out.push({ h: L('Conclusió', 'Conclusión', 'Conclusion'), t: L('$|A| = 0$: la matriu <b>no és invertible</b>. Aquí s\'acaba.', '$|A| = 0$: la matriz <b>no es invertible</b>. Aquí se acaba.', '$|A| = 0$: the matrix <b>is not invertible</b>. We stop here.'), c: 'done' }); return out; }
     const Cf = mCof(A);
-    if (n === 2) out.push({ h: L('2. Adjunts', '2. Adjuntos'), m: 'm_{11} = ' + qtx(A[1][1]) + ',  m_{12} = −' + qPar(A[1][0]) + ' = ' + qtx(Cf[0][1]) + ',  m_{21} = −' + qPar(A[0][1]) + ' = ' + qtx(Cf[1][0]) + ',  m_{22} = ' + qtx(A[0][0]), w: L('A ordre 2 cada menor complementari és un sol nombre.', 'En orden 2 cada menor complementario es un solo número.') });
-    else out.push({ h: L('2. Adjunts', '2. Adjuntos'), t: '<div class="adjg">' + Cf.map((r, i) => r.map((v, j) => '<span class="m">' + tx('m_{' + (i + 1) + (j + 1) + '} = ' + sgnTx(i, j) + mTx(mMinorM(A, i, j), 'd') + ' = ' + qtx(v)) + '</span>').join('')).join('') + '</div>', w: L('Menor complementari amb el signe del tauler d\'escacs.', 'Menor complementario con el signo del tablero de ajedrez.') });
-    out.push({ h: L('3. Matriu adjunta', '3. Matriz adjunta'), m: 'Adj A = ' + mTx(Cf) });
-    out.push({ h: L('4. Transposem', '4. Trasponemos'), m: '(Adj A)^{T} = ' + mTx(mT(Cf)) });
+    if (n === 2) out.push({ h: L('2. Adjunts', '2. Adjuntos', '2. Cofactors'), m: 'm_{11} = ' + qtx(A[1][1]) + ',  m_{12} = −' + qPar(A[1][0]) + ' = ' + qtx(Cf[0][1]) + ',  m_{21} = −' + qPar(A[0][1]) + ' = ' + qtx(Cf[1][0]) + ',  m_{22} = ' + qtx(A[0][0]), w: L('A ordre 2 cada menor complementari és un sol nombre.', 'En orden 2 cada menor complementario es un solo número.', 'In order 2 each complementary minor is a single number.') });
+    else out.push({ h: L('2. Adjunts', '2. Adjuntos', '2. Cofactors'), t: '<div class="adjg">' + Cf.map((r, i) => r.map((v, j) => '<span class="m">' + tx('m_{' + (i + 1) + (j + 1) + '} = ' + sgnTx(i, j) + mTx(mMinorM(A, i, j), 'd') + ' = ' + qtx(v)) + '</span>').join('')).join('') + '</div>', w: L('Menor complementari amb el signe del tauler d\'escacs.', 'Menor complementario con el signo del tablero de ajedrez.', 'Complementary minor with the chessboard sign.') });
+    out.push({ h: L('3. Matriu adjunta', '3. Matriz adjunta', '3. Adjugate matrix'), m: 'Adj A = ' + mTx(Cf) });
+    out.push({ h: L('4. Transposem', '4. Trasponemos', '4. We transpose'), m: '(Adj A)^{T} = ' + mTx(mT(Cf)) });
     const Inv = mInv(A);
-    out.push({ h: L('5. Dividim pel determinant', '5. Dividimos por el determinante'), m: 'A^{−1} = ' + qtx(qd(Q(1), d)) + ' · ' + mTx(mT(Cf)) + ' = ' + mTx(Inv), w: L('multipliquem cada element per 1/|A|', 'multiplicamos cada elemento por 1/|A|'), c: 'done' });
-    out.push({ h: L('6. Comprovació', '6. Comprobación'), m: 'A · A^{−1} = ' + mTx(mMul(A, Inv)) + ' = I_{' + n + '}', w: mEq(mMul(A, Inv), mId(n)) ? L('Surt la identitat: la inversa és correcta.', 'Sale la identidad: la inversa es correcta.') : '' });
+    out.push({ h: L('5. Dividim pel determinant', '5. Dividimos por el determinante', '5. We divide by the determinant'), m: 'A^{−1} = ' + qtx(qd(Q(1), d)) + ' · ' + mTx(mT(Cf)) + ' = ' + mTx(Inv), w: L('multipliquem cada element per 1/|A|', 'multiplicamos cada elemento por 1/|A|', 'we multiply each entry by 1/|A|'), c: 'done' });
+    out.push({ h: L('6. Comprovació', '6. Comprobación', '6. Check'), m: 'A · A^{−1} = ' + mTx(mMul(A, Inv)) + ' = I_{' + n + '}', w: mEq(mMul(A, Inv), mId(n)) ? L('Surt la identitat: la inversa és correcta.', 'Sale la identidad: la inversa es correcta.', 'We get the identity: the inverse is correct.') : '' });
     return out;
   }
 
