@@ -11,7 +11,7 @@ export function LabShell({ title, children }) {
   const lab = useContext(LabContext);
   return (
     <div className="lab" data-w={lab ? lab.w : undefined} data-id={lab ? lab.id : undefined}>
-      <div className="lab-h"><span className="tag">{L('Laboratori', 'Laboratorio')}</span><span className="tt">{title}</span></div>
+      <div className="lab-h"><span className="tag">{L('Laboratori', 'Laboratorio', 'Lab')}</span><span className="tt">{title}</span></div>
       <div className="lab-b">{children}</div>
     </div>
   );
