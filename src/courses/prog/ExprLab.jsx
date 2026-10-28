@@ -22,10 +22,10 @@ function Result({ vals, names, ex }) {
   try { r = xpEval(e, vars, steps, L); } catch (err) { fail = err.message; }
   return (
     <>
-      <div className="ip-xppar">{L('Com la llegeix el curs: ', 'Cómo la lee el curso: ')}{par}</div>
+      <div className="ip-xppar">{L('Com la llegeix el curs: ', 'Cómo la lee el curso: ', 'How the course reads it: ')}{par}</div>
       {stepRows(steps)}
       {fail != null ? errRow(fail) : (
-        <div className="ip-xpst fin"><span className="n">=</span><span>{L('Resultat: ', 'Resultado: ')}<b>{xpShow(r)}</b>{typeof r === 'boolean' ? L(' (expressió booleana)', ' (expresión booleana)') : L(' (expressió numèrica)', ' (expresión numérica)')}</span></div>
+        <div className="ip-xpst fin"><span className="n">=</span><span>{L('Resultat: ', 'Resultado: ', 'Result: ')}<b>{xpShow(r)}</b>{typeof r === 'boolean' ? L(' (expressió booleana)', ' (expresión booleana)', ' (Boolean expression)') : L(' (expressió numèrica)', ' (expresión numérica)', ' (numeric expression)')}</span></div>
       )}
     </>
   );
@@ -59,7 +59,7 @@ export default function ExprLab({ expr, vars }) {
 
   return (
     <div className="ip-xp">
-      <div className="ip-xph">{L('Laboratori: avalua una expressió amb les prioritats del curs', 'Laboratorio: evalúa una expresión con las prioridades del curso')}</div>
+      <div className="ip-xph">{L('Laboratori: avalua una expressió amb les prioritats del curs', 'Laboratorio: evalúa una expresión con las prioridades del curso', 'Lab: evaluate an expression with the course precedence')}</div>
       <div className="ip-xpb">
         <div className="ip-xprow">
           {names.map((k, i) => (
@@ -68,8 +68,8 @@ export default function ExprLab({ expr, vars }) {
           ))}
         </div>
         <div className="ip-xprow">
-          <input ref={exRef} className="ex" spellCheck={false} aria-label={L('Expressió', 'Expresión')} value={ex} onChange={(e) => setEx(e.target.value)} onKeyDown={onEnter} />
-          <button type="button" className="ip-btn pri sm" onClick={go}>{L('Avalua', 'Evalúa')}</button>
+          <input ref={exRef} className="ex" spellCheck={false} aria-label={L('Expressió', 'Expresión', 'Expression')} value={ex} onChange={(e) => setEx(e.target.value)} onKeyDown={onEnter} />
+          <button type="button" className="ip-btn pri sm" onClick={go}>{L('Avalua', 'Evalúa', 'Evaluate')}</button>
         </div>
         <div className="ip-xpkeys">
           {KEYS.map((k) => <button key={k} type="button" data-k={k} onClick={() => insert(k)}>{k}</button>)}

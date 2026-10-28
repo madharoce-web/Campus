@@ -9,7 +9,7 @@ import { MARK, nextUid } from './marks.js';
 export function makeCore($) {
   const { lang } = $;
   const uid = nextUid;
-  const L = (ca, es) => lang === 'ca' ? ca : es;
+  const L = (ca, es, en) => lang === 'ca' ? ca : lang === 'en' && en != null ? en : es;
   const esc = Z.escH;
 
   const fmt = (x, d) => Z.fmtNum(x, d == null ? 4 : d);
@@ -24,16 +24,16 @@ export function makeCore($) {
   const OL = arr => '<ol>' + arr.map(x => '<li>' + md(x) + '</li>').join('') + '</ol>';
   function BX(kind, head, body) { return '<div class="bx ' + kind + '"><div class="bh">' + head + '</div>' + body + '</div>'; }
   const bodyH = b => Array.isArray(b) ? b.join('') : (/^\s*<(div|ul|ol|p|table|section)[\s>]/.test(b) ? b : P(b));
-  const DEF = (name, body) => BX('def', L('Definició', 'Definición') + (name ? ' · ' + name : ''), bodyH(body));
+  const DEF = (name, body) => BX('def', L('Definició', 'Definición', 'Definition') + (name ? ' · ' + name : ''), bodyH(body));
   const THM = (label, body) => BX('thm', md(label), bodyH(body));
-  const TIP = body => BX('tip', L('Per entendre-ho', 'Para entenderlo'), bodyH(body));
-  const WARN = body => BX('warn', L('Compte', 'Cuidado'), bodyH(body));
-  const EXB = (head, body) => BX('ex', head ? md(head) : L('Exemple', 'Ejemplo'), bodyH(body));
+  const TIP = body => BX('tip', L('Per entendre-ho', 'Para entenderlo', 'To understand it'), bodyH(body));
+  const WARN = body => BX('warn', L('Compte', 'Cuidado', 'Careful'), bodyH(body));
+  const EXB = (head, body) => BX('ex', head ? md(head) : L('Exemple', 'Ejemplo', 'Example'), bodyH(body));
   function TBL(head, rows, cls) {
     return '<div class="tbl"><table class="' + (cls || '') + '"><thead><tr>' + head.map(h => '<th>' + md(h) + '</th>').join('') + '</tr></thead><tbody>' +
       rows.map(r => '<tr>' + r.map(c => '<td>' + md(c) + '</td>').join('') + '</tr>').join('') + '</tbody></table></div>';
   }
-  const yes = () => '<span class="yes">' + L('Sí', 'Sí') + '</span>';
+  const yes = () => '<span class="yes">' + L('Sí', 'Sí', 'Yes') + '</span>';
   const no = () => '<span class="no">No</span>';
 
   function LAB(w, id, cfg) { return MARK + JSON.stringify(['lab', w, id, cfg || {}]) + MARK; }
@@ -53,7 +53,7 @@ export function makeCore($) {
   }
 
   const fb = (k, h) => '<div class="fb ' + k + '">' + h + '</div>';
-  const okTxt = ok => '<b>' + (ok ? L('Correcte', 'Correcto') : L('Incorrecte', 'Incorrecto')) + '.</b> ';
+  const okTxt = ok => '<b>' + (ok ? L('Correcte', 'Correcto', 'Correct') : L('Incorrecte', 'Incorrecto', 'Incorrect')) + '.</b> ';
 
   /* ---------- recta real en SVG ---------- */
   function NL(min, max, W, H, y0) {

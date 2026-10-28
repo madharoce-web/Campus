@@ -15,8 +15,8 @@ export function QuantLab() {
 
   return (
     <div className="lab" data-lab="quant">
-      <p className="lb-title">{L('Laboratori: ∀ i ∃ en un món de cinc persones', 'Laboratorio: ∀ y ∃ en un mundo de cinco personas')}</p>
-      <p className="lb-help">{L('Decideix qui és estudiant (E) i qui treballa (T). Tria una fórmula: el diagrama pinta de verd els que fan certa la part de dins i de vermell els que la fan falsa.', 'Decide quién es estudiante (E) y quién trabaja (T). Elige una fórmula: el diagrama pinta de verde a quien hace cierta la parte de dentro y de rojo a quien la hace falsa.')}</p>
+      <p className="lb-title">{L('Laboratori: ∀ i ∃ en un món de cinc persones', 'Laboratorio: ∀ y ∃ en un mundo de cinco personas', 'Lab: ∀ and ∃ in a world of five people')}</p>
+      <p className="lb-help">{L('Decideix qui és estudiant (E) i qui treballa (T). Tria una fórmula: el diagrama pinta de verd els que fan certa la part de dins i de vermell els que la fan falsa.', 'Decide quién es estudiante (E) y quién trabaja (T). Elige una fórmula: el diagrama pinta de verde a quien hace cierta la parte de dentro y de rojo a quien la hace falsa.', 'Decide who is a student (E) and who works (T). Choose a formula: the diagram colours green whoever makes the inner part true and red whoever makes it false.')}</p>
       <div className="lb-row">
         <div className="lb-people">
           <div className="lb-ph"><span></span><span>E</span><span>T</span></div>
@@ -32,7 +32,7 @@ export function QuantLab() {
           ))}
         </div>
         <div className="lb-venn">
-          <svg viewBox="0 0 380 222" role="img" aria-label={L('Diagrama dels conjunts E i T amb les cinc persones', 'Diagrama de los conjuntos E y T con las cinco personas')}>
+          <svg viewBox="0 0 380 222" role="img" aria-label={L('Diagrama dels conjunts E i T amb les cinc persones', 'Diagrama de los conjuntos E y T con las cinco personas', 'Diagram of the sets E and T with the five people')}>
             <rect x="2" y="2" width="376" height="218" rx="14" className="vz-dom" />
             <circle cx="140" cy="112" r="84" className="vz-setI" /><circle cx="240" cy="112" r="84" className="vz-setT" />
             <text x="64" y="40" className="vz-lab vz-tI" textAnchor="middle">E</text><text x="316" y="40" className="vz-lab vz-tT" textAnchor="middle">T</text>
@@ -46,14 +46,14 @@ export function QuantLab() {
         </div>
       </div>
       <div className="lb-ctrl">
-        <span className="lb-lbl">{L('Notació', 'Notación')}</span>
+        <span className="lb-lbl">{L('Notació', 'Notación', 'Notation')}</span>
         <div className="lb-seg" role="group">
-          <button type="button" data-n="std" aria-pressed={Q.notation === 'std'} onClick={() => setQ((o) => ({ ...o, notation: 'std' }))}>{L('Estàndard', 'Estándar')}</button>
-          <button type="button" data-n="col" aria-pressed={Q.notation === 'col'} onClick={() => setQ((o) => ({ ...o, notation: 'col' }))}>{L('Dos punts', 'Dos puntos')}</button>
+          <button type="button" data-n="std" aria-pressed={Q.notation === 'std'} onClick={() => setQ((o) => ({ ...o, notation: 'std' }))}>{L('Estàndard', 'Estándar', 'Standard')}</button>
+          <button type="button" data-n="col" aria-pressed={Q.notation === 'col'} onClick={() => setQ((o) => ({ ...o, notation: 'col' }))}>{L('Dos punts', 'Dos puntos', 'Colon')}</button>
         </div>
-        <span className="lb-lbl">{L('Exemples', 'Ejemplos')}</span>
+        <span className="lb-lbl">{L('Exemples', 'Ejemplos', 'Examples')}</span>
         <div className="lb-seg" role="group">
-          {[L('Inicial', 'Inicial'), L('Ningú estudia', 'Nadie estudia'), L('Tots estudien', 'Todos estudian')].map((t, k) => (
+          {[L('Inicial', 'Inicial', 'Initial'), L('Ningú estudia', 'Nadie estudia', 'Nobody studies'), L('Tots estudien', 'Todos estudian', 'Everybody studies')].map((t, k) => (
             <button key={k} type="button" data-p={k} onClick={() => preset(k)}>{t}</button>
           ))}
         </div>
@@ -92,8 +92,8 @@ export function OrderLab() {
 
   return (
     <div className="lab" data-lab="order">
-      <p className="lb-title">{L("Laboratori: l'ordre dels quantificadors", 'Laboratorio: el orden de los cuantificadores')}</p>
-      <p className="lb-help">{L('A(x, y) vol dir «x admira y». Activa o treu fletxes a la graella (fila = qui admira, columna = qui és admirat) i mira com canvien les fórmules. Toca una fórmula per veure al graf les fletxes que la fan certa.', 'A(x, y) significa «x admira a y». Activa o quita flechas en la cuadrícula (fila = quien admira, columna = quien es admirado) y mira cómo cambian las fórmulas. Toca una fórmula para ver en el grafo las flechas que la hacen cierta.')}</p>
+      <p className="lb-title">{L("Laboratori: l'ordre dels quantificadors", 'Laboratorio: el orden de los cuantificadores', 'Lab: the order of quantifiers')}</p>
+      <p className="lb-help">{L('A(x, y) vol dir «x admira y». Activa o treu fletxes a la graella (fila = qui admira, columna = qui és admirat) i mira com canvien les fórmules. Toca una fórmula per veure al graf les fletxes que la fan certa.', 'A(x, y) significa «x admira a y». Activa o quita flechas en la cuadrícula (fila = quien admira, columna = quien es admirado) y mira cómo cambian las fórmulas. Toca una fórmula para ver en el grafo las flechas que la hacen cierta.', 'A(x, y) means “x admires y”. Turn arrows on or off in the grid (row = who admires, column = who is admired) and see how the formulas change. Tap a formula to see in the graph the arrows that make it true.')}</p>
       <div className="lb-row">
         <div className="lb-grid">
           <table className="lb-mx">
@@ -115,7 +115,7 @@ export function OrderLab() {
           </table>
         </div>
         <div className="lb-graph">
-          <svg viewBox="0 0 340 280" role="img" aria-label={L('Graf de la relació A(x, y): x admira y', 'Grafo de la relación A(x, y): x admira a y')}>
+          <svg viewBox="0 0 340 280" role="img" aria-label={L('Graf de la relació A(x, y): x admira y', 'Grafo de la relación A(x, y): x admira a y', 'Graph of the relation A(x, y): x admires y')}>
             <defs>
               <marker id="lbm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path className="vz-ah" d="M0 0 L10 5 L0 10 z" /></marker>
               <marker id="lbmA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path className="vz-ahA" d="M0 0 L10 5 L0 10 z" /></marker>
@@ -131,9 +131,9 @@ export function OrderLab() {
         </div>
       </div>
       <div className="lb-ctrl">
-        <span className="lb-lbl">{L('Exemples', 'Ejemplos')}</span>
+        <span className="lb-lbl">{L('Exemples', 'Ejemplos', 'Examples')}</span>
         <div className="lb-seg" role="group">
-          {[L('Cercle', 'Círculo'), L('Un ídol', 'Un ídolo'), L('Una admiradora', 'Una admiradora')].map((t, k) => (
+          {[L('Cercle', 'Círculo', 'Circle'), L('Un ídol', 'Un ídolo', 'An idol'), L('Una admiradora', 'Una admiradora', 'An admirer')].map((t, k) => (
             <button key={k} type="button" data-p={k} onClick={() => setR((o) => ({ ...o, m: rPreset(k) }))}>{t}</button>
           ))}
         </div>

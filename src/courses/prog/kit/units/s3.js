@@ -5,7 +5,8 @@ export default {
    "t": "p",
    "x": [
     "De SI…LLAVORS i SEGONS_SIGUI a if/else i switch. Exemple resolt: la Botiga dels Ous.",
-    "De SI…LLAVORS y SEGONS_SIGUI a if/else y switch. Ejemplo resuelto: la Tienda de los Huevos."
+    "De SI…LLAVORS y SEGONS_SIGUI a if/else y switch. Ejemplo resuelto: la Tienda de los Huevos.",
+    "From SI…LLAVORS and SEGONS_SIGUI to if/else and switch. Worked example: the Egg Shop."
    ]
   },
   {
@@ -13,11 +14,13 @@ export default {
    "items": [
     [
      "**Sessions:** Dl. 21/09 i dc. 23/09",
-     "**Sesiones:** Lu. 21/09 y mi. 23/09"
+     "**Sesiones:** Lu. 21/09 y mi. 23/09",
+     "**Sessions:** Mon 21/09 and Wed 23/09"
     ],
     [
      "**Teoria associada:** Tema 2.2",
-     "**Teoría asociada:** Tema 2.2"
+     "**Teoría asociada:** Tema 2.2",
+     "**Related theory:** Unit 2.2"
     ]
    ]
   },
@@ -25,14 +28,16 @@ export default {
    "t": "p",
    "x": [
     "Fins ara els programes feien sempre les mateixes instruccions, de dalt a baix. Aquesta setmana el programa aprèn a **decidir**: segons les dades, executa un camí o un altre. És la composició alternativa del Tema 2.2 (`SI`, `SEGONS_SIGUI`) escrita en C++.",
-    "Hasta ahora los programas ejecutaban siempre las mismas instrucciones, de arriba abajo. Esta semana el programa aprende a **decidir**: según los datos, ejecuta un camino u otro. Es la composición alternativa del Tema 2.2 (`SI`, `SEGONS_SIGUI`) escrita en C++."
+    "Hasta ahora los programas ejecutaban siempre las mismas instrucciones, de arriba abajo. Esta semana el programa aprende a **decidir**: según los datos, ejecuta un camino u otro. Es la composición alternativa del Tema 2.2 (`SI`, `SEGONS_SIGUI`) escrita en C++.",
+    "Until now programs always ran the same instructions, from top to bottom. This week the program learns to **decide**: depending on the data, it takes one path or another. It is the selection composition of Unit 2.2 (`SI`, `SEGONS_SIGUI`) written in C++."
    ]
   },
   {
    "t": "summary",
    "title": [
     "En acabar aquesta pràctica sabràs",
-    "Al terminar esta práctica sabrás"
+    "Al terminar esta práctica sabrás",
+    "By the end of this lab you will be able to"
    ],
    "blocks": [
     {
@@ -40,23 +45,28 @@ export default {
      "items": [
       [
        "Escriure condicions amb els operadors relacionals (`==`, `!=`, `<`…) i lògics (`&&`, `||`, `!`).",
-       "Escribir condiciones con los operadores relacionales (`==`, `!=`, `<`…) y lógicos (`&&`, `||`, `!`)."
+       "Escribir condiciones con los operadores relacionales (`==`, `!=`, `<`…) y lógicos (`&&`, `||`, `!`).",
+       "Write conditions with relational (`==`, `!=`, `<`…) and logical (`&&`, `||`, `!`) operators."
       ],
       [
        "Fer servir `if`, `if … else` i cadenes `else if`, i decidir quan cal niuar-les.",
-       "Utilizar `if`, `if … else` y cadenas `else if`, y decidir cuándo hay que anidarlas."
+       "Utilizar `if`, `if … else` y cadenas `else if`, y decidir cuándo hay que anidarlas.",
+       "Use `if`, `if … else` and `else if` chains, and decide when to nest them."
       ],
       [
        "Fer servir `switch` amb `case`, `break` i `default`.",
-       "Utilizar `switch` con `case`, `break` y `default`."
+       "Utilizar `switch` con `case`, `break` y `default`.",
+       "Use `switch` with `case`, `break` and `default`."
       ],
       [
        "Escriure reals amb un nombre fix de decimals (`fixed` i `setprecision`).",
-       "Escribir reales con un número fijo de decimales (`fixed` y `setprecision`)."
+       "Escribir reales con un número fijo de decimales (`fixed` y `setprecision`).",
+       "Write real numbers with a fixed number of decimals (`fixed` and `setprecision`)."
       ],
       [
        "Reconèixer els errors clàssics: `=` per `==`, el `;` després de l'`if`, les claus que falten i el `break` oblidat.",
-       "Reconocer los errores clásicos: `=` por `==`, el `;` después del `if`, las llaves que faltan y el `break` olvidado."
+       "Reconocer los errores clásicos: `=` por `==`, el `;` después del `if`, las llaves que faltan y el `break` olvidado.",
+       "Recognise the classic mistakes: `=` for `==`, the `;` after the `if`, missing braces and the forgotten `break`."
       ]
      ]
     }
@@ -69,14 +79,17 @@ export default {
     "t": "html",
     "h": [
      "<div class=\"ip-map\">\n<div class=\"ip-maph\">Pseudocodi</div><span></span><div class=\"ip-maph\">C++</div>\n<div>SI cond LLAVORS … FI_SI</div><span>→</span><div>if (cond) { … }</div>\n<div>SI cond LLAVORS … ALTRAMENT … FI_SI</div><span>→</span><div>if (cond) { … } else { … }</div>\n<div>SEGONS_SIGUI x FER  v1: …  ALTRAMENT …</div><span>→</span><div>switch (x) { case v1: … break; default: … }</div>\n<div>=   ≠   &lt;   ≤   &gt;   ≥</div><span>→</span><div>==   !=   &lt;   &lt;=   &gt;   &gt;=</div>\n<div>I   O   NO</div><span>→</span><div>&amp;&amp;   ||   !</div>\n<div>CERT   FALS</div><span>→</span><div>true   false</div>\n</div>",
-     "<div class=\"ip-map\">\n<div class=\"ip-maph\">Pseudocódigo</div><span></span><div class=\"ip-maph\">C++</div>\n<div>SI cond LLAVORS … FI_SI</div><span>→</span><div>if (cond) { … }</div>\n<div>SI cond LLAVORS … ALTRAMENT … FI_SI</div><span>→</span><div>if (cond) { … } else { … }</div>\n<div>SEGONS_SIGUI x FER  v1: …  ALTRAMENT …</div><span>→</span><div>switch (x) { case v1: … break; default: … }</div>\n<div>=   ≠   &lt;   ≤   &gt;   ≥</div><span>→</span><div>==   !=   &lt;   &lt;=   &gt;   &gt;=</div>\n<div>I   O   NO</div><span>→</span><div>&amp;&amp;   ||   !</div>\n<div>CERT   FALS</div><span>→</span><div>true   false</div>\n</div>"
-    ]
+     "<div class=\"ip-map\">\n<div class=\"ip-maph\">Pseudocódigo</div><span></span><div class=\"ip-maph\">C++</div>\n<div>SI cond LLAVORS … FI_SI</div><span>→</span><div>if (cond) { … }</div>\n<div>SI cond LLAVORS … ALTRAMENT … FI_SI</div><span>→</span><div>if (cond) { … } else { … }</div>\n<div>SEGONS_SIGUI x FER  v1: …  ALTRAMENT …</div><span>→</span><div>switch (x) { case v1: … break; default: … }</div>\n<div>=   ≠   &lt;   ≤   &gt;   ≥</div><span>→</span><div>==   !=   &lt;   &lt;=   &gt;   &gt;=</div>\n<div>I   O   NO</div><span>→</span><div>&amp;&amp;   ||   !</div>\n<div>CERT   FALS</div><span>→</span><div>true   false</div>\n</div>",
+     "<div class=\"ip-map\">\n<div class=\"ip-maph\">Pseudocode</div><span></span><div class=\"ip-maph\">C++</div>\n<div>SI cond LLAVORS … FI_SI</div><span>→</span><div>if (cond) { … }</div>\n<div>SI cond LLAVORS … ALTRAMENT … FI_SI</div><span>→</span><div>if (cond) { … } else { … }</div>\n<div>SEGONS_SIGUI x FER  v1: …  ALTRAMENT …</div><span>→</span><div>switch (x) { case v1: … break; default: … }</div>\n<div>=   ≠   &lt;   ≤   &gt;   ≥</div><span>→</span><div>==   !=   &lt;   &lt;=   &gt;   &gt;=</div>\n<div>I   O   NO</div><span>→</span><div>&amp;&amp;   ||   !</div>\n<div>CERT   FALS</div><span>→</span><div>true   false</div>\n</div>"
+    ],
+    "mode": "explained"
    },
    {
     "t": "p",
     "x": [
      "Dues diferències de forma: en C++ la condició va **sempre entre parèntesis**, i el bloc es delimita amb **claus** `{ }` en lloc de `FI_SI`.",
-     "Dos diferencias de forma: en C++ la condición va **siempre entre paréntesis**, y el bloque se delimita con **llaves** `{ }` en lugar de `FI_SI`."
+     "Dos diferencias de forma: en C++ la condición va **siempre entre paréntesis**, y el bloque se delimita con **llaves** `{ }` en lugar de `FI_SI`.",
+     "Two differences in form: in C++ the condition **always goes in parentheses**, and the block is delimited with **braces** `{ }` instead of `FI_SI`."
     ]
    }
   ],
@@ -85,35 +98,41 @@ export default {
     "t": "p",
     "x": [
      "Una condició és una expressió que val `true` (cert) o `false` (fals). Es construeix comparant valors i combinant comparacions.",
-     "Una condición es una expresión que vale `true` (cierto) o `false` (falso). Se construye comparando valores y combinando comparaciones."
+     "Una condición es una expresión que vale `true` (cierto) o `false` (falso). Se construye comparando valores y combinando comparaciones.",
+     "A condition is an expression worth `true` or `false`. It is built by comparing values and combining comparisons."
     ]
    },
    {
     "t": "h",
     "x": [
      "Operadors relacionals",
-     "Operadores relacionales"
+     "Operadores relacionales",
+     "Relational operators"
     ]
    },
    {
     "t": "html",
     "h": [
      "<div class=\"ip-tw\"><table>\n<thead><tr><th>C++</th><th>Significat</th><th>Exemple</th><th class=\"c\">Amb x = 7</th></tr></thead>\n<tbody>\n<tr><td><code>==</code></td><td>igual a</td><td><code>x == 7</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>!=</code></td><td>diferent de</td><td><code>x != 7</code></td><td class=\"c ip-f\">false</td></tr>\n<tr><td><code>&lt;</code></td><td>menor que</td><td><code>x &lt; 10</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>&lt;=</code></td><td>menor o igual que</td><td><code>x &lt;= 6</code></td><td class=\"c ip-f\">false</td></tr>\n<tr><td><code>&gt;</code></td><td>més gran que</td><td><code>x &gt; 0</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>&gt;=</code></td><td>més gran o igual que</td><td><code>x &gt;= 7</code></td><td class=\"c ip-v\">true</td></tr>\n</tbody>\n</table></div>",
-     "<div class=\"ip-tw\"><table>\n<thead><tr><th>C++</th><th>Significado</th><th>Ejemplo</th><th class=\"c\">Con x = 7</th></tr></thead>\n<tbody>\n<tr><td><code>==</code></td><td>igual a</td><td><code>x == 7</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>!=</code></td><td>distinto de</td><td><code>x != 7</code></td><td class=\"c ip-f\">false</td></tr>\n<tr><td><code>&lt;</code></td><td>menor que</td><td><code>x &lt; 10</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>&lt;=</code></td><td>menor o igual que</td><td><code>x &lt;= 6</code></td><td class=\"c ip-f\">false</td></tr>\n<tr><td><code>&gt;</code></td><td>mayor que</td><td><code>x &gt; 0</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>&gt;=</code></td><td>mayor o igual que</td><td><code>x &gt;= 7</code></td><td class=\"c ip-v\">true</td></tr>\n</tbody>\n</table></div>"
-    ]
+     "<div class=\"ip-tw\"><table>\n<thead><tr><th>C++</th><th>Significado</th><th>Ejemplo</th><th class=\"c\">Con x = 7</th></tr></thead>\n<tbody>\n<tr><td><code>==</code></td><td>igual a</td><td><code>x == 7</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>!=</code></td><td>distinto de</td><td><code>x != 7</code></td><td class=\"c ip-f\">false</td></tr>\n<tr><td><code>&lt;</code></td><td>menor que</td><td><code>x &lt; 10</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>&lt;=</code></td><td>menor o igual que</td><td><code>x &lt;= 6</code></td><td class=\"c ip-f\">false</td></tr>\n<tr><td><code>&gt;</code></td><td>mayor que</td><td><code>x &gt; 0</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>&gt;=</code></td><td>mayor o igual que</td><td><code>x &gt;= 7</code></td><td class=\"c ip-v\">true</td></tr>\n</tbody>\n</table></div>",
+     "<div class=\"ip-tw\"><table>\n<thead><tr><th>C++</th><th>Meaning</th><th>Example</th><th class=\"c\">With x = 7</th></tr></thead>\n<tbody>\n<tr><td><code>==</code></td><td>igual a</td><td><code>x == 7</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>!=</code></td><td>not equal to</td><td><code>x != 7</code></td><td class=\"c ip-f\">false</td></tr>\n<tr><td><code>&lt;</code></td><td>menor que</td><td><code>x &lt; 10</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>&lt;=</code></td><td>menor o igual que</td><td><code>x &lt;= 6</code></td><td class=\"c ip-f\">false</td></tr>\n<tr><td><code>&gt;</code></td><td>greater than</td><td><code>x &gt; 0</code></td><td class=\"c ip-v\">true</td></tr>\n<tr><td><code>&gt;=</code></td><td>greater than or equal to</td><td><code>x &gt;= 7</code></td><td class=\"c ip-v\">true</td></tr>\n</tbody>\n</table></div>"
+    ],
+    "mode": "explained"
    },
    {
     "t": "warn",
     "title": [
      "= no és ==",
-     "= no es =="
+     "= no es ==",
+     "= is not =="
     ],
     "blocks": [
      {
       "t": "p",
       "x": [
        "`=` **assigna** i `==` **compara**. Si escriviu `if (x = 0)`, el programa no pregunta res: posa un 0 dins de `x` i, com que 0 es considera fals, no entra mai a l'`if`. El compilador ho accepta (només dona un avís), i per això és tan perillós. Executeu-lo amb diferents entrades:",
-       "`=` **asigna** y `==` **compara**. Si escribís `if (x = 0)`, el programa no pregunta nada: pone un 0 dentro de `x` y, como el 0 se considera falso, no entra nunca en el `if`. El compilador lo acepta (solo da un aviso), y por eso es tan peligroso. Ejecutadlo con diferentes entradas:"
+       "`=` **asigna** y `==` **compara**. Si escribís `if (x = 0)`, el programa no pregunta nada: pone un 0 dentro de `x` y, como el 0 se considera falso, no entra nunca en el `if`. El compilador lo acepta (solo da un aviso), y por eso es tan peligroso. Ejecutadlo con diferentes entradas:",
+       "`=` **assigns** and `==` **compares**. If you write `if (x = 0)`, the program asks nothing: it puts a 0 into `x` and, since 0 is considered false, it never enters the `if`. The compiler accepts it (it only gives a warning), and that is why it is so dangerous. Run it with different inputs:"
       ]
      }
     ]
@@ -128,48 +147,56 @@ export default {
     },
     "src": [
      "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x;\n    cin >> x;\n    if (x = 0) {                 // ERROR: hauria de ser x == 0\n        cout << \"x val zero\" << endl;\n    } else {\n        cout << \"x no val zero\" << endl;\n    }\n    cout << \"Ara x val \" << x << endl;   // l'if ha esborrat el valor llegit\n    return 0;\n}",
-     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x;\n    cin >> x;\n    if (x = 0) {                 // ERROR: debería ser x == 0\n        cout << \"x val zero\" << endl;\n    } else {\n        cout << \"x no val zero\" << endl;\n    }\n    cout << \"Ara x val \" << x << endl;   // el if ha borrado el valor leído\n    return 0;\n}"
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x;\n    cin >> x;\n    if (x = 0) {                 // ERROR: debería ser x == 0\n        cout << \"x val zero\" << endl;\n    } else {\n        cout << \"x no val zero\" << endl;\n    }\n    cout << \"Ara x val \" << x << endl;   // el if ha borrado el valor leído\n    return 0;\n}",
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x;\n    cin >> x;\n    if (x = 0) {                 // ERROR: it should be x == 0\n        cout << \"x val zero\" << endl;\n    } else {\n        cout << \"x no val zero\" << endl;\n    }\n    cout << \"Ara x val \" << x << endl;   // the if has wiped out the value read\n    return 0;\n}"
     ]
    },
    {
     "t": "p",
     "x": [
      "Amb l'entrada 5 escriu «x no val zero» i «Ara x val 0»; amb l'entrada 0, exactament el mateix. Canvieu `=` per `==` i torneu-lo a executar.",
-     "Con la entrada 5 escribe «x no val zero» y «Ara x val 0»; con la entrada 0, exactamente lo mismo. Cambiad `=` por `==` y volved a ejecutarlo."
+     "Con la entrada 5 escribe «x no val zero» y «Ara x val 0»; con la entrada 0, exactamente lo mismo. Cambiad `=` por `==` y volved a ejecutarlo.",
+     "With input 5 it writes “x no val zero” and “Ara x val 0”; with input 0, exactly the same. Change `=` to `==` and run it again."
     ]
    },
    {
     "t": "h",
     "x": [
      "Operadors lògics",
-     "Operadores lógicos"
+     "Operadores lógicos",
+     "Logical operators"
     ]
    },
    {
     "t": "p",
     "x": [
      "Serveixen per combinar condicions. Són els mateixos `I`, `O`, `NO` del pseudocodi, amb les mateixes taules de veritat:",
-     "Sirven para combinar condiciones. Son los mismos `I`, `O`, `NO` del pseudocódigo, con las mismas tablas de verdad:"
+     "Sirven para combinar condiciones. Son los mismos `I`, `O`, `NO` del pseudocódigo, con las mismas tablas de verdad:",
+     "They are used to combine conditions. They are the same `I`, `O`, `NO` as in pseudocode, with the same truth tables:"
     ]
    },
    {
     "t": "html",
-    "h": "<div class=\"ip-tw\"><table>\n<thead><tr><th class=\"c\">A</th><th class=\"c\">B</th><th class=\"c\">A &amp;&amp; B</th><th class=\"c\">A || B</th><th class=\"c\">!A</th></tr></thead>\n<tbody>\n<tr><td class=\"c\">true</td><td class=\"c\">true</td><td class=\"c ip-v\">true</td><td class=\"c ip-v\">true</td><td class=\"c ip-f\">false</td></tr>\n<tr><td class=\"c\">true</td><td class=\"c\">false</td><td class=\"c ip-f\">false</td><td class=\"c ip-v\">true</td><td class=\"c ip-f\">false</td></tr>\n<tr><td class=\"c\">false</td><td class=\"c\">true</td><td class=\"c ip-f\">false</td><td class=\"c ip-v\">true</td><td class=\"c ip-v\">true</td></tr>\n<tr><td class=\"c\">false</td><td class=\"c\">false</td><td class=\"c ip-f\">false</td><td class=\"c ip-f\">false</td><td class=\"c ip-v\">true</td></tr>\n</tbody>\n</table></div>"
+    "h": "<div class=\"ip-tw\"><table>\n<thead><tr><th class=\"c\">A</th><th class=\"c\">B</th><th class=\"c\">A &amp;&amp; B</th><th class=\"c\">A || B</th><th class=\"c\">!A</th></tr></thead>\n<tbody>\n<tr><td class=\"c\">true</td><td class=\"c\">true</td><td class=\"c ip-v\">true</td><td class=\"c ip-v\">true</td><td class=\"c ip-f\">false</td></tr>\n<tr><td class=\"c\">true</td><td class=\"c\">false</td><td class=\"c ip-f\">false</td><td class=\"c ip-v\">true</td><td class=\"c ip-f\">false</td></tr>\n<tr><td class=\"c\">false</td><td class=\"c\">true</td><td class=\"c ip-f\">false</td><td class=\"c ip-v\">true</td><td class=\"c ip-v\">true</td></tr>\n<tr><td class=\"c\">false</td><td class=\"c\">false</td><td class=\"c ip-f\">false</td><td class=\"c ip-f\">false</td><td class=\"c ip-v\">true</td></tr>\n</tbody>\n</table></div>",
+    "mode": "explained"
    },
    {
     "t": "list",
     "items": [
      [
       "`&&` (I): cert només si **totes dues** ho són. Per exemple, «la nota és vàlida»: `nota >= 0 && nota <= 10`.",
-      "`&&` (Y): cierto solo si **ambas** lo son. Por ejemplo, «la nota es válida»: `nota >= 0 && nota <= 10`."
+      "`&&` (Y): cierto solo si **ambas** lo son. Por ejemplo, «la nota es válida»: `nota >= 0 && nota <= 10`.",
+      "`&&` (AND): true only if **both** are. For example, “the mark is valid”: `nota >= 0 && nota <= 10`."
      ],
      [
       "`||` (O): cert si **almenys una** ho és. Per exemple, «és cap de setmana»: `dia == 6 || dia == 7`.",
-      "`||` (O): cierto si **al menos una** lo es. Por ejemplo, «es fin de semana»: `dia == 6 || dia == 7`."
+      "`||` (O): cierto si **al menos una** lo es. Por ejemplo, «es fin de semana»: `dia == 6 || dia == 7`.",
+      "`||` (OR): true if **at least one** is. For example, “it is the weekend”: `dia == 6 || dia == 7`."
      ],
      [
       "`!` (NO): inverteix. `!(x > 0)` equival a `x <= 0`.",
-      "`!` (NO): invierte. `!(x > 0)` equivale a `x <= 0`."
+      "`!` (NO): invierte. `!(x > 0)` equivale a `x <= 0`.",
+      "`!` (NOT): inverts. `!(x > 0)` is equivalent to `x <= 0`."
      ]
     ]
    },
@@ -177,14 +204,16 @@ export default {
     "t": "warn",
     "title": [
      "Els intervals no s'escriuen com a matemàtiques",
-     "Los intervalos no se escriben como en matemáticas"
+     "Los intervalos no se escriben como en matemáticas",
+     "Intervals are not written as in mathematics"
     ],
     "blocks": [
      {
       "t": "p",
       "x": [
        "A matemàtiques escrivim 0 ≤ x ≤ 10. En C++, `0 <= x <= 10` compila però fa una altra cosa: primer calcula `0 <= x` (que val 0 o 1) i després compara aquest 0 o 1 amb 10, que sempre és cert. Cal separar-ho en dues comparacions unides amb `&&`. Proveu-ho amb 25:",
-       "En matemáticas escribimos 0 ≤ x ≤ 10. En C++, `0 <= x <= 10` compila pero hace otra cosa: primero calcula `0 <= x` (que vale 0 o 1) y después compara ese 0 o 1 con 10, lo que siempre es cierto. Hay que separarlo en dos comparaciones unidas con `&&`. Probadlo con 25:"
+       "En matemáticas escribimos 0 ≤ x ≤ 10. En C++, `0 <= x <= 10` compila pero hace otra cosa: primero calcula `0 <= x` (que vale 0 o 1) y después compara ese 0 o 1 con 10, lo que siempre es cierto. Hay que separarlo en dos comparaciones unidas con `&&`. Probadlo con 25:",
+       "In mathematics we write 0 ≤ x ≤ 10. In C++, `0 <= x <= 10` compiles but does something else: it first computes `0 <= x` (worth 0 or 1) and then compares that 0 or 1 with 10, which is always true. It must be split into two comparisons joined with `&&`. Try it with 25:"
       ]
      }
     ]
@@ -199,21 +228,24 @@ export default {
     },
     "src": [
      "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x;\n    cin >> x;\n    if (0 <= x <= 10) {                      // MALAMENT: sempre és cert\n        cout << \"Versio dolenta: \" << x << \" es dins [0, 10]\" << endl;\n    }\n    if (0 <= x && x <= 10) {                 // BE\n        cout << \"Versio bona: \" << x << \" es dins [0, 10]\" << endl;\n    } else {\n        cout << \"Versio bona: \" << x << \" es fora de [0, 10]\" << endl;\n    }\n    return 0;\n}",
-     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x;\n    cin >> x;\n    if (0 <= x <= 10) {                      // MAL: siempre es cierto\n        cout << \"Versio dolenta: \" << x << \" es dins [0, 10]\" << endl;\n    }\n    if (0 <= x && x <= 10) {                 // BIEN\n        cout << \"Versio bona: \" << x << \" es dins [0, 10]\" << endl;\n    } else {\n        cout << \"Versio bona: \" << x << \" es fora de [0, 10]\" << endl;\n    }\n    return 0;\n}"
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x;\n    cin >> x;\n    if (0 <= x <= 10) {                      // MAL: siempre es cierto\n        cout << \"Versio dolenta: \" << x << \" es dins [0, 10]\" << endl;\n    }\n    if (0 <= x && x <= 10) {                 // BIEN\n        cout << \"Versio bona: \" << x << \" es dins [0, 10]\" << endl;\n    } else {\n        cout << \"Versio bona: \" << x << \" es fora de [0, 10]\" << endl;\n    }\n    return 0;\n}",
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x;\n    cin >> x;\n    if (0 <= x <= 10) {                      // WRONG: always true\n        cout << \"Versio dolenta: \" << x << \" es dins [0, 10]\" << endl;\n    }\n    if (0 <= x && x <= 10) {                 // RIGHT\n        cout << \"Versio bona: \" << x << \" es dins [0, 10]\" << endl;\n    } else {\n        cout << \"Versio bona: \" << x << \" es fora de [0, 10]\" << endl;\n    }\n    return 0;\n}"
     ]
    },
    {
     "t": "h",
     "x": [
      "L'avaluació en curtcircuit",
-     "La evaluación en cortocircuito"
+     "La evaluación en cortocircuito",
+     "Short-circuit evaluation"
     ]
    },
    {
     "t": "p",
     "x": [
      "C++ avalua les condicions d'esquerra a dreta i **s'atura** quan ja sap el resultat: en `A && B`, si A és fals, B ni es mira; en `A || B`, si A és cert, tampoc. Això permet posar primer una condició de seguretat. Aquí el residu no es calcula si el divisor és 0 (proveu l'entrada `7 0`):",
-     "C++ evalúa las condiciones de izquierda a derecha y **se detiene** cuando ya conoce el resultado: en `A && B`, si A es falso, B ni se mira; en `A || B`, si A es cierto, tampoco. Esto permite poner primero una condición de seguridad. Aquí el resto no se calcula si el divisor es 0 (probad la entrada `7 0`):"
+     "C++ evalúa las condiciones de izquierda a derecha y **se detiene** cuando ya conoce el resultado: en `A && B`, si A es falso, B ni se mira; en `A || B`, si A es cierto, tampoco. Esto permite poner primero una condición de seguridad. Aquí el resto no se calcula si el divisor es 0 (probad la entrada `7 0`):",
+     "C++ evaluates conditions from left to right and **stops** when it already knows the result: in `A && B`, if A is false, B is not even looked at; in `A || B`, if A is true, neither. This lets you put a safety condition first. Here the remainder is not computed if the divisor is 0 (try the input `7 0`):"
     ]
    },
    {
@@ -227,7 +259,8 @@ export default {
     },
     "src": [
      "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    if (b != 0 && a % b == 0) {      // si b és 0, a % b no s'arriba a calcular\n        cout << a << \" es divisible per \" << b << endl;\n    } else {\n        cout << a << \" no es divisible per \" << b << endl;\n    }\n    return 0;\n}",
-     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    if (b != 0 && a % b == 0) {      // si b es 0, a % b no se llega a calcular\n        cout << a << \" es divisible per \" << b << endl;\n    } else {\n        cout << a << \" no es divisible per \" << b << endl;\n    }\n    return 0;\n}"
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    if (b != 0 && a % b == 0) {      // si b es 0, a % b no se llega a calcular\n        cout << a << \" es divisible per \" << b << endl;\n    } else {\n        cout << a << \" no es divisible per \" << b << endl;\n    }\n    return 0;\n}",
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    if (b != 0 && a % b == 0) {      // if b is 0, a % b is never computed\n        cout << a << \" es divisible per \" << b << endl;\n    } else {\n        cout << a << \" no es divisible per \" << b << endl;\n    }\n    return 0;\n}"
     ]
    }
   ],
@@ -240,7 +273,8 @@ export default {
        "t": "p",
        "x": [
         "**Condicional simple.** Si la condició és certa, s'executa el bloc; si és falsa, se salta i el programa continua després de la clau.",
-        "**Condicional simple.** Si la condición es cierta, se ejecuta el bloque; si es falsa, se salta y el programa continúa después de la llave."
+        "**Condicional simple.** Si la condición es cierta, se ejecuta el bloque; si es falsa, se salta y el programa continúa después de la llave.",
+        "**Simple conditional.** If the condition is true, the block runs; if it is false, it is skipped and the program continues after the brace."
        ]
       },
       {
@@ -257,7 +291,8 @@ export default {
        "t": "p",
        "x": [
         "**Condicional doble.** S'executa **exactament un** dels dos blocs: el primer si la condició és certa, el de l'`else` si és falsa.",
-        "**Condicional doble.** Se ejecuta **exactamente uno** de los dos bloques: el primero si la condición es cierta, el del `else` si es falsa."
+        "**Condicional doble.** Se ejecuta **exactamente uno** de los dos bloques: el primero si la condición es cierta, el del `else` si es falsa.",
+        "**Double conditional.** **Exactly one** of the two blocks runs: the first if the condition is true, the `else` one if it is false."
        ]
       },
       {
@@ -275,14 +310,16 @@ export default {
     "t": "h",
     "x": [
      "Les claus i el punt i coma",
-     "Las llaves y el punto y coma"
+     "Las llaves y el punto y coma",
+     "Braces and the semicolon"
     ]
    },
    {
     "t": "p",
     "x": [
      "Sense claus, l'`if` només controla la **primera** instrucció que el segueix. El sagnat no compta: és només per a les persones. Executeu-lo amb `2 7` (a no és més gran que b) i mireu la traça:",
-     "Sin llaves, el `if` solo controla la **primera** instrucción que lo sigue. La sangría no cuenta: es solo para las personas. Ejecutadlo con `2 7` (a no es mayor que b) y mirad la traza:"
+     "Sin llaves, el `if` solo controla la **primera** instrucción que lo sigue. La sangría no cuenta: es solo para las personas. Ejecutadlo con `2 7` (a no es mayor que b) y mirad la traza:",
+     "Without braces, the `if` only controls the **first** instruction after it. Indentation does not count: it is only for people. Run it with `2 7` (a is not greater than b) and look at the trace:"
     ]
    },
    {
@@ -296,14 +333,16 @@ export default {
     },
     "src": [
      "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    if (a > b)\n        cout << \"El major es \" << a << endl;\n        cout << \"Per tant a > b\" << endl;     // NO és dins de l'if: s'executa sempre\n    return 0;\n}",
-     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    if (a > b)\n        cout << \"El major es \" << a << endl;\n        cout << \"Per tant a > b\" << endl;     // NO está dentro del if: se ejecuta siempre\n    return 0;\n}"
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    if (a > b)\n        cout << \"El major es \" << a << endl;\n        cout << \"Per tant a > b\" << endl;     // NO está dentro del if: se ejecuta siempre\n    return 0;\n}",
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    if (a > b)\n        cout << \"El major es \" << a << endl;\n        cout << \"Per tant a > b\" << endl;     // NOT inside the if: it always runs\n    return 0;\n}"
     ]
    },
    {
     "t": "warn",
     "title": [
      "Dos errors que el compilador no detecta",
-     "Dos errores que el compilador no detecta"
+     "Dos errores que el compilador no detecta",
+     "Two mistakes the compiler does not detect"
     ],
     "blocks": [
      {
@@ -311,11 +350,13 @@ export default {
       "items": [
        [
         "**Claus que falten:** poseu-les sempre, encara que el bloc tingui una sola línia. Així, si després hi afegiu una instrucció, quedarà dins.",
-        "**Llaves que faltan:** ponedlas siempre, aunque el bloque tenga una sola línea. Así, si más adelante añadís una instrucción, quedará dentro."
+        "**Llaves que faltan:** ponedlas siempre, aunque el bloque tenga una sola línea. Así, si más adelante añadís una instrucción, quedará dentro.",
+        "**Missing braces:** always add them, even if the block has a single line. That way, if you add an instruction later, it will be inside."
        ],
        [
         "**Punt i coma després de la condició:** `if (a > b); { … }`. El `;` és una instrucció buida: l'`if` controla aquesta instrucció buida i el bloc de claus s'executa sempre. Després del parèntesi de l'`if` mai no hi va punt i coma.",
-        "**Punto y coma después de la condición:** `if (a > b); { … }`. El `;` es una instrucción vacía: el `if` controla esa instrucción vacía y el bloque de llaves se ejecuta siempre. Después del paréntesis del `if` nunca va punto y coma."
+        "**Punto y coma después de la condición:** `if (a > b); { … }`. El `;` es una instrucción vacía: el `if` controla esa instrucción vacía y el bloque de llaves se ejecuta siempre. Después del paréntesis del `if` nunca va punto y coma.",
+        "**Semicolon after the condition:** `if (a > b); { … }`. The `;` is an empty instruction: the `if` controls that empty instruction and the block in braces always runs. After the parenthesis of the `if` there is never a semicolon."
        ]
       ]
      }
@@ -327,15 +368,18 @@ export default {
     "t": "p",
     "x": [
      "Quan hi ha més de dues possibilitats, s'encadenen les preguntes: si la primera falla, es fa la segona, i així successivament. Exemple: l'estat de l'aigua segons la temperatura (≤ 0 gel, < 100 líquid, la resta vapor).",
-     "Cuando hay más de dos posibilidades, se encadenan las preguntas: si la primera falla, se hace la segunda, y así sucesivamente. Ejemplo: el estado del agua según la temperatura (≤ 0 hielo, < 100 líquido, el resto vapor)."
+     "Cuando hay más de dos posibilidades, se encadenan las preguntas: si la primera falla, se hace la segunda, y así sucesivamente. Ejemplo: el estado del agua según la temperatura (≤ 0 hielo, < 100 líquido, el resto vapor).",
+     "When there are more than two possibilities, the questions are chained: if the first fails, the second is asked, and so on. Example: the state of water depending on the temperature (≤ 0 ice, < 100 liquid, the rest steam)."
     ]
    },
    {
     "t": "html",
     "h": [
      "<figure class=\"ip-fig\" style=\"--fig-min:600px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 720 410\" role=\"img\" aria-label=\"Cadena else if: cada pregunta només es fa si les anteriors han estat falses\" role=\"img\">\n<rect class=\"bxa\" x=\"20\" y=\"14\" width=\"120\" height=\"38\" rx=\"6\"></rect><text class=\"dm\" x=\"80\" y=\"33\" text-anchor=\"middle\" dominant-baseline=\"central\">cin &gt;&gt; t</text>\n<path class=\"ln\" d=\"M80 52 V78\" marker-end=\"url(#ah)\"></path>\n<polygon class=\"bxq\" points=\"80,80 150,120 80,160 10,120\"></polygon><text class=\"dm\" x=\"80\" y=\"120\" text-anchor=\"middle\" dominant-baseline=\"central\">t &lt;= 0 ?</text>\n<path class=\"lno\" d=\"M150 120 H198\" marker-end=\"url(#aho)\"></path><text class=\"ds\" x=\"174\" y=\"110\" text-anchor=\"middle\">cert</text>\n<rect class=\"bxo\" x=\"200\" y=\"101\" width=\"130\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"265\" y=\"120\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Gel\"</text>\n<path class=\"lnb\" d=\"M80 160 V188\" marker-end=\"url(#ahb)\"></path><text class=\"ds\" x=\"92\" y=\"177\" text-anchor=\"start\">fals</text>\n<polygon class=\"bxq\" points=\"80,190 150,230 80,270 10,230\"></polygon><text class=\"dm\" x=\"80\" y=\"230\" text-anchor=\"middle\" dominant-baseline=\"central\">t &lt; 100 ?</text>\n<path class=\"lno\" d=\"M150 230 H198\" marker-end=\"url(#aho)\"></path><text class=\"ds\" x=\"174\" y=\"220\" text-anchor=\"middle\">cert</text>\n<rect class=\"bxo\" x=\"200\" y=\"211\" width=\"130\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"265\" y=\"230\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Liquid\"</text>\n<path class=\"lnb\" d=\"M80 270 V298\" marker-end=\"url(#ahb)\"></path><text class=\"ds\" x=\"92\" y=\"287\" text-anchor=\"start\">fals</text>\n<rect class=\"bxw\" x=\"20\" y=\"300\" width=\"120\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"80\" y=\"319\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Vapor\"</text>\n<path class=\"ln\" d=\"M330 120 H400 V356\"></path><path class=\"ln\" d=\"M330 230 H400\"></path><path class=\"ln\" d=\"M140 319 H400\"></path>\n<path class=\"ln\" d=\"M400 356 V364\" marker-end=\"url(#ah)\"></path>\n<rect class=\"bxg\" x=\"330\" y=\"366\" width=\"140\" height=\"34\" rx=\"6\"></rect><text class=\"dt\" x=\"400\" y=\"383\" text-anchor=\"middle\" dominant-baseline=\"central\">continua</text>\n<text class=\"dm\" x=\"470\" y=\"120\" dominant-baseline=\"central\">if (t &lt;= 0)</text>\n<text class=\"dm\" x=\"470\" y=\"230\" dominant-baseline=\"central\">else if (t &lt; 100)</text>\n<text class=\"ds\" x=\"470\" y=\"250\" dominant-baseline=\"central\">aquí ja se sap que t &gt; 0</text>\n<text class=\"dm\" x=\"470\" y=\"319\" dominant-baseline=\"central\">else</text>\n<path class=\"lnd\" d=\"M460 120 H420\"></path><path class=\"lnd\" d=\"M460 230 H420\"></path><path class=\"lnd\" d=\"M460 319 H420\"></path>\n</svg></div>\n<figcaption>Cada pregunta només es fa si totes les anteriors han estat falses. Com a màxim s'executa una branca, i amb l'<code>else</code> final, exactament una.</figcaption>\n</figure>",
-     "<figure class=\"ip-fig\" style=\"--fig-min:600px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 720 410\" role=\"img\" aria-label=\"Cadena else if: cada pregunta solo se hace si las anteriores han sido falsas\" role=\"img\">\n<rect class=\"bxa\" x=\"20\" y=\"14\" width=\"120\" height=\"38\" rx=\"6\"></rect><text class=\"dm\" x=\"80\" y=\"33\" text-anchor=\"middle\" dominant-baseline=\"central\">cin &gt;&gt; t</text>\n<path class=\"ln\" d=\"M80 52 V78\" marker-end=\"url(#ah)\"></path>\n<polygon class=\"bxq\" points=\"80,80 150,120 80,160 10,120\"></polygon><text class=\"dm\" x=\"80\" y=\"120\" text-anchor=\"middle\" dominant-baseline=\"central\">t &lt;= 0 ?</text>\n<path class=\"lno\" d=\"M150 120 H198\" marker-end=\"url(#aho)\"></path><text class=\"ds\" x=\"174\" y=\"110\" text-anchor=\"middle\">cierto</text>\n<rect class=\"bxo\" x=\"200\" y=\"101\" width=\"130\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"265\" y=\"120\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Gel\"</text>\n<path class=\"lnb\" d=\"M80 160 V188\" marker-end=\"url(#ahb)\"></path><text class=\"ds\" x=\"92\" y=\"177\" text-anchor=\"start\">falso</text>\n<polygon class=\"bxq\" points=\"80,190 150,230 80,270 10,230\"></polygon><text class=\"dm\" x=\"80\" y=\"230\" text-anchor=\"middle\" dominant-baseline=\"central\">t &lt; 100 ?</text>\n<path class=\"lno\" d=\"M150 230 H198\" marker-end=\"url(#aho)\"></path><text class=\"ds\" x=\"174\" y=\"220\" text-anchor=\"middle\">cierto</text>\n<rect class=\"bxo\" x=\"200\" y=\"211\" width=\"130\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"265\" y=\"230\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Liquid\"</text>\n<path class=\"lnb\" d=\"M80 270 V298\" marker-end=\"url(#ahb)\"></path><text class=\"ds\" x=\"92\" y=\"287\" text-anchor=\"start\">falso</text>\n<rect class=\"bxw\" x=\"20\" y=\"300\" width=\"120\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"80\" y=\"319\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Vapor\"</text>\n<path class=\"ln\" d=\"M330 120 H400 V356\"></path><path class=\"ln\" d=\"M330 230 H400\"></path><path class=\"ln\" d=\"M140 319 H400\"></path>\n<path class=\"ln\" d=\"M400 356 V364\" marker-end=\"url(#ah)\"></path>\n<rect class=\"bxg\" x=\"330\" y=\"366\" width=\"140\" height=\"34\" rx=\"6\"></rect><text class=\"dt\" x=\"400\" y=\"383\" text-anchor=\"middle\" dominant-baseline=\"central\">continúa</text>\n<text class=\"dm\" x=\"470\" y=\"120\" dominant-baseline=\"central\">if (t &lt;= 0)</text>\n<text class=\"dm\" x=\"470\" y=\"230\" dominant-baseline=\"central\">else if (t &lt; 100)</text>\n<text class=\"ds\" x=\"470\" y=\"250\" dominant-baseline=\"central\">aquí ya se sabe que t &gt; 0</text>\n<text class=\"dm\" x=\"470\" y=\"319\" dominant-baseline=\"central\">else</text>\n<path class=\"lnd\" d=\"M460 120 H420\"></path><path class=\"lnd\" d=\"M460 230 H420\"></path><path class=\"lnd\" d=\"M460 319 H420\"></path>\n</svg></div>\n<figcaption>Cada pregunta solo se hace si todas las anteriores han sido falsas. Como máximo se ejecuta una rama, y con el <code>else</code> final, exactamente una.</figcaption>\n</figure>"
-    ]
+     "<figure class=\"ip-fig\" style=\"--fig-min:600px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 720 410\" role=\"img\" aria-label=\"Cadena else if: cada pregunta solo se hace si las anteriores han sido falsas\" role=\"img\">\n<rect class=\"bxa\" x=\"20\" y=\"14\" width=\"120\" height=\"38\" rx=\"6\"></rect><text class=\"dm\" x=\"80\" y=\"33\" text-anchor=\"middle\" dominant-baseline=\"central\">cin &gt;&gt; t</text>\n<path class=\"ln\" d=\"M80 52 V78\" marker-end=\"url(#ah)\"></path>\n<polygon class=\"bxq\" points=\"80,80 150,120 80,160 10,120\"></polygon><text class=\"dm\" x=\"80\" y=\"120\" text-anchor=\"middle\" dominant-baseline=\"central\">t &lt;= 0 ?</text>\n<path class=\"lno\" d=\"M150 120 H198\" marker-end=\"url(#aho)\"></path><text class=\"ds\" x=\"174\" y=\"110\" text-anchor=\"middle\">cierto</text>\n<rect class=\"bxo\" x=\"200\" y=\"101\" width=\"130\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"265\" y=\"120\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Gel\"</text>\n<path class=\"lnb\" d=\"M80 160 V188\" marker-end=\"url(#ahb)\"></path><text class=\"ds\" x=\"92\" y=\"177\" text-anchor=\"start\">falso</text>\n<polygon class=\"bxq\" points=\"80,190 150,230 80,270 10,230\"></polygon><text class=\"dm\" x=\"80\" y=\"230\" text-anchor=\"middle\" dominant-baseline=\"central\">t &lt; 100 ?</text>\n<path class=\"lno\" d=\"M150 230 H198\" marker-end=\"url(#aho)\"></path><text class=\"ds\" x=\"174\" y=\"220\" text-anchor=\"middle\">cierto</text>\n<rect class=\"bxo\" x=\"200\" y=\"211\" width=\"130\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"265\" y=\"230\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Liquid\"</text>\n<path class=\"lnb\" d=\"M80 270 V298\" marker-end=\"url(#ahb)\"></path><text class=\"ds\" x=\"92\" y=\"287\" text-anchor=\"start\">falso</text>\n<rect class=\"bxw\" x=\"20\" y=\"300\" width=\"120\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"80\" y=\"319\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Vapor\"</text>\n<path class=\"ln\" d=\"M330 120 H400 V356\"></path><path class=\"ln\" d=\"M330 230 H400\"></path><path class=\"ln\" d=\"M140 319 H400\"></path>\n<path class=\"ln\" d=\"M400 356 V364\" marker-end=\"url(#ah)\"></path>\n<rect class=\"bxg\" x=\"330\" y=\"366\" width=\"140\" height=\"34\" rx=\"6\"></rect><text class=\"dt\" x=\"400\" y=\"383\" text-anchor=\"middle\" dominant-baseline=\"central\">continúa</text>\n<text class=\"dm\" x=\"470\" y=\"120\" dominant-baseline=\"central\">if (t &lt;= 0)</text>\n<text class=\"dm\" x=\"470\" y=\"230\" dominant-baseline=\"central\">else if (t &lt; 100)</text>\n<text class=\"ds\" x=\"470\" y=\"250\" dominant-baseline=\"central\">aquí ya se sabe que t &gt; 0</text>\n<text class=\"dm\" x=\"470\" y=\"319\" dominant-baseline=\"central\">else</text>\n<path class=\"lnd\" d=\"M460 120 H420\"></path><path class=\"lnd\" d=\"M460 230 H420\"></path><path class=\"lnd\" d=\"M460 319 H420\"></path>\n</svg></div>\n<figcaption>Cada pregunta solo se hace si todas las anteriores han sido falsas. Como máximo se ejecuta una rama, y con el <code>else</code> final, exactamente una.</figcaption>\n</figure>",
+     "<figure class=\"ip-fig\" style=\"--fig-min:600px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 720 410\" role=\"img\" aria-label=\"else if chain: each question is only asked if the previous ones were false\" role=\"img\">\n<rect class=\"bxa\" x=\"20\" y=\"14\" width=\"120\" height=\"38\" rx=\"6\"></rect><text class=\"dm\" x=\"80\" y=\"33\" text-anchor=\"middle\" dominant-baseline=\"central\">cin &gt;&gt; t</text>\n<path class=\"ln\" d=\"M80 52 V78\" marker-end=\"url(#ah)\"></path>\n<polygon class=\"bxq\" points=\"80,80 150,120 80,160 10,120\"></polygon><text class=\"dm\" x=\"80\" y=\"120\" text-anchor=\"middle\" dominant-baseline=\"central\">t &lt;= 0 ?</text>\n<path class=\"lno\" d=\"M150 120 H198\" marker-end=\"url(#aho)\"></path><text class=\"ds\" x=\"174\" y=\"110\" text-anchor=\"middle\">true</text>\n<rect class=\"bxo\" x=\"200\" y=\"101\" width=\"130\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"265\" y=\"120\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Gel\"</text>\n<path class=\"lnb\" d=\"M80 160 V188\" marker-end=\"url(#ahb)\"></path><text class=\"ds\" x=\"92\" y=\"177\" text-anchor=\"start\">false</text>\n<polygon class=\"bxq\" points=\"80,190 150,230 80,270 10,230\"></polygon><text class=\"dm\" x=\"80\" y=\"230\" text-anchor=\"middle\" dominant-baseline=\"central\">t &lt; 100 ?</text>\n<path class=\"lno\" d=\"M150 230 H198\" marker-end=\"url(#aho)\"></path><text class=\"ds\" x=\"174\" y=\"220\" text-anchor=\"middle\">true</text>\n<rect class=\"bxo\" x=\"200\" y=\"211\" width=\"130\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"265\" y=\"230\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Liquid\"</text>\n<path class=\"lnb\" d=\"M80 270 V298\" marker-end=\"url(#ahb)\"></path><text class=\"ds\" x=\"92\" y=\"287\" text-anchor=\"start\">false</text>\n<rect class=\"bxw\" x=\"20\" y=\"300\" width=\"120\" height=\"38\" rx=\"6\"></rect><text class=\"dt db\" x=\"80\" y=\"319\" text-anchor=\"middle\" dominant-baseline=\"central\">\"Vapor\"</text>\n<path class=\"ln\" d=\"M330 120 H400 V356\"></path><path class=\"ln\" d=\"M330 230 H400\"></path><path class=\"ln\" d=\"M140 319 H400\"></path>\n<path class=\"ln\" d=\"M400 356 V364\" marker-end=\"url(#ah)\"></path>\n<rect class=\"bxg\" x=\"330\" y=\"366\" width=\"140\" height=\"34\" rx=\"6\"></rect><text class=\"dt\" x=\"400\" y=\"383\" text-anchor=\"middle\" dominant-baseline=\"central\">continues</text>\n<text class=\"dm\" x=\"470\" y=\"120\" dominant-baseline=\"central\">if (t &lt;= 0)</text>\n<text class=\"dm\" x=\"470\" y=\"230\" dominant-baseline=\"central\">else if (t &lt; 100)</text>\n<text class=\"ds\" x=\"470\" y=\"250\" dominant-baseline=\"central\">here we already know t &gt; 0</text>\n<text class=\"dm\" x=\"470\" y=\"319\" dominant-baseline=\"central\">else</text>\n<path class=\"lnd\" d=\"M460 120 H420\"></path><path class=\"lnd\" d=\"M460 230 H420\"></path><path class=\"lnd\" d=\"M460 319 H420\"></path>\n</svg></div>\n<figcaption>Each question is only asked if all the previous ones were false. At most one branch runs, and with the final <code>else</code>, exactly one.</figcaption>\n</figure>"
+    ],
+    "mode": "explained"
    },
    {
     "t": "code",
@@ -348,28 +392,32 @@ export default {
     },
     "src": [
      "#include <iostream>\nusing namespace std;\n\nint main() {\n    double t;\n    cin >> t;\n    if (t <= 0) {\n        cout << \"Gel\" << endl;\n    } else if (t < 100) {          // no cal posar t > 0 && t < 100\n        cout << \"Liquid\" << endl;\n    } else {\n        cout << \"Vapor\" << endl;\n    }\n    return 0;\n}",
-     "#include <iostream>\nusing namespace std;\n\nint main() {\n    double t;\n    cin >> t;\n    if (t <= 0) {\n        cout << \"Gel\" << endl;\n    } else if (t < 100) {          // no hace falta poner t > 0 && t < 100\n        cout << \"Liquid\" << endl;\n    } else {\n        cout << \"Vapor\" << endl;\n    }\n    return 0;\n}"
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    double t;\n    cin >> t;\n    if (t <= 0) {\n        cout << \"Gel\" << endl;\n    } else if (t < 100) {          // no hace falta poner t > 0 && t < 100\n        cout << \"Liquid\" << endl;\n    } else {\n        cout << \"Vapor\" << endl;\n    }\n    return 0;\n}",
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    double t;\n    cin >> t;\n    if (t <= 0) {\n        cout << \"Gel\" << endl;\n    } else if (t < 100) {          // no need to write t > 0 && t < 100\n        cout << \"Liquid\" << endl;\n    } else {\n        cout << \"Vapor\" << endl;\n    }\n    return 0;\n}"
     ]
    },
    {
     "t": "p",
     "x": [
      "Fixeu-vos que a la segona pregunta no cal escriure `t > 0 && t < 100`: si hi hem arribat és perquè `t <= 0` ha estat fals. Aprofitar el que ja sabem fa les condicions més curtes i evita deixar forats o solapaments.",
-     "Fijaos en que en la segunda pregunta no hace falta escribir `t > 0 && t < 100`: si hemos llegado hasta ella es porque `t <= 0` ha sido falso. Aprovechar lo que ya sabemos hace las condiciones más cortas y evita dejar huecos o solapamientos."
+     "Fijaos en que en la segunda pregunta no hace falta escribir `t > 0 && t < 100`: si hemos llegado hasta ella es porque `t <= 0` ha sido falso. Aprovechar lo que ya sabemos hace las condiciones más cortas y evita dejar huecos o solapamientos.",
+     "Notice that in the second question there is no need to write `t > 0 && t < 100`: if we have got there it is because `t <= 0` was false. Using what we already know makes conditions shorter and avoids gaps or overlaps."
     ]
    },
    {
     "t": "h",
     "x": [
      "L'ordre de les preguntes importa",
-     "El orden de las preguntas importa"
+     "El orden de las preguntas importa",
+     "The order of the questions matters"
     ]
    },
    {
     "t": "p",
     "x": [
      "Com que s'executa la **primera** branca certa, l'ordre canvia el resultat. Volem: 9 o més, «Excel·lent»; 7 o més, «Notable»; 5 o més, «Aprovat»; si no, «Suspès».",
-     "Como se ejecuta la **primera** rama cierta, el orden cambia el resultado. Queremos: 9 o más, «Excel·lent»; 7 o más, «Notable»; 5 o más, «Aprovat»; si no, «Suspès»."
+     "Como se ejecuta la **primera** rama cierta, el orden cambia el resultado. Queremos: 9 o más, «Excel·lent»; 7 o más, «Notable»; 5 o más, «Aprovat»; si no, «Suspès».",
+     "Since the **first** true branch runs, the order changes the result. We want: 9 or more, “Excel·lent”; 7 or more, “Notable”; 5 or more, “Aprovat”; otherwise, “Suspès”."
     ]
    },
    {
@@ -412,37 +460,44 @@ export default {
     "t": "html",
     "h": [
      "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>Amb la versió incorrecta, qualsevol nota ≥ 5 cau a la primera branca.</caption>\n<thead><tr><th class=\"c\">nota</th><th>Ordre correcte</th><th>Ordre incorrecte</th></tr></thead>\n<tbody>\n<tr><td class=\"c\">9.5</td><td class=\"ip-v\">Excel·lent</td><td class=\"ip-f\">Aprovat</td></tr>\n<tr><td class=\"c\">7.2</td><td class=\"ip-v\">Notable</td><td class=\"ip-f\">Aprovat</td></tr>\n<tr><td class=\"c\">5.0</td><td class=\"ip-v\">Aprovat</td><td class=\"ip-v\">Aprovat</td></tr>\n<tr><td class=\"c\">3.4</td><td class=\"ip-v\">Suspès</td><td class=\"ip-v\">Suspès</td></tr>\n</tbody>\n</table></div>",
-     "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>Con la versión incorrecta, cualquier nota ≥ 5 cae en la primera rama.</caption>\n<thead><tr><th class=\"c\">nota</th><th>Orden correcto</th><th>Orden incorrecto</th></tr></thead>\n<tbody>\n<tr><td class=\"c\">9.5</td><td class=\"ip-v\">Excel·lent</td><td class=\"ip-f\">Aprovat</td></tr>\n<tr><td class=\"c\">7.2</td><td class=\"ip-v\">Notable</td><td class=\"ip-f\">Aprovat</td></tr>\n<tr><td class=\"c\">5.0</td><td class=\"ip-v\">Aprovat</td><td class=\"ip-v\">Aprovat</td></tr>\n<tr><td class=\"c\">3.4</td><td class=\"ip-v\">Suspès</td><td class=\"ip-v\">Suspès</td></tr>\n</tbody>\n</table></div>"
-    ]
+     "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>Con la versión incorrecta, cualquier nota ≥ 5 cae en la primera rama.</caption>\n<thead><tr><th class=\"c\">nota</th><th>Orden correcto</th><th>Orden incorrecto</th></tr></thead>\n<tbody>\n<tr><td class=\"c\">9.5</td><td class=\"ip-v\">Excel·lent</td><td class=\"ip-f\">Aprovat</td></tr>\n<tr><td class=\"c\">7.2</td><td class=\"ip-v\">Notable</td><td class=\"ip-f\">Aprovat</td></tr>\n<tr><td class=\"c\">5.0</td><td class=\"ip-v\">Aprovat</td><td class=\"ip-v\">Aprovat</td></tr>\n<tr><td class=\"c\">3.4</td><td class=\"ip-v\">Suspès</td><td class=\"ip-v\">Suspès</td></tr>\n</tbody>\n</table></div>",
+     "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>With the wrong version, any mark ≥ 5 falls into the first branch.</caption>\n<thead><tr><th class=\"c\">nota</th><th>Correct order</th><th>Wrong order</th></tr></thead>\n<tbody>\n<tr><td class=\"c\">9.5</td><td class=\"ip-v\">Excel·lent</td><td class=\"ip-f\">Aprovat</td></tr>\n<tr><td class=\"c\">7.2</td><td class=\"ip-v\">Notable</td><td class=\"ip-f\">Aprovat</td></tr>\n<tr><td class=\"c\">5.0</td><td class=\"ip-v\">Aprovat</td><td class=\"ip-v\">Aprovat</td></tr>\n<tr><td class=\"c\">3.4</td><td class=\"ip-v\">Suspès</td><td class=\"ip-v\">Suspès</td></tr>\n</tbody>\n</table></div>"
+    ],
+    "mode": "explained"
    },
    {
     "t": "tip",
     "title": [
      "Regla pràctica",
-     "Regla práctica"
+     "Regla práctica",
+     "Rule of thumb"
     ],
     "blocks": [
      {
       "t": "p",
       "x": [
        "En una cadena amb `>=`, comenceu pel llindar **més alt**; amb `<=` o `<`, pel **més baix**. I comproveu sempre els valors frontera (5, 7, 9): és on fallen les condicions.",
-       "En una cadena con `>=`, empezad por el umbral **más alto**; con `<=` o `<`, por el **más bajo**. Y comprobad siempre los valores frontera (5, 7, 9): es donde fallan las condiciones."
+       "En una cadena con `>=`, empezad por el umbral **más alto**; con `<=` o `<`, por el **más bajo**. Y comprobad siempre los valores frontera (5, 7, 9): es donde fallan las condiciones.",
+       "In a chain with `>=`, start with the **highest** threshold; with `<=` or `<`, with the **lowest**. And always check the boundary values (5, 7, 9): that is where conditions fail."
       ]
      }
-    ]
+    ],
+    "mode": "explained"
    },
    {
     "t": "h",
     "x": [
      "Condicionals niuades o condicions compostes?",
-     "¿Condicionales anidadas o condiciones compuestas?"
+     "¿Condicionales anidadas o condiciones compuestas?",
+     "Nested conditionals or compound conditions?"
     ]
    },
    {
     "t": "p",
     "x": [
      "Un `if` pot anar dins d'un altre. Sovint el mateix problema es pot escriure niuant o combinant amb `&&`. Exemple: s'aprova si la nota és ≥ 5 **i** l'assistència ≥ 80 %, i en cas contrari volem saber el motiu.",
-     "Un `if` puede ir dentro de otro. A menudo el mismo problema se puede escribir anidando o combinando con `&&`. Ejemplo: se aprueba si la nota es ≥ 5 **y** la asistencia ≥ 80 %, y en caso contrario queremos saber el motivo."
+     "Un `if` puede ir dentro de otro. A menudo el mismo problema se puede escribir anidando o combinando con `&&`. Ejemplo: se aprueba si la nota es ≥ 5 **y** la asistencia ≥ 80 %, y en caso contrario queremos saber el motivo.",
+     "An `if` can go inside another. Often the same problem can be written by nesting or by combining with `&&`. Example: you pass if the mark is ≥ 5 **and** attendance ≥ 80 %, and otherwise we want to know the reason."
     ]
    },
    {
@@ -482,7 +537,8 @@ export default {
     "t": "p",
     "x": [
      "Si només cal saber sí o no, la condició composta és més clara. Si cada combinació porta a una resposta diferent, cal niuar. Cada `else` s'aparella amb l'`if` obert més proper: amb claus i bon sagnat no hi ha dubte.",
-     "Si solo hace falta saber sí o no, la condición compuesta es más clara. Si cada combinación lleva a una respuesta diferente, hay que anidar. Cada `else` se empareja con el `if` abierto más cercano: con llaves y una buena sangría no hay duda."
+     "Si solo hace falta saber sí o no, la condición compuesta es más clara. Si cada combinación lleva a una respuesta diferente, hay que anidar. Cada `else` se empareja con el `if` abierto más cercano: con llaves y una buena sangría no hay duda.",
+     "If you only need to know yes or no, the compound condition is clearer. If each combination leads to a different answer, you must nest. Each `else` pairs with the nearest open `if`: with braces and good indentation there is no doubt."
     ]
    }
   ],
@@ -491,7 +547,8 @@ export default {
     "t": "p",
     "x": [
      "És el `SEGONS_SIGUI`: compara **una** variable amb una llista de valors concrets. Exemple: un semàfor que rep un caràcter.",
-     "Es el `SEGONS_SIGUI`: compara **una** variable con una lista de valores concretos. Ejemplo: un semáforo que recibe un carácter."
+     "Es el `SEGONS_SIGUI`: compara **una** variable con una lista de valores concretos. Ejemplo: un semáforo que recibe un carácter.",
+     "It is the `SEGONS_SIGUI`: it compares **one** variable with a list of specific values. Example: a traffic light that receives a character."
     ]
    },
    {
@@ -532,11 +589,13 @@ export default {
     "head": [
      [
       "Peça",
-      "Pieza"
+      "Pieza",
+      "Piece"
      ],
      [
       "Què fa",
-      "Qué hace"
+      "Qué hace",
+      "What it does"
      ]
     ],
     "rows": [
@@ -544,28 +603,32 @@ export default {
       "`switch (llum)`",
       [
        "Avalua l'expressió **una sola vegada**. Ha de ser entera o `char`: no serveix amb `double` ni amb `string`.",
-       "Evalúa la expresión **una sola vez**. Debe ser entera o `char`: no sirve con `double` ni con `string`."
+       "Evalúa la expresión **una sola vez**. Debe ser entera o `char`: no sirve con `double` ni con `string`.",
+       "Evaluates the expression **only once**. It must be an integer or a `char`: it does not work with `double` or `string`."
       ]
      ],
      [
       "`case 'V':`",
       [
        "Punt d'entrada si el valor és exactament `'V'`. Cada valor ha de ser una constant (no `case x > 5:`).",
-       "Punto de entrada si el valor es exactamente `'V'`. Cada valor debe ser una constante (no `case x > 5:`)."
+       "Punto de entrada si el valor es exactamente `'V'`. Cada valor debe ser una constante (no `case x > 5:`).",
+       "Entry point if the value is exactly `'V'`. Each value must be a constant (not `case x > 5:`)."
       ]
      ],
      [
       "`break;`",
       [
        "Surt del `switch`. Sense `break`, l'execució **continua** pel `case` següent.",
-       "Sale del `switch`. Sin `break`, la ejecución **continúa** por el `case` siguiente."
+       "Sale del `switch`. Sin `break`, la ejecución **continúa** por el `case` siguiente.",
+       "Leaves the `switch`. Without `break`, execution **continues** into the next `case`."
       ]
      ],
      [
       "`default:`",
       [
        "Si no coincideix cap `case`. És l'`ALTRAMENT`. És opcional.",
-       "Si no coincide ningún `case`. Es el `ALTRAMENT`. Es opcional."
+       "Si no coincide ningún `case`. Es el `ALTRAMENT`. Es opcional.",
+       "If no `case` matches. It is the `ALTRAMENT`. It is optional."
       ]
      ]
     ]
@@ -574,14 +637,16 @@ export default {
     "t": "warn",
     "title": [
      "El break oblidat",
-     "El break olvidado"
+     "El break olvidado",
+     "The forgotten break"
     ],
     "blocks": [
      {
       "t": "p",
       "x": [
        "Un `case` només és un punt d'entrada: un cop dins, el programa va baixant fins que troba un `break` o el final del `switch`. Aquí falta el `break` del groc. Executeu-lo amb `G`:",
-       "Un `case` solo es un punto de entrada: una vez dentro, el programa va bajando hasta que encuentra un `break` o el final del `switch`. Aquí falta el `break` del amarillo. Ejecutadlo con `G`:"
+       "Un `case` solo es un punto de entrada: una vez dentro, el programa va bajando hasta que encuentra un `break` o el final del `switch`. Aquí falta el `break` del amarillo. Ejecutadlo con `G`:",
+       "A `case` is only an entry point: once inside, the program goes down until it finds a `break` or the end of the `switch`. Here the `break` for amber is missing. Run it with `G`:"
       ]
      }
     ]
@@ -597,14 +662,16 @@ export default {
     },
     "src": [
      "#include <iostream>\nusing namespace std;\n\nint main() {\n    char llum;\n    cin >> llum;\n    switch (llum) {\n        case 'V':\n            cout << \"Passa\" << endl;\n            break;\n        case 'G':\n            cout << \"Frena\" << endl;     // falta el break: continua avall\n        case 'R':\n            cout << \"Atura't\" << endl;\n            break;\n        default:\n            cout << \"Llum desconeguda\" << endl;\n    }\n    return 0;\n}",
-     "#include <iostream>\nusing namespace std;\n\nint main() {\n    char llum;\n    cin >> llum;\n    switch (llum) {\n        case 'V':\n            cout << \"Passa\" << endl;\n            break;\n        case 'G':\n            cout << \"Frena\" << endl;     // falta el break: sigue hacia abajo\n        case 'R':\n            cout << \"Atura't\" << endl;\n            break;\n        default:\n            cout << \"Llum desconeguda\" << endl;\n    }\n    return 0;\n}"
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    char llum;\n    cin >> llum;\n    switch (llum) {\n        case 'V':\n            cout << \"Passa\" << endl;\n            break;\n        case 'G':\n            cout << \"Frena\" << endl;     // falta el break: sigue hacia abajo\n        case 'R':\n            cout << \"Atura't\" << endl;\n            break;\n        default:\n            cout << \"Llum desconeguda\" << endl;\n    }\n    return 0;\n}",
+     "#include <iostream>\nusing namespace std;\n\nint main() {\n    char llum;\n    cin >> llum;\n    switch (llum) {\n        case 'V':\n            cout << \"Passa\" << endl;\n            break;\n        case 'G':\n            cout << \"Frena\" << endl;     // the break is missing: it falls through\n        case 'R':\n            cout << \"Atura't\" << endl;\n            break;\n        default:\n            cout << \"Llum desconeguda\" << endl;\n    }\n    return 0;\n}"
     ]
    },
    {
     "t": "p",
     "x": [
      "Aquesta caiguda d'un `case` a l'altre té un ús legítim: agrupar valors que fan el mateix, com ara acceptar majúscules i minúscules.",
-     "Esta caída de un `case` al otro tiene un uso legítimo: agrupar valores que hacen lo mismo, como por ejemplo aceptar mayúsculas y minúsculas."
+     "Esta caída de un `case` al otro tiene un uso legítimo: agrupar valores que hacen lo mismo, como por ejemplo aceptar mayúsculas y minúsculas.",
+     "This fall-through from one `case` to another has a legitimate use: grouping values that do the same thing, for example accepting capital and lower-case letters."
     ]
    },
    {
@@ -620,25 +687,29 @@ export default {
     "head": [
      [
       "Situació",
-      "Situación"
+      "Situación",
+      "Situation"
      ],
      [
       "Millor eina",
-      "Mejor herramienta"
+      "Mejor herramienta",
+      "Best tool"
      ]
     ],
     "rows": [
      [
       [
        "Una variable entera o `char` comparada amb valors concrets (menú, codi, lletra)",
-       "Una variable entera o `char` comparada con valores concretos (menú, código, letra)"
+       "Una variable entera o `char` comparada con valores concretos (menú, código, letra)",
+       "An integer or `char` variable compared with specific values (menu, code, letter)"
       ],
       "`switch`"
      ],
      [
       [
        "Intervals (`nota >= 7`), reals o condicions amb diverses variables",
-       "Intervalos (`nota >= 7`), reales o condiciones con varias variables"
+       "Intervalos (`nota >= 7`), reales o condiciones con varias variables",
+       "Intervals (`nota >= 7`), reals or conditions with several variables"
       ],
       "Cadena `if … else if`"
      ]
@@ -650,7 +721,8 @@ export default {
     "t": "p",
     "x": [
      "Els enunciats demanen sovint «amb 2 decimals». Per defecte, `cout` escriu un real amb el mínim de xifres necessari (5 i no 5.00). Amb la llibreria `<iomanip>`:",
-     "Los enunciados piden a menudo «con 2 decimales». Por defecto, `cout` escribe un real con el mínimo de cifras necesario (5 y no 5.00). Con la biblioteca `<iomanip>`:"
+     "Los enunciados piden a menudo «con 2 decimales». Por defecto, `cout` escribe un real con el mínimo de cifras necesario (5 y no 5.00). Con la biblioteca `<iomanip>`:",
+     "Statements often ask for “with 2 decimals”. By default, `cout` writes a real with the minimum number of digits needed (5 and not 5.00). With the `<iomanip>` library:"
     ]
    },
    {
@@ -658,11 +730,13 @@ export default {
     "items": [
      [
       "`fixed`: notació decimal normal, sense exponents.",
-      "`fixed`: notación decimal normal, sin exponentes."
+      "`fixed`: notación decimal normal, sin exponentes.",
+      "`fixed`: normal decimal notation, without exponents."
      ],
      [
       "`setprecision(n)`: amb `fixed`, **n decimals exactes**, arrodonint.",
-      "`setprecision(n)`: con `fixed`, **n decimales exactos**, redondeando."
+      "`setprecision(n)`: con `fixed`, **n decimales exactos**, redondeando.",
+      "`setprecision(n)`: with `fixed`, **exactly n decimals**, rounding."
      ]
     ]
    },
@@ -670,7 +744,8 @@ export default {
     "t": "p",
     "x": [
      "Totes dues opcions queden actives per a **tota** la resta del programa; n'hi ha prou de posar-les una vegada.",
-     "Ambas opciones quedan activas para **todo** el resto del programa; basta con ponerlas una vez."
+     "Ambas opciones quedan activas para **todo** el resto del programa; basta con ponerlas una vez.",
+     "Both options stay active for **the whole** rest of the program; it is enough to set them once."
     ]
    },
    {
@@ -682,7 +757,8 @@ export default {
     },
     "src": [
      "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    double a = 5, b = 6.25, c = 2.0 / 3;\n    cout << a << \" | \" << b << \" | \" << c << endl;      // per defecte\n    cout << fixed << setprecision(2);                    // a partir d'aquí, 2 decimals\n    cout << a << \" | \" << b << \" | \" << c << endl;\n    cout << setprecision(3) << c << endl;                // ara, 3 decimals\n    return 0;\n}",
-     "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    double a = 5, b = 6.25, c = 2.0 / 3;\n    cout << a << \" | \" << b << \" | \" << c << endl;      // por defecto\n    cout << fixed << setprecision(2);                    // a partir de aquí, 2 decimales\n    cout << a << \" | \" << b << \" | \" << c << endl;\n    cout << setprecision(3) << c << endl;                // ahora, 3 decimales\n    return 0;\n}"
+     "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    double a = 5, b = 6.25, c = 2.0 / 3;\n    cout << a << \" | \" << b << \" | \" << c << endl;      // por defecto\n    cout << fixed << setprecision(2);                    // a partir de aquí, 2 decimales\n    cout << a << \" | \" << b << \" | \" << c << endl;\n    cout << setprecision(3) << c << endl;                // ahora, 3 decimales\n    return 0;\n}",
+     "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    double a = 5, b = 6.25, c = 2.0 / 3;\n    cout << a << \" | \" << b << \" | \" << c << endl;      // by default\n    cout << fixed << setprecision(2);                    // from here on, 2 decimals\n    cout << a << \" | \" << b << \" | \" << c << endl;\n    cout << setprecision(3) << c << endl;                // now, 3 decimals\n    return 0;\n}"
     ]
    },
    {
@@ -691,7 +767,8 @@ export default {
      "Valor",
      [
       "Per defecte",
-      "Por defecto"
+      "Por defecto",
+      "By default"
      ],
      "fixed + setprecision(2)"
     ],
@@ -717,14 +794,16 @@ export default {
     "t": "warn",
     "title": [
      "Compte amb setprecision sense fixed",
-     "Cuidado con setprecision sin fixed"
+     "Cuidado con setprecision sin fixed",
+     "Careful with setprecision without fixed"
     ],
     "blocks": [
      {
       "t": "p",
       "x": [
        "Sense `fixed`, `setprecision(n)` vol dir **n xifres significatives**, no n decimals: `setprecision(2)` escriu 12.75 com a «13». Poseu sempre `fixed` davant.",
-       "Sin `fixed`, `setprecision(n)` significa **n cifras significativas**, no n decimales: `setprecision(2)` escribe 12.75 como «13». Poned siempre `fixed` delante."
+       "Sin `fixed`, `setprecision(n)` significa **n cifras significativas**, no n decimales: `setprecision(2)` escribe 12.75 como «13». Poned siempre `fixed` delante.",
+       "Without `fixed`, `setprecision(n)` means **n significant digits**, not n decimals: `setprecision(2)` writes 12.75 as “13”. Always put `fixed` in front."
       ]
      }
     ]
@@ -735,30 +814,35 @@ export default {
     "t": "note",
     "title": [
      "Enunciat",
-     "Enunciado"
+     "Enunciado",
+     "Statement"
     ],
     "blocks": [
      {
       "t": "p",
       "x": [
        "En una botiga es venen ous en capses de 12 i també d'escadussers (solts). N'hi ha de tres qualitats: **A** a 3 € la dotzena, **B** a 2,50 € i **C** a 2 €. Els escadussers es paguen a 0,30, 0,25 i 0,20 € la unitat, respectivament. Entrats la quantitat d'ous i el tipus, cal dir quantes capses i quants ous solts cal lliurar, i l'import de la compra.",
-       "En una tienda se venden huevos en cajas de 12 y también sueltos. Los hay de tres calidades: **A** a 3 € la docena, **B** a 2,50 € y **C** a 2 €. Los huevos sueltos se pagan a 0,30, 0,25 y 0,20 € la unidad, respectivamente. Dados la cantidad de huevos y el tipo, hay que decir cuántas cajas y cuántos huevos sueltos hay que entregar, y el importe de la compra."
+       "En una tienda se venden huevos en cajas de 12 y también sueltos. Los hay de tres calidades: **A** a 3 € la docena, **B** a 2,50 € y **C** a 2 €. Los huevos sueltos se pagan a 0,30, 0,25 y 0,20 € la unidad, respectivamente. Dados la cantidad de huevos y el tipo, hay que decir cuántas cajas y cuántos huevos sueltos hay que entregar, y el importe de la compra.",
+       "A shop sells eggs in boxes of 12 and also loose. There are three qualities: **A** at €3 a dozen, **B** at €2.50 and **C** at €2. Loose eggs cost €0.30, €0.25 and €0.20 each, respectively. Given the number of eggs and the type, say how many boxes and how many loose eggs must be handed over, and the amount of the purchase."
       ]
      },
      {
       "t": "p",
       "x": [
        "Sortida: `Dotzenes: ND`, `Escadussers: NE` i `IMPORT: X.XX` (amb 2 decimals), cadascuna en una línia.",
-       "Salida: `Dotzenes: ND`, `Escadussers: NE` e `IMPORT: X.XX` (con 2 decimales), cada una en una línea."
+       "Salida: `Dotzenes: ND`, `Escadussers: NE` e `IMPORT: X.XX` (con 2 decimales), cada una en una línea.",
+       "Output: `Dotzenes: ND`, `Escadussers: NE` and `IMPORT: X.XX` (with 2 decimals), each on its own line."
       ]
      }
-    ]
+    ],
+    "mode": "explained"
    },
    {
     "t": "h",
     "x": [
      "Analitzar: què és dada, què és resultat, què és intern",
-     "Analizar: qué es dato, qué es resultado, qué es interno"
+     "Analizar: qué es dato, qué es resultado, qué es interno",
+     "Analyse: what is data, what is a result, what is internal"
     ]
    },
    {
@@ -767,15 +851,18 @@ export default {
      "E/S",
      [
       "Nom",
-      "Nombre"
+      "Nombre",
+      "Name"
      ],
      [
       "Tipus",
-      "Tipo"
+      "Tipo",
+      "Type"
      ],
      [
       "Descripció",
-      "Descripción"
+      "Descripción",
+      "Description"
      ]
     ],
     "rows": [
@@ -785,7 +872,8 @@ export default {
       "int",
       [
        "Nombre d'ous comprats",
-       "Número de huevos comprados"
+       "Número de huevos comprados",
+       "Number of eggs bought"
       ]
      ],
      [
@@ -794,7 +882,8 @@ export default {
       "char",
       [
        "Qualitat: `'A'`, `'B'` o `'C'`",
-       "Calidad: `'A'`, `'B'` o `'C'`"
+       "Calidad: `'A'`, `'B'` o `'C'`",
+       "Quality: `'A'`, `'B'` or `'C'`"
       ]
      ],
      [
@@ -803,7 +892,8 @@ export default {
       "int",
       [
        "Capses (dotzenes senceres)",
-       "Cajas (docenas enteras)"
+       "Cajas (docenas enteras)",
+       "Boxes (whole dozens)"
       ]
      ],
      [
@@ -812,7 +902,8 @@ export default {
       "int",
       [
        "Ous escadussers (de 0 a 11)",
-       "Huevos sueltos (de 0 a 11)"
+       "Huevos sueltos (de 0 a 11)",
+       "Loose eggs (from 0 to 11)"
       ]
      ],
      [
@@ -821,7 +912,8 @@ export default {
       "double",
       [
        "Preu de la dotzena i de l'ou solt (depenen del tipus)",
-       "Precio de la docena y del huevo suelto (dependen del tipo)"
+       "Precio de la docena y del huevo suelto (dependen del tipo)",
+       "Price of the dozen and of the loose egg (they depend on the type)"
       ]
      ],
      [
@@ -830,7 +922,8 @@ export default {
       "double",
       [
        "Import total",
-       "Importe total"
+       "Importe total",
+       "Total amount"
       ]
      ]
     ]
@@ -839,7 +932,8 @@ export default {
     "t": "h",
     "x": [
      "Dissenyar: tres passos",
-     "Diseñar: tres pasos"
+     "Diseñar: tres pasos",
+     "Design: three steps"
     ]
    },
    {
@@ -847,15 +941,18 @@ export default {
     "items": [
      [
       "**Repartir els ous** (com a la Fàbrica de Pilotes): `ND = NO / 12` i `NE = NO % 12`.",
-      "**Repartir los huevos** (como en la Fábrica de Pelotas): `ND = NO / 12` y `NE = NO % 12`."
+      "**Repartir los huevos** (como en la Fábrica de Pelotas): `ND = NO / 12` y `NE = NO % 12`.",
+      "**Share out the eggs** (as in the Ball Factory): `ND = NO / 12` and `NE = NO % 12`."
      ],
      [
       "**Triar els preus** segons el tipus. Com que es compara una lletra amb valors concrets, és un `switch`.",
-      "**Elegir los precios** según el tipo. Como se compara una letra con valores concretos, es un `switch`."
+      "**Elegir los precios** según el tipo. Como se compara una letra con valores concretos, es un `switch`.",
+      "**Choose the prices** according to the type. Since a letter is compared with specific values, it is a `switch`."
      ],
      [
       "**Calcular l'import**: `IMP = ND · PD + NE · PE`, i escriure-ho tot amb el format demanat.",
-      "**Calcular el importe**: `IMP = ND · PD + NE · PE`, y escribirlo todo con el formato pedido."
+      "**Calcular el importe**: `IMP = ND · PD + NE · PE`, y escribirlo todo con el formato pedido.",
+      "**Compute the amount**: `IMP = ND · PD + NE · PE`, and write everything in the required format."
      ]
     ],
     "ordered": true
@@ -866,11 +963,13 @@ export default {
      "TPO",
      [
       "PD (€ / dotzena)",
-      "PD (€ / docena)"
+      "PD (€ / docena)",
+      "PD (€ / dozen)"
      ],
      [
       "PE (€ / ou)",
-      "PE (€ / huevo)"
+      "PE (€ / huevo)",
+      "PE (€ / egg)"
      ]
     ],
     "rows": [
@@ -895,28 +994,34 @@ export default {
     "t": "html",
     "h": [
      "<figure class=\"ip-fig\" style=\"--fig-min:640px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 760 250\" role=\"img\" aria-label=\"El switch tria els preus segons el tipus i després es calcula l'import\" role=\"img\">\n<rect class=\"bxa\" x=\"10\" y=\"105\" width=\"150\" height=\"40\" rx=\"6\"></rect><text class=\"dm\" x=\"85\" y=\"125\" text-anchor=\"middle\" dominant-baseline=\"central\">switch (TPO)</text>\n<path class=\"ln\" d=\"M160 125 H190 V45 H238\" marker-end=\"url(#ah)\"></path><path class=\"ln\" d=\"M190 125 H238\" marker-end=\"url(#ah)\"></path><path class=\"ln\" d=\"M190 125 V205 H238\" marker-end=\"url(#ah)\"></path>\n<text class=\"dm\" x=\"214\" y=\"36\" text-anchor=\"middle\">'A'</text><text class=\"dm\" x=\"214\" y=\"116\" text-anchor=\"middle\">'B'</text><text class=\"dm\" x=\"214\" y=\"196\" text-anchor=\"middle\">'C'</text>\n<rect class=\"bxq\" x=\"240\" y=\"22\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"45\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 3;  PE = 0.30</text>\n<rect class=\"bxq\" x=\"240\" y=\"102\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"125\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 2.5;  PE = 0.25</text>\n<rect class=\"bxq\" x=\"240\" y=\"182\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"205\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 2;  PE = 0.20</text>\n<path class=\"ln\" d=\"M430 45 H470 V205 H430\"></path><path class=\"ln\" d=\"M430 125 H470\"></path>\n<text class=\"ds\" x=\"478\" y=\"70\" text-anchor=\"start\">break</text>\n<path class=\"ln\" d=\"M470 125 H508\" marker-end=\"url(#ah)\"></path>\n<rect class=\"bxo\" x=\"510\" y=\"98\" width=\"240\" height=\"54\" rx=\"6\"></rect><text class=\"dm\" x=\"630\" y=\"118\" text-anchor=\"middle\" dominant-baseline=\"central\">IMP = ND*PD + NE*PE</text><text class=\"ds\" x=\"630\" y=\"138\" text-anchor=\"middle\" dominant-baseline=\"central\">un sol càlcul per als tres tipus</text>\n</svg></div>\n<figcaption>El <code>switch</code> només decideix els preus; el càlcul de l'import és comú i es fa una sola vegada, després.</figcaption>\n</figure>",
-     "<figure class=\"ip-fig\" style=\"--fig-min:640px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 760 250\" role=\"img\" aria-label=\"El switch elige los precios según el tipo y después se calcula el importe\" role=\"img\">\n<rect class=\"bxa\" x=\"10\" y=\"105\" width=\"150\" height=\"40\" rx=\"6\"></rect><text class=\"dm\" x=\"85\" y=\"125\" text-anchor=\"middle\" dominant-baseline=\"central\">switch (TPO)</text>\n<path class=\"ln\" d=\"M160 125 H190 V45 H238\" marker-end=\"url(#ah)\"></path><path class=\"ln\" d=\"M190 125 H238\" marker-end=\"url(#ah)\"></path><path class=\"ln\" d=\"M190 125 V205 H238\" marker-end=\"url(#ah)\"></path>\n<text class=\"dm\" x=\"214\" y=\"36\" text-anchor=\"middle\">'A'</text><text class=\"dm\" x=\"214\" y=\"116\" text-anchor=\"middle\">'B'</text><text class=\"dm\" x=\"214\" y=\"196\" text-anchor=\"middle\">'C'</text>\n<rect class=\"bxq\" x=\"240\" y=\"22\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"45\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 3;  PE = 0.30</text>\n<rect class=\"bxq\" x=\"240\" y=\"102\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"125\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 2.5;  PE = 0.25</text>\n<rect class=\"bxq\" x=\"240\" y=\"182\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"205\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 2;  PE = 0.20</text>\n<path class=\"ln\" d=\"M430 45 H470 V205 H430\"></path><path class=\"ln\" d=\"M430 125 H470\"></path>\n<text class=\"ds\" x=\"478\" y=\"70\" text-anchor=\"start\">break</text>\n<path class=\"ln\" d=\"M470 125 H508\" marker-end=\"url(#ah)\"></path>\n<rect class=\"bxo\" x=\"510\" y=\"98\" width=\"240\" height=\"54\" rx=\"6\"></rect><text class=\"dm\" x=\"630\" y=\"118\" text-anchor=\"middle\" dominant-baseline=\"central\">IMP = ND*PD + NE*PE</text><text class=\"ds\" x=\"630\" y=\"138\" text-anchor=\"middle\" dominant-baseline=\"central\">un solo cálculo para los tres tipos</text>\n</svg></div>\n<figcaption>El <code>switch</code> solo decide los precios; el cálculo del importe es común y se hace una sola vez, después.</figcaption>\n</figure>"
-    ]
+     "<figure class=\"ip-fig\" style=\"--fig-min:640px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 760 250\" role=\"img\" aria-label=\"El switch elige los precios según el tipo y después se calcula el importe\" role=\"img\">\n<rect class=\"bxa\" x=\"10\" y=\"105\" width=\"150\" height=\"40\" rx=\"6\"></rect><text class=\"dm\" x=\"85\" y=\"125\" text-anchor=\"middle\" dominant-baseline=\"central\">switch (TPO)</text>\n<path class=\"ln\" d=\"M160 125 H190 V45 H238\" marker-end=\"url(#ah)\"></path><path class=\"ln\" d=\"M190 125 H238\" marker-end=\"url(#ah)\"></path><path class=\"ln\" d=\"M190 125 V205 H238\" marker-end=\"url(#ah)\"></path>\n<text class=\"dm\" x=\"214\" y=\"36\" text-anchor=\"middle\">'A'</text><text class=\"dm\" x=\"214\" y=\"116\" text-anchor=\"middle\">'B'</text><text class=\"dm\" x=\"214\" y=\"196\" text-anchor=\"middle\">'C'</text>\n<rect class=\"bxq\" x=\"240\" y=\"22\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"45\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 3;  PE = 0.30</text>\n<rect class=\"bxq\" x=\"240\" y=\"102\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"125\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 2.5;  PE = 0.25</text>\n<rect class=\"bxq\" x=\"240\" y=\"182\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"205\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 2;  PE = 0.20</text>\n<path class=\"ln\" d=\"M430 45 H470 V205 H430\"></path><path class=\"ln\" d=\"M430 125 H470\"></path>\n<text class=\"ds\" x=\"478\" y=\"70\" text-anchor=\"start\">break</text>\n<path class=\"ln\" d=\"M470 125 H508\" marker-end=\"url(#ah)\"></path>\n<rect class=\"bxo\" x=\"510\" y=\"98\" width=\"240\" height=\"54\" rx=\"6\"></rect><text class=\"dm\" x=\"630\" y=\"118\" text-anchor=\"middle\" dominant-baseline=\"central\">IMP = ND*PD + NE*PE</text><text class=\"ds\" x=\"630\" y=\"138\" text-anchor=\"middle\" dominant-baseline=\"central\">un solo cálculo para los tres tipos</text>\n</svg></div>\n<figcaption>El <code>switch</code> solo decide los precios; el cálculo del importe es común y se hace una sola vez, después.</figcaption>\n</figure>",
+     "<figure class=\"ip-fig\" style=\"--fig-min:640px\">\n<div class=\"ip-figb\"><svg viewBox=\"0 0 760 250\" role=\"img\" aria-label=\"The switch chooses the prices according to the type and then the amount is computed\" role=\"img\">\n<rect class=\"bxa\" x=\"10\" y=\"105\" width=\"150\" height=\"40\" rx=\"6\"></rect><text class=\"dm\" x=\"85\" y=\"125\" text-anchor=\"middle\" dominant-baseline=\"central\">switch (TPO)</text>\n<path class=\"ln\" d=\"M160 125 H190 V45 H238\" marker-end=\"url(#ah)\"></path><path class=\"ln\" d=\"M190 125 H238\" marker-end=\"url(#ah)\"></path><path class=\"ln\" d=\"M190 125 V205 H238\" marker-end=\"url(#ah)\"></path>\n<text class=\"dm\" x=\"214\" y=\"36\" text-anchor=\"middle\">'A'</text><text class=\"dm\" x=\"214\" y=\"116\" text-anchor=\"middle\">'B'</text><text class=\"dm\" x=\"214\" y=\"196\" text-anchor=\"middle\">'C'</text>\n<rect class=\"bxq\" x=\"240\" y=\"22\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"45\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 3;  PE = 0.30</text>\n<rect class=\"bxq\" x=\"240\" y=\"102\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"125\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 2.5;  PE = 0.25</text>\n<rect class=\"bxq\" x=\"240\" y=\"182\" width=\"190\" height=\"46\" rx=\"6\"></rect><text class=\"dm\" x=\"335\" y=\"205\" text-anchor=\"middle\" dominant-baseline=\"central\">PD = 2;  PE = 0.20</text>\n<path class=\"ln\" d=\"M430 45 H470 V205 H430\"></path><path class=\"ln\" d=\"M430 125 H470\"></path>\n<text class=\"ds\" x=\"478\" y=\"70\" text-anchor=\"start\">break</text>\n<path class=\"ln\" d=\"M470 125 H508\" marker-end=\"url(#ah)\"></path>\n<rect class=\"bxo\" x=\"510\" y=\"98\" width=\"240\" height=\"54\" rx=\"6\"></rect><text class=\"dm\" x=\"630\" y=\"118\" text-anchor=\"middle\" dominant-baseline=\"central\">IMP = ND*PD + NE*PE</text><text class=\"ds\" x=\"630\" y=\"138\" text-anchor=\"middle\" dominant-baseline=\"central\">a single calculation for the three types</text>\n</svg></div>\n<figcaption>The <code>switch</code> only decides the prices; the calculation of the amount is common and done only once, afterwards.</figcaption>\n</figure>"
+    ],
+    "mode": "explained"
    },
    {
     "t": "h",
     "x": [
      "Comprovar a mà abans de programar",
-     "Comprobar a mano antes de programar"
+     "Comprobar a mano antes de programar",
+     "Check by hand before programming"
     ]
    },
    {
     "t": "html",
     "h": [
      "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>Traça amb NO = 29 i TPO = 'B'.</caption>\n<thead><tr><th>Instrucció</th><th class=\"c\">ND</th><th class=\"c\">NE</th><th class=\"c\">PD</th><th class=\"c\">PE</th><th class=\"c\">IMP</th></tr></thead>\n<tbody>\n<tr><td>ND = NO / 12;</td><td class=\"c hl\">2</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td></tr>\n<tr><td>NE = NO % 12;</td><td class=\"c\">2</td><td class=\"c hl\">5</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td></tr>\n<tr><td>case 'B': PD = 2.5; PE = 0.25;</td><td class=\"c\">2</td><td class=\"c\">5</td><td class=\"c hl\">2.5</td><td class=\"c hl\">0.25</td><td class=\"c\">?</td></tr>\n<tr><td>IMP = ND*PD + NE*PE;</td><td class=\"c\">2</td><td class=\"c\">5</td><td class=\"c\">2.5</td><td class=\"c\">0.25</td><td class=\"c hl\">6.25</td></tr>\n</tbody>\n</table></div>",
-     "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>Traza con NO = 29 y TPO = 'B'.</caption>\n<thead><tr><th>Instrucción</th><th class=\"c\">ND</th><th class=\"c\">NE</th><th class=\"c\">PD</th><th class=\"c\">PE</th><th class=\"c\">IMP</th></tr></thead>\n<tbody>\n<tr><td>ND = NO / 12;</td><td class=\"c hl\">2</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td></tr>\n<tr><td>NE = NO % 12;</td><td class=\"c\">2</td><td class=\"c hl\">5</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td></tr>\n<tr><td>case 'B': PD = 2.5; PE = 0.25;</td><td class=\"c\">2</td><td class=\"c\">5</td><td class=\"c hl\">2.5</td><td class=\"c hl\">0.25</td><td class=\"c\">?</td></tr>\n<tr><td>IMP = ND*PD + NE*PE;</td><td class=\"c\">2</td><td class=\"c\">5</td><td class=\"c\">2.5</td><td class=\"c\">0.25</td><td class=\"c hl\">6.25</td></tr>\n</tbody>\n</table></div>"
-    ]
+     "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>Traza con NO = 29 y TPO = 'B'.</caption>\n<thead><tr><th>Instrucción</th><th class=\"c\">ND</th><th class=\"c\">NE</th><th class=\"c\">PD</th><th class=\"c\">PE</th><th class=\"c\">IMP</th></tr></thead>\n<tbody>\n<tr><td>ND = NO / 12;</td><td class=\"c hl\">2</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td></tr>\n<tr><td>NE = NO % 12;</td><td class=\"c\">2</td><td class=\"c hl\">5</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td></tr>\n<tr><td>case 'B': PD = 2.5; PE = 0.25;</td><td class=\"c\">2</td><td class=\"c\">5</td><td class=\"c hl\">2.5</td><td class=\"c hl\">0.25</td><td class=\"c\">?</td></tr>\n<tr><td>IMP = ND*PD + NE*PE;</td><td class=\"c\">2</td><td class=\"c\">5</td><td class=\"c\">2.5</td><td class=\"c\">0.25</td><td class=\"c hl\">6.25</td></tr>\n</tbody>\n</table></div>",
+     "<div class=\"ip-tw trace\"><table class=\"trace\">\n<caption>Trace with NO = 29 and TPO = 'B'.</caption>\n<thead><tr><th>Instruction</th><th class=\"c\">ND</th><th class=\"c\">NE</th><th class=\"c\">PD</th><th class=\"c\">PE</th><th class=\"c\">IMP</th></tr></thead>\n<tbody>\n<tr><td>ND = NO / 12;</td><td class=\"c hl\">2</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td></tr>\n<tr><td>NE = NO % 12;</td><td class=\"c\">2</td><td class=\"c hl\">5</td><td class=\"c\">?</td><td class=\"c\">?</td><td class=\"c\">?</td></tr>\n<tr><td>case 'B': PD = 2.5; PE = 0.25;</td><td class=\"c\">2</td><td class=\"c\">5</td><td class=\"c hl\">2.5</td><td class=\"c hl\">0.25</td><td class=\"c\">?</td></tr>\n<tr><td>IMP = ND*PD + NE*PE;</td><td class=\"c\">2</td><td class=\"c\">5</td><td class=\"c\">2.5</td><td class=\"c\">0.25</td><td class=\"c hl\">6.25</td></tr>\n</tbody>\n</table></div>"
+    ],
+    "mode": "explained"
    },
    {
     "t": "p",
     "x": [
      "2 · 2,50 + 5 · 0,25 = 5,00 + 1,25 = 6,25 €. Ara el programa, en pseudocodi i en C++. Al pseudocodi la variable es diu `NOUS` perquè `NO` és l'operador lògic de negació i no es pot fer servir com a nom. Proveu també `11 A`, `24 B`, `0 C` i `100 A` (ha de donar 25.20):",
-     "2 · 2,50 + 5 · 0,25 = 5,00 + 1,25 = 6,25 €. Ahora el programa, en pseudocódigo y en C++. En el pseudocódigo la variable se llama `NOUS` porque `NO` es el operador lógico de negación y no se puede usar como nombre. Probad también `11 A`, `24 B`, `0 C` y `100 A` (debe dar 25.20):"
+     "2 · 2,50 + 5 · 0,25 = 5,00 + 1,25 = 6,25 €. Ahora el programa, en pseudocódigo y en C++. En el pseudocódigo la variable se llama `NOUS` porque `NO` es el operador lógico de negación y no se puede usar como nombre. Probad también `11 A`, `24 B`, `0 C` y `100 A` (debe dar 25.20):",
+     "2 · 2.50 + 5 · 0.25 = 5.00 + 1.25 = €6.25. Now the program, in pseudocode and in C++. In the pseudocode the variable is called `NOUS` because `NO` is the logical negation operator and cannot be used as a name. Also try `11 A`, `24 B`, `0 C` and `100 A` (it must give 25.20):"
     ]
    },
    {
@@ -959,7 +1064,8 @@ export default {
     "t": "tip",
     "title": [
      "Millores i detalls",
-     "Mejoras y detalles"
+     "Mejoras y detalles",
+     "Improvements and details"
     ],
     "blocks": [
      {
@@ -967,19 +1073,23 @@ export default {
       "items": [
        [
         "`PD` i `PE` s'inicialitzen a 0: si arribés un tipus que no és A, B ni C, sense inicialitzar l'import seria brossa. Una versió més completa afegiria un `default` que escrigui un missatge d'error.",
-        "`PD` y `PE` se inicializan a 0: si llegara un tipo que no es A, B ni C, sin inicializar el importe sería basura. Una versión más completa añadiría un `default` que escribiera un mensaje de error."
+        "`PD` y `PE` se inicializan a 0: si llegara un tipo que no es A, B ni C, sin inicializar el importe sería basura. Una versión más completa añadiría un `default` que escribiera un mensaje de error.",
+        "`PD` and `PE` are initialised to 0: if a type other than A, B or C arrived, without initialising the amount would be garbage. A more complete version would add a `default` writing an error message."
        ],
        [
         "`cin >> NO >> TPO` llegeix l'enter i després el caràcter, encara que estiguin separats per un espai: el `>>` salta els espais.",
-        "`cin >> NO >> TPO` lee el entero y después el carácter, aunque estén separados por un espacio: el `>>` salta los espacios."
+        "`cin >> NO >> TPO` lee el entero y después el carácter, aunque estén separados por un espacio: el `>>` salta los espacios.",
+        "`cin >> NO >> TPO` reads the integer and then the character, even if they are separated by a space: `>>` skips spaces."
        ],
        [
         "`fixed << setprecision(2)` només afecta els reals: `ND` i `NE` són enters i s'escriuen igual.",
-        "`fixed << setprecision(2)` solo afecta a los reales: `ND` y `NE` son enteros y se escriben igual."
+        "`fixed << setprecision(2)` solo afecta a los reales: `ND` y `NE` son enteros y se escriben igual.",
+        "`fixed << setprecision(2)` only affects reals: `ND` and `NE` are integers and are written the same way."
        ]
       ]
      }
-    ]
+    ],
+    "mode": "explained"
    }
   ],
   "s3-8": [
@@ -988,15 +1098,18 @@ export default {
     "head": [
      [
       "Escrit",
-      "Escrito"
+      "Escrito",
+      "Written"
      ],
      [
       "Què passa",
-      "Qué ocurre"
+      "Qué ocurre",
+      "What happens"
      ],
      [
       "Correcte",
-      "Correcto"
+      "Correcto",
+      "Correct"
      ]
     ],
     "rows": [
@@ -1004,7 +1117,8 @@ export default {
       "`if (x = 5)`",
       [
        "Assigna 5 i sempre és cert.",
-       "Asigna 5 y siempre es cierto."
+       "Asigna 5 y siempre es cierto.",
+       "It assigns 5 and is always true."
       ],
       "`if (x == 5)`"
      ],
@@ -1012,7 +1126,8 @@ export default {
       "`if (x > 0);`",
       [
        "L'`if` controla una instrucció buida; el bloc s'executa sempre.",
-       "El `if` controla una instrucción vacía; el bloque se ejecuta siempre."
+       "El `if` controla una instrucción vacía; el bloque se ejecuta siempre.",
+       "The `if` controls an empty instruction; the block always runs."
       ],
       "`if (x > 0) {`"
      ],
@@ -1020,7 +1135,8 @@ export default {
       "`if (0 <= x <= 10)`",
       [
        "Sempre és cert.",
-       "Siempre es cierto."
+       "Siempre es cierto.",
+       "It is always true."
       ],
       "`if (0 <= x && x <= 10)`"
      ],
@@ -1028,7 +1144,8 @@ export default {
       "`if (x == 1 || 2)`",
       [
        "El `2` sol ja és cert: sempre entra.",
-       "El `2` solo ya es cierto: siempre entra."
+       "El `2` solo ya es cierto: siempre entra.",
+       "The `2` on its own is already true: it always enters."
       ],
       "`if (x == 1 || x == 2)`"
      ],
@@ -1036,22 +1153,26 @@ export default {
       "`case \"A\":`",
       [
        "Error: `\"A\"` és un text; un `char` va amb cometes simples.",
-       "Error: `\"A\"` es un texto; un `char` va con comillas simples."
+       "Error: `\"A\"` es un texto; un `char` va con comillas simples.",
+       "Error: `\"A\"` is a text; a `char` goes in single quotes."
       ],
       "`case 'A':`"
      ],
      [
       [
        "`case 'A': … case 'B':` sense `break`",
-       "`case 'A': … case 'B':` sin `break`"
+       "`case 'A': … case 'B':` sin `break`",
+       "`case 'A': … case 'B':` without `break`"
       ],
       [
        "S'executen també les instruccions del cas següent.",
-       "Se ejecutan también las instrucciones del caso siguiente."
+       "Se ejecutan también las instrucciones del caso siguiente.",
+       "The instructions of the next case also run."
       ],
       [
        "Un `break;` al final de cada cas.",
-       "Un `break;` al final de cada caso."
+       "Un `break;` al final de cada caso.",
+       "A `break;` at the end of each case."
       ]
      ]
     ]
@@ -1062,7 +1183,8 @@ export default {
     "t": "p",
     "x": [
      "A CodeRunner: «El Pàrking», «El Sou dels Infermers», «Quadrant», «Màxim de dos enters», «Positiu, negatiu o zero», «Nota (A..F) a text» amb `switch` i «Calculadora simple amb operador»; d'ampliació, «Any de traspàs» i «Ordena tres enters». Aquí els teniu, amb altres de reforç, compilador, proves i rellotge:",
-     "En CodeRunner: «El Pàrking», «El Sou dels Infermers», «Quadrant», «Màxim de dos enters», «Positiu, negatiu o zero», «Nota (A..F) a text» con `switch` y «Calculadora simple amb operador»; de ampliación, «Any de traspàs» y «Ordena tres enters». Aquí los tenéis, con otros de refuerzo, compilador, pruebas y reloj:"
+     "En CodeRunner: «El Pàrking», «El Sou dels Infermers», «Quadrant», «Màxim de dos enters», «Positiu, negatiu o zero», «Nota (A..F) a text» con `switch` y «Calculadora simple amb operador»; de ampliación, «Any de traspàs» y «Ordena tres enters». Aquí los tenéis, con otros de refuerzo, compilador, pruebas y reloj:",
+     "In CodeRunner: “El Pàrking”, “El Sou dels Infermers”, “Quadrant”, “Màxim de dos enters”, “Positiu, negatiu o zero”, “Nota (A..F) a text” with `switch` and “Calculadora simple amb operador”; as extension, “Any de traspàs” and “Ordena tres enters”. Here you have them, with other reinforcement ones, a compiler, tests and a timer:"
     ]
    },
    {
@@ -1070,14 +1192,17 @@ export default {
     "id": "exlist",
     "props": {
      "wk": 3
-    }
+    },
+    "mode": "explained"
    },
    {
     "t": "p",
     "x": [
      "Abans de programar, podeu escriure l'algorisme a [Escriu i prova el pseudocodi](/programacio/practica?unit=t21) i provar-lo amb jocs de proves.",
-     "Antes de programar, podéis escribir el algoritmo en [Escribe y prueba el pseudocódigo](/programacio/practica?unit=t21) y probarlo con juegos de pruebas."
-    ]
+     "Antes de programar, podéis escribir el algoritmo en [Escribe y prueba el pseudocódigo](/programacio/practica?unit=t21) y probarlo con juegos de pruebas.",
+     "Before programming, you can write the algorithm in [Write and test the pseudocode](/programacio/practica?unit=t21) and try it with test sets."
+    ],
+    "mode": "explained"
    }
   ],
   "s3-10": [
@@ -1090,7 +1215,8 @@ export default {
        "t": "p",
        "x": [
         "Què escriu aquest fragment amb `x = 3`?",
-        "¿Qué escribe este fragmento con `x = 3`?"
+        "¿Qué escribe este fragmento con `x = 3`?",
+        "What does this fragment write with `x = 3`?"
        ]
       },
       {
@@ -1105,11 +1231,13 @@ export default {
       "gran!",
       [
        "Error de compilació",
-       "Error de compilación"
+       "Error de compilación",
+       "Compilation error"
       ],
       [
        "Res",
-       "Nada"
+       "Nada",
+       "Nothing"
       ]
      ],
      "answer": 1,
@@ -1118,7 +1246,8 @@ export default {
        "t": "p",
        "x": [
         "El `;` després de la condició és una instrucció buida: l'`if` acaba aquí. El bloc de claus és independent i s'executa sempre.",
-        "El `;` después de la condición es una instrucción vacía: el `if` termina ahí. El bloque de llaves es independiente y se ejecuta siempre."
+        "El `;` después de la condición es una instrucción vacía: el `if` termina ahí. El bloque de llaves es independiente y se ejecuta siempre.",
+        "The `;` after the condition is an empty instruction: the `if` ends there. The block in braces is independent and always runs."
        ]
       }
      ]
@@ -1133,7 +1262,8 @@ export default {
        "t": "p",
        "x": [
         "Amb `char op = '-';`, què escriu?",
-        "Con `char op = '-';`, ¿qué escribe?"
+        "Con `char op = '-';`, ¿qué escribe?",
+        "With `char op = '-';`, what does it write?"
        ]
       },
       {
@@ -1155,7 +1285,8 @@ export default {
        "t": "p",
        "x": [
         "Entra pel `case '-'` i, com que no hi ha `break`, continua pel `case '*'` fins al `break`. El `default` no s'executa.",
-        "Entra por el `case '-'` y, como no hay `break`, continúa por el `case '*'` hasta el `break`. El `default` no se ejecuta."
+        "Entra por el `case '-'` y, como no hay `break`, continúa por el `case '*'` hasta el `break`. El `default` no se ejecuta.",
+        "It enters through `case '-'` and, since there is no `break`, it continues into `case '*'` until the `break`. The `default` does not run."
        ]
       }
      ]
@@ -1170,7 +1301,8 @@ export default {
        "t": "p",
        "x": [
         "Quina condició expressa «x és fora de l'interval \\[1, 10\\]»?",
-        "¿Qué condición expresa «x está fuera del intervalo \\[1, 10\\]»?"
+        "¿Qué condición expresa «x está fuera del intervalo \\[1, 10\\]»?",
+        "Which condition expresses “x is outside the interval \\[1, 10\\]”?"
        ]
       }
      ],
@@ -1187,7 +1319,8 @@ export default {
        "t": "p",
        "x": [
         "Ser fora vol dir ser menor que 1 **o** més gran que 10. Amb `&&` no es compliria mai, i amb `<=`/`>=` els extrems 1 i 10 quedarien fora per error.",
-        "Estar fuera significa ser menor que 1 **o** mayor que 10. Con `&&` no se cumpliría nunca, y con `<=`/`>=` los extremos 1 y 10 quedarían fuera por error."
+        "Estar fuera significa ser menor que 1 **o** mayor que 10. Con `&&` no se cumpliría nunca, y con `<=`/`>=` los extremos 1 y 10 quedarían fuera por error.",
+        "Being outside means being less than 1 **or** greater than 10. With `&&` it would never hold, and with `<=`/`>=` the endpoints 1 and 10 would be left outside by mistake."
        ]
       }
      ]
@@ -1202,7 +1335,8 @@ export default {
        "t": "p",
        "x": [
         "Quina d'aquestes expressions **no** es pot fer servir com a `switch (…)`?",
-        "¿Cuál de estas expresiones **no** se puede usar como `switch (…)`?"
+        "¿Cuál de estas expresiones **no** se puede usar como `switch (…)`?",
+        "Which of these expressions **cannot** be used as `switch (…)`?"
        ]
       }
      ],
@@ -1213,7 +1347,8 @@ export default {
       "Una variable `int`",
       [
        "L'expressió `n % 4` amb `n` enter",
-       "La expresión `n % 4` con `n` entero"
+       "La expresión `n % 4` con `n` entero",
+       "The expression `n % 4` with `n` an integer"
       ]
      ],
      "answer": 0,
@@ -1222,7 +1357,8 @@ export default {
        "t": "p",
        "x": [
         "El `switch` només admet valors enters o caràcters. Per a reals o intervals, cal una cadena `if … else if`.",
-        "El `switch` solo admite valores enteros o caracteres. Para reales o intervalos, hace falta una cadena `if … else if`."
+        "El `switch` solo admite valores enteros o caracteres. Para reales o intervalos, hace falta una cadena `if … else if`.",
+        "`switch` only accepts integer values or characters. For reals or intervals, you need an `if … else if` chain."
        ]
       }
      ]
@@ -1237,7 +1373,8 @@ export default {
        "t": "p",
        "x": [
         "A la Botiga dels Ous, quin és l'import de `17 C`?",
-        "En la Tienda de los Huevos, ¿cuál es el importe de `17 C`?"
+        "En la Tienda de los Huevos, ¿cuál es el importe de `17 C`?",
+        "In the Egg Shop, what is the amount for `17 C`?"
        ]
       }
      ],
@@ -1254,7 +1391,8 @@ export default {
        "t": "p",
        "x": [
         "17 = 1 dotzena + 5 ous solts. 1 · 2,00 + 5 · 0,20 = 2,00 + 1,00 = 3,00 €.",
-        "17 = 1 docena + 5 huevos sueltos. 1 · 2,00 + 5 · 0,20 = 2,00 + 1,00 = 3,00 €."
+        "17 = 1 docena + 5 huevos sueltos. 1 · 2,00 + 5 · 0,20 = 2,00 + 1,00 = 3,00 €.",
+        "17 = 1 dozen + 5 loose eggs. 1 · 2.00 + 5 · 0.20 = 2.00 + 1.00 = €3.00."
        ]
       }
      ]
@@ -1270,23 +1408,28 @@ export default {
       "items": [
        [
         "La condició va entre parèntesis i el bloc entre claus: `if (cond) { … } else { … }`. Poseu sempre les claus.",
-        "La condición va entre paréntesis y el bloque entre llaves: `if (cond) { … } else { … }`. Poned siempre las llaves."
+        "La condición va entre paréntesis y el bloque entre llaves: `if (cond) { … } else { … }`. Poned siempre las llaves.",
+        "The condition goes in parentheses and the block in braces: `if (cond) { … } else { … }`. Always add the braces."
        ],
        [
         "`==` compara i `=` assigna. Els intervals s'escriuen amb `&&`: `a <= x && x <= b`.",
-        "`==` compara y `=` asigna. Los intervalos se escriben con `&&`: `a <= x && x <= b`."
+        "`==` compara y `=` asigna. Los intervalos se escriben con `&&`: `a <= x && x <= b`.",
+        "`==` compares and `=` assigns. Intervals are written with `&&`: `a <= x && x <= b`."
        ],
        [
         "En una cadena `else if` s'executa la **primera** branca certa: l'ordre de les preguntes importa.",
-        "En una cadena `else if` se ejecuta la **primera** rama cierta: el orden de las preguntas importa."
+        "En una cadena `else if` se ejecuta la **primera** rama cierta: el orden de las preguntas importa.",
+        "In an `else if` chain the **first** true branch runs: the order of the questions matters."
        ],
        [
         "`switch` és per a un valor enter o `char` comparat amb constants; cada `case` acaba amb `break`.",
-        "`switch` es para un valor entero o `char` comparado con constantes; cada `case` termina con `break`."
+        "`switch` es para un valor entero o `char` comparado con constantes; cada `case` termina con `break`.",
+        "`switch` is for an integer or `char` value compared with constants; each `case` ends with `break`."
        ],
        [
         "Per escriure reals amb n decimals: `cout << fixed << setprecision(n)` amb `#include <iomanip>`.",
-        "Para escribir reales con n decimales: `cout << fixed << setprecision(n)` con `#include <iomanip>`."
+        "Para escribir reales con n decimales: `cout << fixed << setprecision(n)` con `#include <iomanip>`.",
+        "To write reals with n decimals: `cout << fixed << setprecision(n)` with `#include <iomanip>`."
        ]
       ]
      }
@@ -1294,5 +1437,18 @@ export default {
    }
   ]
  },
- "examEnd": []
+ "examEnd": [
+  {
+   "ref": "cpp-model-parking"
+  },
+  {
+   "ref": "cpp-model-ous"
+  },
+  {
+   "ref": "cpp-m-calculadora"
+  },
+  {
+   "ref": "cpp-s3-sou-infermeres"
+  }
+ ]
 };

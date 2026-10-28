@@ -6,7 +6,7 @@
 
 export function list(a, L) {
   if (a.length <= 1) return a.join('');
-  return a.slice(0, -1).join(', ') + L(' i ', ' y ') + a[a.length - 1];
+  return a.slice(0, -1).join(', ') + L(' i ', ' y ', ' and ') + a[a.length - 1];
 }
 
 /* ===================== 1. Quantificadors ∀ i ∃ ===================== */
@@ -38,17 +38,17 @@ export function qWhy(people, f, r, L) {
   const nE = people.filter((p) => p.E).length;
   if (f.q === 'A') {
     if (r.v) {
-      if (f.rang && nE === 0) return [L('Cert, i sense cap estudiant: no hi ha ningú al rang, i un ∀ sobre un rang buit és cert (no hi ha cap contraexemple possible).', 'Cierto, y sin ningún estudiante: no hay nadie en el rango, y un ∀ sobre un rango vacío es cierto (no hay ningún contraejemplo posible).')];
-      return [L('Cert: les cinc caselles són T. Un ∀ és una «i» gegant.', 'Cierto: las cinco casillas son T. Un ∀ es una «y» gigante.')];
+      if (f.rang && nE === 0) return [L('Cert, i sense cap estudiant: no hi ha ningú al rang, i un ∀ sobre un rang buit és cert (no hi ha cap contraexemple possible).', 'Cierto, y sin ningún estudiante: no hay nadie en el rango, y un ∀ sobre un rango vacío es cierto (no hay ningún contraejemplo posible).', 'True, and with no students at all: there is nobody in the range, and a ∀ over an empty range is true (no counterexample is possible).')];
+      return [L('Cert: les cinc caselles són T. Un ∀ és una «i» gegant.', 'Cierto: las cinco casillas son T. Un ∀ es una «y» gigante.', 'True: all five cells are T. A ∀ is a giant “and”.')];
     }
-    return [L('Fals. Contraexemple: ', 'Falso. Contraejemplo: '), { b: list(bad, L) }, L(". N'hi ha prou amb un.", '. Basta con uno.')];
+    return [L('Fals. Contraexemple: ', 'Falso. Contraejemplo: ', 'False. Counterexample: '), { b: list(bad, L) }, L(". N'hi ha prou amb un.", '. Basta con uno.', '. One is enough.')];
   }
-  if (r.v) return [L('Cert. Testimoni: ', 'Cierto. Testigo: '), { b: list(ok, L) }, L(". Un ∃ és una «o» gegant: n'hi ha prou amb un.", '. Un ∃ es una «o» gigante: basta con uno.')];
-  return [L('Fals: cap de les cinc caselles és T.', 'Falso: ninguna de las cinco casillas es T.')];
+  if (r.v) return [L('Cert. Testimoni: ', 'Cierto. Testigo: ', 'True. Witness: '), { b: list(ok, L) }, L(". Un ∃ és una «o» gegant: n'hi ha prou amb un.", '. Un ∃ es una «o» gigante: basta con uno.', '. An ∃ is a giant “or”: one is enough.')];
+  return [L('Fals: cap de les cinc caselles és T.', 'Falso: ninguna de las cinco casillas es T.', 'False: none of the five cells is T.')];
 }
 
 export function qTagNote(f, L) {
-  if (f.tag === 'neg') return [L('És la negació de «Tots els estudiants treballen»: sempre té el valor contrari. Comprova-ho canviant les caselles.', 'Es la negación de «Todos los estudiantes trabajan»: siempre tiene el valor contrario. Compruébalo cambiando las casillas.')];
+  if (f.tag === 'neg') return [L('És la negació de «Tots els estudiants treballen»: sempre té el valor contrari. Comprova-ho canviant les caselles.', 'Es la negación de «Todos los estudiantes trabajan»: siempre tiene el valor contrario. Compruébalo cambiando las casillas.', 'It is the negation of “All students work”: it always has the opposite value. Check it by changing the cells.')];
   if (f.tag === 'trap1') return L(['Trampa: amb ∀ i ∧ s\'afirma que ', { b: 'tothom' }, ' és estudiant. Per dir «tots els estudiants treballen» cal →.'], ['Trampa: con ∀ y ∧ se afirma que ', { b: 'todo el mundo' }, ' es estudiante. Para decir «todos los estudiantes trabajan» hace falta →.']);
   if (f.tag === 'trap2') return L(["Trampa: amb ∃ i → n'hi ha prou que algú ", { b: 'no' }, ' sigui estudiant perquè sigui certa. Per dir «algun estudiant treballa» cal ∧.'], ['Trampa: con ∃ y → basta con que alguien ', { b: 'no' }, ' sea estudiante para que sea cierta. Para decir «algún estudiante trabaja» hace falta ∧.']);
   return null;
@@ -96,15 +96,15 @@ export function rEval(m, k, L) {
     const miss = [];
     for (i = 0; i < n; i++) { const r = row(i); if (r.length) hl.push([i, r[0]]); else miss.push(N[i]); }
     v = !miss.length;
-    txt = v ? [L('Cert: cadascú té almenys una fletxa que surt (marcades). Cada x pot triar una y diferent.', 'Cierto: cada uno tiene al menos una flecha que sale (marcadas). Cada x puede elegir una y distinta.')]
-      : [L('Fals: ', 'Falso: '), { b: list(miss, L) }, L(' no admira ningú.', ' no admira a nadie.')];
+    txt = v ? [L('Cert: cadascú té almenys una fletxa que surt (marcades). Cada x pot triar una y diferent.', 'Cierto: cada uno tiene al menos una flecha que sale (marcadas). Cada x puede elegir una y distinta.', 'True: each one has at least one outgoing arrow (highlighted). Each x can choose a different y.')]
+      : [L('Fals: ', 'Falso: ', 'False: '), { b: list(miss, L) }, L(' no admira ningú.', ' no admira a nadie.', ' admires nobody.')];
   } else if (k === 'EA') {
     let w = -1;
     for (j = 0; j < n; j++) if (col(j).length === n) { w = j; break; }
     v = w >= 0;
     if (v) {
       for (i = 0; i < n; i++) hl.push([i, w]);
-      txt = [L('Cert: ', 'Cierto: '), { b: N[w] }, L(' rep una fletxa de tots quatre (ella mateixa inclosa). És la mateixa y per a totes les x.', ' recibe una flecha de los cuatro (incluida ella misma). Es la misma y para todas las x.')];
+      txt = [L('Cert: ', 'Cierto: ', 'True: '), { b: N[w] }, L(' rep una fletxa de tots quatre (ella mateixa inclosa). És la mateixa y per a totes les x.', ' recibe una flecha de los cuatro (incluida ella misma). Es la misma y para todas las x.', ' receives an arrow from all four (including herself). It is the same y for every x.')];
     } else {
       txt = L(['Fals: ningú no rep fletxa dels quatre. Compara-ho amb la primera: que cadascú admiri algú no vol dir que tots admirin ', { b: 'la mateixa' }, ' persona.'],
         ['Falso: nadie recibe flecha de los cuatro. Compáralo con la primera: que cada uno admire a alguien no significa que todos admiren a ', { b: 'la misma' }, ' persona.']);
@@ -113,24 +113,24 @@ export function rEval(m, k, L) {
     let w2 = -1;
     for (i = 0; i < n; i++) if (row(i).length === n) { w2 = i; break; }
     v = w2 >= 0;
-    if (v) { for (j = 0; j < n; j++) hl.push([w2, j]); txt = [L('Cert: ', 'Cierto: '), { b: N[w2] }, L(' té fletxa cap a tots quatre.', ' tiene flecha hacia los cuatro.')]; }
-    else txt = [L('Fals: ningú no té fletxes cap als quatre.', 'Falso: nadie tiene flechas hacia los cuatro.')];
+    if (v) { for (j = 0; j < n; j++) hl.push([w2, j]); txt = [L('Cert: ', 'Cierto: ', 'True: '), { b: N[w2] }, L(' té fletxa cap a tots quatre.', ' tiene flecha hacia los cuatro.', ' has an arrow to all four.')]; }
+    else txt = [L('Fals: ningú no té fletxes cap als quatre.', 'Falso: nadie tiene flechas hacia los cuatro.', 'False: nobody has arrows to all four.')];
   } else if (k === 'AEr') {
     const miss2 = [];
     for (j = 0; j < n; j++) { const c = col(j); if (c.length) hl.push([c[0], j]); else miss2.push(N[j]); }
     v = !miss2.length;
-    txt = v ? [L('Cert: tothom rep almenys una fletxa.', 'Cierto: todo el mundo recibe al menos una flecha.')] : [L('Fals: ', 'Falso: '), { b: list(miss2, L) }, L(' no rep cap fletxa.', ' no recibe ninguna flecha.')];
+    txt = v ? [L('Cert: tothom rep almenys una fletxa.', 'Cierto: todo el mundo recibe al menos una flecha.', 'True: everybody receives at least one arrow.')] : [L('Fals: ', 'Falso: ', 'False: '), { b: list(miss2, L) }, L(' no rep cap fletxa.', ' no recibe ninguna flecha.', ' receives no arrow.')];
   } else if (k === 'AA') {
     let cnt = 0;
     for (i = 0; i < n; i++) for (j = 0; j < n; j++) cnt += m[i][j];
     v = cnt === n * n;
-    txt = [v ? L('Cert: hi ha les 16 fletxes, també les de cadascú cap a si mateix.', 'Cierto: están las 16 flechas, también las de cada uno hacia sí mismo.') : L('Fals: hi ha ', 'Falso: hay ') + cnt + L(' fletxes de 16.', ' flechas de 16.')];
+    txt = [v ? L('Cert: hi ha les 16 fletxes, també les de cadascú cap a si mateix.', 'Cierto: están las 16 flechas, también las de cada uno hacia sí mismo.', 'True: all 16 arrows are there, including each person\'s arrow to themselves.') : L('Fals: hi ha ', 'Falso: hay ', 'False: there are ') + cnt + L(' fletxes de 16.', ' flechas de 16.', ' arrows out of 16.')];
   } else {
     let e = null;
     for (i = 0; i < n && !e; i++) for (j = 0; j < n; j++) if (m[i][j]) { e = [i, j]; break; }
     v = !!e;
     if (e) hl.push(e);
-    txt = [v ? L("Cert: n'hi ha prou amb una fletxa, per exemple ", 'Cierto: basta con una flecha, por ejemplo ') + N[e[0]] + ' → ' + N[e[1]] + '.' : L('Fals: no hi ha cap fletxa.', 'Falso: no hay ninguna flecha.')];
+    txt = [v ? L("Cert: n'hi ha prou amb una fletxa, per exemple ", 'Cierto: basta con una flecha, por ejemplo ', 'True: one arrow is enough, for example ') + N[e[0]] + ' → ' + N[e[1]] + '.' : L('Fals: no hi ha cap fletxa.', 'Falso: no hay ninguna flecha.', 'False: there is no arrow.')];
   }
   return { v, hl, txt };
 }

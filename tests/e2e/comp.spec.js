@@ -3,7 +3,7 @@ import { expectNoOverflow, setLang, watchErrors } from './helpers.js';
 import toc from '../../src/courses/comp/kit/toc.js';
 import t3toc from '../../src/courses/comp/kit/t3/toc.js';
 
-// Computadors CP1 a la plantilla: temes T1–T2.2 importats, T3 (àlgebra de Boole) escrit en tres
+// Computadors CP1 a la plantilla: temes T1–T2.2 importats i T3 (àlgebra de Boole), tots en tres
 // idiomes, laboratoris, exercicis amb apartats, pràctica generada i simulacre amb el format del CP1.
 const UNITS = [...toc, t3toc];
 
@@ -13,7 +13,7 @@ async function openToc(page) {
   if (await btn.isVisible()) await btn.click();
 }
 
-test('temari: els quatre temes, en català i castellà; el T3 també en anglès', async ({ page }) => {
+test('temari: els quatre temes en català, castellà i anglès', async ({ page }) => {
   const errors = watchErrors(page);
   for (const lang of ['ca', 'es']) {
     if (lang === 'es') await setLang(page, 'es');
@@ -30,7 +30,8 @@ test('temari: els quatre temes, en català i castellà; el T3 també en anglès'
   await expect(page.locator('.app-langnote')).toHaveCount(0);
   await expect(page.locator('#t3-abs')).toContainText('A variable «absorbs» a term that already contains it');
   await page.goto('/computadors/temari/t21');
-  await expect(page.locator('.app-langnote')).toContainText('not yet available in English');
+  await expect(page.locator('.kit-unit-h h2')).toHaveText('Representation of information');
+  await expect(page.locator('.app-langnote')).toHaveCount(0);
   await expect(page.locator('.kit-texerr')).toHaveCount(0);
   expect(errors).toEqual([]);
 });

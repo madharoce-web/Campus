@@ -22,7 +22,7 @@ export const PATI_CODE = 'ip-pati-code';
 export const PATI_IN = 'ip-pati-in';
 
 /** Primera frase de l'enunciat (per als exercicis sense títol). */
-const nameOf = (x) => x.title || String((x.qb.find((b) => b.t === 'p') || {}).x || '').replace(/\*\*|`/g, '').replace(/^(.{68}).+$/, '$1…');
+const nameOf = (x, tr) => tr(x.title) || String(tr((x.qb.find((b) => b.t === 'p') || {}).x) || '').replace(/\*\*|`/g, '').replace(/^(.{68}).+$/, '$1…');
 
 export function ExList({ wk }) {
   const { L } = useLang();
@@ -31,19 +31,19 @@ export function ExList({ wk }) {
   const unit = 's' + wk;
   const list = CPP.filter((x) => x.unit === unit);
   const done = list.filter((x) => st.practice[x.id]?.ok).length;
-  const LVN = { 1: L('Fàcil', 'Fácil'), 2: L('Mitjà', 'Medio'), 3: L('Difícil', 'Difícil'), 4: L('Extrem', 'Extremo') };
+  const LVN = { 1: L('Fàcil', 'Fácil', 'Easy'), 2: L('Mitjà', 'Medio', 'Medium'), 3: L('Difícil', 'Difícil', 'Hard'), 4: L('Extrem', 'Extremo', 'Extreme') };
   return (
     <div className="ip-exs" data-wk={wk}>
       <div className="ip-exsh">
-        <b>{L('Exercicis de la setmana amb compilador i proves', 'Ejercicios de la semana con compilador y pruebas')}</b>
-        <span className={'ip-badge' + (done === list.length && list.length ? ' done' : '')}>{done + ' / ' + list.length + L(' resolts', ' resueltos')}</span>
-        <Link className="ip-btn out sm" to={'/programacio/practica?unit=' + unit}>{L('Obre-los a la Pràctica', 'Ábrelos en la Práctica')}</Link>
+        <b>{L('Exercicis de la setmana amb compilador i proves', 'Ejercicios de la semana con compilador y pruebas', 'This week\'s exercises with a compiler and tests')}</b>
+        <span className={'ip-badge' + (done === list.length && list.length ? ' done' : '')}>{done + ' / ' + list.length + L(' resolts', ' resueltos', ' solved')}</span>
+        <Link className="ip-btn out sm" to={'/programacio/practica?unit=' + unit}>{L('Obre-los a la Pràctica', 'Ábrelos en la Práctica', 'Open them in Practice')}</Link>
       </div>
       {list.map((x) => (
         <div className="ip-exrow" key={x.id}>
-          <div className="ip-actb"><Link to={'/programacio/practica?unit=' + unit + '&ex=' + x.id}>{tr(nameOf(x))}</Link><div className="ip-actd">{(x.tags || []).join(', ')}</div></div>
+          <div className="ip-actb"><Link to={'/programacio/practica?unit=' + unit + '&ex=' + x.id}>{nameOf(x, tr)}</Link><div className="ip-actd">{(x.tags || []).join(', ')}</div></div>
           <span className={'ip-badge lv' + x.lv}>{LVN[x.lv]}</span>
-          <span className={'ip-badge' + (st.practice[x.id]?.ok ? ' done' : '')}>{st.practice[x.id]?.ok ? L('Resolt', 'Resuelto') : L('Per fer', 'Por hacer')}</span>
+          <span className={'ip-badge' + (st.practice[x.id]?.ok ? ' done' : '')}>{st.practice[x.id]?.ok ? L('Resolt', 'Resuelto', 'Solved') : L('Per fer', 'Por hacer', 'To do')}</span>
         </div>
       ))}
     </div>
@@ -91,11 +91,11 @@ export function Pati() {
     <div className="pg-pati" data-course="cpp">
       <div className="edbox"><CodeEditor id="ped" ref={edRef} value={code} onChange={onCode} onRun={() => runRef.current?.()} /></div>
       <div className="pg-acts">
-        <button type="button" className="btn btn-primary" id="p-run" title="Ctrl+Enter" disabled={busy} onClick={() => patiRun()}>{L('Executa', 'Ejecuta')}</button>
-        <button type="button" className="btn btn-secondary" id="p-tpl" onClick={restart}>{L('Comença de nou', 'Empieza de nuevo')}</button>
-        <span className="tiny muted">{eng.mode === 'interp' ? L('intèrpret lleuger', 'intérprete ligero') : 'clang++ -std=gnu++17 -Wall'}</span>
+        <button type="button" className="btn btn-primary" id="p-run" title="Ctrl+Enter" disabled={busy} onClick={() => patiRun()}>{L('Executa', 'Ejecuta', 'Run')}</button>
+        <button type="button" className="btn btn-secondary" id="p-tpl" onClick={restart}>{L('Comença de nou', 'Empieza de nuevo', 'Start again')}</button>
+        <span className="tiny muted">{eng.mode === 'interp' ? L('intèrpret lleuger', 'intérprete ligero', 'lightweight interpreter') : 'clang++ -std=gnu++17 -Wall'}</span>
       </div>
-      <label className="small" htmlFor="pin">{L('Entrada del programa (stdin)', 'Entrada del programa (stdin)')}</label>
+      <label className="small" htmlFor="pin">{L('Entrada del programa (stdin)', 'Entrada del programa (stdin)', 'Program input (stdin)')}</label>
       <textarea className="stdin" id="pin" spellCheck={false} value={inp} onChange={(e) => onInp(e.target.value)} />
       <pre className="console" id="pcon"><ConsoleParts parts={out || [['sys', 'placeholder']]} onGoto={(l, c) => edRef.current?.focusAt(l, c)} /></pre>
     </div>

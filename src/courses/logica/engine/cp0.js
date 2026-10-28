@@ -12,7 +12,7 @@ export function tokenize(s, L) {
     if (/\s/.test(c)) { i++; continue; }
     if ('¬∧∨→↔(),'.indexOf(c) >= 0) { out.push({ k: 's', v: c }); i++; continue; }
     if ((m = /^[A-Za-zÀ-ÿ0-9_']+/.exec(s.slice(i)))) { out.push({ k: 'id', v: m[0] }); i += m[0].length; continue; }
-    throw new Error(L('Caràcter inesperat: ', 'Carácter inesperado: ') + c);
+    throw new Error(L('Caràcter inesperat: ', 'Carácter inesperado: ', 'Unexpected character: ') + c);
   }
   return out;
 }
@@ -21,7 +21,7 @@ export function parseCP0(s, L) {
   const t = tokenize(s, L);
   let p = 0;
   const pk = () => (t[p] ? t[p].v : null);
-  const eat = (v) => { if (pk() !== v) throw new Error(L("S'esperava ", 'Se esperaba ') + v); p++; };
+  const eat = (v) => { if (pk() !== v) throw new Error(L("S'esperava ", 'Se esperaba ', 'Expected ') + v); p++; };
   function iff() { let a = imp(); while (pk() === '↔') { p++; a = { k: 'iff', a, b: imp() }; } return a; }
   function imp() { const a = or(); if (pk() === '→') { p++; return { k: 'imp', a, b: imp() }; } return a; }
   function or() { let a = and(); while (pk() === '∨') { p++; a = { k: 'or', a, b: and() }; } return a; }
@@ -30,10 +30,10 @@ export function parseCP0(s, L) {
   function prim() {
     if (pk() === '(') { p++; const f = iff(); eat(')'); return f; }
     if (t[p] && t[p].k === 'id' && /^[A-Z]/.test(t[p].v)) return { k: 'at', v: t[p++].v };
-    throw new Error(L('Fórmula mal formada', 'Fórmula mal formada') + (t[p] ? ' (' + t[p].v + ')' : ''));
+    throw new Error(L('Fórmula mal formada', 'Fórmula mal formada', 'Ill-formed formula') + (t[p] ? ' (' + t[p].v + ')' : ''));
   }
   const f = iff();
-  if (p !== t.length) throw new Error(L('Sobra text: ', 'Sobra texto: ') + t[p].v);
+  if (p !== t.length) throw new Error(L('Sobra text: ', 'Sobra texto: ', 'Extra text: ') + t[p].v);
   return f;
 }
 
@@ -85,12 +85,12 @@ export function truthTable(src, L) {
     src = src.trim();
     const parts = src.split(/⇒|=>|\|-|⊢/);
     let prem = [], concl = null;
-    if (parts.length > 2) throw new Error(L('Només hi pot haver un ⇒', 'Solo puede haber un ⇒'));
+    if (parts.length > 2) throw new Error(L('Només hi pot haver un ⇒', 'Solo puede haber un ⇒', 'There can only be one ⇒'));
     if (parts.length === 2) { prem = parts[0].split(/;/).filter((x) => x.trim()).map((x) => parseCP0(x, L)); concl = parseCP0(parts[1], L); }
     else prem = [parseCP0(src, L)];
     const all = prem.concat(concl ? [concl] : []), names = [];
     all.forEach((f) => atoms(f, names)); names.sort();
-    if (names.length > 6) throw new Error(L('Massa àtoms (màxim 6)', 'Demasiados átomos (máximo 6)'));
+    if (names.length > 6) throw new Error(L('Massa àtoms (màxim 6)', 'Demasiados átomos (máximo 6)', 'Too many atoms (maximum 6)'));
     const cols = [];
     all.forEach((f) => subs(f).forEach((s) => { if (!cols.some((c) => fs(c) === fs(s))) cols.push(s); }));
     const clsOf = (c) => (concl && fs(c) === fs(concl) ? 'cc' : prem.some((p) => fs(p) === fs(c)) ? 'pc' : '');

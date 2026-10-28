@@ -11,3 +11,4 @@ dist-*/
 
 # material original (diapositives, PDF) per preparar contingut: no es publica
 inbox/
+.aider*

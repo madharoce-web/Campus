@@ -16,10 +16,10 @@ export function makeLabsConj($) {
       if (s[p] === '∅') { p++; return { o: 'l', v: '∅' }; }
       if (s[p] === '{') { let d = 0, q = p; for (; q < s.length; q++) { if (s[q] === '{') d++; else if (s[q] === '}') { d--; if (!d) break; } } const t = s.slice(p, q + 1); p = q + 1; return { o: 'l', v: Z.hparse(t) }; }
       if (s[p] === '(') { p++; const v = E(); if (s[p++] !== ')') throw new Error(')'); v.par = true; return v; }
-      throw new Error(L('No entenc el conjunt', 'No entiendo el conjunto'));
+      throw new Error(L('No entenc el conjunt', 'No entiendo el conjunto', 'I don\'t understand the set'));
     }
     function E() { let v = lit(); while (p < s.length && '∪∩∖'.includes(s[p])) { const o = s[p++]; v = { o, a: v, b: lit() }; } return v; }
-    const v = E(); if (p !== s.length) throw new Error(L('Sobra text al final', 'Sobra texto al final')); return v;
+    const v = E(); if (p !== s.length) throw new Error(L('Sobra text al final', 'Sobra texto al final', 'There is extra text at the end')); return v;
   }
   function hEval(n) { if (n.o === 'l') return n.v; const a = hEval(n.a), b = hEval(n.b); return n.o === '∪' ? Z.hU(a, b) : n.o === '∩' ? Z.hI(a, b) : Z.hD(a, b); }
   function hShow(n) { if (n.o === 'l') return n.v; const s = hShow(n.a) + ' ' + n.o + ' ' + hShow(n.b); return n.par ? '(' + s + ')' : s; }
@@ -40,11 +40,11 @@ export function makeLabsConj($) {
     const R = { N: 0, Z0: 1, Z: 1, Q: 2, R: 3, C: 4 }[c.kind], need = { N: 0, Z: 1, Q: 2, R: 3, C: 4 }[U];
     const ok = R <= need;
     let why;
-    if (ok) why = { N: L('és un natural', 'es un natural'), Z0: L('és un enter', 'es un entero'), Z: L('és un enter', 'es un entero'), R: L('és real', 'es real'), C: L('és complex', 'es complejo') }[c.kind];
-    else if (c.kind === 'Z0') why = L('al curs ℕ = {1, 2, 3, …}: el 0 no és natural', 'en el curso ℕ = {1, 2, 3, …}: el 0 no es natural');
-    else if (c.kind === 'Z') why = L('és negatiu i ℕ només té positius', 'es negativo y ℕ solo tiene positivos');
-    else if (c.kind === 'R') why = L('és irracional: no és cap quocient m/n', 'es irracional: no es ningún cociente m/n');
-    else why = L('no és real: el seu quadrat és negatiu', 'no es real: su cuadrado es negativo');
+    if (ok) why = { N: L('és un natural', 'es un natural', 'is a natural number'), Z0: L('és un enter', 'es un entero', 'is an integer'), Z: L('és un enter', 'es un entero', 'is an integer'), R: L('és real', 'es real', 'is real'), C: L('és complex', 'es complejo', 'is complex') }[c.kind];
+    else if (c.kind === 'Z0') why = L('al curs ℕ = {1, 2, 3, …}: el 0 no és natural', 'en el curso ℕ = {1, 2, 3, …}: el 0 no es natural', 'in this course ℕ = {1, 2, 3, …}: 0 is not a natural number');
+    else if (c.kind === 'Z') why = L('és negatiu i ℕ només té positius', 'es negativo y ℕ solo tiene positivos', 'is negative and ℕ only has positives');
+    else if (c.kind === 'R') why = L('és irracional: no és cap quocient m/n', 'es irracional: no es ningún cociente m/n', 'is irrational: it is not any quotient m/n');
+    else why = L('no és real: el seu quadrat és negatiu', 'no es real: su cuadrado es negativo', 'is not real: its square is negative');
     return { ok, why };
   }
   const IMG = {
@@ -61,25 +61,25 @@ export function makeLabsConj($) {
     const n = A.length, x = A[0], y = n === 3 ? '4' : 'c', At = setTx(A), out = [];
     const add = (s, v, why) => out.push({ s, v, why });
     if (n) {
-      add(x + ' ∈ ' + At, true, L('x és un dels elements de la llista.', 'x es uno de los elementos de la lista.'));
+      add(x + ' ∈ ' + At, true, L('x és un dels elements de la llista.', 'x es uno de los elementos de la lista.', 'x is one of the elements of the list.'));
       add('\\{' + x + '\\} ∈ ' + At, false, L('els elements d\'A són ' + A.join(', ') + ', no conjunts. {' + x + '} no és a la llista.', 'los elementos de A son ' + A.join(', ') + ', no conjuntos. {' + x + '} no está en la lista.'));
       add('\\{' + x + '\\} ⊆ ' + At, true, L('l\'únic element de {' + x + '} és ' + x + ', i ' + x + ' ∈ A.', 'el único elemento de {' + x + '} es ' + x + ', y ' + x + ' ∈ A.'));
       add(x + ' ∈ 𝒫(A)', false, L('els elements de 𝒫(A) són conjunts (subconjunts d\'A); ' + x + ' és un nombre.', 'los elementos de 𝒫(A) son conjuntos (subconjuntos de A); ' + x + ' es un número.'));
       add('\\{' + x + '\\} ∈ 𝒫(A)', true, L('B ∈ 𝒫(A) ⟺ B ⊆ A, i {' + x + '} ⊆ A.', 'B ∈ 𝒫(A) ⟺ B ⊆ A, y {' + x + '} ⊆ A.'));
       add('\\{' + x + ', ' + y + '\\} ⊆ ' + At, false, L(y + ' ∈ {' + x + ', ' + y + '} però ' + y + ' ∉ A: un sol element que falla trenca la inclusió.', y + ' ∈ {' + x + ', ' + y + '} pero ' + y + ' ∉ A: un solo elemento que falla rompe la inclusión.'));
       add('A ⊆ 𝒫(A)', false, L(x + ' ∈ A però ' + x + ' ∉ 𝒫(A), perquè 𝒫(A) només conté conjunts.', x + ' ∈ A pero ' + x + ' ∉ 𝒫(A), porque 𝒫(A) solo contiene conjuntos.'));
-      add('∅ ∈ ' + At, false, L('cap element d\'A és el conjunt buit.', 'ningún elemento de A es el conjunto vacío.'));
-      add('∅ ⊊ ' + At, false, L('la definició de classe de subconjunt propi demana A ≠ ∅: el buit queda exclòs.', 'la definición de clase de subconjunto propio pide A ≠ ∅: el vacío queda excluido.'));
-      add('A ⊊ A', false, L('propi demana A ≠ B, i aquí són el mateix conjunt.', 'propio pide A ≠ B, y aquí son el mismo conjunto.'));
+      add('∅ ∈ ' + At, false, L('cap element d\'A és el conjunt buit.', 'ningún elemento de A es el conjunto vacío.', 'no element of A is the empty set.'));
+      add('∅ ⊊ ' + At, false, L('la definició de classe de subconjunt propi demana A ≠ ∅: el buit queda exclòs.', 'la definición de clase de subconjunto propio pide A ≠ ∅: el vacío queda excluido.', 'the class definition of proper subset requires A ≠ ∅: the empty set is excluded.'));
+      add('A ⊊ A', false, L('propi demana A ≠ B, i aquí són el mateix conjunt.', 'propio pide A ≠ B, y aquí son el mismo conjunto.', 'proper requires A ≠ B, and here they are the same set.'));
     }
     if (n >= 2) add('\\{' + x + '\\} ⊊ ' + At, true, L('{' + x + '} ⊆ A, no és buit i és diferent d\'A.', '{' + x + '} ⊆ A, no es vacío y es distinto de A.'));
-    add('∅ ∈ 𝒫(A)', true, L('∅ ⊆ A sempre, per tant ∅ és un element de 𝒫(A).', '∅ ⊆ A siempre, por tanto ∅ es un elemento de 𝒫(A).'));
-    add('∅ ⊆ 𝒫(A)', true, L('el buit és subconjunt de qualsevol conjunt.', 'el vacío es subconjunto de cualquier conjunto.'));
-    add('A ∈ 𝒫(A)', true, L('A ⊆ A, per tant A és un dels subconjunts.', 'A ⊆ A, por tanto A es uno de los subconjuntos.'));
-    add('\\{∅\\} ⊆ 𝒫(A)', true, L('l\'únic element de {∅} és ∅, i ∅ ∈ 𝒫(A).', 'el único elemento de {∅} es ∅, y ∅ ∈ 𝒫(A).'));
+    add('∅ ∈ 𝒫(A)', true, L('∅ ⊆ A sempre, per tant ∅ és un element de 𝒫(A).', '∅ ⊆ A siempre, por tanto ∅ es un elemento de 𝒫(A).', '∅ ⊆ A always, so ∅ is an element of 𝒫(A).'));
+    add('∅ ⊆ 𝒫(A)', true, L('el buit és subconjunt de qualsevol conjunt.', 'el vacío es subconjunto de cualquier conjunto.', 'the empty set is a subset of any set.'));
+    add('A ∈ 𝒫(A)', true, L('A ⊆ A, per tant A és un dels subconjunts.', 'A ⊆ A, por tanto A es uno de los subconjuntos.', 'A ⊆ A, so A is one of the subsets.'));
+    add('\\{∅\\} ⊆ 𝒫(A)', true, L('l\'únic element de {∅} és ∅, i ∅ ∈ 𝒫(A).', 'el único elemento de {∅} es ∅, y ∅ ∈ 𝒫(A).', 'the only element of {∅} is ∅, and ∅ ∈ 𝒫(A).'));
     add('|𝒫(A)| = ' + (1 << n), true, L('|𝒫(A)| = 2^{|A|} = 2^' + n + '.', '|𝒫(A)| = 2^{|A|} = 2^' + n + '.'));
-    if (n) add('\\{∅\\} ∈ 𝒫(A)', false, L('{∅} ∈ 𝒫(A) voldria dir {∅} ⊆ A, és a dir ∅ ∈ A, i no és cert.', '{∅} ∈ 𝒫(A) querría decir {∅} ⊆ A, es decir ∅ ∈ A, y no es cierto.'));
-    else add('𝒫(∅) = ∅', false, L('𝒫(∅) = {∅}: té un element, el buit.', '𝒫(∅) = {∅}: tiene un elemento, el vacío.'));
+    if (n) add('\\{∅\\} ∈ 𝒫(A)', false, L('{∅} ∈ 𝒫(A) voldria dir {∅} ⊆ A, és a dir ∅ ∈ A, i no és cert.', '{∅} ∈ 𝒫(A) querría decir {∅} ⊆ A, es decir ∅ ∈ A, y no es cierto.', '{∅} ∈ 𝒫(A) would mean {∅} ⊆ A, that is ∅ ∈ A, which is not true.'));
+    else add('𝒫(∅) = ∅', false, L('𝒫(∅) = {∅}: té un element, el buit.', '𝒫(∅) = {∅}: tiene un elemento, el vacío.', '𝒫(∅) = {∅}: it has one element, the empty set.'));
     return out;
   }
 
@@ -118,7 +118,7 @@ export function makeLabsConj($) {
     if (n.o === 'v') return M('x ' + (v ? '∈ ' : '∉ ') + n.v);
     if (n.o === 'O') return M('x ∈ Ω'); if (n.o === '0') return M('x ∉ ∅');
     const a = n.a ? inR(n.a, r, k) : 0, b = n.b ? inR(n.b, r, k) : 0, IN = (x, t) => M('x ' + (t ? '∈ ' : '∉ ') + D(x));
-    const AND = L(' i ', ' y '), BEC = L(' perquè ', ' porque ');
+    const AND = L(' i ', ' y ', ' and '), BEC = L(' perquè ', ' porque ', ' because ');
     let r2;
     if (n.o === "'") r2 = IN(n.a, !v);
     else if (n.o === '&') r2 = v ? IN(n.a, 1) + AND + IN(n.b, 1) : (a ? IN(n.b, 0) : IN(n.a, 0));

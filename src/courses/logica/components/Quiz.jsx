@@ -10,7 +10,7 @@ export default function Quiz({ id, q }) {
   const done = ans !== null;
   return (
     <div className="lq" data-ok={q.ok}>
-      <p className="lq-k">{L('Pregunta', 'Pregunta')}</p>
+      <p className="lq-k">{L('Pregunta', 'Pregunta', 'Question')}</p>
       <Rich as="p" html={q.q} />
       <ol className="lq-ops">
         {q.opts.map((o, i) => (
@@ -22,7 +22,7 @@ export default function Quiz({ id, q }) {
         ))}
       </ol>
       <div className="why" hidden={!done}>
-        {done && <p className={'lq-res ' + (ans === ok ? 'ok' : 'ko')}>{ans === ok ? L('Correcte.', 'Correcto.') : L('No és correcte.', 'No es correcto.')}</p>}
+        {done && <p className={'lq-res ' + (ans === ok ? 'ok' : 'ko')}>{ans === ok ? L('Correcte.', 'Correcto.', 'Correct.') : L('No és correcte.', 'No es correcto.', 'Not correct.')}</p>}
         <Rich html={q.why} />
       </div>
     </div>

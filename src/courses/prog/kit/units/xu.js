@@ -5,7 +5,8 @@ export default {
    "t": "p",
    "x": [
     "La notació exacta dels temes 2.1, 2.2 i 2.3, per tenir-la a mà mentre escrius algorismes.",
-    "La notación exacta de los temas 2.1, 2.2 y 2.3, para tenerla a mano mientras escribes algoritmos."
+    "La notación exacta de los temas 2.1, 2.2 y 2.3, para tenerla a mano mientras escribes algoritmos.",
+    "The exact notation of units 2.1, 2.2 and 2.3, to have it at hand while you write algorithms."
    ]
   }
  ],
@@ -15,7 +16,8 @@ export default {
     "t": "p",
     "x": [
      "Tres parts: NOU TIPUS (més endavant), ENTORN amb totes les dades, i les accions entre INICI_SEQÜÈNCIA i FI_SEQÜÈNCIA. Les asserts entre claus expressen l'estat inicial i el final.",
-     "Tres partes: NOU TIPUS (más adelante), ENTORN con todos los datos, y las acciones entre INICI_SEQÜÈNCIA y FI_SEQÜÈNCIA. Las aserciones entre llaves expresan el estado inicial y el final."
+     "Tres partes: NOU TIPUS (más adelante), ENTORN con todos los datos, y las acciones entre INICI_SEQÜÈNCIA y FI_SEQÜÈNCIA. Las aserciones entre llaves expresan el estado inicial y el final.",
+     "Three parts: NOU TIPUS (later on), ENTORN with all the data, and the actions between INICI_SEQÜÈNCIA and FI_SEQÜÈNCIA. The assertions in braces express the initial and final states."
     ]
    },
    {
@@ -33,11 +35,13 @@ export default {
     "head": [
      [
       "Tipus",
-      "Tipo"
+      "Tipo",
+      "Type"
      ],
      [
       "Exemple",
-      "Ejemplo"
+      "Ejemplo",
+      "Example"
      ]
     ],
     "rows": [
@@ -68,11 +72,13 @@ export default {
      [
       [
        "Subrang, Enumeratiu",
-       "Subrango, Enumerado"
+       "Subrango, Enumerado",
+       "Subrange, Enumerated"
       ],
       [
        "definits pel programador",
-       "definidos por el programador"
+       "definidos por el programador",
+       "defined by the programmer"
       ]
      ]
     ]
@@ -82,11 +88,13 @@ export default {
     "head": [
      [
       "Acció",
-      "Acción"
+      "Acción",
+      "Action"
      ],
      [
       "Com s'escriu",
-      "Cómo se escribe"
+      "Cómo se escribe",
+      "How it is written"
      ]
     ],
     "rows": [
@@ -97,14 +105,16 @@ export default {
      [
       [
        "Assignació",
-       "Asignación"
+       "Asignación",
+       "Assignment"
       ],
       "`A ← expressió`"
      ],
      [
       [
        "Sortida",
-       "Salida"
+       "Salida",
+       "Output"
       ],
       "`Escriure \"text \", A`"
      ]
@@ -117,11 +127,13 @@ export default {
     "head": [
      [
       "Operació",
-      "Operación"
+      "Operación",
+      "Operation"
      ],
      [
       "Símbol",
-      "Símbolo"
+      "Símbolo",
+      "Symbol"
      ],
      "a = 9, b = 5"
     ],
@@ -134,7 +146,8 @@ export default {
      [
       [
        "Producte",
-       "Producto"
+       "Producto",
+       "Product"
       ],
       "`·`",
       "`45`"
@@ -142,7 +155,8 @@ export default {
      [
       [
        "Divisió",
-       "División"
+       "División",
+       "Division"
       ],
       "`/`",
       "`1,8`"
@@ -150,7 +164,8 @@ export default {
      [
       [
        "Quocient enter",
-       "Cociente entero"
+       "Cociente entero",
+       "Integer quotient"
       ],
       "`‖  (div)`",
       "`1`"
@@ -158,7 +173,8 @@ export default {
      [
       [
        "Residu",
-       "Resto"
+       "Resto",
+       "Remainder"
       ],
       "`|R  (mod)`",
       "`4`"
@@ -166,7 +182,8 @@ export default {
      [
       [
        "Lògics",
-       "Lógicos"
+       "Lógicos",
+       "Logical"
       ],
       "`I   O   NO`",
       "``"
@@ -174,7 +191,8 @@ export default {
      [
       [
        "Relacionals",
-       "Relacionales"
+       "Relacionales",
+       "Relational"
       ],
       "`=  ≠  <  >  ≤  ≥`",
       "``"
@@ -186,11 +204,13 @@ export default {
     "head": [
      [
       "Prioritat",
-      "Prioridad"
+      "Prioridad",
+      "Precedence"
      ],
      [
       "Operadors",
-      "Operadores"
+      "Operadores",
+      "Operators"
      ]
     ],
     "rows": [
@@ -209,7 +229,8 @@ export default {
      [
       [
        "4a (la més baixa)",
-       "4a (la más baja)"
+       "4a (la más baja)",
+       "4th (the lowest)"
       ],
       "`=  <  >  ≤  ≥  ≠`"
      ]
@@ -219,8 +240,10 @@ export default {
     "t": "note",
     "x": [
      "Els relacionals van al final: a < b I c = d no vol dir el que sembla. Escriu sempre (a < b) I (c = d). A igual prioritat, d'esquerra a dreta: 20 ‖ 3 |R 4 = (20 ‖ 3) |R 4 = 2.",
-     "Los relacionales van al final: a < b I c = d no significa lo que parece. Escribe siempre (a < b) I (c = d). A igual prioridad, de izquierda a derecha: 20 ‖ 3 |R 4 = (20 ‖ 3) |R 4 = 2."
-    ]
+     "Los relacionales van al final: a < b I c = d no significa lo que parece. Escribe siempre (a < b) I (c = d). A igual prioridad, de izquierda a derecha: 20 ‖ 3 |R 4 = (20 ‖ 3) |R 4 = 2.",
+     "Relational operators come last: a < b I c = d does not mean what it seems. Always write (a < b) I (c = d). With equal precedence, from left to right: 20 ‖ 3 |R 4 = (20 ‖ 3) |R 4 = 2."
+    ],
+    "mode": "explained"
    }
   ],
   "xu-4": [
@@ -236,8 +259,10 @@ export default {
     "t": "note",
     "x": [
      "DES_DE només quan saps el nombre de voltes abans d'entrar. Dins del bucle no es toca la variable de control. Amb Increment −1 compta cap avall.",
-     "DES_DE solo cuando sabes el número de vueltas antes de entrar. Dentro del bucle no se toca la variable de control. Con Increment −1 cuenta hacia abajo."
-    ]
+     "DES_DE solo cuando sabes el número de vueltas antes de entrar. Dentro del bucle no se toca la variable de control. Con Increment −1 cuenta hacia abajo.",
+     "DES_DE only when you know the number of iterations before entering. Inside the loop the control variable is not touched. With Increment −1 it counts down."
+    ],
+    "mode": "explained"
    }
   ],
   "xu-5": [
@@ -253,7 +278,8 @@ export default {
     "t": "p",
     "x": [
      "A l'entrada, obtenir element és Llegir, i la fi es detecta amb una marca:",
-     "En la entrada, obtener elemento es Llegir, y el fin se detecta con una marca:"
+     "En la entrada, obtener elemento es Llegir, y el fin se detecta con una marca:",
+     "In input, getting an element is Llegir, and the end is detected with a marker:"
     ]
    },
    {
@@ -268,8 +294,10 @@ export default {
     "t": "note",
     "x": [
      "A la cerca només s'avança a l'ALTRAMENT: si avances sempre, l'element trobat queda enrere del capçal. Recorregut: tots els elements. Cerca: para quan troba.",
-     "En la búsqueda solo se avanza en el ALTRAMENT: si avanzas siempre, el elemento encontrado queda detrás del cabezal. Recorrido: todos los elementos. Búsqueda: para cuando encuentra."
-    ]
+     "En la búsqueda solo se avanza en el ALTRAMENT: si avanzas siempre, el elemento encontrado queda detrás del cabezal. Recorrido: todos los elementos. Búsqueda: para cuando encuentra.",
+     "In a search you only advance in the ALTRAMENT: if you always advance, the element found is left behind the cursor. Traversal: all the elements. Search: it stops when it finds it."
+    ],
+    "mode": "explained"
    }
   ],
   "xu-6": [
@@ -280,7 +308,8 @@ export default {
      "Python",
      [
       "Pseudocodi del curs",
-      "Pseudocódigo del curso"
+      "Pseudocódigo del curso",
+      "Course pseudocode"
      ]
     ],
     "rows": [
@@ -344,7 +373,8 @@ export default {
       "`break`",
       [
        "trobat ← cert i NO trobat al MENTRE",
-       "trobat ← cert y NO trobat en el MENTRE"
+       "trobat ← cert y NO trobat en el MENTRE",
+       "trobat ← cert and NO trobat in the MENTRE"
       ]
      ],
      [
@@ -352,7 +382,8 @@ export default {
       "`—`",
       [
        "fila a l'ENTORN: x  Enter",
-       "fila en el ENTORN: x  Enter"
+       "fila en el ENTORN: x  Enter",
+       "row in the ENTORN: x  Enter"
       ]
      ]
     ]
@@ -363,33 +394,39 @@ export default {
     "t": "def",
     "title": [
      "Algorisme",
-     "Algoritmo"
+     "Algoritmo",
+     "Algorithm"
     ],
     "x": [
      "Seqüència ordenada i finita d'accions que dona un mètode per resoldre un problema.",
-     "Secuencia ordenada y finita de acciones que da un método para resolver un problema."
+     "Secuencia ordenada y finita de acciones que da un método para resolver un problema.",
+     "An ordered, finite sequence of actions that gives a method for solving a problem."
     ]
    },
    {
     "t": "def",
     "title": [
      "Característiques",
-     "Características"
+     "Características",
+     "Characteristics"
     ],
     "x": [
      "Finit, definibilitat, eficient, simplicitat.",
-     "Finito, definibilidad, eficiente, simplicidad."
+     "Finito, definibilidad, eficiente, simplicidad.",
+     "Finite, well defined, efficient, simple."
     ]
    },
    {
     "t": "def",
     "title": [
      "Entorn, acció, procés, processador",
-     "Entorno, acción, proceso, procesador"
+     "Entorno, acción, proceso, procesador",
+     "Environment, action, process, processor"
     ],
     "x": [
      "Objectes de la tasca; esdeveniment finit amb efecte previst; execució d'accions; entitat que entén i executa l'algorisme.",
-     "Objetos de la tarea; suceso finito con efecto previsto; ejecución de acciones; entidad que entiende y ejecuta el algoritmo."
+     "Objetos de la tarea; suceso finito con efecto previsto; ejecución de acciones; entidad que entiende y ejecuta el algoritmo.",
+     "Objects of the task; a finite event with an expected effect; execution of actions; an entity that understands and executes the algorithm."
     ]
    },
    {
@@ -397,14 +434,16 @@ export default {
     "title": "Fases",
     "x": [
      "Enunciat → disseny → codificació → verificació i depuració (jocs de proves).",
-     "Enunciado → diseño → codificación → verificación y depuración (juegos de pruebas)."
+     "Enunciado → diseño → codificación → verificación y depuración (juegos de pruebas).",
+     "Statement → design → coding → verification and debugging (test sets)."
     ]
    },
    {
     "t": "def",
     "title": [
      "Equació fonamental",
-     "Ecuación fundamental"
+     "Ecuación fundamental",
+     "Fundamental equation"
     ],
     "x": "Programa = Algorisme + Estructures de dades"
    },
@@ -412,14 +451,29 @@ export default {
     "t": "def",
     "title": [
      "Programació estructurada",
-     "Programación estructurada"
+     "Programación estructurada",
+     "Structured programming"
     ],
     "x": [
      "Només tres composicions: seqüencial, alternativa (simple, doble, múltiple) i iterativa (MENTRE, REPETEIX…FINS_QUE, DES_DE).",
-     "Solo tres composiciones: secuencial, alternativa (simple, doble, múltiple) e iterativa (MENTRE, REPETEIX…FINS_QUE, DES_DE)."
+     "Solo tres composiciones: secuencial, alternativa (simple, doble, múltiple) e iterativa (MENTRE, REPETEIX…FINS_QUE, DES_DE).",
+     "Only three compositions: sequential, selection (simple, double, multiple) and iteration (MENTRE, REPETEIX…FINS_QUE, DES_DE)."
     ]
    }
   ]
  },
- "examEnd": []
+ "examEnd": [
+  {
+   "ref": "pq-nota",
+   "seed": 1
+  },
+  {
+   "ref": "pq-prio",
+   "seed": 2
+  },
+  {
+   "ref": "pq-esq",
+   "seed": 3
+  }
+ ]
 };

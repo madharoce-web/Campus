@@ -17,7 +17,7 @@ import { bkCheck, bkInst } from '../bankmodel.js';
 import { Keys, useKeys } from '../ui.jsx';
 import { MPRAC } from './prac.jsx';
 
-export const genLang = (ui) => (ui === 'ca' ? 'ca' : 'es');
+export const genLang = (ui) => (ui === 'ca' || ui === 'en' ? ui : 'es');
 const MS = {
   ca: { warn: 'Escriu una resposta (o tria les opcions) abans de comprovar-la.', answer: 'Resposta', fail: "No s'ha pogut generar aquest exercici.", yes: 'Sí', no: 'No', t: 'Cert', f: 'Fals', okSelf: "L'havies fet bé?", partly: 'No del tot', model: 'Mostra la solució model', rub: 'Com es puntua', pts: 'punts', pt: 'punt' },
   es: { warn: 'Escribe una respuesta (o elige las opciones) antes de comprobarla.', answer: 'Respuesta', fail: 'No se ha podido generar este ejercicio.', yes: 'Sí', no: 'No', t: 'Cierto', f: 'Falso', okSelf: '¿Lo habías hecho bien?', partly: 'No del todo', model: 'Mostrar la solución modelo', rub: 'Cómo se puntúa', pts: 'puntos', pt: 'punto' },
@@ -260,7 +260,7 @@ export const MATES_TYPES = {
     space: 'none',
     Print: PrintBank,
     key: (ex, tr) => {
-      const C = getContent(tr(['ca', 'es', 'es']));
+      const C = getContent(tr(['ca', 'es', 'en']));
       const I = bankInst(C, ex);
       if (!I) return '';
       const a = I.a;

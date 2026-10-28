@@ -13,7 +13,7 @@ export function LabShell({ title, children }) {
   const lab = useContext(LabContext);
   return (
     <div className="lab" data-w={lab ? lab.w : undefined} data-id={lab ? lab.id : undefined}>
-      <div className="lab-h"><span className="tag">{L('Laboratori', 'Laboratorio')}</span><Rich as="span" className="tt" html={title} /></div>
+      <div className="lab-h"><span className="tag">{L('Laboratori', 'Laboratorio', 'Lab')}</span><Rich as="span" className="tt" html={title} /></div>
       <div className="lab-b">{children}</div>
     </div>
   );
@@ -24,9 +24,9 @@ export function Html({ html, as }) {
   return html ? <Rich as={as} className="rc" html={html} /> : null;
 }
 
-/** Contingut del laboratori en un idioma (getContent(lang)). */
+/** Contingut del laboratori en l'idioma de la pàgina (getContent: ca, es o en). */
 export function useContent() {
-  return getContent(useLang().lang);
+  return getContent(useLang().ui);
 }
 
 /**
@@ -47,9 +47,9 @@ export function Stepper({ id, gen, all, bare }) {
     <>
       <Html html={'<div class="steps">' + steps.slice(0, k).map(C.stepRow).join('') + '</div>'} />
       <div className="row p-mt8">
-        {!done && <button type="button" className="btn primary" data-stp="next" onClick={() => setK((x) => (x || 1) + 1)}>{L('Següent pas', 'Siguiente paso') + ' (' + k + '/' + steps.length + ')'}</button>}
-        {!done && <button type="button" className="btn ghost" data-stp="all" onClick={() => setK(steps.length)}>{L('Mostra-ho tot', 'Muéstralo todo')}</button>}
-        {k > 1 && <button type="button" className="btn ghost" data-stp="reset" onClick={() => setK(1)}>{L('Torna a començar', 'Vuelve a empezar')}</button>}
+        {!done && <button type="button" className="btn primary" data-stp="next" onClick={() => setK((x) => (x || 1) + 1)}>{L('Següent pas', 'Siguiente paso', 'Next step') + ' (' + k + '/' + steps.length + ')'}</button>}
+        {!done && <button type="button" className="btn ghost" data-stp="all" onClick={() => setK(steps.length)}>{L('Mostra-ho tot', 'Muéstralo todo', 'Show it all')}</button>}
+        {k > 1 && <button type="button" className="btn ghost" data-stp="reset" onClick={() => setK(1)}>{L('Torna a començar', 'Vuelve a empezar', 'Start again')}</button>}
       </div>
     </>
   );

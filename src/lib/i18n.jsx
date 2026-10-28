@@ -6,7 +6,7 @@ import { lsGet, lsSet } from './storage.js';
  *  - `ui`: idioma de la interfície (closca, portada, catàleg): 'ca' | 'es' | 'en'.
  *  - `lang`: idioma del contingut dels cursos, que de moment només existeix en català i
  *    castellà: 'ca' | 'es' (en anglès, els cursos es mostren en castellà).
- * Els cursos fan servir `lang`, `li` i `L(ca, es)`; les pàgines noves, `ui` i `t(…)`.
+ * Els cursos fan servir `lang`, `li` i `L(ca, es, en?)`; les pàgines noves, `ui` i `t(…)`.
  * Es desa a localStorage amb la mateixa clau que la versió original ('sem1-lang').
  */
 const LangContext = createContext(null);
@@ -43,8 +43,8 @@ export function LangProvider({ children }) {
       setLang,
       /** índex de l'idioma del contingut: 0 = català, 1 = castellà (per a parells [ca, es]) */
       li: lang === 'es' ? 1 : 0,
-      /** tria el text de l'idioma del contingut: L('Hola', 'Hola') */
-      L: (ca, es) => (lang === 'es' ? es : ca),
+      /** tria el text de l'idioma del contingut: L('Hola', 'Hola', 'Hello') (sense anglès, el castellà) */
+      L: (ca, es, en) => (ui === 'ca' ? ca : ui === 'en' && en != null ? en : es),
       /** tria el text de l'idioma de la interfície: t(['ca', 'es', 'en']) o t({ ca, es, en }) */
       t: (v) => pick(v, ui),
     };

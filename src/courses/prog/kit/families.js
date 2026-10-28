@@ -8,7 +8,7 @@ import { ESQ, NOTA, TEO } from '../../pseudo/data/quiz.js';
 import { genPrio } from '../../pseudo/engine/quiz.js';
 
 const L3 = (ca, es, en) => [ca, es, en];
-const tr2 = (o) => (o == null || typeof o === 'string' ? o : [o.ca, o.es ?? o.ca]);
+const tr2 = (o) => (o == null || typeof o === 'string' ? o : [o.ca, o.es ?? o.ca, o.en ?? o.es ?? o.ca]);
 const code = (s) => '`' + String(s).replace(/`/g, "'") + '`';
 
 /** El generador de prioritats fa servir Math.random: s'executa amb la llavor. */
