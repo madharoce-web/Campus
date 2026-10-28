@@ -5,7 +5,8 @@ export default {
    "unit": "u3",
    "t": [
     "Implicacions lògiques (regles d'inferència)",
-    "Implicaciones lógicas (reglas de inferencia)"
+    "Implicaciones lógicas (reglas de inferencia)",
+    "Logical implications (inference rules)"
    ],
    "items": [
     {
@@ -57,7 +58,8 @@ export default {
      "id": "fs-implicacions-logiques-regles-d-inferencia-3",
      "note": [
       "no hi ha resultat: no hi havia condició",
-      "no hay resultado: no había condición"
+      "no hay resultado: no había condición",
+      "no result: there was no condition"
      ],
      "t": "*Modus tollens*",
      "x": "`(A → B) ∧ ¬B ⇒ ¬A`"
@@ -158,7 +160,8 @@ export default {
    "unit": "u3",
    "t": [
     "Equivalències lògiques",
-    "Equivalencias lógicas"
+    "Equivalencias lógicas",
+    "Logical equivalences"
    ],
    "items": [
     {
@@ -210,7 +213,8 @@ export default {
      "id": "fs-equivalencies-logiques-3",
      "note": [
       "girar una implicació per encadenar-la",
-      "girar una implicación para encadenarla"
+      "girar una implicación para encadenarla",
+      "turn an implication around to chain it"
      ],
      "t": "Contrapositiva",
      "x": "`A → B ⇔ ¬B → ¬A`"
@@ -219,7 +223,8 @@ export default {
      "id": "fs-equivalencies-logiques-4",
      "note": [
       "ficar negacions cap a dins",
-      "meter las negaciones hacia dentro"
+      "meter las negaciones hacia dentro",
+      "push the negations inwards"
      ],
      "t": "De Morgan",
      "x": "`¬(A ∧ B) ⇔ ¬A ∨ ¬B` · `¬(A ∨ B) ⇔ ¬A ∧ ¬B`"
@@ -320,7 +325,8 @@ export default {
    "unit": "u3",
    "t": [
     "Propietats dels quantificadors",
-    "Propiedades de los cuantificadores"
+    "Propiedades de los cuantificadores",
+    "Properties of the quantifiers"
    ],
    "items": [
     {

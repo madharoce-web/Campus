@@ -2,15 +2,15 @@
 
 export function kindName(k, L) {
   return {
-    A: L('Formalització en CP0', 'Formalización en CP0'), B: L('Taula de veritat', 'Tabla de verdad'), R: L('Raonament en CP0', 'Razonamiento en CP0'),
-    E: L('Formalització en CP1', 'Formalización en CP1'), F: L('Resolució en CP1', 'Resolución en CP1'),
+    A: L('Formalització en CP0', 'Formalización en CP0', 'Formalisation in CP0'), B: L('Taula de veritat', 'Tabla de verdad', 'Truth table'), R: L('Raonament en CP0', 'Razonamiento en CP0', 'Reasoning in CP0'),
+    E: L('Formalització en CP1', 'Formalización en CP1', 'Formalisation in CP1'), F: L('Resolució en CP1', 'Resolución en CP1', 'Resolution in CP1'),
   }[k];
 }
 
 /** Models de control: exercicis [tipus, pes en %, parts de la solució ('b': només el mètode alternatiu)]. */
 export const MODELS = {
-  cp1: { n: 'CP1', t: (L) => L('CP1 · Lògica de proposicions', 'CP1 · Lógica de proposiciones'), slots: [['R', 50, 'ab'], ['A', 30, null], ['B', 20, null]] },
-  cp2: { n: 'CP2', t: (L) => L('CP2 · Lògica de predicats', 'CP2 · Lógica de predicados'), slots: [['R', 20, 'b'], ['E', 40, null], ['F', 40, null]] },
+  cp1: { n: 'CP1', t: (L) => L('CP1 · Lògica de proposicions', 'CP1 · Lógica de proposiciones', 'Test 1 · Propositional logic'), slots: [['R', 50, 'ab'], ['A', 30, null], ['B', 20, null]] },
+  cp2: { n: 'CP2', t: (L) => L('CP2 · Lògica de predicats', 'CP2 · Lógica de predicados', 'Test 2 · Predicate logic'), slots: [['R', 20, 'b'], ['E', 40, null], ['F', 40, null]] },
 };
 export const DURATION = 5400; // una hora i mitja
 
@@ -56,7 +56,7 @@ export function withHistory(hist, S) {
 /** Estat del rellotge: text i classe (warn: menys de 10 minuts; over: temps esgotat; fin: acabat). */
 export function clock(S, now, L) {
   const el = ((S.fin || now) - S.t0) / 1000, left = DURATION - el;
-  const text = S.fin ? L('Temps emprat ', 'Tiempo empleado ') + fmtClock(el) : (left >= 0 ? fmtClock(left) : '+' + fmtClock(-left));
+  const text = S.fin ? L('Temps emprat ', 'Tiempo empleado ', 'Time taken ') + fmtClock(el) : (left >= 0 ? fmtClock(left) : '+' + fmtClock(-left));
   const cls = S.fin ? 'fin' : left < 0 ? 'over' : left < 600 ? 'warn' : '';
   return { text, cls };
 }
