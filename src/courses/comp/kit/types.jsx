@@ -118,7 +118,7 @@ function PrintParts({ ex }) {
 }
 
 /* ---------- exercicis generats ---------- */
-const genLang = (ui) => (ui === 'ca' ? 'ca' : 'es');
+const genLang = (ui) => (ui === 'ca' || ui === 'en' ? ui : 'es');
 export const genQ = (lang, ex) => (ex.exq != null
   ? examQuestions(lang, ex.seed)[ex.exq]
   : practiceQuestion(lang, { k: ex.k, lvl: ex.hard ? 'dur' : 'normal', seed: ex.seed, seen: [] }).q);
@@ -222,7 +222,7 @@ export const COMP_TYPES = {
     space: 'none',
     Print: PrintGen,
     key: (ex, tr) => {
-      const lang = tr(['ca', 'es', 'es']);
+      const lang = tr(['ca', 'es', 'en']);
       const { C } = getContent(lang);
       const q = genQ(lang, ex);
       return q.mc ? 'abcd'[q.order.indexOf(0)] + ')' : q.range ? '[' + C.sgn(q.range[0]) + ', ' + C.sgn(q.range[1]) + ']' : plain(C.ansShow(q.a));
