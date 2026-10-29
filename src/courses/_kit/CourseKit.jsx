@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useLang, pick } from '../../lib/i18n.jsx';
 import { recordVisit } from '../../lib/visits.js';
@@ -53,6 +53,15 @@ export default function CourseKit({ course }) {
   const bank = useModule(course.k + ':bank', course.bank);
   const review = useReview();
   useActiveCourse(course.k);
+  // alçada real de les pestanyes (fixes en baixar): les barres i l'índex que van a sota la fan servir
+  useLayoutEffect(() => {
+    const el = document.getElementById('kit-tabs');
+    const root = el && el.closest('.kit');
+    if (!root || typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(() => root.style.setProperty('--kit-tabs', el.offsetHeight + 'px'));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [course.k, tab]);
   useEffect(() => { recordVisit(course.k); }, [course.k]);
   useEffect(() => { migrateOnce(course.k, course.migrate); }, [course]);
   useEffect(() => {

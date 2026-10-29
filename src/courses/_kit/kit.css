@@ -424,3 +424,11 @@ math{font-family:"Cambria Math", 'STIXTwoMath-Regular', "STIX Two Math", 'NotoSa
 .kit-review-note .am-btn{color:#fff}
 .kit-units-here{display:inline-block; margin-left:10px; padding:1px 10px; border-radius:999px; background:var(--am-brand, #696e2e); color:#fff !important; font-size:.78rem; font-weight:600; text-decoration:none !important; vertical-align:middle}
 .kit-units-here:hover{background:var(--am-brand-dark, #55591f)}
+
+/* les pestanyes de l'assignatura queden fixes sota la barra superior en baixar; la barra de la
+   lliçó (mode), l'índex i la del simulacre van a sota (--kit-tabs: l'alçada real, de CourseKit.jsx) */
+.kit{--kit-tabs:46px; --kit-bar:calc(56px + var(--kit-tabs))}
+.kit #kit-tabs{position:sticky; top:60px; z-index:8; background:#fff}
+.kit .kit-lesson-bar, .kit .kit-exam-bar{top:calc(60px + var(--kit-tabs))}
+.kit .kit-side{top:calc(76px + var(--kit-tabs)); max-height:calc(100vh - 92px - var(--kit-tabs))}
+.kit .kit-adapt-card{top:calc(160px + var(--kit-tabs))}
