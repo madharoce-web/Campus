@@ -122,6 +122,8 @@ test('tauler: resum, progrés de cada assignatura, calendari i calaix de blocs',
   });
   await page.goto('/logica');
   await expect(page.locator('.kit[data-kit="logica"]')).toBeVisible();
+  // l'assignatura apunta els totals quan s'ha carregat el banc (l'inici mostra «fets/total»)
+  await expect(page.locator('.kit-stats .am-stat').nth(2)).toContainText('/');
   await page.goto('/tauler');
   await expect(page.locator('h1')).toHaveText('Tauler');
   await expect(page.locator('#m-stats .am-stat')).toHaveCount(4);
