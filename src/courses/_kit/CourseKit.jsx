@@ -66,6 +66,11 @@ export default function CourseKit({ course }) {
     const to = course.legacy(decodeURIComponent(hash.slice(1)), [], '');
     if (to) return <Navigate replace to={to} />;
   }
+  // un tema que ja no existeix (s'ha reorganitzat el temari): l'assignatura diu on és ara
+  if ((tab === 'temari' || tab === 'metodes') && arg && course.legacy && !course.units.some((u) => u.id === arg)) {
+    const to = course.legacy(arg, rest.slice(1), hash);
+    if (to) return <Navigate replace to={tab === 'metodes' ? to.replace('/temari/', '/metodes/').replace(/#.*$/, '') : to} />;
+  }
   if (!TABS.includes(tab)) {
     const to = course.legacy && course.legacy(tab, rest, hash);
     return <Navigate replace to={to || course.path} />;

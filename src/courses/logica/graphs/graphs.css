@@ -1,0 +1,54 @@
+/* scope:off */
+/* Laboratoris, figures i exercicis de grafs (Lògica i grafs). Global: tots els selectors porten el prefix
+   gl- o gv, i els exercicis (que no són dins de [data-course]) també els necessiten. */
+.gl{margin:0}
+.gl-h{margin:0 0 8px; font-weight:600; color:#55672a}
+.gl-hint{margin:6px 0 10px; color:#5b554a; font-size:.92rem}
+.gl-bar{display:flex; flex-wrap:wrap; gap:6px 8px; align-items:center; margin:6px 0}
+.gl-pick{display:inline-flex; gap:6px; align-items:center; font-size:.9rem}
+.gl-pick select{width:auto; padding:4px 8px}
+.gl-chk{display:inline-flex; gap:6px; align-items:center; font-size:.9rem}
+.gl-body{display:grid; grid-template-columns:minmax(0, 1.2fr) minmax(0, 1fr); gap:14px; align-items:start}
+.gl-two{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+@media (max-width:720px){ .gl-body, .gl-two{grid-template-columns:1fr} }
+.gl-panel{font-size:.92rem; min-width:0}
+.gl-panel p{margin:0 0 8px}
+.gv{width:100%; height:auto; max-width:440px; display:block; margin:0 auto; touch-action:none; user-select:none; background:#fbfaf6; border:1px solid #e9e5da; border-radius:8px}
+.gv .is-click{cursor:pointer}
+.gv-v:focus-visible circle, .gv-e:focus-visible path{outline:none; stroke:#55672a; stroke-width:4}
+.gv :focus{outline:none}
+.gl-degs{display:flex; flex-wrap:wrap; gap:4px 10px; font-variant-numeric:tabular-nums}
+.gl-facts{margin:8px 0 0; padding-left:18px}
+.gl-mat, .gl-inv, .gl-dij, .gl-cpm{border-collapse:collapse; font-variant-numeric:tabular-nums; font-size:.85rem}
+.gl-mat th, .gl-mat td{width:24px; height:22px; text-align:center; border:1px solid #e9e5da}
+.gl-mat th{background:#f3f1ea; font-weight:600}
+.gl-mat td.is-on{background:#e4ead2; font-weight:600}
+.gl-inv th, .gl-inv td, .gl-dij th, .gl-dij td, .gl-cpm th, .gl-cpm td{border:1px solid #e9e5da; padding:3px 7px; text-align:center}
+.gl-inv th, .gl-dij th, .gl-cpm th{background:#f3f1ea; font-weight:600}
+.gl-dij td.is-fix{background:#e4ead2; font-weight:700}
+.gl-dij td.is-old{background:#f6f5f0}
+.gl-cpm tr.is-crit td, .gl-cpm tr.is-crit th{background:#e4ead2}
+.gl-tw{overflow-x:auto; margin:8px 0}
+.gl-num{width:58px; padding:2px 6px}
+.gl-ok{color:#3e4d1c; font-weight:600}
+.gl-bad{color:#a2402c; font-weight:600}
+.gl-note{margin:8px 0; padding:8px 12px; background:#f6f5f0; border-radius:6px; font-size:.9rem}
+ol.gl-note, ul.gl-note{padding-left:28px}
+.gl-trail{font-family:"IBM Plex Mono", Consolas, monospace; overflow-wrap:anywhere}
+.gl-small{color:#8b8477; font-size:.82rem}
+.gl-pens{display:inline-flex; gap:4px}
+.gl-pens .gl-pen{width:30px; height:30px; border-radius:50%; border:1.6px solid #2b2a24; font-weight:600; cursor:pointer; color:#2b2a24}
+.gl-pens .gl-pen.is-on{outline:3px solid #55672a; outline-offset:1px}
+.gl-gantt svg{width:100%; max-width:520px; height:auto; display:block; margin-top:8px}
+.gl-matin td{padding:0}
+.gl-matin{width:auto}
+.gl-matin input.gl-cell{width:28px; min-width:0; max-width:28px; height:26px; padding:0; border:0; border-radius:0; text-align:center; font:inherit; background:transparent; box-shadow:none}
+.gl-cell:focus{outline:2px solid #55672a; background:#fff}
+.gl-colour{display:grid; gap:8px; max-width:440px}
+.gl-seq{font-family:"IBM Plex Mono", Consolas, monospace; letter-spacing:.04em}
+/* botons propis: el full de la pàgina original reinicia els <button> dins l'assignatura */
+.gl .gl-b{border:1px solid #c9c4b5; background:#fff; color:#2b2a24; border-radius:6px; padding:4px 11px; font-size:.86rem; line-height:1.4; cursor:pointer}
+.gl .gl-b:hover:not(:disabled){background:#f3f1ea}
+.gl .gl-b.is-on{background:#55672a; border-color:#55672a; color:#fff}
+.gl .gl-b:disabled{opacity:.5; cursor:default}
+.gl .gl-b:focus-visible{outline:2px solid #55672a; outline-offset:2px}

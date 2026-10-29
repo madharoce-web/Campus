@@ -123,13 +123,28 @@ Un exercici: `{ id, unit, level: 'easy' | 'exam' | 'hard', type, q | qb, …, st
 
 - **Tipus de base** (`_kit/exercise/types.jsx`): `mcq`, `multi`, `tf`, `num`, `nums`, `match`, `short`, `open`.
 - **Tipus propis** (`course.types`): `tt` i `bool` a Computadors; `mbank`, `mprac` i `mexam` a
-  Matemàtiques; `cpp` i `pseudo` a Programació. Un tipus té `Input`, `check`, `space` i, per al PDF,
+  Matemàtiques; `cpp` i `pseudo` a Programació; `seq` (successió de vèrtexs: circuit d'Euler, de
+  Hamilton, camí més curt o recorregut), `colour` (acolorir els vèrtexs clicant-los) i `matrix` (matriu
+  d'adjacència) a Lògica i grafs (`src/courses/logica/graphs/types.jsx`). Un tipus té `Input`, `check`, `space` i, per al PDF,
   `Print` i la clau de solucions: `key(ex, tr)` (text) o `Key({ ex })` (component, per a solucions
   per apartats o jocs de proves).
 - **Famílies**: `{ id, unit, level, gen(rng, seed) → exercici }`. La mateixa llavor dona sempre el mateix
   enunciat; la pràctica en genera de nous sense fi. Cada tema hauria de tenir famílies dels tres nivells.
 - **Citar el banc**: a `check.ex`, `examEnd` i `methods.solved` es pot posar `{ ref: 'id', seed? }` en
   lloc de copiar l'exercici (`_kit/refs.js`).
+- **Rúbrica** (opcional, als de nivell examen): `rubric: [{ pts, x: [ca, es, en] }]`, què puntua cada
+  part de la resposta. La farà servir la correcció d'exàmens en paper.
+- **Llavors deterministes**: un generador només pot fer servir el `rng` que rep, mai `Math.random` ni
+  una ordenació amb una comparació aleatòria (el resultat dependria del navegador).
+
+## Figures de grafs
+
+Lògica i grafs té un motor de grafs (`src/courses/logica/graphs/model.js`: valències, matrius, Euler,
+Hamilton, Dijkstra, arbres generadors, recorreguts, acoloriment, isomorfisme, planaritat i C.P.M.) i
+`graphSvg(G, opcions)` (`graphs/svg.js`), que dibuixa un graf com a SVG per a un bloc `diagram` o un
+enunciat: posicions en cercle, per nivells o donades (`grid`), pesos, fletxes, bucles, costats múltiples i
+vèrtexs o costats remarcats. Les lliçons de grafs ho fan servir amb les ajudes de `graphs/lesson.js`
+(`fig`, `figs`, `galleryFig`); els laboratoris són a `components/GraphLabs.jsx`.
 
 ## Mètodes d'examen (`methods.js`)
 
