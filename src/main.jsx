@@ -12,6 +12,8 @@ import './styles/site.css';
 
 // basename: la web pot viure a l'arrel del domini o en una subcarpeta (BASE_PATH).
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
+// versió publicada (vite.config.js), per saber quina versió veu cadascú
+document.documentElement.dataset.build = import.meta.env.VITE_BUILD;
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

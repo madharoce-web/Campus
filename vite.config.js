@@ -1,6 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { execSync } from 'node:child_process';
 import scopeCourses from './tools/postcss-scope-courses.js';
+
+// Versió publicada (commit): queda dins del fitxer principal, de manera que cada publicació en té un de
+// nom nou i cap memòria cau no pot servir una versió anterior amb el mateix nom.
+let build = process.env.CF_PAGES_COMMIT_SHA || '';
+if (!build) { try { build = execSync('git rev-parse HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch { build = 'local'; } }
+process.env.VITE_BUILD = build.slice(0, 7);
 
 // BASE_PATH permet publicar la web en una subcarpeta (p. ex. /Campus/ a GitHub Pages).
 // Per defecte es publica a l'arrel del domini.
