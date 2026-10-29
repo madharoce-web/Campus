@@ -102,7 +102,7 @@ for (const [path, k, u1, uc] of KIT) {
       await page.click('#kit-topdf');
       await expect(page).toHaveURL(new RegExp(path + '/simulacre/pdf$'));
       const qs = page.locator('#kit-sheet .kp-q');
-      expect(await qs.count()).toBeGreaterThan(0);
+      await expect(qs.first()).toBeVisible();
       for (const q of await qs.all()) {
         await expect(q.locator('.kp-stem')).not.toBeEmpty();
         expect(await q.locator('.kp-space, .kp-opts, .kp-match, .kp-nums').count()).toBeGreaterThan(0);

@@ -40,6 +40,8 @@ export default function PrintExam() {
       </div>
     );
   }
+  // fins que no hi ha el banc, el full encara no té exercicis
+  if (!bank) return <p className="kit-loading">{S.loading}</p>;
   const title = tr(course.title);
   return (
     <div className="kp">
