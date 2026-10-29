@@ -207,13 +207,54 @@ select.am-input{appearance:none; padding-right:2.25rem; background:#fff url("dat
 
 /* tutorial de primera visita (app/Tour.jsx) */
 .am-tour{position:fixed; inset:0; z-index:1000; font-family:var(--am-sans); font-size:var(--am-fs); line-height:1.5}
-.am-tour-dim{position:fixed; inset:0; background:rgba(29,33,37,.55); animation:am-tour-in .25s both}
-.am-tour-hole{position:fixed; border-radius:var(--am-r); box-shadow:0 0 0 2px var(--am-brand), 0 0 0 9999px rgba(29,33,37,.55); transition:all .3s cubic-bezier(.2,.7,.2,1); pointer-events:none}
-.am-tour-box{position:fixed; background:#fff; color:var(--am-ink); border-radius:var(--am-r); border-top:4px solid var(--am-brand); box-shadow:0 10px 30px rgba(0,0,0,.18); padding:16px 18px 14px; animation:am-tour-in .3s both; outline:none}
-.am-tour-box h2{font-family:var(--am-serif); font-weight:400; font-size:1.2rem; margin:0 0 6px}
-.am-tour-box p{margin:0 0 10px; color:var(--am-ink-2)}
-.am-tour-n{font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--am-brand) !important; font-weight:600; margin:0 0 4px !important}
-.am-tour-acts{display:flex; align-items:center; gap:8px; justify-content:flex-end}
-.am-tour-skip{margin-right:auto; background:none; border:0; padding:0; font:inherit; font-size:.85rem; color:var(--am-ink-3); cursor:pointer; text-decoration:underline}
-@keyframes am-tour-in{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
-@media (prefers-reduced-motion:reduce){ .am-tour *, .am-tour-dim, .am-tour-box, .am-tour-hole{animation:none !important; transition:none !important} }
+/* focus: un forat al vel fosc que es desplaça d'un element a l'altre, amb un pols suau */
+.am-tour-hole{position:fixed; border-radius:10px; box-shadow:0 0 0 9999px rgba(29,33,37,.58); transition:left .45s cubic-bezier(.2,.8,.2,1), top .45s cubic-bezier(.2,.8,.2,1), width .45s cubic-bezier(.2,.8,.2,1), height .45s cubic-bezier(.2,.8,.2,1); pointer-events:none; animation:am-tour-fade .3s both}
+.am-tour-hole.is-on{box-shadow:0 0 0 3px var(--am-brand), 0 0 0 9999px rgba(29,33,37,.58)}
+.am-tour-hole.is-on::after{content:""; position:absolute; inset:-3px; border-radius:inherit; border:3px solid var(--am-brand); animation:am-tour-pulse 1.8s ease-out .5s infinite}
+/* bombolla */
+.am-tour-box{position:fixed; box-sizing:border-box; background:#fff; color:var(--am-ink); border-radius:12px; box-shadow:0 18px 50px rgba(20,22,10,.28), 0 2px 6px rgba(20,22,10,.12); padding:18px 20px 14px; outline:none; overflow:visible;
+  transition:left .45s cubic-bezier(.2,.8,.2,1), top .45s cubic-bezier(.2,.8,.2,1); animation:am-tour-pop .35s cubic-bezier(.2,.9,.3,1.2) both}
+.am-tour-box::before{content:""; position:absolute; left:calc(var(--arrow) - 9px); width:18px; height:18px; background:#fff; transform:rotate(45deg); display:none; box-shadow:-2px -2px 3px rgba(20,22,10,.06)}
+.am-tour-box.is-below::before{display:block; top:-8px}
+.am-tour-box.is-above::before{display:block; bottom:-8px; box-shadow:2px 2px 3px rgba(20,22,10,.08)}
+.am-tour-bar{position:absolute; left:0; right:0; top:0; height:4px; border-radius:12px 12px 0 0; background:var(--am-primary-soft); overflow:hidden}
+.am-tour-bar span{display:block; height:100%; background:var(--am-brand); transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.am-tour-in{animation:am-tour-slide .35s cubic-bezier(.2,.8,.2,1) both}
+.am-tour-in.from-l{animation-name:am-tour-slide-l}
+.am-tour-box h2{font-family:var(--am-serif); font-weight:400; font-size:1.3rem; line-height:1.25; margin:0 0 6px; color:var(--am-ink)}
+.am-tour-box p{margin:0 0 12px; color:var(--am-ink-2)}
+.am-tour-n{font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--am-brand) !important; font-weight:700; margin:2px 0 4px !important}
+.am-tour-foot{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap}
+.am-tour-dots{display:flex; gap:6px}
+.am-tour-dot{width:8px; height:8px; padding:0; border:0; border-radius:999px; background:var(--am-line-3); cursor:pointer; transition:width .3s, background .3s}
+.am-tour-dot.is-past{background:#b9bd8c}
+.am-tour-dot.is-on{width:22px; background:var(--am-brand)}
+.am-tour-dot:focus-visible{outline:2px solid var(--am-brand); outline-offset:2px}
+.am-tour-acts{display:flex; gap:8px; margin-left:auto}
+.am-tour-btn{display:inline-flex; align-items:center; gap:6px; min-height:38px; padding:0 16px; border:1px solid var(--am-line-3); border-radius:999px; background:#fff; color:var(--am-ink); font:inherit; font-size:.92rem; font-weight:500; cursor:pointer; transition:background .15s, transform .15s, box-shadow .15s}
+.am-tour-btn:hover{background:var(--am-bg-3)}
+.am-tour-btn:active{transform:scale(.97)}
+.am-tour-btn.is-primary{background:var(--am-primary); border-color:var(--am-primary); color:#fff; box-shadow:0 2px 8px rgba(105,110,46,.35)}
+.am-tour-btn.is-primary:hover{background:var(--am-primary-dark); border-color:var(--am-primary-dark)}
+.am-tour-btn.is-primary span{transition:transform .2s}
+.am-tour-btn.is-primary:hover span{transform:translateX(3px)}
+.am-tour-btn:focus-visible{outline:none; box-shadow:var(--am-focus)}
+.am-tour-skip{display:block; margin:10px auto 0; background:none; border:0; padding:2px 6px; font:inherit; font-size:.82rem; color:var(--am-ink-3); cursor:pointer; border-radius:4px}
+.am-tour-skip:hover{color:var(--am-ink); text-decoration:underline}
+.am-tour-skip:focus-visible{outline:2px solid var(--am-brand)}
+/* dibuixos de benvinguda i de final */
+.am-tour-art{display:block; width:120px; height:64px; margin:4px auto 6px}
+.am-tour-art circle{fill:#fff; stroke:var(--am-brand); stroke-width:3; transform-box:fill-box; transform-origin:center; animation:am-tour-node .5s cubic-bezier(.2,.9,.3,1.4) both}
+.am-tour-art circle:nth-of-type(2){animation-delay:.15s} .am-tour-art circle:nth-of-type(3){animation-delay:.3s} .am-tour-art circle:nth-of-type(4){animation-delay:.45s}
+.am-tour-art-l{fill:none; stroke:#b9bd8c; stroke-width:3; stroke-linecap:round; stroke-dasharray:140; stroke-dashoffset:140; animation:am-tour-draw .9s ease-out .2s forwards}
+.am-tour-art.is-done{width:64px}
+.am-tour-art.is-done circle{fill:var(--am-primary-soft); stroke-width:3}
+.am-tour-art.is-done path{fill:none; stroke:var(--am-brand); stroke-width:5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:40; stroke-dashoffset:40; animation:am-tour-draw .5s ease-out .35s forwards}
+@keyframes am-tour-fade{from{opacity:0} to{opacity:1}}
+@keyframes am-tour-pop{from{opacity:0; transform:translateY(10px) scale(.96)} to{opacity:1; transform:none}}
+@keyframes am-tour-slide{from{opacity:0; transform:translateX(18px)} to{opacity:1; transform:none}}
+@keyframes am-tour-slide-l{from{opacity:0; transform:translateX(-18px)} to{opacity:1; transform:none}}
+@keyframes am-tour-pulse{0%{opacity:.7; transform:scale(1)} 70%,100%{opacity:0; transform:scale(1.06)}}
+@keyframes am-tour-node{from{transform:scale(0)} to{transform:scale(1)}}
+@keyframes am-tour-draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){ .am-tour *, .am-tour *::before, .am-tour *::after, .am-tour-box, .am-tour-hole{animation:none !important; transition:none !important} .am-tour-art-l, .am-tour-art path{stroke-dashoffset:0 !important} }

@@ -1,6 +1,11 @@
 /** Passos dels tutorials de primera visita (app/Tour.jsx). Textos en [ca, es, en]. */
 
 export const TOUR_CURSOS = [
+  { art: 'hello',
+    title: ['Hola%n! Aquest és el teu campus', '¡Hola%n! Este es tu campus', 'Hi%n! This is your campus'],
+    body: ['En mig minut et mostrem on és cada cosa. Pots avançar amb les fletxes del teclat o saltar-ho quan vulguis.',
+      'En medio minuto te enseñamos dónde está cada cosa. Puedes avanzar con las flechas del teclado o saltarlo cuando quieras.',
+      'In half a minute we will show you where everything is. Use the arrow keys to move on, or skip it whenever you like.'] },
   { sel: '#m-mine',
     title: ['El teu campus', 'Tu campus', 'Your campus'],
     body: ['Aquí tens els graus i les assignatures que has triat. Amb «Canvia les assignatures» en pots afegir o treure quan vulguis.',
@@ -16,14 +21,24 @@ export const TOUR_CURSOS = [
     body: ['Des d’aquí canvies l’idioma, entres al teu compte i pots tornar a veure aquest tutorial.',
       'Desde aquí cambias el idioma, entras en tu cuenta y puedes volver a ver este tutorial.',
       'From here you change the language, open your account and can watch this tour again.'] },
+  { art: 'done',
+    title: ['Tot a punt', 'Todo listo', 'All set'],
+    body: ['Obre una assignatura per començar. Cada assignatura té el seu propi recorregut la primera vegada.',
+      'Abre una asignatura para empezar. Cada asignatura tiene su propio recorrido la primera vez.',
+      'Open a subject to begin. Each subject has its own short tour the first time.'] },
 ];
 
 export const TOUR_COURSE = [
   { sel: '#kit-tabs',
     title: ['Les seccions de l’assignatura', 'Las secciones de la asignatura', 'The subject’s sections'],
-    body: ['Temari per estudiar, Mètodes d’examen amb els trucs de cada tema, Pràctica per nivells i Simulacre amb el format real.',
-      'Temario para estudiar, Métodos de examen con los trucos de cada tema, Práctica por niveles y Simulacro con el formato real.',
-      'Syllabus to study, Exam methods with each unit’s tips, Practice by level and a Mock exam in the real format.'] },
+    body: ['Temari per estudiar, Mètodes d’examen amb els trucs de cada tema, Pràctica per nivells, Simulacre amb el format real i Repàs.',
+      'Temario para estudiar, Métodos de examen con los trucos de cada tema, Práctica por niveles, Simulacro con el formato real y Repaso.',
+      'Syllabus to study, Exam methods with each unit’s tips, Practice by level, a Mock exam in the real format and Review.'] },
+  { sel: '#kit-tabs [data-k="repas"]',
+    title: ['El repàs a mida', 'El repaso a medida', 'Personalised review'],
+    body: ['Els exercicis que falles tornen aquí al cap d’1, 3, 7, 16 i 35 dies, fins que els domines. El número diu quants toquen avui.',
+      'Los ejercicios que fallas vuelven aquí al cabo de 1, 3, 7, 16 y 35 días, hasta que los dominas. El número dice cuántos tocan hoy.',
+      'Exercises you get wrong come back here after 1, 3, 7, 16 and 35 days, until you master them. The number shows how many are due today.'] },
   { sel: '#kit-continue',
     title: ['Continua on ho vas deixar', 'Continúa donde lo dejaste', 'Pick up where you left off'],
     body: ['Aquest botó et porta a l’últim apartat que vas llegir.',
