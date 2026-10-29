@@ -147,10 +147,9 @@ export default function Benvinguda() {
                 const on = degrees.includes(d.k);
                 return (
                   <li key={d.k} style={{ '--i': i }}>
-                    <button type="button" className={'bv-deg' + (on ? ' is-on' : '')} aria-pressed={on} data-degree={d.k} onClick={() => toggleDeg(d.k)}
-                      style={{ '--dc': d.color, '--db': d.bg }}>
+                    <button type="button" className={'bv-deg' + (on ? ' is-on' : '')} aria-pressed={on} data-degree={d.k} onClick={() => toggleDeg(d.k)}>
                       <span className="bv-dico"><DegreeIcon name={d.icon} /></span>
-                      <span className="bv-dtx"><b>{t(d.name)}</b><small>{d.status === 'live' ? L.live : L.soon}</small></span>
+                      <span className="bv-dtx"><b>{t(d.name)}</b><small className={'bv-badge' + (d.status === 'live' ? ' is-live' : '')}>{d.status === 'live' ? L.live : L.soon}</small></span>
                       <span className="bv-tick" aria-hidden="true">{CHECK}</span>
                     </button>
                   </li>
@@ -177,7 +176,7 @@ export default function Benvinguda() {
                   <div key={term.k} className="bv-term">
                     <div className="bv-termh">
                       <h3>{t(term.name)}</h3>
-                      <button type="button" className="kit-link" onClick={() => setSubjects((ss) => (ks.every((k) => ss.includes(k)) ? ss.filter((k) => !ks.includes(k)) : [...new Set([...ss, ...ks])]))}>
+                      <button type="button" className="bv-all" onClick={() => setSubjects((ss) => (ks.every((k) => ss.includes(k)) ? ss.filter((k) => !ks.includes(k)) : [...new Set([...ss, ...ks])]))}>
                         {ks.every((k) => subjects.includes(k)) ? L.none : L.all}
                       </button>
                     </div>
@@ -188,8 +187,9 @@ export default function Benvinguda() {
                         return (
                           <li key={k} style={{ '--i': i }}>
                             <button type="button" className={'bv-sub' + (on ? ' is-on' : '')} aria-pressed={on} data-subject={k} onClick={() => toggleSub(k)}>
-                              <span className="bv-sico" style={{ '--m-ci': r.color, '--m-ci-bg': r.bg }}><CourseIcon name={r.icon} /></span>
-                              <span className="bv-stx"><b>{t(c.name)}</b><small>{t(c.cat)}</small></span>
+                              <span className="bv-sico"><CourseIcon name={r.icon} /></span>
+                              {/* «C++» no s'ha de partir entre línies */}
+                              <span className="bv-stx"><b>{t(c.name)}</b><small>{t(c.cat).replace('C++', 'C\u2060+\u2060+')}</small></span>
                               <span className="bv-tick" aria-hidden="true">{CHECK}</span>
                             </button>
                           </li>

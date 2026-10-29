@@ -14,7 +14,7 @@
 .bv-acts{display:flex; gap:10px; justify-content:flex-end; margin-top:26px}
 .bv-hello .bv-acts{justify-content:flex-start}
 .bv-big{padding:.6rem 1.4rem; font-size:1rem}
-.bv-note{background:var(--am-info-bg); border:1px solid var(--am-info-line); color:var(--am-info-ink); border-radius:var(--am-r); padding:10px 14px; margin:16px 0 0}
+.bv-note{background:var(--am-brand-soft); border:1px solid var(--am-brand-line); color:var(--am-ink-2); border-radius:var(--am-r); padding:10px 14px; margin:16px 0 0}
 
 /* passos */
 .bv-steps{display:flex; gap:6px; list-style:none; margin:0 auto; padding:0; counter-reset:none}
@@ -48,10 +48,18 @@
 .bv-deg, .bv-sub{width:100%; display:flex; align-items:center; gap:12px; text-align:left; background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); padding:12px 14px; font:inherit; color:inherit; cursor:pointer; transition:border-color .15s, box-shadow .15s, transform .15s}
 .bv-deg:hover, .bv-sub:hover{border-color:var(--am-brand); transform:translateY(-1px)}
 .bv-deg.is-on, .bv-sub.is-on{border-color:var(--am-brand); box-shadow:inset 0 0 0 1px var(--am-brand); background:var(--am-brand-soft)}
-.bv-dico{width:40px; height:40px; flex:none; border-radius:var(--am-r); background:var(--db); display:grid; place-items:center}
-.bv-dico svg{width:22px; height:22px; fill:none; stroke:var(--dc); stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
-.bv-sico{width:40px; height:40px; flex:none; border-radius:var(--am-r); background:var(--m-ci-bg); color:var(--m-ci); display:grid; place-items:center}
-.bv-sico svg{width:22px; height:22px}
+.bv-dico, .bv-sico{width:42px; height:42px; flex:none; border-radius:10px; background:var(--am-brand-soft); color:var(--am-brand); display:grid; place-items:center; transition:background .2s, color .2s, transform .2s}
+.bv-dico svg, .bv-sico svg{width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+.bv-deg:hover .bv-dico, .bv-sub:hover .bv-sico{transform:scale(1.06)}
+.is-on .bv-dico, .is-on .bv-sico{background:var(--am-brand); color:#fff}
+.bv-badge{justify-self:start; margin-top:3px; padding:0 8px; border-radius:999px; background:var(--am-bg-2); border:1px solid var(--am-line); font-size:.75rem !important; line-height:1.6}
+.bv-badge.is-live{background:var(--am-brand-soft); border-color:var(--am-brand-line); color:var(--am-brand) !important; font-weight:600}
+.bv-all{border:1px solid var(--am-brand-line); background:#fff; color:var(--am-brand); border-radius:999px; padding:.15rem .8rem; font:inherit; font-size:.82rem; font-weight:600; cursor:pointer; transition:background .15s, border-color .15s}
+.bv-all:hover{background:var(--am-brand-soft); border-color:var(--am-brand)}
+.bv-all:focus-visible{outline:none; box-shadow:var(--am-focus)}
+.bv .am-btn-outline{border-color:var(--am-brand-line); color:var(--am-ink)}
+.bv .am-btn-outline:hover:not(:disabled){background:var(--am-brand-soft); border-color:var(--am-brand)}
+.bv .am-btn-primary:disabled{opacity:.45}
 .bv-dtx, .bv-stx{display:grid; flex:1; min-width:0}
 .bv-dtx small, .bv-stx small{color:var(--am-ink-3); font-size:.82rem}
 .bv-tick{width:22px; height:22px; flex:none; border-radius:50%; border:1px solid var(--am-line-2); display:grid; place-items:center; transition:all .2s}
@@ -60,7 +68,7 @@
 .is-on .bv-tick svg{stroke-dashoffset:0}
 .bv-dgroup h2{font-family:var(--am-serif); font-weight:400; font-size:1.2rem; margin:18px 0 6px}
 .bv-term{margin:0 0 14px}
-.bv-termh{display:flex; align-items:baseline; justify-content:space-between; margin:0 0 8px}
+.bv-termh{display:flex; align-items:center; justify-content:space-between; margin:0 0 8px}
 .bv-termh h3{font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--am-ink-2); margin:0}
 .bv-sum{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; border-top:1px solid var(--am-line); padding-top:14px; margin-top:12px; color:var(--am-ink-2)}
 
