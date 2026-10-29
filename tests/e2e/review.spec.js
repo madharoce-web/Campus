@@ -15,7 +15,7 @@ test('algorisme: un error entra a la caixa 1 i cada encert la puja fins que es d
   expect(c).toMatchObject({ ref: 'x', box: 1, wrong: 1 });
   expect(isDue(c, T0)).toBe(false);
   expect(isDue(c, T0 + DAY)).toBe(true);
-  let t = T0;
+  let t;
   for (let box = 2; box <= INTERVALS.length; box++) {
     t = c.due + 3600000;
     c = nextState(c, true, t);
