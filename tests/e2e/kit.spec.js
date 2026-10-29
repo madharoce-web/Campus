@@ -31,6 +31,12 @@ for (const [path, k, u1, uc] of KIT) {
       await expect(page).toHaveURL(new RegExp(path + '/temari/' + u1 + '$'));
       // la vista comença a dalt, sense saltar a cap apartat
       expect(await page.evaluate(() => window.scrollY)).toBe(0);
+      // en baixar, les pestanyes i la barra de la lliçó queden enganxades, sense cap escletxa entre elles
+      await page.evaluate(() => window.scrollTo(0, 900));
+      await expect.poll(() => page.evaluate(() => {
+        const t = document.getElementById('kit-tabs').getBoundingClientRect(), b = document.querySelector('.kit-lesson-bar').getBoundingClientRect();
+        return Math.round((b.top - t.bottom) * 10) / 10 <= 0 && Math.round(t.top) === 60;
+      })).toBe(true);
       await expectNoOverflow(page);
       expect(errors).toEqual([]);
     });

@@ -61,7 +61,8 @@ export default function CourseKit({ course }) {
     const ro = new ResizeObserver(() => root.style.setProperty('--kit-tabs', el.offsetHeight + 'px'));
     ro.observe(el);
     return () => ro.disconnect();
-  }, [course.k, tab]);
+    // també en canviar de tema: si es ve de la pestanya Temari (que redirigeix), les pestanyes encara no hi eren
+  }, [course.k, tab, arg]);
   useEffect(() => { recordVisit(course.k); }, [course.k]);
   useEffect(() => { migrateOnce(course.k, course.migrate); }, [course]);
   useEffect(() => {

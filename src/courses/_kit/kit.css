@@ -427,8 +427,10 @@ math{font-family:"Cambria Math", 'STIXTwoMath-Regular', "STIX Two Math", 'NotoSa
 
 /* les pestanyes de l'assignatura queden fixes sota la barra superior en baixar; la barra de la
    lliçó (mode), l'índex i la del simulacre van a sota (--kit-tabs: l'alçada real, de CourseKit.jsx) */
-.kit{--kit-tabs:46px; --kit-bar:calc(56px + var(--kit-tabs))}
+.kit{--kit-tabs:44px; --kit-bar:calc(56px + var(--kit-tabs))}
 .kit #kit-tabs{position:sticky; top:60px; z-index:8; background:#fff}
 .kit .kit-lesson-bar, .kit .kit-exam-bar{top:calc(60px + var(--kit-tabs))}
+/* una franja blanca per sobre de la barra tapa qualsevol escletxa amb les pestanyes (arrodoniments) */
+.kit .kit-lesson-bar::before{content:""; position:absolute; left:0; right:0; bottom:100%; height:6px; background:#fff}
 .kit .kit-side{top:calc(76px + var(--kit-tabs)); max-height:calc(100vh - 92px - var(--kit-tabs))}
 .kit .kit-adapt-card{top:calc(160px + var(--kit-tabs))}
