@@ -60,7 +60,7 @@
 .am-hr{border:0; border-top:1px solid var(--am-line); margin:14px 0 16px}
 .am-section + .am-section{margin-top:34px}
 .am-shead{display:flex; align-items:center; flex-wrap:wrap; gap:6px 10px}
-.am-ico{width:36px; height:36px; border-radius:var(--am-r); display:grid; place-items:center; flex:0 0 auto; background:var(--am-ci-bg, var(--am-teal-soft)); color:var(--am-ci, var(--am-teal))}
+.am-ico{width:36px; height:36px; border-radius:var(--am-r); display:grid; place-items:center; flex:0 0 auto; background:var(--am-ci-bg, var(--am-brand-soft)); color:var(--am-ci, var(--am-brand))}
 .am-ico svg{width:21px; height:21px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
 @media (max-width:640px){ .am-h1{font-size:1.6rem; margin-bottom:18px} }
 
@@ -88,7 +88,7 @@
 
 /* ---------- insígnies i avisos ---------- */
 .am-badge{display:inline-block; padding:.25em .5em; border-radius:.25rem; font-size:.75em; font-weight:700; line-height:1; white-space:nowrap; vertical-align:middle; background:var(--am-line-2); color:var(--am-ink)}
-.am-badge-live{background:var(--am-success); color:#fff}
+.am-badge-live{background:var(--am-brand-soft); color:var(--am-brand); box-shadow:inset 0 0 0 1px var(--am-brand-line)}
 .am-alert{padding:.75rem 1.25rem; border:1px solid transparent; border-radius:var(--am-r); margin-bottom:16px}
 .am-alert-info{background:var(--am-info-bg); border-color:var(--am-info-line); color:var(--am-info-ink)}
 .am-alert-warning{background:var(--am-warning-bg); border-color:var(--am-warning-line); color:var(--am-warning-ink)}

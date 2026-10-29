@@ -22,7 +22,8 @@ export default function CourseHeader({ k, title, before, extra, sub, children })
       </nav>
       <div className="m-ph">
         {before}
-        <span className="m-cico" style={{ '--m-ci': c.color, '--m-ci-bg': c.bg }}><CourseIcon name={c.icon} /></span>
+        {/* la icona, amb els colors de la marca (oliva), com al registre guiat */}
+        <span className="m-cico"><CourseIcon name={c.icon} /></span>
         <h1>{t}</h1>
         {extra}
       </div>

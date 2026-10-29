@@ -97,7 +97,7 @@ function Degree({ d, Lx }) {
     <>
       <Crumbs Lx={Lx}><Link to="/graus">{Lx.title}</Link><span className="am-sep">/</span><span>{t(d.short)}</span></Crumbs>
       <div className="am-ph">
-        <span className="am-ico" style={{ '--am-ci': d.color, '--am-ci-bg': d.bg }}><DegreeIcon name={d.icon} /></span>
+        <span className="am-ico"><DegreeIcon name={d.icon} /></span>
         <h1 className="am-h1">{t(d.name)}</h1>
         <span className={'am-badge' + (live ? ' am-badge-live' : '')}>{live ? Lx.live : Lx.soon}</span>
       </div>
