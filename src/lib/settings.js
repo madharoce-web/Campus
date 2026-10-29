@@ -26,6 +26,7 @@ export const DEFAULTS = {
     degrees: 0,              // 0 = sense límit
     subjects: 0,
     examsPerWeek: 0,
+    reviewPerDay: 0,         // exercicis de repàs a mida per dia (si el pla gratuït en té)
   },
   features: {
     // funció → plans que la tenen

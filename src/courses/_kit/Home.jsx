@@ -8,6 +8,7 @@ import { openDock } from './dockStore.js';
 import Tour from '../../app/Tour.jsx';
 import { TOUR_COURSE } from '../../app/tours.js';
 import { useCampus } from '../../lib/campus.js';
+import { dueCounts, useReview } from '../../lib/review.js';
 
 /** Inici de l'assignatura: resum, temes amb el progrés, «continua on ho vas deixar» i accessos. */
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
   const go = last ? course.path + '/temari/' + last.id + '#' + st.last.sec : course.path + '/temari/' + course.units[0].id;
   const done = Object.values(st.practice).filter((p) => p && p.ok).length;
   const campus = useCampus();
+  const due = dueCounts(useReview())[course.k] || 0;
   return (
     <div className="kit-home">
       {/* tutorial de la primera assignatura que s'obre, un cop configurat el campus */}
@@ -32,6 +34,12 @@ export default function Home() {
         <div className="am-stat"><dt className="am-sr">{S.homeStats.ex}</dt><dd><b>{done}{st.tot ? '/' + st.tot.ex : ''}</b><span>{S.homeStats.ex} · {S.done.toLowerCase()}</span></dd></div>
         <div className="am-stat"><dt className="am-sr">{S.homeStats.exams}</dt><dd><b>{st.exams.length}</b><span>{S.homeStats.exams}</span></dd></div>
       </dl>
+      {due > 0 && (
+        <p className="kit-review-note" id="kit-review-note">
+          <span>{S.reviewNote.replace('%d', due)}</span>
+          <Link className="am-btn am-btn-primary" to={course.path + '/repas'}>{S.tabs.repas}</Link>
+        </p>
+      )}
       <div className="am-btn-row kit-home-go">
         <Link className="am-btn am-btn-primary" id="kit-continue" to={go}>{last ? S.continue : S.start}</Link>
         <Link className="am-btn am-btn-secondary" to={course.path + '/practica'}>{S.quick.practice}</Link>

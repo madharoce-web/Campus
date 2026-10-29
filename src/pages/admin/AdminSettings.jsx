@@ -11,7 +11,7 @@ const S = {
     pricesH: 'Preus (euros al mes, impostos inclosos)', basePrice: 'Tarifa bàsica', baseSubjects: 'Assignatures incloses a la tarifa bàsica', extraSubject: 'Cada assignatura de més', degreeMultiplier: 'Multiplicador per cada grau de més', proPrice: 'Pla Pro (per grau)',
     trialDays: 'Dies de prova gratuïta (0 = sense prova)', semester: 'Descompte semestral (%)', year: 'Descompte anual (%)',
     example: 'Exemple', exampleT: (s, d, p) => `${s} assignatures en ${d} grau(s): ${p} al mes`,
-    freeH: 'Límits del pla gratuït (0 = sense límit)', freeDegrees: 'Graus', freeSubjects: 'Assignatures', freeExams: 'Simulacres per setmana',
+    freeH: 'Límits del pla gratuït (0 = sense límit)', freeDegrees: 'Graus', freeSubjects: 'Assignatures', freeExams: 'Simulacres per setmana', freeReview: 'Repàs per dia',
     featH: 'Funcions de cada plan', feat: 'Funció', free: 'Gratuït', basic: 'Bàsic', pro: 'Pro',
     companyH: 'Dades de l’empresa', companyHint: 'Surten a l’avís legal, a la política de privacitat, al contacte i a les factures.',
     cname: 'Raó social', nrt: 'NRT', address: 'Adreça', city: 'Parròquia o ciutat', country: 'País', email: 'Correu de contacte', phone: 'Telèfon',
@@ -24,7 +24,7 @@ const S = {
     pricesH: 'Precios (euros al mes, impuestos incluidos)', basePrice: 'Tarifa básica', baseSubjects: 'Asignaturas incluidas en la tarifa básica', extraSubject: 'Cada asignatura adicional', degreeMultiplier: 'Multiplicador por cada grado adicional', proPrice: 'Plan Pro (por grado)',
     trialDays: 'Días de prueba gratuita (0 = sin prueba)', semester: 'Descuento semestral (%)', year: 'Descuento anual (%)',
     example: 'Ejemplo', exampleT: (s, d, p) => `${s} asignaturas en ${d} grado(s): ${p} al mes`,
-    freeH: 'Límites del plan gratuito (0 = sin límite)', freeDegrees: 'Grados', freeSubjects: 'Asignaturas', freeExams: 'Simulacros por semana',
+    freeH: 'Límites del plan gratuito (0 = sin límite)', freeDegrees: 'Grados', freeSubjects: 'Asignaturas', freeExams: 'Simulacros por semana', freeReview: 'Repaso por día',
     featH: 'Funciones de cada plan', feat: 'Función', free: 'Gratuito', basic: 'Básico', pro: 'Pro',
     companyH: 'Datos de la empresa', companyHint: 'Salen en el aviso legal, la política de privacidad, el contacto y las facturas.',
     cname: 'Razón social', nrt: 'NRT', address: 'Dirección', city: 'Parroquia o ciudad', country: 'País', email: 'Correo de contacto', phone: 'Teléfono',
@@ -37,7 +37,7 @@ const S = {
     pricesH: 'Prices (euros per month, taxes included)', basePrice: 'Basic fee', baseSubjects: 'Subjects included in the basic fee', extraSubject: 'Each extra subject', degreeMultiplier: 'Multiplier for each extra degree', proPrice: 'Pro plan (per degree)',
     trialDays: 'Free trial days (0 = no trial)', semester: 'Semester discount (%)', year: 'Yearly discount (%)',
     example: 'Example', exampleT: (s, d, p) => `${s} subjects in ${d} degree(s): ${p} per month`,
-    freeH: 'Free plan limits (0 = unlimited)', freeDegrees: 'Degrees', freeSubjects: 'Subjects', freeExams: 'Mock exams per week',
+    freeH: 'Free plan limits (0 = unlimited)', freeDegrees: 'Degrees', freeSubjects: 'Subjects', freeExams: 'Mock exams per week', freeReview: 'Review per day',
     featH: 'Features of each plan', feat: 'Feature', free: 'Free', basic: 'Basic', pro: 'Pro',
     companyH: 'Company details', companyHint: 'Shown in the legal notice, privacy policy, contact section and invoices.',
     cname: 'Company name', nrt: 'NRT', address: 'Address', city: 'Parish or city', country: 'Country', email: 'Contact email', phone: 'Phone',
@@ -113,6 +113,7 @@ export function PlansSettings() {
           <Num id="ad-fdeg" label={L.freeDegrees} value={f.v.degrees} onChange={(x) => f.setV({ ...f.v, degrees: x })} />
           <Num id="ad-fsub" label={L.freeSubjects} value={f.v.subjects} onChange={(x) => f.setV({ ...f.v, subjects: x })} />
           <Num id="ad-fex" label={L.freeExams} value={f.v.examsPerWeek} onChange={(x) => f.setV({ ...f.v, examsPerWeek: x })} />
+          <Num id="ad-frev" label={L.freeReview} value={f.v.reviewPerDay ?? 0} onChange={(x) => f.setV({ ...f.v, reviewPerDay: x })} />
         </div>
         <SaveBar sec={f} L={L} />
       </section>

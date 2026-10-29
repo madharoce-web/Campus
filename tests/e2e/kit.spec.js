@@ -17,7 +17,7 @@ for (const [path, k, u1, uc] of KIT) {
     test('inici: pestanyes, temes i accessos', async ({ page }) => {
       const errors = watchErrors(page);
       await page.goto(path);
-      await expect(page.locator('#kit-tabs a')).toHaveCount(5);
+      await expect(page.locator('#kit-tabs a')).toHaveCount(6);
       await expect(page.locator('.kit-units li').first()).toBeVisible();
       await page.click('#kit-continue');
       await expect(page).toHaveURL(new RegExp(path + '/temari/' + u1 + '$'));

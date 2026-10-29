@@ -12,6 +12,7 @@
 import { useCallback, useSyncExternalStore } from 'react';
 import { lsJSON, lsSetJSON } from '../../lib/storage.js';
 import { logAttempt } from '../../lib/intents.js';
+import { recordReview } from '../../lib/review.js';
 
 export const kitKey = (k) => `kit-${k}-v1`;
 const EMPTY = { read: {}, checks: {}, practice: {}, exams: [], last: null, tot: null, mig: false };
@@ -72,12 +73,16 @@ export function useKit(k) {
 export const markRead = (k, sec) => updateKit(k, (s) => (s.read[sec] ? s : { ...s, read: { ...s.read, [sec]: Date.now() } }));
 export const setLast = (k, unit, sec) => updateKit(k, (s) => (s.last && s.last.unit === unit && s.last.sec === sec ? s : { ...s, last: { unit, sec } }));
 // cada resultat també s'apunta al registre d'intents del compte (lib/intents.js; sense sessió no fa res)
+// i al repàs a mida (lib/review.js): els errors hi entren i els encerts els fan avançar
 export const recordCheck = (k, id, ok) => {
   logAttempt({ subject: k, item: id, correct: ok, kind: 'quiz' });
+  recordReview(k, id, ok);
   updateKit(k, (s) => ({ ...s, checks: { ...s.checks, [id]: ok ? 1 : 0 } }));
 };
-export const recordPractice = (k, id, res) => {
+/** opts: { seed } (exercici d'una família) i { review: true } dins d'una sessió de repàs. */
+export const recordPractice = (k, id, res, opts = {}) => {
   logAttempt({ subject: k, item: id, correct: res.ok, score: res.self ?? null });
+  recordReview(k, id, res.ok, opts);
   updateKit(k, (s) => {
     const prev = s.practice[id];
     // un exercici fet bé no torna a «pendent» si després es falla
@@ -85,9 +90,13 @@ export const recordPractice = (k, id, res) => {
     return { ...s, practice: { ...s.practice, [id]: { ...res, ok, at: Date.now() } } };
   });
 };
-/** Simulacre lliurat: e = { min, mark, n }; items = [{ id, frac }] per al registre d'intents. */
+/** Simulacre lliurat: e = { min, mark, n }; items = [{ id, frac, seed? }] per al registre d'intents i el repàs. */
 export const addExam = (k, e, items = []) => {
-  for (const it of items) logAttempt({ subject: k, item: it.id, correct: it.frac == null ? null : it.frac >= 1, score: it.frac, kind: 'exam' });
+  for (const it of items) {
+    logAttempt({ subject: k, item: it.id, correct: it.frac == null ? null : it.frac >= 1, score: it.frac, kind: 'exam' });
+    // al repàs, només els exercicis que es poden tornar a mostrar (els del banc; un mal resultat és < 0,5)
+    if (it.frac != null && it.bank) recordReview(k, it.id, it.frac >= 0.5, { seed: it.seed });
+  }
   logAttempt({ subject: k, item: 'simulacre-' + e.min, score: e.mark, kind: 'exam', durationMs: e.ms });
   updateKit(k, (s) => ({ ...s, exams: [...s.exams, { min: e.min, mark: e.mark, n: e.n, at: Date.now() }].slice(-30) }));
 };

@@ -411,3 +411,14 @@ math{font-family:"Cambria Math", 'STIXTwoMath-Regular', "STIX Two Math", 'NotoSa
   html.kit-printing .kp-sheet{max-width:none; margin:0; padding:0; border:0; box-shadow:none}
   .kp-lines,.kp-grid,.kp-code{-webkit-print-color-adjust:exact; print-color-adjust:exact}
 }
+/* repàs a mida */
+.kit-badge{display:inline-block; min-width:1.4em; padding:0 .4em; margin-left:2px; border-radius:999px; background:var(--am-brand, #696e2e); color:#fff; font-size:.75rem; font-weight:600; line-height:1.4; text-align:center}
+.kit-review-boxes{display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 16px}
+.kit-rbox{border:1px solid var(--am-line); border-radius:999px; padding:2px 10px; font-size:.82rem; color:var(--am-ink-3)}
+.kit-rbox.is-on{border-color:var(--am-brand, #696e2e); color:var(--am-ink)}
+.kit-review-empty{padding:18px 20px; border:1px solid var(--am-line); border-radius:var(--am-r); background:#fff; margin-top:12px}
+.kit-review-empty p{margin:0 0 8px}
+.kit-review-prog{font-weight:600; margin:14px 0 6px}
+.kit-review-end{margin-top:16px; padding:12px 16px; border-radius:var(--am-r); background:#eef1e0; color:#3e4d1c; font-weight:600}
+.kit-review-note{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 14px; margin:0 0 16px; padding:10px 14px; border:1px solid #cfd6a8; border-radius:var(--am-r); background:#f4f6ea}
+.kit-review-note .am-btn{color:#fff}

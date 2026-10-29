@@ -28,7 +28,7 @@ function FamilyCard({ fam, n, done, k }) {
   const ex = useMemo(() => instance(fam, seed), [fam, seed]);
   return (
     <div className="kit-fam">
-      <Exercise key={seed} ex={ex} n={n} done={done} onResult={(r) => recordPractice(k, fam.id, r)} />
+      <Exercise key={seed} ex={ex} n={n} done={done} onResult={(r) => recordPractice(k, fam.id, r, { seed })} />
       <button type="button" className="kit-link kit-another" onClick={() => setSeed(newSeed())}>↻ {K[ui].another}</button>
     </div>
   );

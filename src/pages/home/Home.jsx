@@ -10,6 +10,7 @@ import { ACTIVITIES, CARDS, CARD_BY_KEY } from '../../courses/registry.js';
 import { progressOf } from '../../catalog/progress.js';
 import { DEGREE_BY_KEY } from '../../catalog/degrees.js';
 import { mySubjects, useCampus } from '../../lib/campus.js';
+import { dueCounts, useReview } from '../../lib/review.js';
 import Tour from '../../app/Tour.jsx';
 import { TOUR_CURSOS } from '../../app/tours.js';
 import Page from '../../app/Page.jsx';
@@ -38,6 +39,7 @@ export default function Home({ view }) {
   // només les assignatures triades al registre guiat (totes, si encara no se n'ha triat cap)
   const campus = useCampus();
   const MINE = mySubjects(campus, CARDS);
+  const review = useReview();
 
   const cname = (c) => t(c.name);
   const NameLink = ({ c }) => (
@@ -153,6 +155,9 @@ export default function Home({ view }) {
   const month = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
   const progress = MINE.map((c) => [c, progressOf(c.k)]);
   const doneAll = progress.reduce((n, [, p]) => n + (p ? p.done : 0), 0);
+  // repàs a mida: exercicis fallats que avui toca tornar a fer, per assignatura (lib/review.js)
+  const due = dueCounts(review);
+  const toReview = MINE.map((c) => [c, due[c.k] || 0]).filter(([, n]) => n);
   const viewTauler = (
     <>
       <h1 className="m-h1">{Lx.dash}</h1>
@@ -162,6 +167,20 @@ export default function Home({ view }) {
         <div className="am-stat"><dt className="am-sr">{Lx.stDays}</dt><dd><b>{days.filter((d) => d.startsWith(month)).length}</b><span>{Lx.stDays}</span></dd></div>
         <div className="am-stat"><dt className="am-sr">{Lx.stStreak}</dt><dd><b>{streakOf(days)}</b><span>{Lx.stStreak}</span></dd></div>
       </dl>
+      <section className="am-mblock" id="m-review" aria-labelledby="m-revh">
+        <h2 className="am-bt" id="m-revh">{Lx.revT}</h2>
+        {toReview.length ? (
+          <ul className="am-prog">
+            {toReview.map(([c, n]) => (
+              <li key={c.k} data-review={c.k}>
+                <span className="am-prog-name"><Link to={c.to}>{cname(c)}</Link><small>{t(c.cat)}</small></span>
+                <span className="am-prog-num">{Lx.revN.replace('%d', n)}</span>
+                <Link className="am-btn am-btn-primary m-revgo" to={c.to + '/repas'}>{Lx.revGo}</Link>
+              </li>
+            ))}
+          </ul>
+        ) : <p className="m-muted">{Lx.revNone}</p>}
+      </section>
       <section className="am-mblock" id="m-progress" aria-labelledby="m-progh">
         <h2 className="am-bt" id="m-progh">{Lx.progT}</h2>
         <ul className="am-prog">

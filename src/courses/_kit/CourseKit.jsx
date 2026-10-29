@@ -17,9 +17,11 @@ import Methods from './Methods.jsx';
 import Practice from './Practice.jsx';
 import Exam from './Exam.jsx';
 import PrintExam from './PrintExam.jsx';
+import Review from './Review.jsx';
+import { dueCounts, useReview } from '../../lib/review.js';
 import './kit.css';
 
-export const TABS = ['inici', 'temari', 'metodes', 'practica', 'simulacre'];
+export const TABS = ['inici', 'temari', 'metodes', 'practica', 'simulacre', 'repas'];
 
 /** Botó del formulari flotant (a la barra superior; el portal conserva el context). */
 function DockButton() {
@@ -49,6 +51,7 @@ export default function CourseKit({ course }) {
   const tab = rest[0] || 'inici';
   const arg = rest[1];
   const bank = useModule(course.k + ':bank', course.bank);
+  const review = useReview();
   useActiveCourse(course.k);
   useEffect(() => { recordVisit(course.k); }, [course.k]);
   useEffect(() => { migrateOnce(course.k, course.migrate); }, [course]);
@@ -80,12 +83,15 @@ export default function CourseKit({ course }) {
   const hasEn = (u) => !!(u && u.langs && u.langs.includes('en'));
   const unitTab = tab === 'temari' || tab === 'metodes';
   const enReady = unitTab ? hasEn(course.units.find((u) => u.id === arg) || course.units[0]) : course.units.every(hasEn);
-  const items = TABS.map((k) => ({ k, label: S.tabs[k], to: course.path + (k === 'inici' ? '' : '/' + k) }));
+  // a la pestanya de repàs, quants exercicis toquen avui
+  const due = dueCounts(review)[course.k] || 0;
+  const items = TABS.map((k) => ({ k, label: k === 'repas' && due ? <>{S.tabs[k]} <span className="kit-badge" data-out="review-due">{due}</span></> : S.tabs[k], to: course.path + (k === 'inici' ? '' : '/' + k) }));
   let body;
   if (tab === 'temari') body = <Lesson unitId={arg || course.units[0].id} />;
   else if (tab === 'metodes') body = <Methods unitId={arg || course.units[0].id} />;
   else if (tab === 'practica') body = <Practice />;
   else if (tab === 'simulacre') body = arg === 'pdf' ? <PrintExam /> : <Exam />;
+  else if (tab === 'repas') body = <Review />;
   else body = <Home />;
 
   return (

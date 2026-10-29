@@ -1,7 +1,8 @@
 /** Textos de la plantilla d'assignatura (iguals per a totes les assignatures). */
 export const K = {
   ca: {
-    tabs: { inici: 'Inici', temari: 'Temari', metodes: "Mètodes d'examen", practica: 'Pràctica', simulacre: 'Simulacre' },
+    tabs: { inici: 'Inici', temari: 'Temari', metodes: "Mètodes d'examen", practica: 'Pràctica', simulacre: 'Simulacre', repas: 'Repàs' },
+    reviewH: 'Repàs d’avui', reviewNote: 'Avui tens %d exercicis per repassar d’aquesta assignatura.',
     formulas: 'Formulari', index: 'Índex', unit: 'Tema', units: 'Temes', section: 'Apartat',
     direct: 'Directe', explained: 'Explicat', modeLabel: "Tipus d'explicació",
     modeHint: { direct: "Al gra: els conceptes, les regles i algun exemple.", explained: 'Pas a pas: més exemples, esquemes, taules i laboratoris.' },
@@ -33,7 +34,8 @@ export const K = {
     loading: 'Carregant…',
   },
   es: {
-    tabs: { inici: 'Inicio', temari: 'Temario', metodes: 'Métodos de examen', practica: 'Práctica', simulacre: 'Simulacro' },
+    tabs: { inici: 'Inicio', temari: 'Temario', metodes: 'Métodos de examen', practica: 'Práctica', simulacre: 'Simulacro', repas: 'Repaso' },
+    reviewH: 'Repaso de hoy', reviewNote: 'Hoy tienes %d ejercicios por repasar de esta asignatura.',
     formulas: 'Formulario', index: 'Índice', unit: 'Tema', units: 'Temas', section: 'Apartado',
     direct: 'Directo', explained: 'Explicado', modeLabel: 'Tipo de explicación',
     modeHint: { direct: 'Al grano: los conceptos, las reglas y algún ejemplo.', explained: 'Paso a paso: más ejemplos, esquemas, tablas y laboratorios.' },
@@ -65,7 +67,8 @@ export const K = {
     loading: 'Cargando…',
   },
   en: {
-    tabs: { inici: 'Overview', temari: 'Lessons', metodes: 'Exam methods', practica: 'Practice', simulacre: 'Mock exam' },
+    tabs: { inici: 'Overview', temari: 'Lessons', metodes: 'Exam methods', practica: 'Practice', simulacre: 'Mock exam', repas: 'Review' },
+    reviewH: 'Today’s review', reviewNote: 'You have %d exercises from this course to review today.',
     formulas: 'Formula sheet', index: 'Contents', unit: 'Unit', units: 'Units', section: 'Section',
     direct: 'Concise', explained: 'Detailed', modeLabel: 'Explanation style',
     modeHint: { direct: 'Straight to the point: concepts, rules and a few examples.', explained: 'Step by step: more examples, diagrams, tables and labs.' },

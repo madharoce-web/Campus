@@ -62,7 +62,7 @@ function EndEx({ ex: raw, n }) {
   const ex = useEx(raw);
   if (!ex) return null;
   const pid = ex.ref || ex.id;
-  return <Exercise ex={ex} variant="end" n={n} done={st.practice[pid]?.ok} onResult={(r) => recordPractice(course.k, pid, r)} />;
+  return <Exercise ex={ex} variant="end" n={n} done={st.practice[pid]?.ok} onResult={(r) => recordPractice(course.k, pid, r, { seed: ex.seed })} />;
 }
 
 /** Temari: índex a l'esquerra i la lliçó (un tema) amb el selector de mode. */

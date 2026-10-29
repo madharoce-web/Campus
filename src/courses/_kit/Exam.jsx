@@ -199,7 +199,7 @@ export default function Exam() {
         <div className="kit-exam-end">
           {sim.result == null ? (
             <button type="button" className="am-btn am-btn-primary" id="kit-finish" disabled={pending > 0}
-              onClick={() => { addExam(course.k, { min: sim.min, mark, n: exs.length, ms: sim.delivered - sim.t0 }, graded.map((g) => ({ id: g.ex.ref || g.ex.id, frac: g.frac }))); setSim({ ...sim, result: mark }); window.scrollTo(0, 0); }}>{S.finish}</button>
+              onClick={() => { addExam(course.k, { min: sim.min, mark, n: exs.length, ms: sim.delivered - sim.t0 }, graded.map((g) => ({ id: g.ex.ref || g.ex.id, frac: g.frac, seed: g.ex.seed, bank: !!(g.ex.ref || g.ex.family || (bank?.items || []).some((x) => x.id === g.ex.id)) }))); setSim({ ...sim, result: mark }); window.scrollTo(0, 0); }}>{S.finish}</button>
           ) : (
             <p className="kit-mark" id="kit-mark">{S.mark}: <b>{num(sim.result, ui)}</b> / 10</p>
           )}
