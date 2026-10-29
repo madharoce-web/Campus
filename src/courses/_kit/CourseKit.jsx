@@ -8,7 +8,7 @@ import SectionTabs from '../../app/SectionTabs.jsx';
 import { NavbarTools, useActiveCourse } from '../../app/NavbarSlots.jsx';
 import { KitContext, useCourse } from './context.js';
 import { K } from './strings.js';
-import { migrateOnce, setTotals } from './state.js';
+import { getKit, migrateOnce, setTotals } from './state.js';
 import { useModule } from './useAsync.js';
 import { toggleDock } from './dockStore.js';
 import Home from './Home.jsx';
@@ -73,6 +73,12 @@ export default function CourseKit({ course }) {
   if ((tab === 'temari' || tab === 'metodes') && arg && course.legacy && !course.units.some((u) => u.id === arg)) {
     const to = course.legacy(arg, rest.slice(1), hash);
     if (to) return <Navigate replace to={tab === 'metodes' ? to.replace('/temari/', '/metodes/').replace(/#.*$/, '') : to} />;
+  }
+  // la pestanya Temari, sense tema, obre l'apartat on es va quedar (o el primer tema)
+  if (tab === 'temari' && !arg) {
+    const last = getKit(course.k).last;
+    const u = last && course.units.find((x) => x.id === last.unit);
+    return <Navigate replace to={course.path + '/temari/' + (u ? u.id + '#' + last.sec : course.units[0].id)} />;
   }
   if (!TABS.includes(tab)) {
     const to = course.legacy && course.legacy(tab, rest, hash);

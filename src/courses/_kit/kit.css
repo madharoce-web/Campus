@@ -422,3 +422,5 @@ math{font-family:"Cambria Math", 'STIXTwoMath-Regular', "STIX Two Math", 'NotoSa
 .kit-review-end{margin-top:16px; padding:12px 16px; border-radius:var(--am-r); background:#eef1e0; color:#3e4d1c; font-weight:600}
 .kit-review-note{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 14px; margin:0 0 16px; padding:10px 14px; border:1px solid #cfd6a8; border-radius:var(--am-r); background:#f4f6ea}
 .kit-review-note .am-btn{color:#fff}
+.kit-units-here{display:inline-block; margin-left:10px; padding:1px 10px; border-radius:999px; background:var(--am-brand, #696e2e); color:#fff !important; font-size:.78rem; font-weight:600; text-decoration:none !important; vertical-align:middle}
+.kit-units-here:hover{background:var(--am-brand-dark, #55591f)}

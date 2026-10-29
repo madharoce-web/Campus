@@ -70,7 +70,10 @@ export default function CodeEditor({ value, onChange, readOnly = false, onRun, o
       cm.refresh();
       const code = cm.getValue();
       const ln = code.split('\n').findIndex((l) => /^\s*$/.test(l) && l.length > 0);
-      if (focusTpl != null && ln >= 0 && code === focusTpl) { cm.focus(); cm.setCursor({ line: ln, ch: 4 }); }
+      // només si l'editor ja és a la vista: en una llista d'exercicis, enfocar-lo faria saltar la pàgina
+      const r = host.current && host.current.getBoundingClientRect();
+      const inView = r && r.top >= 0 && r.bottom <= window.innerHeight;
+      if (focusTpl != null && ln >= 0 && code === focusTpl && inView) { cm.focus(); cm.setCursor({ line: ln, ch: 4 }); }
     }, 0);
     return () => clearTimeout(t);
   }, [readOnly, viewer, focusTpl]);

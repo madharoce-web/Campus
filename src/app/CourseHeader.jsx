@@ -5,7 +5,7 @@ import { CourseIcon } from './icons.jsx';
 import { T } from './strings.js';
 
 /**
- * Capçalera del curs: molles de pa, icona, títol, contingut extra (puntuació, cercador…)
+ * Capçalera del curs: curs pare (en els subcursos), icona, títol, contingut extra (puntuació, cercador…)
  * i subtítol. `before` es posa abans de la icona (per exemple, el botó del calaix).
  */
 export default function CourseHeader({ k, title, before, extra, sub, children }) {
@@ -15,11 +15,12 @@ export default function CourseHeader({ k, title, before, extra, sub, children })
   const t = title ?? pick(c.title, lang);
   return (
     <header className="m-hd">
-      <nav className="m-crumbs" aria-label={T[lang].crumbs}>
-        <Link to="/cursos">{T[lang].crumb}</Link>
-        {parent && <><span className="m-sep">/</span><Link to={parent.path}>{pick(parent.title, lang)}</Link></>}
-        <span className="m-sep">/</span><span>{t}</span>
-      </nav>
+      {/* la barra superior ja porta a «Els meus cursos»: les molles només diuen de quin curs penja un subcurs */}
+      {parent && (
+        <nav className="m-crumbs" aria-label={T[lang].crumbs}>
+          <Link to={parent.path}>← {pick(parent.title, lang)}</Link>
+        </nav>
+      )}
       <div className="m-ph">
         {before}
         {/* la icona, amb els colors de la marca (oliva), com al registre guiat */}

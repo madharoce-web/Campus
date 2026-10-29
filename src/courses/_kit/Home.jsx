@@ -4,13 +4,12 @@ import { inline, Tx, useTr } from './text.jsx';
 import { useCourse } from './context.js';
 import { K } from './strings.js';
 import { useKit } from './state.js';
-import { openDock } from './dockStore.js';
 import Tour from '../../app/Tour.jsx';
 import { TOUR_COURSE } from '../../app/tours.js';
 import { useCampus } from '../../lib/campus.js';
 import { dueCounts, useReview } from '../../lib/review.js';
 
-/** Inici de l'assignatura: resum, temes amb el progrés, «continua on ho vas deixar» i accessos. */
+/** Inici de l'assignatura: resum, xifres i temes amb el progrés (i on es va quedar). Les seccions són a les pestanyes. */
 export default function Home() {
   const course = useCourse();
   const { ui } = useLang();
@@ -19,7 +18,6 @@ export default function Home() {
   const st = useKit(course.k);
   const nsec = course.units.reduce((n, u) => n + u.sections.length, 0);
   const last = st.last && course.units.find((u) => u.id === st.last.unit);
-  const go = last ? course.path + '/temari/' + last.id + '#' + st.last.sec : course.path + '/temari/' + course.units[0].id;
   const done = Object.values(st.practice).filter((p) => p && p.ok).length;
   const campus = useCampus();
   const due = dueCounts(useReview())[course.k] || 0;
@@ -40,12 +38,6 @@ export default function Home() {
           <Link className="am-btn am-btn-primary" to={course.path + '/repas'}>{S.tabs.repas}</Link>
         </p>
       )}
-      <div className="am-btn-row kit-home-go">
-        <Link className="am-btn am-btn-primary" id="kit-continue" to={go}>{last ? S.continue : S.start}</Link>
-        <Link className="am-btn am-btn-secondary" to={course.path + '/practica'}>{S.quick.practice}</Link>
-        <Link className="am-btn am-btn-secondary" to={course.path + '/simulacre'}>{S.quick.exam}</Link>
-        {course.formulas && <button type="button" className="am-btn am-btn-secondary" onClick={() => openDock(course.k)}>{S.quick.formulas}</button>}
-      </div>
       <h2 className="kit-h2">{S.homeH}</h2>
       <ol className="kit-units">
         {course.units.map((u) => {
@@ -56,11 +48,12 @@ export default function Home() {
               <span className="kit-units-n">{u.n}</span>
               <div className="kit-units-b">
                 <Link to={course.path + '/temari/' + u.id} className="kit-units-t">{inline(tr(u.t))}</Link>
+                {/* on es va quedar: continua des de l'últim apartat llegit */}
+                {last && last.id === u.id && <Link className="kit-units-here" id="kit-continue" to={course.path + '/temari/' + u.id + '#' + st.last.sec}>{S.continueHere}</Link>}
                 {u.d && <p>{inline(tr(u.d))}</p>}
                 <div className="kit-units-m">
                   <span className="am-bar"><span style={{ width: pct + '%' }} /></span>
                   <small>{S.readOf.replace('%a', r).replace('%b', u.sections.length)}</small>
-                  <Link to={course.path + '/metodes/' + u.id} className="kit-units-l">{S.tabs.metodes}</Link>
                 </div>
               </div>
             </li>

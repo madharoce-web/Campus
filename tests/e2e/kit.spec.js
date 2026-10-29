@@ -19,9 +19,16 @@ for (const [path, k, u1, uc] of KIT) {
       await page.goto(path);
       await expect(page.locator('#kit-tabs a')).toHaveCount(6);
       await expect(page.locator('.kit-units li').first()).toBeVisible();
-      await page.click('#kit-continue');
+      // sense botons repetits a l'inici: les seccions són a les pestanyes
+      await expect(page.locator('.kit-home-go')).toHaveCount(0);
+      await page.click('#kit-tabs a[data-k="temari"]');
       await expect(page).toHaveURL(new RegExp(path + '/temari/' + u1 + '$'));
       await expect(page.locator('section.kit-sec').first()).toBeVisible();
+      // en tornar a l'inici, «Continua aquí» marca el tema on es va quedar, i Temari hi torna
+      await page.click('#kit-tabs a[data-k="inici"]');
+      await expect(page.locator('#kit-continue')).toBeVisible();
+      await page.click('#kit-tabs a[data-k="temari"]');
+      await expect(page).toHaveURL(new RegExp(path + '/temari/' + u1 + '#'));
       await expectNoOverflow(page);
       expect(errors).toEqual([]);
     });
