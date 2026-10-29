@@ -621,12 +621,12 @@ export default [
   ]
  },
  {
-  "id": "g1",
-  "n": "10",
+  "id": "gr1",
+  "n": "G1",
   "t": [
-   "Teoria de grafs",
-   "Teoría de grafos",
-   "Graph theory"
+   "Què és un graf",
+   "Qué es un grafo",
+   "What a graph is"
   ],
   "langs": [
    "ca",
@@ -637,11 +637,11 @@ export default [
    {
     "id": "1-conceptes-basics",
     "t": [
-     "Conceptes bàsics",
-     "Conceptos básicos",
-     "Basic concepts"
+     "Vèrtexs, costats i valències",
+     "Vértices, lados y valencias",
+     "Vertices, edges and degrees"
     ],
-    "aliases": [
+    "old": [
      "1-1-graf-no-dirigit",
      "1-2-graf-dirigit-o-digraf",
      "1-3-terminologia",
@@ -662,28 +662,81 @@ export default [
     "t": [
      "Operacions amb grafs",
      "Operaciones con grafos",
-     "Operations with graphs"
+     "Operations on graphs"
     ]
-   },
+   }
+  ]
+ },
+ {
+  "id": "gr2",
+  "n": "G2",
+  "t": [
+   "Representació de grafs",
+   "Representación de grafos",
+   "Representing graphs"
+  ],
+  "langs": [
+   "ca",
+   "es",
+   "en"
+  ],
+  "sections": [
    {
     "id": "4-representacio-de-grafs",
     "t": [
-     "Representació de grafs",
-     "Representación de grafos",
-     "Representation of graphs"
+     "Llista i matriu d'adjacència",
+     "Lista y matriz de adyacencia",
+     "Adjacency list and matrix"
     ],
-    "aliases": [
-     "4-1-matriu-d-adjacencia",
-     "4-2-successions-de-costats-i-potencies-de-la-matriu",
-     "4-3-matriu-d-incidencia"
+    "old": [
+     "4-1-matriu-d-adjacencia"
     ]
    },
+   {
+    "id": "gr2-potencies",
+    "t": [
+     "Potències de la matriu i successions de costats",
+     "Potencias de la matriz y sucesiones de lados",
+     "Matrix powers and walks"
+    ],
+    "hard": true,
+    "old": [
+     "4-2-successions-de-costats-i-potencies-de-la-matriu"
+    ]
+   },
+   {
+    "id": "gr2-incidencia",
+    "t": [
+     "Matriu d'incidència",
+     "Matriz de incidencia",
+     "Incidence matrix"
+    ],
+    "old": [
+     "4-3-matriu-d-incidencia"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gr3",
+  "n": "G3",
+  "t": [
+   "Camins i connexió",
+   "Caminos y conexión",
+   "Paths and connectivity"
+  ],
+  "langs": [
+   "ca",
+   "es",
+   "en"
+  ],
+  "sections": [
    {
     "id": "5-camins-i-circuits",
     "t": [
      "Camins i circuits",
      "Caminos y circuitos",
-     "Paths and circuits"
+     "Walks, paths and circuits"
     ]
    },
    {
@@ -691,9 +744,9 @@ export default [
     "t": [
      "Connexió",
      "Conexión",
-     "Connectedness"
+     "Connectivity"
     ],
-    "aliases": [
+    "old": [
      "6-1-rang-de-valors-per-al-nombre-de-costats",
      "6-2-conjunts-desconnectors-i-de-tall"
     ]
@@ -705,13 +758,30 @@ export default [
      "Conectividad en grafos dirigidos",
      "Connectivity in directed graphs"
     ],
-    "aliases": [
+    "hard": true,
+    "old": [
      "7-1-successors-i-antecessors",
      "7-2-diccionari-d-un-graf",
      "7-3-components-fortament-connexes",
      "7-4-graf-condensat"
     ]
-   },
+   }
+  ]
+ },
+ {
+  "id": "gr4",
+  "n": "G4",
+  "t": [
+   "Circuits d'Euler i de Hamilton",
+   "Circuitos de Euler y de Hamilton",
+   "Euler and Hamilton circuits"
+  ],
+  "langs": [
+   "ca",
+   "es",
+   "en"
+  ],
+  "sections": [
    {
     "id": "8-circuits-d-euler",
     "t": [
@@ -719,7 +789,7 @@ export default [
      "Circuitos de Euler",
      "Euler circuits"
     ],
-    "aliases": [
+    "old": [
      "8-1-metode-i-circuits-parcials",
      "8-2-metode-ii-metode-de-fleury",
      "8-3-graf-euleria-i-semi-euleria"
@@ -732,7 +802,8 @@ export default [
      "Circuitos de Hamilton",
      "Hamilton circuits"
     ],
-    "aliases": [
+    "hard": true,
+    "old": [
      "9-1-condicions-suficients",
      "9-2-grafs-bipartits-i-circuits-de-hamilton",
      "9-3-metode-exhaustiu",
@@ -740,20 +811,62 @@ export default [
      "9-5-matriu-literal-i-producte-llati",
      "9-6-metode-de-la-concatenacio-llatina"
     ]
-   },
+   }
+  ]
+ },
+ {
+  "id": "gr5",
+  "n": "G5",
+  "t": [
+   "Camí més curt",
+   "Camino más corto",
+   "Shortest paths"
+  ],
+  "langs": [
+   "ca",
+   "es",
+   "en"
+  ],
+  "sections": [
    {
     "id": "10-cami-mes-curt",
     "t": [
-     "Camí més curt",
-     "Camino más corto",
-     "Shortest path"
+     "Grafs ponderats i nombre mínim de costats",
+     "Grafos ponderados y número mínimo de lados",
+     "Weighted graphs and fewest edges"
     ],
-    "aliases": [
+    "old": [
      "10-1-graf-ponderat",
-     "10-2-nombre-minim-de-costats-pesos-unitaris",
-     "10-3-algorisme-de-dijkstra"
+     "10-2-nombre-minim-de-costats-pesos-unitaris"
     ]
    },
+   {
+    "id": "gr5-dijkstra",
+    "t": [
+     "Algorisme de Dijkstra",
+     "Algoritmo de Dijkstra",
+     "Dijkstra's algorithm"
+    ],
+    "old": [
+     "10-3-algorisme-de-dijkstra"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gr6",
+  "n": "G6",
+  "t": [
+   "Isomorfisme i planaritat",
+   "Isomorfismo y planaridad",
+   "Isomorphism and planarity"
+  ],
+  "langs": [
+   "ca",
+   "es",
+   "en"
+  ],
+  "sections": [
    {
     "id": "11-grafs-isomorfs",
     "t": [
@@ -761,7 +874,7 @@ export default [
      "Grafos isomorfos",
      "Isomorphic graphs"
     ],
-    "aliases": [
+    "old": [
      "11-1-propietats"
     ]
    },
@@ -772,38 +885,76 @@ export default [
      "Grafos planares",
      "Planar graphs"
     ],
-    "aliases": [
+    "hard": true,
+    "old": [
      "12-1-cares",
      "12-2-teorema-d-euler-per-a-grafs-planars",
      "12-3-reduccions-en-serie-i-grafs-homeomorfs",
      "12-4-teorema-de-kuratowski",
      "12-5-graf-dual"
     ]
-   },
+   }
+  ]
+ },
+ {
+  "id": "gr7",
+  "n": "G7",
+  "t": [
+   "Acoloriment",
+   "Coloración",
+   "Colouring"
+  ],
+  "langs": [
+   "ca",
+   "es",
+   "en"
+  ],
+  "sections": [
    {
     "id": "13-acoloriment",
     "t": [
-     "Acoloriment",
-     "Coloreado",
-     "Colouring"
+     "Acoloriment de vèrtexs",
+     "Coloración de vértices",
+     "Vertex colouring"
     ],
-    "aliases": [
+    "old": [
      "13-1-acoloriment-dels-vertexs",
      "13-2-teorema-dels-quatre-colors",
-     "13-3-algorisme-per-acolorir-els-vertexs",
-     "13-4-acoloriment-dels-costats",
+     "13-3-algorisme-per-acolorir-els-vertexs"
+    ]
+   },
+   {
+    "id": "gr7-costats",
+    "t": [
+     "Acoloriment de costats",
+     "Coloración de lados",
+     "Edge colouring"
+    ],
+    "old": [
+     "13-4-acoloriment-dels-costats"
+    ]
+   },
+   {
+    "id": "gr7-polinomi",
+    "t": [
+     "Polinomi cromàtic",
+     "Polinomio cromático",
+     "Chromatic polynomial"
+    ],
+    "hard": true,
+    "old": [
      "13-5-polinomi-cromatic"
     ]
    }
   ]
  },
  {
-  "id": "g2",
-  "n": "11",
+  "id": "gr8",
+  "n": "G8",
   "t": [
-   "Teoria d'arbres",
-   "Teoría de árboles",
-   "Tree theory"
+   "Arbres i recorreguts",
+   "Árboles y recorridos",
+   "Trees and traversals"
   ],
   "langs": [
    "ca",
@@ -818,7 +969,7 @@ export default [
      "Árboles",
      "Trees"
     ],
-    "aliases": [
+    "old": [
      "14-1-arbres-amb-arrel",
      "14-2-propietats-dels-arbres",
      "14-3-relacions-entre-elements-d-un-arbre",
@@ -832,10 +983,12 @@ export default [
      "Árboles generadores",
      "Spanning trees"
     ],
-    "aliases": [
+    "old": [
      "15-1-metode-1-per-nivells",
      "15-2-metode-2-en-profunditat",
-     "15-3-arbres-generadors-minimals"
+     "15-3-arbres-generadors-minimals",
+     "metode-1-algorisme-de-prim",
+     "metode-2-algorisme-de-kruskal"
     ]
    },
    {
@@ -845,7 +998,7 @@ export default [
      "Recorridos de un grafo",
      "Graph traversals"
     ],
-    "aliases": [
+    "old": [
      "16-1-dfs-depth-first-search",
      "16-2-bfs-breadth-first-search"
     ]
@@ -853,8 +1006,8 @@ export default [
   ]
  },
  {
-  "id": "g3",
-  "n": "12",
+  "id": "gr9",
+  "n": "G9",
   "t": [
    "Planificació de projectes",
    "Planificación de proyectos",
@@ -869,23 +1022,59 @@ export default [
    {
     "id": "17-planificacio-de-projectes",
     "t": [
-     "Planificació de projectes",
-     "Planificación de proyectos",
-     "Project planning"
+     "Tasques, anterioritats i nivells",
+     "Tareas, anterioridades y niveles",
+     "Tasks, precedence and levels"
     ],
-    "aliases": [
+    "old": [
      "17-1-conceptes-basics",
      "17-2-contratemps",
      "17-3-tipus-de-tasques",
      "17-4-nivell-d-una-tasca",
-     "17-5-metodes-de-planificacio",
+     "17-5-metodes-de-planificacio"
+    ]
+   },
+   {
+    "id": "gr9-cpm",
+    "t": [
+     "Mètode C.P.M.: dates early i last",
+     "Método C.P.M.: fechas early y last",
+     "CPM: early and last dates"
+    ],
+    "old": [
      "17-6-metode-c-p-m",
      "17-7-data-early",
-     "17-8-data-last",
+     "17-8-data-last"
+    ]
+   },
+   {
+    "id": "gr9-marges",
+    "t": [
+     "Marges i camí crític",
+     "Márgenes y camino crítico",
+     "Slack and critical path"
+    ],
+    "old": [
      "17-9-marges-i-cami-critic",
      "17-10-exemple-complet-del-metode-c-p-m"
     ]
-   },
+   }
+  ]
+ },
+ {
+  "id": "grr",
+  "n": "GR",
+  "t": [
+   "Repàs de grafs",
+   "Repaso de grafos",
+   "Graph review"
+  ],
+  "langs": [
+   "ca",
+   "es",
+   "en"
+  ],
+  "sections": [
    {
     "id": "18-questions-de-repas",
     "t": [
@@ -904,4 +1093,4 @@ export default [
    }
   ]
  }
-];
+]

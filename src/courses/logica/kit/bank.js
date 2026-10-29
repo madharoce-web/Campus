@@ -1,4 +1,6 @@
 // Generat per tools/kit-import/logica.mjs a partir del contingut anterior; a partir d'ara s'edita aquí.
+import { GRAPH_FAMILIES } from '../graphs/families.js';
+
 export default {
  "items": [
   {
@@ -8143,5 +8145,5 @@ export default {
    "space": "lines:14"
   }
  ],
- "families": []
+ "families": GRAPH_FAMILIES
 };

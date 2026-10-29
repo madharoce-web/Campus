@@ -3,15 +3,15 @@ import { expectNoOverflow, setLang, watchErrors } from './helpers.js';
 import toc from '../../src/courses/logica/kit/toc.js';
 import bank from '../../src/courses/logica/kit/bank.js';
 
-// Lògica i grafs a la plantilla: deu temes de lògica i tres de grafs, qüestionaris com a
-// comprovacions, calculadores i laboratoris, els 46 exercicis i els controls CP1/CP2.
+// Lògica i grafs a la plantilla: deu temes de lògica i deu de grafs, qüestionaris com a
+// comprovacions, calculadores i laboratoris, els exercicis del banc i els controls CP1/CP2.
 async function openToc(page) {
   await page.locator('.kit-toc').waitFor({ state: 'attached' });
   const btn = page.locator('.kit-toc-btn');
   if (await btn.isVisible()) await btn.click();
 }
 
-test('temari: els tretze temes en els dos idiomes', async ({ page }) => {
+test('temari: tots els temes en els dos idiomes', async ({ page }) => {
   const errors = watchErrors(page);
   for (const lang of ['ca', 'es']) {
     if (lang === 'es') await setLang(page, 'es');
@@ -32,11 +32,16 @@ test('enllaços antics: unitats, grafs amb àncora, exercicis i simulacre', asyn
   await page.goto('/logica#u3');
   await expect(page).toHaveURL(/\/logica\/temari\/u3$/);
   await page.goto('/logica/grafs#8-circuits-d-euler');
-  await expect(page).toHaveURL(/\/logica\/temari\/g1#8-circuits-d-euler$/);
+  await expect(page).toHaveURL(/\/logica\/temari\/gr4#8-circuits-d-euler$/);
   await expect(page.locator('[id="8-circuits-d-euler"]')).toBeInViewport();
-  // una àncora de dins d'un apartat (h3)
-  await page.goto('/logica/grafs#8-1-metode-i-circuits-parcials');
-  await expect(page).toHaveURL(/\/logica\/temari\/g1#8-1-metode-i-circuits-parcials$/);
+  // una àncora de dins d'un apartat de l'antic temari de grafs: va a l'apartat on és ara
+  await page.goto('/logica/grafs#13-5-polinomi-cromatic');
+  await expect(page).toHaveURL(/\/logica\/temari\/gr7#gr7-polinomi$/);
+  // els temes de grafs d'abans de la reorganització
+  await page.goto('/logica/temari/g3');
+  await expect(page).toHaveURL(/\/logica\/temari\/gr9$/);
+  await page.goto('/logica/metodes/g2');
+  await expect(page).toHaveURL(/\/logica\/metodes\/gr8$/);
   await page.goto('/logica/xr');
   await expect(page).toHaveURL(/\/logica\/practica$/);
   await page.goto('/logica/sim');
@@ -79,10 +84,10 @@ test('qüestionaris, calculadores i laboratoris', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test('pràctica: els 46 exercicis, amb el filtre d\'origen i la solució per passos', async ({ page }) => {
+test("pràctica: els exercicis i les famílies de grafs, amb el filtre d'origen i la solució per passos", async ({ page }) => {
   const errors = watchErrors(page);
   await page.goto('/logica/practica');
-  await expect(page.locator('#kit-count')).toHaveText(bank.items.length + ' exercicis');
+  await expect(page.locator('#kit-count')).toHaveText(bank.items.length + bank.families.length + ' exercicis');
   await page.click('#kit-f-origin [data-v="exam"]');
   await expect(page.locator('#kit-count')).toHaveText(bank.items.filter((x) => x.src === 'exam').length + ' exercicis');
   const r1 = page.locator('article[data-ex="lg-r1"]');

@@ -1,4 +1,6 @@
 // Generat per tools/kit-import/logica.mjs a partir del contingut anterior; a partir d'ara s'edita aquí.
+import { GRAPH_FORMULAS } from '../graphs/formulas.js';
+
 export default {
  "groups": [
   {
@@ -409,5 +411,6 @@ export default {
     }
    ]
   }
+ , ...GRAPH_FORMULAS
  ]
 };

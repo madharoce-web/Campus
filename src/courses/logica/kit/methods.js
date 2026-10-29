@@ -222,20 +222,103 @@ const u9 = {
   ]),
 };
 
-const g1 = {
+// ---------- grafs (temes gr1–gr9 i repàs)
+const gr1 = {
   solvedH: H,
   tricks: [
-    tricks(L3('Comptar abans de buscar', 'Contar antes de buscar', 'Count before searching'), [
-      L3('Suma de valències = 2·(costats): serveix per comprovar qualsevol graf.', 'Suma de valencias = 2·(lados): sirve para comprobar cualquier grafo.', 'Sum of degrees = 2·(edges): it checks any graph.'),
-      L3('Euler: connex i totes les valències parelles. Semieulerià: 0 o 2 senars.', 'Euler: conexo y todas las valencias pares. Semieuleriano: 0 o 2 impares.', 'Euler: connected and all degrees even. Semi-Eulerian: 0 or 2 odd.'),
-      L3('Hamilton: Ore, Dirac i nombre de costats són **suficients**; un bipartit amb |V₁| ≠ |V₂| no ho és mai.', 'Hamilton: Ore, Dirac y número de lados son **suficientes**; un bipartito con |V₁| ≠ |V₂| no lo es nunca.', 'Hamilton: Ore, Dirac and the number of edges are **sufficient**; a bipartite graph with |V₁| ≠ |V₂| never is.'),
+    tricks(L3('Comptar abans de dibuixar', 'Contar antes de dibujar', 'Count before drawing'), [
+      L3('Suma de valències = 2·(costats). Si la suma surt senar, el graf no existeix.', 'Suma de valencias = 2·(lados). Si la suma sale impar, el grafo no existe.', 'Sum of degrees = 2·(edges). An odd sum means no such graph.'),
+      L3('Un bucle suma 2 a la valència; dos costats paral·lels sumen 1 cadascun.', 'Un bucle suma 2 a la valencia; dos lados paralelos suman 1 cada uno.', 'A loop adds 2 to the degree; each parallel edge adds 1.'),
+      L3('`|E(Kₙ)| = n(n−1)/2`, `|E(K_{m,n})| = m·n`, `|E(Cₙ)| = n`, `|E(Wₙ)| = 2(n−1)`, r-regular: `r·n/2`.', '`|E(Kₙ)| = n(n−1)/2`, `|E(K_{m,n})| = m·n`, `|E(Cₙ)| = n`, `|E(Wₙ)| = 2(n−1)`, r-regular: `r·n/2`.', '`|E(Kₙ)| = n(n−1)/2`, `|E(K_{m,n})| = m·n`, `|E(Cₙ)| = n`, `|E(Wₙ)| = 2(n−1)`, r-regular: `r·n/2`.'),
     ]),
-    tricks(L3('Planars i colors', 'Planares y colores', 'Planar graphs and colours'), [
-      L3('`c = m − n + 2` i `m ≤ 3n − 6`: si es trenca, no és planar.', '`c = m − n + 2` y `m ≤ 3n − 6`: si se rompe, no es planar.', '`c = m − n + 2` and `m ≤ 3n − 6`: if it fails, the graph is not planar.'),
-      L3('`γ = 2` ⟺ bipartit; `γ(Kₙ) = n`; i sempre `γ ≤ δ_max + 1`.', '`γ = 2` ⟺ bipartito; `γ(Kₙ) = n`; y siempre `γ ≤ δ_max + 1`.', '`γ = 2` ⟺ bipartite; `γ(Kₙ) = n`; and always `γ ≤ δ_max + 1`.'),
+    tricks(L3('Existeix el graf?', '¿Existe el grafo?', 'Does the graph exist?'), [
+      L3('Suma parella i cap valència més gran que n − 1 (si és simple).', 'Suma par y ninguna valencia mayor que n − 1 (si es simple).', 'Even sum and no degree above n − 1 (if simple).'),
+      L3('Reducció: treu la valència més gran d i resta 1 a les d següents; repeteix fins a zeros (sí) o un negatiu (no).', 'Reducción: quita la valencia mayor d y resta 1 a las d siguientes; repite hasta ceros (sí) o un negativo (no).', 'Reduction: remove the largest degree d and subtract 1 from the next d; repeat until zeros (yes) or a negative (no).'),
     ]),
-    tricks(L3('Dijkstra', 'Dijkstra', 'Dijkstra'), [
-      L3('Taula amb una fila per iteració: marca fixa, vèrtex triat i anterior `a(v)`. El camí es reconstrueix des del final.', 'Tabla con una fila por iteración: marca fija, vértice elegido y anterior `a(v)`. El camino se reconstruye desde el final.', 'A table with one row per iteration: permanent label, chosen vertex and predecessor `a(v)`. The path is rebuilt from the end.'),
+  ],
+  solved: [{ ref: 'gr1-especials', seed: 21 }, { ref: 'gr1-grafica', seed: 13 }],
+  day: day([
+    L3('**Cita el lema:** «per les encaixades de mans, 2|E| = …». Una fórmula sense nom no es puntua igual.', '**Cita el lema:** «por el apretón de manos, 2|E| = …». Una fórmula sin nombre no se puntúa igual.', '**Name the lemma:** “by the handshake lemma, 2|E| = …”. An unnamed formula scores less.'),
+    L3('**Dibuixa:** un esbós del graf evita errors de comptatge.', '**Dibuja:** un esbozo del grafo evita errores de conteo.', '**Sketch it:** a quick drawing avoids counting slips.'),
+  ]),
+};
+
+const gr2 = {
+  solvedH: H,
+  tricks: [
+    tricks(L3('Llegir matrius', 'Leer matrices', 'Reading matrices'), [
+      L3('No dirigit ⇒ simètrica. Fila = veïns; suma de fila = valència (un bucle hi suma 1 més).', 'No dirigido ⇒ simétrica. Fila = vecinos; suma de fila = valencia (un bucle suma 1 más).', 'Undirected ⇒ symmetric. Row = neighbours; row sum = degree (a loop adds 1 more).'),
+      L3('Suma de tota la matriu = 2|E| (sense bucles).', 'Suma de toda la matriz = 2|E| (sin bucles).', 'Sum of the whole matrix = 2|E| (no loops).'),
+      L3('`(A^k)ᵢⱼ` = successions de longitud k de vᵢ a vⱼ. Fes només la fila que et demanen: fila de A per columnes de A.', '`(A^k)ᵢⱼ` = sucesiones de longitud k de vᵢ a vⱼ. Haz solo la fila que te piden: fila de A por columnas de A.', '`(A^k)ᵢⱼ` = walks of length k from vᵢ to vⱼ. Compute only the row you need: row of A times columns of A.'),
+    ]),
+  ],
+  solved: [{ ref: 'gr2-a2', seed: 21 }, { ref: 'gr2-llegirmatriu', seed: 7 }],
+  day: day([
+    L3('**Ordre dels vèrtexs:** escriu-lo a la capçalera de files i columnes.', '**Orden de los vértices:** escríbelo en la cabecera de filas y columnas.', '**Vertex order:** write it on the row and column headers.'),
+  ]),
+};
+
+const gr3 = {
+  solvedH: H,
+  tricks: [
+    tricks(L3('Classificar recorreguts', 'Clasificar recorridos', 'Classifying walks'), [
+      L3('Primer: tots els parells consecutius són costats? Després: costats repetits (simple)? Vèrtexs repetits (elemental)? Tanca (circuit)?', 'Primero: ¿todos los pares consecutivos son lados? Después: ¿lados repetidos (simple)? ¿Vértices repetidos (elemental)? ¿Cierra (circuito)?', 'First: is every consecutive pair an edge? Then: repeated edges (trail)? Repeated vertices (path)? Does it close (circuit)?'),
+    ]),
+    tricks(L3('Connexió', 'Conexión', 'Connectivity'), [
+      L3('Simple i connex: `n − 1 ≤ m ≤ n(n−1)/2`. Amb k components: `m ≤ (n−k)(n−k+1)/2`.', 'Simple y conexo: `n − 1 ≤ m ≤ n(n−1)/2`. Con k componentes: `m ≤ (n−k)(n−k+1)/2`.', 'Simple and connected: `n − 1 ≤ m ≤ n(n−1)/2`. With k components: `m ≤ (n−k)(n−k+1)/2`.'),
+      L3('Components fortes: marca + (on arribo) i − (des d\'on m\'arriben); les dues marques = component.', 'Componentes fuertes: marca + (adonde llego) y − (desde dónde me llegan); las dos marcas = componente.', 'Strong components: mark + (where I can go) and − (who can reach me); both marks = component.'),
+    ]),
+  ],
+  solved: [{ ref: 'gr3-cotes', seed: 17 }, { ref: 'gr3-fort', seed: 2 }],
+  day: day([
+    L3('**Components fortes:** escriu les marques de cada vèrtex, no només el resultat.', '**Componentes fuertes:** escribe las marcas de cada vértice, no solo el resultado.', '**Strong components:** write each vertex\'s marks, not just the result.'),
+  ]),
+};
+
+const gr4 = {
+  solvedH: H,
+  tricks: [
+    tricks(L3('Euler en 10 segons', 'Euler en 10 segundos', 'Euler in 10 seconds'), [
+      L3('Connex? Compta els vèrtexs de valència senar: 0 → circuit, 2 → camí (entre els dos senars), 4 o més → res.', '¿Conexo? Cuenta los vértices de valencia impar: 0 → circuito, 2 → camino (entre los dos impares), 4 o más → nada.', 'Connected? Count odd vertices: 0 → circuit, 2 → path (between the two odd ones), 4+ → none.'),
+      L3('Per trobar-lo: circuits parcials enganxats, o Fleury (no travessis un istme si pots evitar-ho).', 'Para encontrarlo: circuitos parciales enganchados, o Fleury (no cruces un istmo si puedes evitarlo).', 'To find it: splice partial circuits, or Fleury (avoid crossing a bridge if you can).'),
+    ]),
+    tricks(L3('Hamilton', 'Hamilton', 'Hamilton'), [
+      L3('Per dir que sí: dona el circuit, o Dirac/Ore. Per dir que no: vèrtex de valència 1, vèrtex de tall o bipartit amb parts desiguals.', 'Para decir que sí: da el circuito, o Dirac/Ore. Para decir que no: vértice de valencia 1, vértice de corte o bipartito con partes desiguales.', 'To say yes: give the circuit, or Dirac/Ore. To say no: a degree-1 vertex, a cut vertex or a bipartite graph with unequal sides.'),
+      L3('Els vèrtexs de valència 2 obliguen: els seus dos costats hi són segur.', 'Los vértices de valencia 2 obligan: sus dos lados están seguro.', 'Degree-2 vertices force both their edges.'),
+    ]),
+  ],
+  solved: [{ ref: 'gr4-troba', seed: 15 }, { ref: 'gr4-hamilton', seed: 4 }],
+  day: day([
+    L3('**Justifica amb el teorema:** «és eulerià perquè és connex i totes les valències són parelles».', '**Justifica con el teorema:** «es euleriano porque es conexo y todas las valencias son pares».', '**Justify with the theorem:** “it is Eulerian because it is connected and every degree is even”.'),
+    L3('**Comprova el resultat:** el circuit d\'Euler ha de tenir |E| + 1 vèrtexs escrits; el de Hamilton, n + 1.', '**Comprueba el resultado:** el circuito de Euler debe tener |E| + 1 vértices escritos; el de Hamilton, n + 1.', '**Check the result:** an Euler circuit lists |E| + 1 vertices; a Hamilton circuit, n + 1.'),
+  ]),
+};
+
+const gr5 = {
+  solvedH: H,
+  tricks: [
+    tricks(L3('La taula de Dijkstra', 'La tabla de Dijkstra', 'The Dijkstra table'), [
+      L3('Una columna per vèrtex, una fila per pas; a cada casella `(L, a)`; marca amb * el que es fixa.', 'Una columna por vértice, una fila por paso; en cada casilla `(L, a)`; marca con * el que se fija.', 'One column per vertex, one row per step; each cell `(L, a)`; mark with * the vertex fixed.'),
+      L3('Es fixa el mínim de **totes** les etiquetes provisionals, no només dels veïns de l\'últim.', 'Se fija el mínimo de **todas** las etiquetas provisionales, no solo de los vecinos del último.', 'Fix the minimum of **all** temporary labels, not just the last vertex\'s neighbours.'),
+      L3('Si una etiqueta millora, canvia també l\'anterior `a(v)`. El camí es llegeix enrere.', 'Si una etiqueta mejora, cambia también el anterior `a(v)`. El camino se lee hacia atrás.', 'When a label improves, update `a(v)` too. Read the path backwards.'),
+    ]),
+  ],
+  solved: [{ ref: 'gr5-dijkstra', seed: 7 }, { ref: 'gr5-salts', seed: 3 }],
+  day: day([
+    L3('**Comprova la longitud:** suma els pesos del camí que has escrit; ha de coincidir amb L(destí).', '**Comprueba la longitud:** suma los pesos del camino que has escrito; debe coincidir con L(destino).', '**Check the length:** add the weights of your path; it must equal L(target).'),
+  ]),
+};
+
+const gr6 = {
+  solvedH: H,
+  tricks: [
+    tricks(L3('Isomorfs o no', 'Isomorfos o no', 'Isomorphic or not'), [
+      L3('Compara, en aquest ordre: vèrtexs, costats, valències, triangles (cicles curts), bipartit.', 'Compara, en este orden: vértices, lados, valencias, triángulos (ciclos cortos), bipartito.', 'Compare, in this order: vertices, edges, degrees, triangles (short cycles), bipartiteness.'),
+      L3('Si tot coincideix, construeix la bijecció començant pels vèrtexs de valència única i comprova **tots** els costats.', 'Si todo coincide, construye la biyección empezando por los vértices de valencia única y comprueba **todos** los lados.', 'If all match, build the bijection starting from vertices with a unique degree and check **every** edge.'),
+    ]),
+    tricks(L3('Planars', 'Planares', 'Planar graphs'), [
+      L3('`c = m − n + 2` (connex). Simple: `m ≤ 3n − 6`; sense triangles: `m ≤ 2n − 4`. Si es trenca, no és planar.', '`c = m − n + 2` (conexo). Simple: `m ≤ 3n − 6`; sin triángulos: `m ≤ 2n − 4`. Si se rompe, no es planar.', '`f = m − n + 2` (connected). Simple: `m ≤ 3n − 6`; no triangles: `m ≤ 2n − 4`. If it fails, not planar.'),
+      L3('Per dir que sí, dibuixa\'l sense encreuaments. Per dir que no, una cota o un K₅ / K₃,₃ amagat (Kuratowski).', 'Para decir que sí, dibújalo sin cruces. Para decir que no, una cota o un K₅ / K₃,₃ escondido (Kuratowski).', 'To say yes, draw it without crossings. To say no, a bound or a hidden K₅ / K₃,₃ (Kuratowski).'),
     ]),
   ],
   solved: [
@@ -245,20 +328,38 @@ const g1 = {
         step('`m ≤ 3n − 6 = 12` ✓', L3('Compatible amb ser planar.', 'Compatible con ser planar.', 'Compatible with being planar.')),
         step('`c = m − n + 2 = 12 − 6 + 2 = 8`', L3('Fórmula d\'Euler (és l\'octàedre).', 'Fórmula de Euler (es el octaedro).', 'Euler\'s formula (it is the octahedron).')),
       ] },
+    { ref: 'gr6-iso', seed: 14 },
   ],
   day: day([
-    L3('**Justifica amb el teorema:** «és eulerià perquè és connex i totes les valències són parelles».', '**Justifica con el teorema:** «es euleriano porque es conexo y todas las valencias son pares».', '**Justify with the theorem:** “it is Eulerian because it is connected and all the degrees are even”.'),
-    L3('**Algorismes:** escriu la taula de cada iteració; el resultat sol no puntua.', '**Algoritmos:** escribe la tabla de cada iteración; el resultado solo no puntúa.', '**Algorithms:** write the table of each iteration; the result alone earns nothing.'),
+    L3('**No isomorfs:** n\'hi ha prou amb **un** invariant diferent, ben explicat.', '**No isomorfos:** basta con **un** invariante distinto, bien explicado.', '**Not isomorphic:** **one** differing invariant, well explained, is enough.'),
   ]),
 };
 
-const g2 = {
+const gr7 = {
+  solvedH: H,
+  tricks: [
+    tricks(L3('Nombre cromàtic', 'Número cromático', 'Chromatic number'), [
+      L3('Fita inferior: un triangle ⇒ ≥ 3; un K₄ ⇒ ≥ 4; un cicle senar ⇒ ≥ 3. Fita superior: un acoloriment concret.', 'Cota inferior: un triángulo ⇒ ≥ 3; un K₄ ⇒ ≥ 4; un ciclo impar ⇒ ≥ 3. Cota superior: una coloración concreta.', 'Lower bound: a triangle ⇒ ≥ 3; a K₄ ⇒ ≥ 4; an odd cycle ⇒ ≥ 3. Upper bound: an explicit colouring.'),
+      L3('`γ = 2` ⟺ bipartit; `γ(Kₙ) = n`; sempre `γ ≤ δ_max + 1`; planar ⇒ `γ ≤ 4`.', '`γ = 2` ⟺ bipartito; `γ(Kₙ) = n`; siempre `γ ≤ δ_max + 1`; planar ⇒ `γ ≤ 4`.', '`γ = 2` ⟺ bipartite; `γ(Kₙ) = n`; always `γ ≤ δ_max + 1`; planar ⇒ `γ ≤ 4`.'),
+    ]),
+    tricks(L3('Welsh–Powell', 'Welsh–Powell', 'Welsh–Powell'), [
+      L3('Escriu l\'ordre per valència i, per a cada color, la llista de vèrtexs que hi entren.', 'Escribe el orden por valencia y, para cada color, la lista de vértices que entran.', 'Write the order by degree and, for each colour, the list of vertices it takes.'),
+      L3('Si dona k colors, busca una fita inferior igual a k per dir que és el mínim.', 'Si da k colores, busca una cota inferior igual a k para decir que es el mínimo.', 'If it gives k colours, find a matching lower bound to claim it is minimal.'),
+    ]),
+  ],
+  solved: [{ ref: 'gr7-acoloreix', seed: 5 }, { ref: 'gr7-cromatic', seed: 3 }],
+  day: day([
+    L3('**Dos arguments:** «se\'n necessiten almenys k perquè…» i «amb k n\'hi ha prou: aquí tens l\'acoloriment».', '**Dos argumentos:** «se necesitan al menos k porque…» y «con k basta: aquí tienes la coloración».', '**Two arguments:** “at least k are needed because…” and “k suffice: here is the colouring”.'),
+  ]),
+};
+
+const gr8 = {
   solvedH: H,
   tricks: [
     tricks(L3('Arbres', 'Árboles', 'Trees'), [
       L3('n vèrtexs ⟹ n − 1 costats; m-ari regular: `n = m·i + 1`, `t = (m − 1)·i + 1`.', 'n vértices ⟹ n − 1 lados; m-ario regular: `n = m·i + 1`, `t = (m − 1)·i + 1`.', 'n vertices ⟹ n − 1 edges; full m-ary: `n = m·i + 1`, `t = (m − 1)·i + 1`.'),
-      L3('Prim fa créixer un sol arbre; Kruskal tria el costat més barat de tot el graf que no faci circuit.', 'Prim hace crecer un solo árbol; Kruskal elige el lado más barato de todo el grafo que no forme circuito.', 'Prim grows a single tree; Kruskal picks the cheapest edge of the whole graph that does not form a circuit.'),
-      L3('DFS = pila; BFS = cua; en empat, el vèrtex d\'índex més petit.', 'DFS = pila; BFS = cola; en empate, el vértice de índice más pequeño.', 'DFS = stack; BFS = queue; on a tie, the vertex with the smallest index.'),
+      L3('Prim fa créixer un sol arbre; Kruskal tria el costat més barat de tot el graf que no faci circuit.', 'Prim hace crecer un solo árbol; Kruskal elige el lado más barato de todo el grafo que no forme circuito.', 'Prim grows a single tree; Kruskal picks the cheapest edge in the whole graph that closes no circuit.'),
+      L3('DFS = pila; BFS = cua; en empat, ordre alfabètic.', 'DFS = pila; BFS = cola; en empate, orden alfabético.', 'DFS = stack; BFS = queue; on a tie, alphabetical order.'),
     ]),
   ],
   solved: [
@@ -267,17 +368,21 @@ const g2 = {
         step(L3('Arbre binari regular: les fulles són els jugadors, `t = 64`.', 'Árbol binario regular: las hojas son los jugadores, `t = 64`.', 'Full binary tree: the leaves are the players, `t = 64`.')),
         step('`t = i + 1 ⟹ i = 63`', L3('Cada vèrtex intern és un partit.', 'Cada vértice interno es un partido.', 'Each internal vertex is a match.')),
       ] },
+    { ref: 'gr8-minim', seed: 11 },
+    { ref: 'gr8-bfs', seed: 13 },
   ],
   day: day([
-    L3('**Prim i Kruskal:** llista els costats en l\'ordre en què entren i el pes total.', '**Prim y Kruskal:** lista los lados en el orden en que entran y el peso total.', '**Prim and Kruskal:** list the edges in the order they enter and the total weight.'),
+    L3('**Prim i Kruskal:** llista els costats en l\'ordre en què entren (i els rebutjats) i el pes total.', '**Prim y Kruskal:** lista los lados en el orden en que entran (y los rechazados) y el peso total.', '**Prim and Kruskal:** list the edges in the order they enter (and the rejected ones) and the total weight.'),
+    L3('**Recorreguts:** escriu l\'estat de la pila o de la cua a cada pas.', '**Recorridos:** escribe el estado de la pila o de la cola en cada paso.', '**Traversals:** write the stack or queue at each step.'),
   ]),
 };
 
-const g3 = {
+const gr9 = {
   solvedH: H,
   tricks: [
     tricks(L3('CPM en quatre passos', 'CPM en cuatro pasos', 'CPM in four steps'), [
-      L3('Nivells: elimina les tasques ja col·locades i dona el nivell següent a les que no tenen anteriors.', 'Niveles: elimina las tareas ya colocadas y da el nivel siguiente a las que no tienen anteriores.', 'Levels: remove the tasks already placed and give the next level to those without predecessors.'),
+      L3('Nivells: elimina les tasques ja col·locades i dona el nivell següent a les que no tenen anteriors.', 'Niveles: elimina las tareas ya colocadas y da el nivel siguiente a las que no tienen anteriores.', 'Levels: remove the tasks already placed and give the next level to those with no predecessors.'),
+      L3('Pes de l\'arc X → Y = durada de **X**. Afegeix α i ω.', 'Peso del arco X → Y = duración de **X**. Añade α y ω.', 'Weight of arc X → Y = duration of **X**. Add α and ω.'),
       L3('Early cap endavant amb **màxims**; last cap enrere amb **mínims**.', 'Early hacia delante con **máximos**; last hacia atrás con **mínimos**.', 'Early forwards with **maxima**; last backwards with **minima**.'),
       L3('Marge total = last − early; les tasques amb marge 0 formen el camí crític.', 'Margen total = last − early; las tareas con margen 0 forman el camino crítico.', 'Total slack = last − early; the tasks with zero slack form the critical path.'),
     ]),
@@ -289,10 +394,26 @@ const g3 = {
         step('Last: fi = 8, D = 7, B = 5, C = 3, A = min(5 − 3, 3 − 3) = 0', L3('Camí més curt fins al final, cap enrere.', 'Camino más corto hasta el final, hacia atrás.', 'Shortest path to the end, backwards.')),
         step(L3('Marges: B = 2, la resta 0. Camí crític A → C → D, durada 8.', 'Márgenes: B = 2, el resto 0. Camino crítico A → C → D, duración 8.', 'Slacks: B = 2, the rest 0. Critical path A → C → D, duration 8.')),
       ] },
+    { ref: 'gr9-cpm', seed: 9 },
   ],
   day: day([
-    L3('**Graf:** cada vèrtex amb [early | last]; afegeix tasca inicial i final de durada 0.', '**Grafo:** cada vértice con [early | last]; añade tarea inicial y final de duración 0.', '**Graph:** each vertex with [early | last]; add an initial and a final task of zero duration.'),
+    L3('**Graf:** cada vèrtex amb [early | last]; afegeix tasca inicial i final de durada 0.', '**Grafo:** cada vértice con [early | last]; añade tarea inicial y final de duración 0.', '**Graph:** each vertex with [early | last]; add an initial and a final task of duration 0.'),
+    L3('**Comprova:** la durada del projecte ha de ser la suma de les durades del camí crític.', '**Comprueba:** la duración del proyecto debe ser la suma de las duraciones del camino crítico.', '**Check:** the project duration must equal the sum of the critical path\'s durations.'),
   ]),
 };
 
-export default { u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, g1, g2, g3 };
+const grr = {
+  solvedH: H,
+  tricks: [
+    tricks(L3('Abans del control de grafs', 'Antes del control de grafos', 'Before the graph test'), [
+      L3('Repassa les fórmules de comptar (encaixades, Kₙ, arbres, Euler planar) amb el formulari.', 'Repasa las fórmulas de contar (apretón de manos, Kₙ, árboles, Euler planar) con el formulario.', 'Review the counting formulas (handshake, Kₙ, trees, planar Euler) with the formula sheet.'),
+      L3('Practica un algorisme de cada: Dijkstra, Welsh–Powell, Kruskal o Prim, BFS/DFS i CPM.', 'Practica un algoritmo de cada: Dijkstra, Welsh–Powell, Kruskal o Prim, BFS/DFS y CPM.', 'Practise one of each algorithm: Dijkstra, Welsh–Powell, Kruskal or Prim, BFS/DFS and CPM.'),
+    ]),
+  ],
+  solved: [{ ref: 'gr6-cares', seed: 4 }, { ref: 'gr9-nivells', seed: 6 }],
+  day: day([
+    L3('**Temps:** els algorismes amb taula (Dijkstra, CPM) són els que més punts donen i els que més temps demanen: comença-hi amb calma.', '**Tiempo:** los algoritmos con tabla (Dijkstra, CPM) son los que más puntos dan y los que más tiempo piden: empieza por ellos con calma.', '**Time:** the table algorithms (Dijkstra, CPM) carry the most points and take the most time: start them calmly.'),
+  ]),
+};
+
+export default { u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, gr1, gr2, gr3, gr4, gr5, gr6, gr7, gr8, gr9, grr };

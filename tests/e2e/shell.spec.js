@@ -126,8 +126,8 @@ test('tauler: resum, progrés de cada assignatura, calendari i calaix de blocs',
   await expect(page.locator('h1')).toHaveText('Tauler');
   await expect(page.locator('#m-stats .am-stat')).toHaveCount(4);
   await expect(page.locator('#m-stats .am-stat').first()).toContainText('1/5');
-  // a la plantilla: apartats + exercicis; el progrés antic (lx-done) s'hi ha importat
-  const lgTotal = lgToc.reduce((n, u) => n + u.sections.length, 0) + lgBank.items.length;
+  // a la plantilla: apartats + exercicis i famílies; el progrés antic (lx-done) s'hi ha importat
+  const lgTotal = lgToc.reduce((n, u) => n + u.sections.length, 0) + lgBank.items.length + lgBank.families.length;
   await expect(page.locator('[data-progress="logica"] .am-prog-num')).toHaveText('3 de ' + lgTotal);
   await expect(page.locator('[data-progress="eco"] .am-prog-num')).toHaveText('1 de 43');
   await expect(page.locator('[data-progress="mates"]')).toContainText('Sense seguiment');

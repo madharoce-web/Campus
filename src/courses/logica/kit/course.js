@@ -3,7 +3,7 @@
  * Els laboratoris i el seu context s'afegeixen a ../index.jsx.
  */
 import toc from './toc.js';
-import { rngOf } from '../../_kit/bank.js';
+import { instance, rngOf } from '../../_kit/bank.js';
 
 const LOAD = Object.fromEntries(toc.map((u) => [u.id, () => import(`./units/${u.id}.js`)]));
 export const units = toc.map((u) => ({ ...u, load: LOAD[u.id] }));
@@ -13,11 +13,14 @@ function findAnchor(id) {
   for (const u of units) {
     const s = u.sections.find((x) => x.id === id || (x.aliases || []).includes(id));
     if (s) return '/logica/temari/' + u.id + '#' + id;
+    // àncores dels temes de grafs d'abans de la reorganització: van a l'apartat on és ara aquell contingut
+    const o = u.sections.find((x) => (x.old || []).includes(id));
+    if (o) return '/logica/temari/' + u.id + '#' + o.id;
   }
   return null;
 }
 
-/** Adreces de la versió anterior: /logica/u5, /logica/grafs#…, /logica/xr, /logica/sim, /logica/<àncora>. */
+/** Adreces de la versió anterior: /logica/u5, /logica/grafs#…, /logica/temari/g1, /logica/xr, /logica/sim, /logica/<àncora>. */
 function legacy(tab, rest, hash) {
   const base = '/logica';
   const h = decodeURIComponent((hash || '').replace(/^#/, ''));
@@ -25,7 +28,10 @@ function legacy(tab, rest, hash) {
   if (tab === 'sim') return base + '/simulacre';
   if (tab === 'fs') return base;
   if (tab === 'logica') return base + '/temari/u0';
-  if (tab === 'grafs') return (h && findAnchor(h)) || base + '/temari/g1';
+  if (tab === 'grafs') return (h && findAnchor(h)) || base + '/temari/gr1';
+  // temes de grafs d'abans de la reorganització (g1 grafs, g2 arbres, g3 projectes)
+  const OLD = { g1: 'gr1', g2: 'gr8', g3: 'gr9' };
+  if (OLD[tab]) return (h && findAnchor(h)) || base + '/temari/' + OLD[tab];
   if (units.some((u) => u.id === tab)) return (h && findAnchor(h)) || base + '/temari/' + tab;
   return findAnchor(tab);
 }
@@ -47,7 +53,7 @@ const MODELS = [
   { id: 'cp2', t: L3('Control CP2 (predicats)', 'Control CP2 (predicados)', 'CP2 test (predicate logic)'), units: ['u3', 'u5', 'u8'], slots: [['R', 2], ['E', 4], ['F', 4]],
     desc: L3('Com el control real: un raonament (2 punts), una formalització en CP1 (4) i una resolució en CP1 (4), en una hora i mitja.', 'Como el control real: un razonamiento (2 puntos), una formalización en CP1 (4) y una resolución en CP1 (4), en una hora y media.', 'Like the real test: an argument (2 points), a CP1 formalisation (4) and a CP1 resolution (4), in an hour and a half.') },
 ];
-export const formats = MODELS.map((M) => ({
+const CP = MODELS.map((M) => ({
   ...M, min: 90,
   build: (seed, bank) => {
     const r = rngOf(seed), used = new Set();
@@ -59,6 +65,21 @@ export const formats = MODELS.map((M) => ({
     });
   },
 }));
+
+/** Control de grafs: un exercici generat de cada bloc (Euler, Dijkstra, acoloriment, arbres, projectes), 10 punts. */
+const GRAFS = {
+  id: 'grafs', min: 90, units: ['gr4', 'gr5', 'gr7', 'gr8', 'gr9'],
+  t: L3('Control de grafs', 'Control de grafos', 'Graph test'),
+  desc: L3('Cinc exercicis nous a cada intent: un circuit d’Euler, Dijkstra, un acoloriment, un arbre generador minimal i un projecte pel mètode C.P.M., en una hora i mitja.', 'Cinco ejercicios nuevos en cada intento: un circuito de Euler, Dijkstra, una coloración, un árbol generador minimal y un proyecto por el método C.P.M., en una hora y media.', 'Five new exercises each time: an Euler circuit, Dijkstra, a colouring, a minimum spanning tree and a CPM project, in an hour and a half.'),
+  build: (seed, bank) => {
+    const r = rngOf(seed);
+    return [['gr4-troba', 2], ['gr5-dijkstra', 2.5], ['gr7-acoloreix', 1.5], ['gr8-minim', 1.5], ['gr9-cpm', 2.5]].map(([id, pts]) => {
+      const fam = (bank?.families || []).find((f) => f.id === id);
+      return fam ? { ...instance(fam, r.int(1, 1e6)), pts } : null;
+    }).filter(Boolean);
+  },
+};
+export const formats = [...CP, GRAFS];
 
 export default {
   k: 'logica',
