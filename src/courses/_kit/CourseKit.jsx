@@ -74,11 +74,12 @@ export default function CourseKit({ course }) {
     const to = course.legacy(arg, rest.slice(1), hash);
     if (to) return <Navigate replace to={tab === 'metodes' ? to.replace('/temari/', '/metodes/').replace(/#.*$/, '') : to} />;
   }
-  // la pestanya Temari, sense tema, obre l'apartat on es va quedar (o el primer tema)
+  // la pestanya Temari, sense tema, obre el tema on es va quedar (o el primer), des de dalt: la vista no
+  // salta a cap apartat (per anar a l'apartat exacte hi ha «Continua aquí» a l'inici)
   if (tab === 'temari' && !arg) {
     const last = getKit(course.k).last;
     const u = last && course.units.find((x) => x.id === last.unit);
-    return <Navigate replace to={course.path + '/temari/' + (u ? u.id + '#' + last.sec : course.units[0].id)} />;
+    return <Navigate replace to={course.path + '/temari/' + (u ? u.id : course.units[0].id)} />;
   }
   if (!TABS.includes(tab)) {
     const to = course.legacy && course.legacy(tab, rest, hash);

@@ -28,7 +28,9 @@ for (const [path, k, u1, uc] of KIT) {
       await page.click('#kit-tabs a[data-k="inici"]');
       await expect(page.locator('#kit-continue')).toBeVisible();
       await page.click('#kit-tabs a[data-k="temari"]');
-      await expect(page).toHaveURL(new RegExp(path + '/temari/' + u1 + '#'));
+      await expect(page).toHaveURL(new RegExp(path + '/temari/' + u1 + '$'));
+      // la vista comença a dalt, sense saltar a cap apartat
+      expect(await page.evaluate(() => window.scrollY)).toBe(0);
       await expectNoOverflow(page);
       expect(errors).toEqual([]);
     });
