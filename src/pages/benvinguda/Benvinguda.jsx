@@ -10,6 +10,7 @@ import { DEGREES, DEGREE_BY_KEY } from '../../catalog/degrees.js';
 import { CARD_BY_KEY, COURSES } from '../../courses/registry.js';
 import { CourseIcon } from '../../app/icons.jsx';
 import { DegreeIcon } from '../graus/icons.jsx';
+import { cover, PREPARING, useCurtain } from '../../app/Curtain.jsx';
 import { BRAND } from '../../app/strings.js';
 import { S } from './strings.js';
 import './benvinguda.css';
@@ -45,9 +46,14 @@ export default function Benvinguda() {
   const campus = useCampus();
   const { values: V } = useSettings();
   const navigate = useNavigate();
+  // mentre el teló de transició tapa la pantalla, l'entrada de la targeta espera
+  const veiled = ['in', 'on'].includes(useCurtain().phase);
   const [params] = useSearchParams();
   const edit = params.has('edit');
-  const next = safeNext(params.get('next') || '/cursos');
+  // en acabar el primer registre es va a «Els meus cursos» (les assignatures i el tutorial), llevat que
+  // es vingués d'una pàgina concreta (un curs, el compte…); en editar, es torna d'on es venia
+  const asked = safeNext(params.get('next') || '/cursos');
+  const next = !edit && ['/', '/tauler', '/inici'].includes(asked) ? '/cursos' : asked;
   useDocumentTitle(L.title);
 
   const [step, setStep] = useState(edit ? 2 : 0);
@@ -90,7 +96,7 @@ export default function Benvinguda() {
   const firstName = name.trim().split(/\s+/)[0];
 
   return (
-    <div data-page="benvinguda" className="am-site"><div className="bv">
+    <div data-page="benvinguda" className="am-site"><div className={'bv' + (veiled ? ' is-veiled' : '')}>
       <header className="bv-top">
         <Link className="m-brand" to="/" aria-label={BRAND}>
           <span className="m-mark" aria-hidden="true">AM</span>
@@ -219,7 +225,7 @@ export default function Benvinguda() {
               {L.prep.map((x, i) => <li key={x} className={i < ready ? 'is-on' : ''}>{CHECK}{x.replace('%d', chosen.length)}</li>)}
             </ul>
             <div className="bv-acts">
-              <button type="button" className="am-btn am-btn-primary bv-big" id="bv-go" disabled={ready < 3} onClick={() => navigate(next, { replace: true })}>{L.go}</button>
+              <button type="button" className="am-btn am-btn-primary bv-big" id="bv-go" disabled={ready < 3} onClick={() => cover(PREPARING).then(() => navigate(next, { replace: true, state: { welcome: true } }))}>{L.go}</button>
             </div>
           </section>
         )}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
+import { cover, ENTERING } from '../../app/Curtain.jsx';
 import { safeNext, useAuth } from '../../lib/auth.jsx';
 import { useDocumentTitle } from '../../lib/useDocumentTitle.js';
 import { Spinner } from './ui.jsx';
@@ -21,7 +22,7 @@ export default function Callback() {
   const failed = status === 'guest' || status === 'disabled' || params.has('error') || params.has('error_description');
   useDocumentTitle(Lx.cbTitle);
 
-  useEffect(() => { if (status === 'user') navigate(next, { replace: true }); }, [status, next, navigate]);
+  useEffect(() => { if (status === 'user') cover(ENTERING).then(() => navigate(next, { replace: true })); }, [status, next, navigate]);
 
   return (
     <div data-page="compte" className="am-site">

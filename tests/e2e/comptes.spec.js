@@ -247,6 +247,44 @@ test('compte nou: registre guiat obligatori, desat al perfil i llista d’espera
   expect(errors).toEqual([]);
 });
 
+test('compte nou des de la portada: teló fins al registre guiat (sense veure el campus) i del registre al campus', async ({ page, context }) => {
+  const errors = watchErrors(page);
+  await mockSupabase(context, { fresh: true });
+  // si el tauler o la graella de cursos apareixen abans del registre guiat, és un «flaix» del campus
+  await page.addInitScript(() => {
+    window.__flash = false;
+    new MutationObserver(() => {
+      if (!location.pathname.startsWith('/benvinguda') && !window.__onboarded && document.querySelector('#m-stats, #m-grid')) window.__flash = true;
+    }).observe(document, { childList: true, subtree: true });
+  });
+  await page.goto('/');
+  const form = page.locator('.lp-signup');
+  await form.locator('#ac-email').fill('mar@example.com');
+  await form.locator('button[type="submit"]').click();
+  await form.locator('#ac-code').fill(TEST_CODE);
+  await form.locator('button[type="submit"]').click();
+  await expect(page.locator('.am-curtain')).toBeVisible();
+  await expect(page).toHaveURL(/\/benvinguda\?next=%2Ftauler$/);
+  await expect(page.locator('.am-curtain')).toHaveCount(0);
+  expect(await page.evaluate(() => window.__flash)).toBe(false);
+  await page.click('#bv-start');
+  await page.fill('#bv-name', 'Mar');
+  await page.click('#bv-next');
+  await page.click('[data-degree="informatica"]');
+  await page.click('#bv-next');
+  await page.click('[data-subject="logica"]');
+  await page.click('#bv-finish');
+  await page.evaluate(() => { window.__onboarded = true; });
+  await page.click('#bv-go');
+  await expect(page.locator('.am-curtain')).toBeVisible();
+  // del registre guiat, a «Els meus cursos»: entrada animada i, quan el teló s'aixeca, el tutorial
+  await expect(page).toHaveURL(/\/cursos$/);
+  await expect(page.locator('.m-welcome.is-go')).toBeVisible();
+  await expect(page.locator('.am-curtain')).toHaveCount(0);
+  await expect(page.locator('.am-tour-box')).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
 test('administració: preus, plans i textos editables; /preus i la portada els fan servir', async ({ page, context }) => {
   const errors = watchErrors(page);
   const sb = await mockSupabase(context, { users: [{ email: 'admin@example.com', profile: { role: 'admin' } }] });

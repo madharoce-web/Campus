@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useLang } from '../../lib/i18n.jsx';
 import { useStoredState } from '../../lib/useStoredState.js';
 import { lsGet } from '../../lib/storage.js';
@@ -12,6 +12,7 @@ import { DEGREE_BY_KEY } from '../../catalog/degrees.js';
 import { mySubjects, useCampus } from '../../lib/campus.js';
 import { dueCounts, useReview } from '../../lib/review.js';
 import Tour from '../../app/Tour.jsx';
+import { useCurtain } from '../../app/Curtain.jsx';
 import { TOUR_CURSOS } from '../../app/tours.js';
 import Page from '../../app/Page.jsx';
 import { CalendarBlock, LinksBlock } from '../../app/blocks.jsx';
@@ -40,6 +41,16 @@ export default function Home({ view }) {
   const campus = useCampus();
   const MINE = mySubjects(campus, CARDS);
   const review = useReview();
+  // arribada des del registre guiat: entrada animada i el tutorial, quan el teló ja s'ha aixecat
+  const welcome = !!useLocation().state?.welcome;
+  const curtainOff = useCurtain().phase === 'off';
+  // el tutorial espera que hagin acabat d'entrar les targetes
+  const [settled, setSettled] = useState(!welcome);
+  useEffect(() => {
+    if (!welcome || !curtainOff) return undefined;
+    const id = setTimeout(() => setSettled(true), 1300);
+    return () => clearTimeout(id);
+  }, [welcome, curtainOff]);
 
   const cname = (c) => t(c.name);
   const NameLink = ({ c }) => (
@@ -116,9 +127,9 @@ export default function Home({ view }) {
   };
 
   const viewCursos = (
-    <>
+    <div className={welcome ? 'm-welcome' + (curtainOff ? ' is-go' : '') : undefined}>
       <h1 className="m-h1">{Lx.mycourses}</h1>
-      <Tour id="cursos" steps={TOUR_CURSOS} when={!!campus.done} />
+      <Tour id="cursos" steps={TOUR_CURSOS} when={!!campus.done && curtainOff && settled} />
       {campus.done ? (
         <p className="m-mine" id="m-mine">
           {campus.degrees.map((k) => DEGREE_BY_KEY[k] && <span key={k} className="m-badge">{t(DEGREE_BY_KEY[k].short)}</span>)}
@@ -146,7 +157,7 @@ export default function Home({ view }) {
         </div>
         <div id="m-grid">{grid()}</div>
       </section>
-    </>
+    </div>
   );
 
   const recent = MINE.filter((c) => visit(c.k)).sort((a, b) => visit(b.k) - visit(a.k));

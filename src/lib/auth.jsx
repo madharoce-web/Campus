@@ -50,10 +50,12 @@ export function AuthProvider({ children }) {
     if (uid) {
       uidRef.current = uid;
       setFarewell(false);
-      setState({ status: 'user', user, profile: null });
+      // profileReady: ja se sap si té perfil (la porta del registre guiat espera a saber-ho)
+      setState({ status: 'user', user, profile: null, profileReady: false });
       setActivityUser(sb, uid);
       loadProfile(sb, uid)
-        .then(({ data }) => { if (uidRef.current === uid) setState((s) => ({ ...s, profile: data })); });
+        .then(({ data }) => { if (uidRef.current === uid) setState((s) => ({ ...s, profile: data, profileReady: true })); },
+          () => { if (uidRef.current === uid) setState((s) => ({ ...s, profileReady: true })); });
       await startSync(sb, uid, () => setRev((r) => r + 1));
       return;
     }

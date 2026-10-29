@@ -9,6 +9,7 @@ import { BlockIcon } from '../../app/blocks.jsx';
 import { BRAND } from '../../app/strings.js';
 import DegreeCard from '../graus/DegreeCard.jsx';
 import AuthForm from '../compte/AuthForm.jsx';
+import { cover, ENTERING } from '../../app/Curtain.jsx';
 import '../compte/compte.css';
 import Pattern from '../home/Pattern.jsx';
 import { money } from '../../lib/plan.js';
@@ -74,7 +75,8 @@ export default function Landing() {
   // sense sessió, el formulari per crear el compte és a la capçalera; en entrar, cap a l'aula
   const [signing, setSigning] = useState(false);
   const guest = status === 'guest' || (signing && status !== 'user');
-  useEffect(() => { if (status === 'user' && signing) navigate('/tauler'); }, [status, signing, navigate]);
+  // compte creat des de la portada: el teló puja i porta al campus (o al registre guiat)
+  useEffect(() => { if (status === 'user' && signing) cover(ENTERING).then(() => navigate('/tauler')); }, [status, signing, navigate]);
   useDocumentTitle(L.title);
   // ja som a la portada després de sortir: la propera visita al campus torna a demanar d'entrar
   useEffect(() => { if (farewell) clearFarewell(); }, [farewell, clearFarewell]);

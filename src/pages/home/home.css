@@ -97,3 +97,18 @@ h1,h2,h3,h4,h5{margin:0; line-height:1.2; text-wrap:balance}
 /* per repassar avui */
 #m-review .am-prog li{grid-template-columns:minmax(0,1fr) auto auto}
 #m-review .m-revgo{padding:.25rem .8rem; font-size:.9rem; color:#fff}
+/* arribada des del registre guiat: el campus entra per parts quan el teló s'aixeca */
+.m-welcome > *, .m-welcome #m-grid .m-card{opacity:0}
+.m-welcome.is-go > *{animation:m-wel-in .55s cubic-bezier(.2,.8,.2,1) both}
+.m-welcome.is-go > :nth-child(2){animation-delay:.08s}
+.m-welcome.is-go > :nth-child(3){animation-delay:.16s}
+.m-welcome.is-go > :nth-child(4){animation-delay:.24s}
+.m-welcome.is-go #m-grid .m-card{animation:m-wel-card .6s cubic-bezier(.2,.9,.3,1.15) both}
+.m-welcome.is-go #m-grid .m-card:nth-child(1){animation-delay:.3s}
+.m-welcome.is-go #m-grid .m-card:nth-child(2){animation-delay:.4s}
+.m-welcome.is-go #m-grid .m-card:nth-child(3){animation-delay:.5s}
+.m-welcome.is-go #m-grid .m-card:nth-child(4){animation-delay:.6s}
+.m-welcome.is-go #m-grid .m-card:nth-child(n+5){animation-delay:.7s}
+@keyframes m-wel-in{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+@keyframes m-wel-card{from{opacity:0; transform:translateY(22px) scale(.96)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){ .m-welcome > *, .m-welcome #m-grid .m-card{opacity:1; animation:none !important} }

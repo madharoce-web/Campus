@@ -258,3 +258,22 @@ select.am-input{appearance:none; padding-right:2.25rem; background:#fff url("dat
 @keyframes am-tour-node{from{transform:scale(0)} to{transform:scale(1)}}
 @keyframes am-tour-draw{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){ .am-tour *, .am-tour *::before, .am-tour *::after, .am-tour-box, .am-tour-hole{animation:none !important; transition:none !important} .am-tour-art-l, .am-tour-art path{stroke-dashoffset:0 !important} }
+
+/* teló de transició (app/Curtain.jsx) */
+.am-curtain{position:fixed; inset:0; z-index:3000; display:grid; place-items:center; background:var(--am-brand); color:#fff; font-family:var(--am-sans)}
+.am-curtain.is-in{animation:am-cur-in .52s cubic-bezier(.65,0,.35,1) both}
+.am-curtain.is-out{animation:am-cur-out .65s cubic-bezier(.65,0,.35,1) both; pointer-events:none}
+.am-curtain-in{display:grid; justify-items:center; gap:14px; text-align:center; padding:24px}
+.am-curtain.is-out .am-curtain-in{animation:am-cur-fade .3s both}
+.am-curtain-mark{width:76px; height:76px; display:grid; place-items:center; background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.85); font:30px var(--am-serif); letter-spacing:.02em; animation:am-cur-mark .6s cubic-bezier(.2,.9,.3,1.3) .15s both}
+.am-curtain p{margin:0; font-family:var(--am-serif); font-size:1.35rem; animation:am-cur-up .5s .3s both}
+.am-curtain-dots{display:flex; gap:7px}
+.am-curtain-dots i{width:7px; height:7px; border-radius:50%; background:#fff; opacity:.4; animation:am-cur-dot 1s ease-in-out infinite}
+.am-curtain-dots i:nth-child(2){animation-delay:.15s} .am-curtain-dots i:nth-child(3){animation-delay:.3s}
+@keyframes am-cur-in{from{clip-path:circle(0% at 50% 100%)} to{clip-path:circle(150% at 50% 100%)}}
+@keyframes am-cur-out{from{transform:none} to{transform:translateY(-100%)}}
+@keyframes am-cur-fade{to{opacity:0; transform:translateY(-10px)}}
+@keyframes am-cur-mark{from{opacity:0; transform:scale(.6) rotate(-8deg)} to{opacity:1; transform:none}}
+@keyframes am-cur-up{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+@keyframes am-cur-dot{0%,100%{opacity:.35; transform:translateY(0)} 50%{opacity:1; transform:translateY(-5px)}}
+@media (prefers-reduced-motion:reduce){ .am-curtain, .am-curtain *{animation:none !important} }

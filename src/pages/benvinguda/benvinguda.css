@@ -16,6 +16,9 @@
 .bv-big{padding:.6rem 1.4rem; font-size:1rem}
 .bv-note{background:var(--am-brand-soft); border:1px solid var(--am-brand-line); color:var(--am-ink-2); border-radius:var(--am-r); padding:10px 14px; margin:16px 0 0}
 
+/* el teló de transició encara tapa la pantalla: les animacions d'entrada esperen */
+.bv.is-veiled .bv-card, .bv.is-veiled .bv-card *, .bv.is-veiled .bv-top{animation-play-state:paused}
+
 /* passos */
 .bv-steps{display:flex; gap:6px; list-style:none; margin:0 auto; padding:0; counter-reset:none}
 .bv-steps li{display:flex; align-items:center; gap:8px; color:var(--am-ink-3); font-size:.88rem}
@@ -43,7 +46,10 @@
 .bv-chip:focus-visible, .bv-deg:focus-visible, .bv-sub:focus-visible{outline:none; box-shadow:var(--am-focus)}
 
 /* graus i assignatures: targetes seleccionables */
-.bv-degs, .bv-subs{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px}
+.bv-degs, .bv-subs{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); grid-auto-rows:1fr; gap:10px}
+/* totes les targetes d'una llista fan la mateixa alçada, encara que el nom ocupi dues línies */
+.bv-degs li, .bv-subs li{display:flex}
+.bv-degs li > button, .bv-subs li > button{height:100%}
 .bv-degs li, .bv-subs li{animation:bv-in .4s both; animation-delay:calc(var(--i) * .06s)}
 .bv-deg, .bv-sub{width:100%; display:flex; align-items:center; gap:12px; text-align:left; background:#fff; border:1px solid var(--am-line); border-radius:var(--am-r); padding:12px 14px; font:inherit; color:inherit; cursor:pointer; transition:border-color .15s, box-shadow .15s, transform .15s}
 .bv-deg:hover, .bv-sub:hover{border-color:var(--am-brand); transform:translateY(-1px)}
